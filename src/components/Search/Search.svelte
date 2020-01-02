@@ -6,9 +6,9 @@
   export let id = Math.random();
   export let labelText = '';
   export let light = false;
-  export let placeholder = '';
-  export let size = small ? 'sm' : 'xl';
+  export let placeholder = 'Search...';
   export let small = false;
+  export let size = small ? 'sm' : 'xl';
   export let style = undefined;
   export let type = 'text';
   export let value = '';

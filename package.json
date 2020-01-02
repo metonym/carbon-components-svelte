@@ -14,6 +14,7 @@
     "test:tdd": "jest --watch",
     "prepublishOnly": "yarn build"
   },
+  "sideEffects": false,
   "dependencies": {
     "carbon-icons-svelte": "^10.8.2",
     "flatpickr": "^4.6.3"

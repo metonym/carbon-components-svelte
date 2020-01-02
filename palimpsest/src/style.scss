@@ -1,0 +1,9 @@
+$css--font-face: true !default;
+$css--helpers: true !default;
+$css--body: true !default;
+$css--use-layer: true !default;
+$css--reset: true !default;
+$css--typography: true !default;
+$css--plex: true !default;
+
+@import 'carbon-components/scss/components/search/_search.scss';
