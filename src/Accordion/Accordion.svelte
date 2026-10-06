@@ -1,4 +1,5 @@
 <script>
+  // ci probe
   /** @extends {"./AccordionSkeleton.svelte"} AccordionSkeletonProps */
 
   /**
