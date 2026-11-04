@@ -9,7 +9,7 @@
 <ConfirmModal
   bind:open
   kind="warning"
-  title="You have unsaved changes"
+  titleText="You have unsaved changes"
   confirmText="Leave"
   cancelText="Stay"
 >

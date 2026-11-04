@@ -8,7 +8,7 @@
 
 <ConfirmModal
   bind:open
-  title="Delete this project?"
+  titleText="Delete this project?"
   confirmText="Delete"
   confirmationPhrase="delete-project"
 >

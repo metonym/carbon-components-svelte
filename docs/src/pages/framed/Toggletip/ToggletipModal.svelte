@@ -19,7 +19,7 @@
     bind:open
     passiveModal
     modalHeading="Toggletip in modal"
-    on:close={() => (open = false)}
+    onopenchange={() => (open = false)}
   >
     <Stack orientation="horizontal" align="center" gap={3}>
       Resource list

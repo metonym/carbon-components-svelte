@@ -11,7 +11,7 @@
 
 <Button kind="danger" onclick={() => (open = true)}>Remove members</Button>
 
-<ConfirmModal bind:open title="Remove these members?" confirmText="Remove">
+<ConfirmModal bind:open titleText="Remove these members?" confirmText="Remove">
   <p>The following members will lose access to this workspace:</p>
   <UnorderedList>
     <ListItem>Ava Chen</ListItem>

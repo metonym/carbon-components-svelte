@@ -21,8 +21,8 @@
 
 <Button onclick={() => (open = true)}>Save changes</Button>
 
-<ComposedModal bind:open on:submit={onSave}>
-  <ModalHeader title="Save changes" />
+<ComposedModal bind:open onprimaryaction={onSave}>
+  <ModalHeader titleText="Save changes" />
   <ModalBody>
     <p>Save your changes to the Cloudant database configuration.</p>
   </ModalBody>

@@ -14,7 +14,7 @@
     modalHeading="TooltipIcon in modal"
     primaryButtonText="Done"
     secondaryButtonText="Cancel"
-    on:click:button--secondary={() => (open = false)}
+    onsecondaryaction={() => (open = false)}
   >
     <TooltipIcon tooltipText="Top" direction="top" icon={Filter} />
     <TooltipIcon tooltipText="Right" direction="right" icon={Filter} />

@@ -16,8 +16,7 @@
   secondaryButtonText="Cancel"
   {shouldSubmitOnEnter}
   {primaryButtonDisabled}
-  on:submit={(e) => onsubmit?.(e)}
-  on:click:button--primary={(e) => onclickbuttonprimary?.(e)}
+  onprimaryaction={(e) => { ((e) => onsubmit?.(e))(e); ((e) => onclickbuttonprimary?.(e))(e); }}
 >
   <textarea data-testid="modal-textarea"></textarea>
   <a href="#details" data-testid="modal-link">Learn more</a>

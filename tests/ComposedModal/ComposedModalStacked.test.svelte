@@ -7,7 +7,7 @@
 </script>
 
 <ComposedModal open data-testid="modal">
-  <ModalHeader title="Modal" />
+  <ModalHeader titleText="Modal" />
   <button
     type="button"
     data-testid="launch-sibling-modal"
@@ -18,7 +18,7 @@
 </ComposedModal>
 
 <ComposedModal bind:open={siblingOpen} data-testid="sibling-modal">
-  <ModalHeader title="Sibling modal" />
+  <ModalHeader titleText="Sibling modal" />
   <button
     type="button"
     data-testid="launch-child-modal"
@@ -28,6 +28,6 @@
   </button>
 
   <ComposedModal bind:open={childOpen} data-testid="child-modal">
-    <ModalHeader title="Child modal" />
+    <ModalHeader titleText="Child modal" />
   </ComposedModal>
 </ComposedModal>

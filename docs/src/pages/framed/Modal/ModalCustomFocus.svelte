@@ -12,10 +12,7 @@
   primaryButtonText="Confirm"
   secondaryButtonText="Cancel"
   selectorPrimaryFocus="#advanced-options"
-  on:click:button--secondary={() => (open = false)}
-  on:open
-  on:close
-  on:submit
+  onsecondaryaction={() => (open = false)}
 >
   <Stack gap={3}>
     <p>Create a new Cloudant database in the US South region.</p>

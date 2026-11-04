@@ -59,7 +59,7 @@
 </Modal>
 
 <ComposedModal open data-testid="composed-modal">
-  <ModalHeader title="Workspace settings" />
+  <ModalHeader titleText="Workspace settings" />
   <ModalBody>
     <TextInput labelText="Workspace name" />
     <Tile>Usage this month</Tile>

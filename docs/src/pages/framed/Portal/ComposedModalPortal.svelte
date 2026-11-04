@@ -30,7 +30,7 @@
   <div><Button onclick={() => (open = true)}>Open modal</Button></div>
   <Portal>
     <ComposedModal bind:open>
-      <ModalHeader title="Composed Modal in Portal" />
+      <ModalHeader titleText="Composed Modal in Portal" />
       <ModalBody>
         <p>
           This composed modal is rendered in a portal, ensuring it appears above
@@ -40,7 +40,7 @@
       <ModalFooter
         primaryButtonText="Confirm"
         secondaryButtonText="Cancel"
-        on:click:button--secondary={() => (open = false)}
+        onsecondaryaction={() => (open = false)}
       />
     </ComposedModal>
   </Portal>

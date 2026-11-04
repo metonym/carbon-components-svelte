@@ -14,7 +14,7 @@
   primaryButtonText="Add instance"
   secondaryButtonText="Cancel"
   hasScrollingContent
-  on:click:button--secondary={() => (open = false)}
+  onsecondaryaction={() => (open = false)}
 >
   <DataTable
     headers={[

@@ -11,8 +11,6 @@
   preventCloseOnClickOutside
   bind:open
   modalHeading="API key created"
-  on:open
-  on:close
 >
   <Stack gap={5}>
     <p>

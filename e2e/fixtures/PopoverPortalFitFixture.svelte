@@ -50,7 +50,7 @@ start at 320 px. -->
   bind:open={modalOpen}
   passiveModal
   modalHeading="Popover in a Modal"
-  on:close={() => (open.modal = false)}
+  onopenchange={() => (open.modal = false)}
 >
   <div style="display: flex; gap: 1rem; align-items: center">
     <span data-testid="modal-toggletip">

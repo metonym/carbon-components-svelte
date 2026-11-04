@@ -13,7 +13,7 @@
     modalHeading="UserAvatar in modal"
     primaryButtonText="Done"
     secondaryButtonText="Cancel"
-    on:click:button--secondary={() => (open = false)}
+    onsecondaryaction={() => (open = false)}
   >
     <UserAvatar
       name="Richard Hendricks"

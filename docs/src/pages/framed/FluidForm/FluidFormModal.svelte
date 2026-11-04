@@ -21,7 +21,7 @@
   modalHeading="Register application"
   primaryButtonText="Add"
   secondaryButtonText="Cancel"
-  on:click:button--secondary={() => (open = false)}
+  onsecondaryaction={() => (open = false)}
 >
   <FluidForm>
     <TextInput

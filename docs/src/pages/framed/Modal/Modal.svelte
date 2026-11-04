@@ -11,10 +11,7 @@
   modalHeading="Create database"
   primaryButtonText="Confirm"
   secondaryButtonText="Cancel"
-  on:click:button--secondary={() => (open = false)}
-  on:open
-  on:close
-  on:submit
+  onsecondaryaction={() => (open = false)}
 >
   <p>Create a new Cloudant database in the US South region.</p>
 </Modal>

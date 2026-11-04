@@ -25,19 +25,19 @@
 
 <ComposedModal
   bind:open
-  on:close={(e) => {
-    console.log("Close triggered by:", e.detail.trigger);
+  onopenchange={(e) => {
+    console.log("Close triggered by:", e.trigger);
     if (hasUnsavedChanges) {
       e.preventDefault();
       showWarning = true;
     }
   }}
-  on:submit={() => {
+  onprimaryaction={() => {
     hasUnsavedChanges = false;
     open = false;
   }}
 >
-  <ModalHeader title="Edit profile" />
+  <ModalHeader titleText="Edit profile" />
   <ModalBody>
     {#if showWarning}
       <InlineNotification
@@ -52,7 +52,7 @@
   <ModalFooter
     primaryButtonText="Save"
     secondaryButtonText="Discard changes"
-    on:click:button--secondary={() => {
+    onsecondaryaction={() => {
       hasUnsavedChanges = false;
       showWarning = false;
       open = false;

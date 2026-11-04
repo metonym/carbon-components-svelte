@@ -23,9 +23,8 @@
   export let footerPrimaryButtonDisabled = false;
   export let footerSecondaryButtonText = "";
   export let footerDanger = false;
-  export let onopen: ((event: CustomEvent) => void) | undefined = undefined;
-  export let onclose: ((event: CustomEvent) => void) | undefined = undefined;
-  export let ontransitionend: ((event: CustomEvent) => void) | undefined =
+  export let onclose: ComponentProps<ComposedModal>["onopenchange"] = undefined;
+  export let ontransitionend: ComponentProps<ComposedModal>["onopenchangecomplete"] =
     undefined;
   export let includeInput = true;
   export let closeOnSubmit = false;
@@ -37,18 +36,17 @@
   {size}
   {danger}
   {preventCloseOnClickOutside}
-  {containerClass}
+  class={containerClass}
   {selectorPrimaryFocus}
-  on:open={(e) => onopen?.(e)}
-  on:close={(e) => onclose?.(e)}
-  on:transitionend={(e) => ontransitionend?.(e)}
-  on:submit={() => {
+  onopenchange={(e) => onclose?.(e)}
+  onopenchangecomplete={(e) => ontransitionend?.(e)}
+  onprimaryaction={() => {
     if (closeOnSubmit) open = false;
   }}
   {...$$restProps}
 >
   {#if headerTitle || headerLabel}
-    <ModalHeader title={headerTitle} label={headerLabel} />
+    <ModalHeader titleText={headerTitle} labelText={headerLabel} />
   {/if}
   {#if includeBody}
     <ModalBody

@@ -31,18 +31,20 @@
   export let preventSecondaryDefault = false;
   export let onsubmit: (() => void) | undefined = undefined;
   export let onprimary: (() => void) | undefined = undefined;
-  export let onsecondary: ((event: CustomEvent) => void) | undefined =
+  export let onsecondary: ((detail: { text: string }) => void) | undefined =
     undefined;
   export let onclose: (() => void) | undefined = undefined;
 </script>
 
 <ComposedModal
   bind:open
-  on:submit={() => onsubmit?.()}
-  on:click:button--primary={() => onprimary?.()}
-  on:close={() => onclose?.()}
+  onprimaryaction={() => {
+    onsubmit?.();
+    onprimary?.();
+  }}
+  onopenchange={() => onclose?.()}
 >
-  <ModalHeader title="Test Modal" />
+  <ModalHeader titleText="Test Modal" />
   <ModalBody>Content</ModalBody>
   <ModalFooter
     {primaryButtonText}
@@ -50,14 +52,12 @@
     {primaryButtonDisabled}
     {primaryButtonLoading}
     {primaryButtonLoadingDescription}
-    {primaryClass}
     {secondaryButtonText}
     {secondaryButtonLoading}
     {secondaryButtonLoadingDescription}
     {secondaryButtons}
-    {secondaryClass}
     {danger}
-    on:click:button--secondary={(e) => {
+    onsecondaryaction={(e) => {
       onsecondary?.(e);
       if (preventSecondaryDefault) e.preventDefault();
     }}

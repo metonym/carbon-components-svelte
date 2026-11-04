@@ -11,7 +11,7 @@
   modalHeading="Reset password"
   primaryButtonText="Reset password"
   secondaryButtonText="Cancel"
-  on:click:button--secondary={() => (open = false)}
+  onsecondaryaction={() => (open = false)}
 >
   <PasswordInput
     labelText="New password"

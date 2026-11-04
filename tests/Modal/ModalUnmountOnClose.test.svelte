@@ -9,6 +9,6 @@
   <Modal
     bind:open
     modalHeading="Unmount On Close"
-    on:close={(e) => onclose?.(e)}
+    onopenchange={(e) => onclose?.(e)}
   />
 {/if}

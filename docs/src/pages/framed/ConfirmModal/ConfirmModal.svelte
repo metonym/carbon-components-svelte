@@ -13,10 +13,10 @@
 
 <ConfirmModal
   bind:open
-  title="Delete this file?"
+  titleText="Delete this file?"
   confirmText="Delete"
-  on:confirm={() => (result = "confirmed")}
-  on:cancel={(e) => (result = `canceled (${e.detail.trigger})`)}
+  onconfirm={() => (result = "confirmed")}
+  onopenchange={(e) => (result = `canceled (${e.trigger})`)}
 >
   <p>This action cannot be undone.</p>
 </ConfirmModal>

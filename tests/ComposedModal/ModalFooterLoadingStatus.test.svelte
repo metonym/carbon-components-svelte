@@ -13,8 +13,8 @@
   export let onloadingsuccess: (() => void) | undefined = undefined;
 </script>
 
-<ComposedModal open selectorPrimaryFocus={null} on:submit={() => onsubmit?.()}>
-  <ModalHeader title="Save changes" />
+<ComposedModal open selectorPrimaryFocus={null} onprimaryaction={() => onsubmit?.()}>
+  <ModalHeader titleText="Save changes" />
   <ModalBody>Save your changes.</ModalBody>
   <ModalFooter
     primaryButtonText="Save"
@@ -22,7 +22,7 @@
     primaryButtonLoadingDescription="Saving"
     {loadingStatus}
     {primaryButtonLoading}
-    on:click:button--secondary={() => onsecondary?.()}
-    on:loading:success={() => onloadingsuccess?.()}
+    onsecondaryaction={() => onsecondary?.()}
+    onloadingsuccess={() => onloadingsuccess?.()}
   />
 </ComposedModal>

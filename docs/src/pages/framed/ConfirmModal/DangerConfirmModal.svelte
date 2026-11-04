@@ -11,7 +11,7 @@
 <ConfirmModal
   bind:open
   kind="danger"
-  title="Delete all instances"
+  titleText="Delete all instances"
   confirmText="Delete"
 >
   <p>This is a permanent action and cannot be undone.</p>

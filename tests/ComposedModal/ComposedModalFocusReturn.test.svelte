@@ -15,7 +15,7 @@
 
 <button type="button" on:click={() => (open = true)}>Open Modal</button>
 <ComposedModal bind:open {preventCloseOnClickOutside}>
-  <ModalHeader title="Focus Return Test" {hideCloseButton} />
+  <ModalHeader titleText="Focus Return Test" {hideCloseButton} />
   <ModalBody />
   {#if showFooter}
     <ModalFooter primaryButtonText="Save" secondaryButtonText="Cancel" />

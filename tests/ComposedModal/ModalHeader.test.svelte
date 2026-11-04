@@ -5,12 +5,8 @@
   import type { ComponentProps } from "svelte";
 
   export let open = true;
-  export let title: ComponentProps<ModalHeader>["title"] = "";
-  export let label: ComponentProps<ModalHeader>["label"] = "";
-  export let labelClass: ComponentProps<ModalHeader>["labelClass"] = "";
-  export let titleClass: ComponentProps<ModalHeader>["titleClass"] = "";
-  export let closeClass: ComponentProps<ModalHeader>["closeClass"] = "";
-  export let closeIconClass: ComponentProps<ModalHeader>["closeIconClass"] = "";
+  export let title: ComponentProps<ModalHeader>["titleText"] = "";
+  export let label: ComponentProps<ModalHeader>["labelText"] = "";
   export let iconDescription: ComponentProps<ModalHeader>["iconDescription"] =
     "Close";
   export let hideCloseButton = false;
@@ -20,15 +16,11 @@
 
 <ComposedModal bind:open>
   <ModalHeader
-    {title}
-    {label}
-    {labelClass}
-    {titleClass}
-    {closeClass}
-    {closeIconClass}
+    titleText={title}
+    labelText={label}
     {iconDescription}
     {hideCloseButton}
-    on:click={() => onclick?.()}
+    onclick={() => onclick?.()}
     {...$$restProps}
   >
     {#if slotContent}

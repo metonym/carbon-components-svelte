@@ -14,7 +14,7 @@
 <Button onclick={() => (open = true)}>Continue setup</Button>
 
 <ComposedModal bind:open>
-  <ModalHeader title="Continue setup" />
+  <ModalHeader titleText="Continue setup" />
   <ModalBody>
     <p>Review this step, go back, or continue to the next one.</p>
   </ModalBody>

@@ -2,7 +2,6 @@ import { fireEvent, render, screen } from "@testing-library/svelte";
 import type ModalComponent from "carbon-components-svelte/Modal/Modal.svelte";
 import type { ComponentProps } from "svelte";
 import { tick } from "svelte";
-import { absorbUnhandledRejection } from "../utils/absorb-unhandled-rejection";
 import { rect } from "../utils/rect";
 import { user } from "../utils/user";
 import { setViewportWidth } from "../utils/viewport";
@@ -65,14 +64,12 @@ describe("Modal", () => {
     expect(modalContainer).toHaveAttribute("aria-label", "");
   });
 
-  it("opens and closes properly", async () => {
-    const openHandler = vi.fn();
+  it("opens and closes properly, calling no callback for changes from outside", async () => {
     const closeHandler = vi.fn();
     const { rerender } = render(ModalTest, {
       props: {
         open: false,
         modalHeading: "Test Modal",
-        onopen: openHandler,
         onclose: closeHandler,
       },
     });
@@ -80,27 +77,22 @@ describe("Modal", () => {
     await rerender({ open: true });
     await tick();
     expect(screen.getByRole("dialog")).toBeInTheDocument();
-    expect(openHandler).toHaveBeenCalledTimes(1);
 
     await rerender({ open: false });
     await flushProgrammaticClose();
-    expect(closeHandler).toHaveBeenCalledTimes(1);
+    expect(getOverlay()).not.toHaveClass("is-visible");
+    expect(closeHandler).not.toHaveBeenCalled();
   });
 
-  // perf/modal-reactive-open-state: focusing on a post-mount open transition
-  // now happens via `tick().then(focus)` (the `$:` block that dispatches
-  // "open" runs before the DOM commits, unlike the old `afterUpdate`), so
-  // this pins down that focus still lands correctly once the tick resolves,
-  // and that an unrelated re-render doesn't cause a duplicate "open" dispatch.
-  it("moves focus into the modal on a post-mount open transition, without duplicating on:open", async () => {
-    const openHandler = vi.fn();
+  // Focus on a post-mount open lands once the DOM commits, and an unrelated
+  // re-render doesn't move it again.
+  it("moves focus into the modal on a post-mount open transition", async () => {
     const { rerender } = render(ModalTest, {
       props: {
         open: false,
         modalHeading: "Post-mount Focus Test",
         primaryButtonText: "Save",
         includeInput: false,
-        onopen: openHandler,
       },
     });
 
@@ -109,9 +101,7 @@ describe("Modal", () => {
     await tick();
 
     expect(screen.getByRole("button", { name: "Save" })).toHaveFocus();
-    expect(openHandler).toHaveBeenCalledTimes(1);
 
-    // An unrelated re-render (open stays true) must not re-fire "open".
     await rerender({
       open: true,
       modalHeading: "Post-mount Focus Test Updated",
@@ -119,7 +109,7 @@ describe("Modal", () => {
     await tick();
     await tick();
 
-    expect(openHandler).toHaveBeenCalledTimes(1);
+    expect(screen.getByRole("button", { name: "Save" })).toHaveFocus();
   });
 
   it("handles button clicks", async () => {
@@ -140,7 +130,7 @@ describe("Modal", () => {
 
     await user.click(screen.getByText("Cancel"));
     expect(onclickbuttonsecondary).toHaveBeenCalledTimes(1);
-    expect(onclickbuttonsecondary.mock.calls[0][0].detail).toEqual({
+    expect(onclickbuttonsecondary.mock.calls[0][0]).toEqual({
       text: "Cancel",
     });
   });
@@ -194,13 +184,13 @@ describe("Modal", () => {
 
     await user.click(screen.getByRole("button", { name: "Cancel" }));
     expect(onclickbuttonsecondary).toHaveBeenCalledTimes(1);
-    expect(onclickbuttonsecondary.mock.calls[0][0].detail).toEqual({
+    expect(onclickbuttonsecondary.mock.calls[0][0]).toEqual({
       text: "Cancel",
     });
 
     await user.click(screen.getByRole("button", { name: "Reset" }));
     expect(onclickbuttonsecondary).toHaveBeenCalledTimes(2);
-    expect(onclickbuttonsecondary.mock.calls[1][0].detail).toEqual({
+    expect(onclickbuttonsecondary.mock.calls[1][0]).toEqual({
       text: "Reset",
     });
   });
@@ -682,8 +672,7 @@ describe("Modal", () => {
     "close-button",
     "escape-key",
     "outside-click",
-    "programmatic",
-  ] as const)("dispatches close event with %s trigger", async (trigger) => {
+  ] as const)("calls onopenchange with the %s trigger", async (trigger) => {
     const closeHandler = vi.fn();
     const { rerender } = render(ModalTest, {
       props: {
@@ -697,7 +686,22 @@ describe("Modal", () => {
     await closeVia[trigger](rerender);
 
     expect(closeHandler).toHaveBeenCalledTimes(1);
-    expect(closeHandler.mock.calls[0][0].detail).toEqual({ trigger });
+    expect(closeHandler.mock.calls[0][0]).toMatchObject({
+      open: false,
+      trigger,
+    });
+  });
+
+  it("calls no onopenchange when open is set to false from outside", async () => {
+    const closeHandler = vi.fn();
+    const { rerender } = render(ModalTest, {
+      props: { open: true, modalHeading: "Programmatic", onclose: closeHandler },
+    });
+
+    await closeVia.programmatic(rerender);
+
+    expect(getOverlay()).not.toHaveClass("is-visible");
+    expect(closeHandler).not.toHaveBeenCalled();
   });
 
   it("hides the close button when hideCloseButton is true", () => {
@@ -736,55 +740,7 @@ describe("Modal", () => {
     expect(document.querySelector(".bx--modal")).not.toHaveClass("is-visible");
   });
 
-  it("does not leave the modal open when a programmatic on:close handler throws", async () => {
-    const error = new Error("consumer error");
-    const trap = absorbUnhandledRejection((reason) => reason === error);
-
-    const { rerender } = render(ModalTest, {
-      props: {
-        open: true,
-        modalHeading: "Throwing Close Test",
-        onclose: () => {
-          throw error;
-        },
-      },
-    });
-
-    expect(screen.getByRole("dialog")).toBeInTheDocument();
-
-    await rerender({ open: false });
-    await flushProgrammaticClose();
-    await trap.wait;
-    trap.dispose();
-
-    const modalWrapper = document.querySelector(".bx--modal");
-    expect(modalWrapper).not.toHaveClass("is-visible");
-    expect(modalWrapper).toHaveAttribute("inert");
-  });
-
-  // When the same boolean both gates an {#if} and binds `open`, flipping it
-  // false closes *and* unmounts the modal in one flush. Svelte does not run a
-  // component's `afterUpdate` while it is being torn down, so the programmatic
-  // `close` is never delivered — in every supported Svelte version, and whether
-  // the dispatch is synchronous or deferred via `tick()`. This documents that
-  // deferring the dispatch did not regress teardown behavior (it is a
-  // pre-existing Svelte limitation, not introduced by the defer).
-  it("does not dispatch programmatic close when the same flip unmounts the modal", async () => {
-    const closeHandler = vi.fn();
-    const { rerender } = render(ModalUnmountOnCloseTest, {
-      props: { open: true, onclose: closeHandler },
-    });
-
-    expect(screen.getByRole("dialog")).toBeInTheDocument();
-
-    await rerender({ open: false });
-    await flushProgrammaticClose();
-
-    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
-    expect(closeHandler).not.toHaveBeenCalled();
-  });
-
-  it("prevents closing when preventDefault is called on close event", async () => {
+  it("stays open when onopenchange calls preventDefault", async () => {
     const closeHandler = vi.fn((e) => {
       e.preventDefault();
     });

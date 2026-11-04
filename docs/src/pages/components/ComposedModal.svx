@@ -34,7 +34,7 @@ Set `alert` to `true` on `ComposedModal` for a time-sensitive dialog. The ARIA `
 
 ```svelte
 <ComposedModal bind:open alert>
-  <ModalHeader title="Session expiring" />
+  <ModalHeader titleText="Session expiring" />
   <ModalBody>Your session ends in 2 minutes. Save your work to continue.</ModalBody>
   <ModalFooter primaryButtonText="Stay signed in" secondaryButtonText="Sign out" />
 </ComposedModal>
@@ -68,7 +68,7 @@ Set `lazy` to build the header, body, and footer the first time the modal opens,
 
 ### Custom heading
 
-Use `ModalHeader`'s default slot to add extra content, such as a status tag, below the title. This is in addition to (or instead of) the plain-text `title` and `label` props.
+Pass children to `ModalHeader` to add extra content, such as a status tag, below the title. This is in addition to (or instead of) `titleText` and `labelText`, which also take snippets.
 
 <FileSource src="/framed/Modal/ComposedModalCustomHeading" />
 
@@ -86,7 +86,7 @@ Set `hasScrollingContent` on `ModalBody` to enable vertical scrolling for length
 
 ## AI label
 
-Put an `AILabel` in the `decorator` slot to mark the modal's content as AI-generated. The label sits beside the close button, and the modal shows the AI surface.
+Put an `AILabel` in the `decorator` snippet to mark the modal's content as AI-generated. The label sits beside the close button, and the modal shows the AI surface.
 
 <FileSource src="/framed/Modal/ComposedModalAILabel" />
 
@@ -114,13 +114,13 @@ Enhance the primary button with an icon using `primaryButtonIcon` on `ModalFoote
 
 ### Primary button loading
 
-Set `primaryButtonLoading` on `ModalFooter` while an async submit is in progress. The primary button shows an [InlineLoading](/components/InlineLoading) spinner, becomes non-interactive, and suppresses `submit` until loading finishes. The modal stays open.
+Set `primaryButtonLoading` on `ModalFooter` while an async submit is in progress. The primary button shows an [InlineLoading](/components/InlineLoading) spinner, becomes non-interactive, and suppresses `onprimaryaction` until loading finishes. The modal stays open.
 
 <FileSource src="/framed/Modal/ComposedModalPrimaryButtonLoading" />
 
 ### Loading status
 
-Set `loadingStatus` on `ModalFooter` to show the progress of the primary action in its button: `"active"` while the work runs, then `"finished"` or `"error"`. Any status other than `"inactive"` disables the footer buttons and suppresses `submit`. After `"finished"`, the footer dispatches `loading:success` when the [InlineLoading](/components/InlineLoading) success delay ends. Close the modal there.
+Set `loadingStatus` on `ModalFooter` to show the progress of the primary action in its button: `"active"` while the work runs, then `"finished"` or `"error"`. Any status other than `"inactive"` disables the footer buttons and suppresses `onprimaryaction`. After `"finished"`, the footer calls `onloadingsuccess` when the [InlineLoading](/components/InlineLoading) success delay ends. Close the modal there.
 
 `primaryButtonLoading` is the same as `"active"`, except that the secondary buttons stay enabled.
 
@@ -134,7 +134,7 @@ Secondary buttons support their own, independent loading state, useful when a se
 
 ## Progress
 
-Combine the composed modal with a progress indicator to create a multi-step flow within a modal. Use the modal footer's default slot to render Cancel (ghost), Previous (secondary), and Next (primary) buttons. Track the current step to control which content is displayed and update the button label on the final step.
+Combine the composed modal with a progress indicator to create a multi-step flow within a modal. Pass children to the modal footer to render Cancel (ghost), Previous (secondary), and Next (primary) buttons. Track the current step to control which content is displayed and update the button label on the final step.
 
 <FileSource src="/framed/Modal/ProgressModal" />
 
@@ -158,7 +158,7 @@ Control how the composed modal can be dismissed.
 
 ### Prevent default
 
-The modal dispatches a cancelable `close` event. Call `e.preventDefault()` to keep the modal open. The event includes a `trigger` property indicating what triggered the close attempt: `"escape-key"` (<DocKbd label="Escape" />), `"outside-click"`, `"close-button"`, or `"programmatic"` (the `open` prop was set to `false` from outside the component, for example through `bind:open`, rather than through one of the modal's own dismiss controls).
+When the user closes the modal, it calls `onopenchange` with `{ open: false, trigger }`. Call `preventDefault()` on it to keep the modal open. `trigger` is `"escape-key"` (<DocKbd label="Escape" />), `"outside-click"` or `"close-button"`. Setting `open` yourself, for example through `bind:open`, calls nothing.
 
 <FileSource src="/framed/Modal/ComposedModalPreventClose" />
 
@@ -172,47 +172,39 @@ Set `preventCloseOnClickOutside` to `true` to keep a passive modal open, for exa
 
 ### Hide close button
 
-Set `hideCloseButton` on `ModalHeader` to remove the header close button. Use this for forced-choice dialogs such as auth walls or terms acceptance. Always provide an alternative dismiss path, typically footer actions. A modal with a `ModalFooter` already stays open on an outside click. <DocKbd label="Escape" /> still closes the modal unless you cancel the `close` event.
+Set `hideCloseButton` on `ModalHeader` to remove the header close button. Use this for forced-choice dialogs such as auth walls or terms acceptance. Always provide an alternative dismiss path, typically footer actions. A modal with a `ModalFooter` already stays open on an outside click. <DocKbd label="Escape" /> still closes the modal unless `onopenchange` calls `preventDefault()`.
 
 <FileSource src="/framed/Modal/ComposedModalHideCloseButton" />
 
 ### Secondary button
 
-`secondaryButtonText` closes the modal by default. The footer dispatches a cancelable `click:button--secondary` event first. Call `e.preventDefault()` to keep the modal open, for example when Cancel should stay put for a dirty form.
+`secondaryButtonText` closes the modal by default. The footer calls `onsecondaryaction` with `{ text }` first. Call `preventDefault()` on it to keep the modal open, for example when Cancel should stay put for a dirty form.
 
 <FileSource src="/framed/Modal/ComposedModalPreventSecondaryClose" />
 
-## Events
+## Callbacks
 
-ComposedModal and ModalFooter dispatch events for the modal's lifecycle and button interactions. The close button, <DocKbd label="Escape" />, an outside click on a passive modal, and `ModalFooter`'s `secondaryButtonText` button close the modal automatically. See [Closing](#closing) above. Every other action, including the primary button and `secondaryButtons` entries, leaves `open` untouched; handle the event and set `open` to `false` yourself when the action should dismiss the dialog.
+The close button, <DocKbd label="Escape" />, an outside click on a passive modal, and `ModalFooter`'s `secondaryButtonText` button close the modal automatically. See [Closing](#closing) above. Every other action, including the primary button and `secondaryButtons` entries, leaves `open` untouched; set `open` to `false` yourself when the action should dismiss the dialog.
 
-### Open
+### Primary and secondary actions
 
-Listen for `on:open` to know when `open` becomes `true`. It fires before the modal is visible and before focus moves into it. To run code after focus has moved, listen for `on:transitionend` and check `event.detail.open`.
-
-```svelte
-<ComposedModal bind:open on:open={() => console.log("opened")}>
-```
-
-### Submit and button clicks
-
-Clicking the primary button in `ModalFooter` dispatches `submit` and `click:button--primary` on `ComposedModal`. `ModalFooter` dispatches `click:button--secondary` with the button's `text`.
+Clicking the primary button in `ModalFooter` calls `onprimaryaction` on `ComposedModal`. `ModalFooter` calls `onsecondaryaction` with the button's `text`.
 
 ```svelte
-<ComposedModal bind:open on:submit={() => (open = false)}>
-  <ModalHeader title="Confirm changes" />
+<ComposedModal bind:open onprimaryaction={() => (open = false)}>
+  <ModalHeader titleText="Confirm changes" />
   <ModalBody>...</ModalBody>
   <ModalFooter primaryButtonText="Confirm" secondaryButtonText="Cancel" />
 </ComposedModal>
 ```
 
-### Transition end
+### Open or close finished
 
-Listen for `on:transitionend` to know when the modal's open or close animation finishes. `event.detail.open` reflects the modal's state at the end of the transition.
+`onopenchangecomplete` is called when the modal's open or close animation finishes, with `{ open }`. Use it to run code after focus has moved into an opened modal.
 
 ```svelte
 <ComposedModal
   bind:open
-  on:transitionend={(e) => console.log("open:", e.detail.open)}
+  onopenchangecomplete={({ open }) => console.log("open:", open)}
 >
 ```

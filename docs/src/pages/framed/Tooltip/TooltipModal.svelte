@@ -13,7 +13,7 @@
     modalHeading="Tooltip in modal"
     primaryButtonText="Done"
     secondaryButtonText="Cancel"
-    on:click:button--secondary={() => (open = false)}
+    onsecondaryaction={() => (open = false)}
   >
     <Tooltip triggerText="Top" direction="top"><p>Top</p></Tooltip>
     <Tooltip triggerText="Right" direction="right"><p>Right</p></Tooltip>

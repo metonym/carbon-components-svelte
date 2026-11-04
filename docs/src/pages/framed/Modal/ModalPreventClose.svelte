@@ -21,18 +21,18 @@
   modalHeading="Edit profile"
   primaryButtonText="Save"
   secondaryButtonText="Discard changes"
-  on:click:button--secondary={() => {
+  onsecondaryaction={() => {
     hasUnsavedChanges = false;
     open = false;
   }}
-  on:close={(e) => {
-    console.log("Close triggered by:", e.detail.trigger);
+  onopenchange={(e) => {
+    console.log("Close triggered by:", e.trigger);
     if (hasUnsavedChanges) {
       e.preventDefault();
       showWarning = true;
     }
   }}
-  on:submit={() => {
+  onprimaryaction={() => {
     hasUnsavedChanges = false;
     open = false;
   }}

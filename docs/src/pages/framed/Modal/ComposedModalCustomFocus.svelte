@@ -17,9 +17,9 @@
 <ComposedModal
   bind:open
   selectorPrimaryFocus="#advanced-options"
-  on:submit={() => (open = false)}
+  onprimaryaction={() => (open = false)}
 >
-  <ModalHeader title="Create database" />
+  <ModalHeader titleText="Create database" />
   <ModalBody>
     <Stack gap={3}>
       <p>Create a new Cloudant database in the US South region.</p>
@@ -36,6 +36,6 @@
   <ModalFooter
     primaryButtonText="Confirm"
     secondaryButtonText="Cancel"
-    on:click:button--secondary={() => (open = false)}
+    onsecondaryaction={() => (open = false)}
   />
 </ComposedModal>

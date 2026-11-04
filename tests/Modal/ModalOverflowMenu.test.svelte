@@ -12,7 +12,7 @@
   open
   passiveModal
   modalHeading="Modal with overflow menu"
-  on:close={(e) => onclose?.(e)}
+  onopenchange={(e) => onclose?.(e)}
 >
   <OverflowMenu iconDescription="More options" {portalMenu}>
     <OverflowMenuItem text="Download" />

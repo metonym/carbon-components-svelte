@@ -1,124 +1,200 @@
 <script>
   /**
-   * @event close
-   * @property {"escape-key" | "outside-click" | "close-button" | "programmatic"} trigger
-   * @event {null} open
-   * @event transitionend
-   * @property {boolean} open
    * @restProps {div}
    */
 
-  /**
-   * Set the size of the composed modal.
-   * Also accepts Carbon v11's `"md"`, the default width.
-   * @type {"xs" | "sm" | "md" | "lg" | undefined}
-   */
-  export let size = undefined;
+  const fallbackId = $props.id();
 
-  /**
-   * Set to `true` to open the modal.
-   * @bindable writable
-   */
-  export let open = false;
+  let {
+    /**
+     * Set the size of the composed modal.
+     * Also accepts Carbon v11's `"md"`, the default width.
+     * @type {"xs" | "sm" | "md" | "lg" | undefined}
+     */
+    size = undefined,
 
-  /** Set to `true` to use the danger variant */
-  export let danger = false;
+    /**
+     * Set to `true` to open the modal.
+     */
+    open = $bindable(false),
 
-  /**
-   * Set to `true` to enable alert mode.
-   * The dialog uses `role="alertdialog"` and is described by `ModalBody`.
-   */
-  export let alert = false;
+    /** Set to `true` to use the danger variant */
+    danger = false,
 
-  /** Set to `true` to remove the modal body padding so content spans edge to edge */
-  export let fullWidth = false;
+    /**
+     * Set to `true` to enable alert mode.
+     * The dialog uses `role="alertdialog"` and is described by `ModalBody`.
+     */
+    alert = false,
 
-  /**
-   * Control whether clicking outside the modal closes it.
-   * By default, a passive modal (one without a `ModalFooter`) closes and a
-   * modal with a `ModalFooter` stays open, as in Carbon v11.
-   * Set to `true` to always keep the modal open on an outside click, or
-   * `false` to always close it.
-   * @type {boolean | undefined}
-   */
-  export let preventCloseOnClickOutside = undefined;
+    /** Set to `true` to remove the modal body padding so content spans edge to edge */
+    fullWidth = false,
 
-  /** Specify a class for the inner modal */
-  export let containerClass = "";
+    /**
+     * Control whether clicking outside the modal closes it.
+     * By default, a passive modal (one without a `ModalFooter`) closes and a
+     * modal with a `ModalFooter` stays open, as in Carbon v11.
+     * Set to `true` to always keep the modal open on an outside click, or
+     * `false` to always close it.
+     * @type {boolean | undefined}
+     */
+    preventCloseOnClickOutside = undefined,
 
-  /**
-   * Specify a selector to be focused when opening the modal.
-   * @type {null | string}
-   */
-  export let selectorPrimaryFocus = "[data-modal-primary-focus]";
+    /**
+     * Specify a selector to be focused when opening the modal.
+     * @type {null | string}
+     */
+    selectorPrimaryFocus = "[data-modal-primary-focus]",
 
-  /**
-   * Set to `true` to build the modal's content the first time it opens
-   * instead of at mount, and keep it afterwards. A closed modal is still
-   * laid out (it is only made invisible), so this saves its nodes on pages
-   * that hold modals most visitors never open. Content is not in the DOM,
-   * or in server-rendered markup, until then.
-   */
-  export let lazy = false;
+    /**
+     * Set to `true` to build the modal's content the first time it opens
+     * instead of at mount, and keep it afterwards. A closed modal is still
+     * laid out (it is only made invisible), so this saves its nodes on pages
+     * that hold modals most visitors never open. Content is not in the DOM,
+     * or in server-rendered markup, until then.
+     */
+    lazy = false,
 
-  /**
-   * Obtain a reference to the top-level HTML element.
-   * @bindable readonly
-   * @type {null | HTMLDivElement}
-   */
-  export let ref = null;
+    /**
+     * Obtain a reference to the top-level HTML element.
+     * @type {null | HTMLDivElement}
+     */
+    ref = $bindable(null),
 
-  /**
-   * Set an id for the top-level element.
-   * The header label, header title, and body ids derive from it as
-   * `{id}-label`, `{id}-title`, and `{id}-body`.
-   */
-  export let id = uniqueId();
+    /**
+     * Set an id for the top-level element.
+     * The header label, header title, and body ids derive from it as
+     * `{id}-label`, `{id}-title`, and `{id}-body`.
+     
+     * @type {string}
+     */
+    id = fallbackId,
 
-  import { createEventDispatcher, onMount, setContext, tick } from "svelte";
-  import { derived, readable, writable } from "svelte/store";
+    /**
+     * Called when the user closes the modal: the close button, Escape, an
+     * outside click, or a `ModalFooter` secondary button. Call
+     * `preventDefault()` to keep it open. Not called when `open` changes
+     * from outside.
+     * @type {((detail: import("../utils/cancelable.js").Cancelable<{ open: boolean; trigger: "escape-key" | "outside-click" | "close-button" }>) => void) | undefined}
+     */
+    onopenchange = undefined,
+
+    /**
+     * Called after the open or close transition ends.
+     * @type {((detail: { open: boolean }) => void) | undefined}
+     */
+    onopenchangecomplete = undefined,
+
+    /**
+     * Called when the user activates the `ModalFooter` primary button.
+     * @type {((detail: { trigger: "button" }) => void) | undefined}
+     */
+    onprimaryaction = undefined,
+
+    /**
+     * The header, body and footer.
+     * @type {import("svelte").Snippet | undefined}
+     */
+    children = undefined,
+
+    /**
+     * Render an `AILabel` or another decorator in the corner.
+     * @type {import("svelte").Snippet | undefined}
+     */
+    decorator = undefined,
+
+    /** @type {import("svelte/elements").ClassValue | undefined} */
+    class: className = undefined,
+
+    /** @type {string | undefined | null} */
+    "aria-label": consumerLabel = undefined,
+
+    /** @type {string | undefined | null} */
+    "aria-labelledby": consumerLabelledby = undefined,
+
+    /** @type {string | undefined | null} */
+    "aria-describedby": ariaDescribedBy = undefined,
+
+    /** @type {import("svelte/elements").MouseEventHandler<HTMLDivElement> | undefined | null} */
+    onmousedown = undefined,
+
+    ...rest
+  } = $props();
+
+
+
+
+
+
+
+
+
+
+
+
+  import { onMount, setContext, tick, untrack } from "svelte";
+  import { readable, writable } from "svelte/store";
   import Decorator from "../AILabel/Decorator.svelte";
   import { trackModal } from "../Modal/modal-store.js";
   import {
     LAYER_CONTEXT_KEY,
     MODAL_CONTEXT_KEY,
   } from "../constants/context-keys.js";
-  import { splitAriaNaming } from "../utils/aria-naming.js";
+  import { cancelable } from "../utils/cancelable.js";
   import { createDialogLifecycle } from "../utils/dialog-lifecycle.js";
   import { joinDescribedBy } from "../utils/field-status.js";
   import { focusQuietly, initialFocus, restoreFocus } from "../utils/focus.js";
   import { isImeComposition } from "../utils/ime-composition.js";
   import { trapFocus } from "../utils/trap-focus.js";
-  import { uniqueId } from "../utils/unique-id.js";
+  import { setComposedModal } from "./composed-modal-context.js";
 
-  const dispatch = createEventDispatcher();
-  /** @type {import("svelte/store").Writable<string | undefined>} */
-  const label = writable(undefined);
-  /** @type {import("svelte/store").Writable<string | undefined>} */
-  const title = writable(undefined);
-  /** @type {import("svelte/store").Writable<string | undefined>} */
-  const bodyId = writable(undefined);
   const focusReturn = restoreFocus();
 
-  // Ids for ModalHeader's label/title headings, so ModalBody (when
-  // `hasScrollingContent`) can name its region via `aria-labelledby`.
-  const modalId = writable(id);
-  $: modalId.set(id);
-  /** @type {import("svelte/store").Readable<{ label: string; title: string; body: string }>} */
-  const ids = derived(modalId, (value) => ({
-    label: `${value}-label`,
-    title: `${value}-title`,
-    body: `${value}-body`,
-  }));
+  // Set by ModalHeader. Ids for its label/title headings let ModalBody
+  // (when `hasScrollingContent`) name its region via `aria-labelledby`.
+  /** @type {string | undefined} */
+  let label = $state();
+  /** @type {string | undefined} */
+  let title = $state();
+  /** @type {string | undefined} */
+  let bodyId = $state();
+  const ids = $derived({
+    label: `${id}-label`,
+    title: `${id}-title`,
+    body: `${id}-body`,
+  });
 
   /** @type {null | HTMLDivElement} */
-  let innerModalRef = null;
-  let mounted = false;
+  let innerModalRef = $state(null);
+  let mounted = $state(false);
   // Live ModalFooters. Without one the modal is passive (Carbon v11).
   let footerCount = 0;
+  // Live ModalHeaders. The last one to unmount clears the label and
+  // title. Svelte 5 unmounts a swapped-out header after its replacement
+  // has set them, so a header can't simply clear them itself.
+  let headerCount = 0;
+
+  /**
+   * A user close becomes a cancelable `onopenchange`; an open or a close
+   * set from outside calls nothing.
+   * @param {string} type
+   * @param {{ trigger?: string }} [detail]
+   */
+  function lifecycleEvent(type, detail) {
+    if (type !== "close" || !detail?.trigger || detail.trigger === "programmatic")
+      return true;
+    const payload = cancelable({
+      open: false,
+      trigger: /** @type {"escape-key" | "outside-click" | "close-button"} */ (
+        detail.trigger
+      ),
+    });
+    onopenchange?.(payload);
+    return !payload.defaultPrevented;
+  }
 
   const lifecycle = createDialogLifecycle({
-    dispatch,
+    dispatch: lifecycleEvent,
     setOpen: (value) => {
       open = value;
     },
@@ -132,93 +208,58 @@
   });
   const { close, outsideDismiss } = lifecycle;
 
-  /**
-   * @type {() => void}
-   */
-  function closeModal() {
-    close("close-button");
-  }
-
-  /**
-   * @type {() => void}
-   */
-  function submit() {
-    dispatch("submit");
-    dispatch("click:button--primary");
-  }
-
-  /**
-   * @type {(value: string | undefined) => void}
-   */
-  function updateLabel(value) {
-    label.set(value);
-  }
-
-  /**
-   * @type {(value: string | undefined) => void}
-   */
-  function updateTitle(value) {
-    title.set(value);
-  }
-
-  // Live ModalHeaders. The last one to unmount clears the label and
-  // title. Svelte 5 unmounts a swapped-out header after its replacement
-  // has set them, so a header can't simply clear them itself.
-  let headerCount = 0;
-
-  /**
-   * @type {() => () => void}
-   */
-  function registerHeader() {
-    headerCount += 1;
-    return () => {
-      headerCount -= 1;
-      if (headerCount === 0) {
-        label.set(undefined);
-        title.set(undefined);
-      }
-    };
-  }
-
-  /**
-   * @type {() => () => void}
-   */
-  function registerFooter() {
-    footerCount += 1;
-    return () => {
-      footerCount -= 1;
-    };
-  }
-
-  /**
-   * @type {(value: string | undefined) => void}
-   */
-  function setBodyId(value) {
-    bodyId.set(value);
-  }
-
   // `lazy`: the content mounts on the first open and then stays.
-  let openedOnce = open;
-  $: if (open) openedOnce = true;
+  let openedOnce = $state(untrack(() => open));
+  $effect.pre(() => {
+    if (open) openedOnce = true;
+  });
 
   setContext(MODAL_CONTEXT_KEY, {});
   // As in v11, the modal starts a layer at level 0 wherever it renders.
   // ModalHeader and ModalFooter sit on it; ModalBody steps up to level 1.
   setContext(LAYER_CONTEXT_KEY, readable(1));
-  setContext("carbon:ComposedModal", {
-    closeModal,
-    submit,
-    updateLabel,
-    updateTitle,
-    registerHeader,
-    registerFooter,
-    ids,
-    label,
-    title,
-    bodyId,
-    setBodyId,
+  setComposedModal({
+    get ids() {
+      return ids;
+    },
+    get label() {
+      return label;
+    },
+    get title() {
+      return title;
+    },
+    setHeading(nextLabel, nextTitle) {
+      label = nextLabel;
+      title = nextTitle;
+    },
+    registerHeader() {
+      headerCount += 1;
+      return () => {
+        headerCount -= 1;
+        if (headerCount === 0) {
+          label = undefined;
+          title = undefined;
+        }
+      };
+    },
+    registerFooter() {
+      footerCount += 1;
+      return () => {
+        footerCount -= 1;
+      };
+    },
+    setBodyId(value) {
+      bodyId = value;
+    },
+    closeModal() {
+      close("close-button");
+    },
+    primaryAction() {
+      onprimaryaction?.({ trigger: "button" });
+    },
   });
 
+  /** @param {HTMLElement} [node] */
   function focus(node) {
     const container = node || innerModalRef;
     const target = initialFocus({
@@ -239,8 +280,10 @@
     if (target) focusQuietly(target);
   }
 
-  const sharedOpen = writable(open);
-  $: $sharedOpen = open;
+  const sharedOpen = writable(untrack(() => open));
+  $effect.pre(() => {
+    sharedOpen.set(open);
+  });
   trackModal(sharedOpen);
 
   // Name the dialog from ModalHeader's label/title. The header registers
@@ -248,26 +291,18 @@
   // client render) point at its heading ids instead. An id with no element
   // is ignored; once mounted with no heading, there is nothing to point at.
   // The server cannot tell which headings the header renders, so it names the
-  // dialog from both ("Label Title"); after mount the name is `$label || $title`
+  // dialog from both ("Label Title"); after mount the name is `label || title`
   // (the label alone when both are set). The name is a superset until then.
-  // The root carries `role="presentation"`, so consumer naming and
-  // description go on the dialog element instead.
-  $: ({
-    ariaLabel: consumerLabel,
-    ariaLabelledBy: consumerLabelledby,
-    ariaDescribedBy,
-    rest: wrapperProps,
-  } = splitAriaNaming($$restProps));
-  $: ariaLabel =
+  const ariaLabel = $derived(
     consumerLabel ??
-    (consumerLabelledby === undefined
-      ? $label || $title || undefined
-      : undefined);
-  $: ariaLabelledby =
+      (consumerLabelledby == null ? label || title || undefined : undefined),
+  );
+  const ariaLabelledby = $derived(
     consumerLabelledby ??
-    (consumerLabel === undefined && !mounted && !$label && !$title
-      ? `${$ids.label} ${$ids.title}`
-      : undefined);
+      (consumerLabel == null && !mounted && !label && !title
+        ? `${ids.label} ${ids.title}`
+        : undefined),
+  );
 
   onMount(() => {
     mounted = true;
@@ -279,31 +314,28 @@
     }
   });
 
-  $: lifecycle.syncOpen(open);
+  $effect.pre(() => {
+    lifecycle.syncOpen(open);
+  });
 
-  /**
-   * Starts active for a filled slot, so the server renders the AI surface.
-   * `Decorator` clears it when no `AILabel` claims the slot.
-   * @type {import("svelte/store").Writable<undefined | "active" | "revert">}
-   */
-  const aiLabelState = writable($$slots.decorator ? "active" : undefined);
+  /** @type {import("svelte/store").Writable<undefined | "active" | "revert">} */
+  const aiLabelState = writable(untrack(() => decorator) ? "active" : undefined);
 </script>
 
-<!-- svelte-ignore a11y-mouse-events-have-key-events -->
 <div
   bind:this={ref}
   role="presentation"
-  class:bx--modal={true}
-  class:bx--layer-one={true}
-  class:is-visible={open}
-  class:bx--modal--danger={danger}
-  class:bx--modal--decorator={$$slots.decorator}
-  class:bx--modal--ai-label={$aiLabelState === "active"}
+  class={[
+    "bx--modal",
+    "bx--layer-one",
+    open && "is-visible",
+    danger && "bx--modal--danger",
+    decorator && "bx--modal--decorator",
+    $aiLabelState === "active" && "bx--modal--ai-label",
+  ]}
   inert={open ? undefined : true}
   {id}
-  {...wrapperProps}
-  on:keydown
-  on:keydown={(event) => {
+  onkeydown={(event) => {
     if (open) {
       if (event.key === "Escape") {
         // Escape that cancels an IME composition is not a close.
@@ -320,52 +352,51 @@
       }
     }
   }}
-  on:click
-  on:mousedown={(event) => {
+  onmousedown={(event) => {
     if (event.target === event.currentTarget) outsideDismiss.pressOutside();
   }}
-  on:mouseup={outsideDismiss.release}
-  on:mouseover
-  on:mouseenter
-  on:mouseleave
-  on:transitionend={(event) => {
+  onmouseup={outsideDismiss.release}
+  ontransitionend={(event) => {
     if (event.propertyName === "transform") {
-      dispatch("transitionend", { open });
+      onopenchangecomplete?.({ open });
       if (!open) focusReturn.restore(ref);
     }
   }}
 >
-  <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+  <!-- svelte-ignore a11y_click_events_have_key_events -->
+  <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
   <div
     bind:this={innerModalRef}
     tabindex="-1"
     role={alert ? "alertdialog" : "dialog"}
-    aria-describedby={joinDescribedBy(
-      alert ? $bodyId : undefined,
-      ariaDescribedBy,
-    )}
+    aria-describedby={joinDescribedBy(alert ? bodyId : undefined, ariaDescribedBy)}
     aria-modal="true"
     aria-label={ariaLabel}
     aria-labelledby={ariaLabelledby}
-    class:bx--modal-container={true}
-    class:bx--modal-container--xs={size === "xs"}
-    class:bx--modal-container--sm={size === "sm"}
-    class:bx--modal-container--lg={size === "lg"}
-    class:bx--modal-container--full-width={fullWidth}
-    class={containerClass}
-    on:mousedown={outsideDismiss.pressInside}
+    {...rest}
+    class={[
+      "bx--modal-container",
+      size === "xs" && "bx--modal-container--xs",
+      size === "sm" && "bx--modal-container--sm",
+      size === "lg" && "bx--modal-container--lg",
+      fullWidth && "bx--modal-container--full-width",
+      className,
+    ]}
+    onmousedown={(event) => {
+      outsideDismiss.pressInside();
+      onmousedown?.(event);
+    }}
   >
     {#if !lazy || openedOnce}
-      <slot />
+      {@render children?.()}
     {/if}
-    {#if $$slots.decorator}
+    {#if decorator}
       <Decorator
         class="bx--modal--inner__decorator"
         state={aiLabelState}
         labelSize="sm"
       >
-        <slot name="decorator" />
+        {@render decorator()}
       </Decorator>
     {/if}
   </div>

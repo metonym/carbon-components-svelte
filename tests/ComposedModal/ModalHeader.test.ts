@@ -74,39 +74,6 @@ describe("ModalHeader", () => {
     expect(onclick).toHaveBeenCalledTimes(1);
   });
 
-  it.each([
-    [
-      "labelClass",
-      { label: "Test Label" },
-      () => screen.getByText("Test Label"),
-      "custom-label-class",
-    ],
-    [
-      "titleClass",
-      { title: "Test Title" },
-      () => screen.getByText("Test Title"),
-      "custom-title-class",
-    ],
-    [
-      "closeClass",
-      {},
-      () => screen.getByRole("button", { name: "Close" }),
-      "custom-close-class",
-    ],
-    [
-      "closeIconClass",
-      {},
-      () =>
-        screen
-          .getByRole("button", { name: "Close" })
-          .querySelector(".bx--modal-close__icon"),
-      "custom-icon-class",
-    ],
-  ])("applies %s", (prop, props, getElement, className) => {
-    render(ModalHeaderTest, { props: { ...props, [prop]: className } });
-
-    expect(getElement()).toHaveClass(className);
-  });
 
   it("should render slot content", () => {
     render(ModalHeaderTest, {

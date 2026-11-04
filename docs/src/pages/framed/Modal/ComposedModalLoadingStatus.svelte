@@ -36,9 +36,9 @@
 <ComposedModal
   bind:open
   preventCloseOnClickOutside={loadingStatus !== "inactive"}
-  on:submit={save}
+  onprimaryaction={save}
 >
-  <ModalHeader title="Save changes" />
+  <ModalHeader titleText="Save changes" />
   <ModalBody>
     <p>Save your changes to the Cloudant database configuration.</p>
     <Checkbox labelText="Simulate a failed save" bind:checked={failSave} />
@@ -48,7 +48,7 @@
     secondaryButtonText="Cancel"
     {loadingStatus}
     primaryButtonLoadingDescription={loadingDescription}
-    on:loading:success={() => {
+    onloadingsuccess={() => {
       open = false;
       loadingStatus = "inactive";
     }}

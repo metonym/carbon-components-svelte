@@ -14,7 +14,7 @@
   secondaryButtonText="Cancel"
   hasForm
   hasScrollingContent
-  on:click:button--secondary={() => (open = false)}
+  onsecondaryaction={() => (open = false)}
 >
   <Stack gap={5}>
     <TextInput labelText="Name" placeholder="Enter name" />

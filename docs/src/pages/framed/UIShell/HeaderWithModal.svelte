@@ -46,8 +46,8 @@
   modalHeading="Create cluster"
   primaryButtonText="Create"
   secondaryButtonText="Cancel"
-  on:click:button--secondary={() => (open = false)}
-  on:submit={() => (open = false)}
+  onsecondaryaction={() => (open = false)}
+  onprimaryaction={() => (open = false)}
 >
   <p>
     The body scroll lock is ref-counted, so opening this modal while the side

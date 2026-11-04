@@ -5,7 +5,7 @@
   export let open = false;
   export let kind: ComponentProps<ConfirmModal>["kind"] = undefined;
   export let title = "Delete this item?";
-  export let label: ComponentProps<ConfirmModal>["label"] = undefined;
+  export let label: ComponentProps<ConfirmModal>["labelText"] = undefined;
   export let confirmText = "Confirm";
   export let cancelText = "Cancel";
   export let confirmationPhrase: ComponentProps<ConfirmModal>["confirmationPhrase"] =
@@ -20,18 +20,17 @@
   export let preventCloseOnClickOutside: ComponentProps<ConfirmModal>["preventCloseOnClickOutside"] =
     undefined;
   export let onconfirm: (() => void) | undefined = undefined;
-  export let oncancel: ((event: CustomEvent) => void) | undefined = undefined;
-  export let onopen: (() => void) | undefined = undefined;
-  export let onclose: ((event: CustomEvent) => void) | undefined = undefined;
-  export let onconfirmerror: ((event: CustomEvent) => void) | undefined =
+  export let onopenchange: ComponentProps<ConfirmModal>["onopenchange"] =
+    undefined;
+  export let onconfirmerror: ComponentProps<ConfirmModal>["onconfirmerror"] =
     undefined;
 </script>
 
 <ConfirmModal
   bind:open
   {kind}
-  {title}
-  {label}
+  titleText={title}
+  labelText={label}
   {confirmText}
   {cancelText}
   {confirmationPhrase}
@@ -41,11 +40,9 @@
   {confirm}
   {size}
   {preventCloseOnClickOutside}
-  on:confirm={() => onconfirm?.()}
-  on:cancel={(e) => oncancel?.(e)}
-  on:open={() => onopen?.()}
-  on:close={(e) => onclose?.(e)}
-  on:confirm:error={(e) => onconfirmerror?.(e)}
+  onconfirm={() => onconfirm?.()}
+  onopenchange={(e) => onopenchange?.(e)}
+  onconfirmerror={(e) => onconfirmerror?.(e)}
 >
   <slot />
 </ConfirmModal>

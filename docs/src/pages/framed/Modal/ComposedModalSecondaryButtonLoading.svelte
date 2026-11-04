@@ -20,8 +20,8 @@
 
 <Button onclick={() => (open = true)}>Save changes</Button>
 
-<ComposedModal bind:open on:submit={() => (open = false)}>
-  <ModalHeader title="Save changes" />
+<ComposedModal bind:open onprimaryaction={() => (open = false)}>
+  <ModalHeader titleText="Save changes" />
   <ModalBody>
     <p>Save your changes to the Cloudant database configuration.</p>
   </ModalBody>
@@ -35,7 +35,7 @@
         loadingDescription: "Saving...",
       },
     ]}
-    on:click:button--secondary={({ detail }) => {
+    onsecondaryaction={({ detail }) => {
       if (detail.text === "Save as draft") onSaveDraft();
     }}
   />

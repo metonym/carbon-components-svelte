@@ -21,7 +21,7 @@ describe("ConfirmModal", () => {
     screen.getByRole("button", { name: "Cancel" });
   });
 
-  it("dispatches confirm and closes on confirm click", async () => {
+  it("calls onconfirm and closes on confirm click", async () => {
     const onconfirm = vi.fn();
     const oncancel = vi.fn();
     render(ConfirmModalTest, {
@@ -30,7 +30,7 @@ describe("ConfirmModal", () => {
         title: "Delete this item?",
         confirmText: "Delete",
         onconfirm,
-        oncancel,
+        onopenchange: oncancel,
       },
     });
 
@@ -43,39 +43,41 @@ describe("ConfirmModal", () => {
     expect(oncancel).not.toHaveBeenCalled();
   });
 
-  it("dispatches cancel with close-button trigger on the X", async () => {
+  it("calls onopenchange with close-button trigger on the X", async () => {
     const oncancel = vi.fn();
     render(ConfirmModalTest, {
       props: {
         open: true,
         title: "Delete this item?",
-        oncancel,
+        onopenchange: oncancel,
       },
     });
 
     await user.click(screen.getByLabelText("Close the modal"));
 
     expect(oncancel).toHaveBeenCalledTimes(1);
-    expect(oncancel.mock.calls[0][0].detail).toEqual({
+    expect(oncancel.mock.calls[0][0]).toMatchObject({
+      open: false,
       trigger: "close-button",
     });
   });
 
-  it("dispatches cancel with cancel-button trigger on the Cancel button", async () => {
+  it("calls onopenchange with cancel-button trigger on the Cancel button", async () => {
     const oncancel = vi.fn();
     render(ConfirmModalTest, {
       props: {
         open: true,
         title: "Delete this item?",
         cancelText: "Cancel",
-        oncancel,
+        onopenchange: oncancel,
       },
     });
 
     await user.click(screen.getByRole("button", { name: "Cancel" }));
 
     expect(oncancel).toHaveBeenCalledTimes(1);
-    expect(oncancel.mock.calls[0][0].detail).toEqual({
+    expect(oncancel.mock.calls[0][0]).toMatchObject({
+      open: false,
       trigger: "cancel-button",
     });
     await tick();
@@ -126,14 +128,12 @@ describe("ConfirmModal", () => {
 
   it("blocks Escape while loading and keeps the modal open", async () => {
     const oncancel = vi.fn();
-    const onclose = vi.fn();
     render(ConfirmModalTest, {
       props: {
         open: true,
         title: "Delete this item?",
         loading: true,
-        oncancel,
-        onclose,
+        onopenchange: oncancel,
       },
     });
 
@@ -146,7 +146,6 @@ describe("ConfirmModal", () => {
     await tick();
 
     expect(oncancel).not.toHaveBeenCalled();
-    expect(onclose).not.toHaveBeenCalled();
     expect(isOpen()).toBe(true);
   });
 
@@ -175,15 +174,13 @@ describe("ConfirmModal", () => {
     ],
   ])("blocks closing with %s while loading", async (_, act) => {
     const oncancel = vi.fn();
-    const onclose = vi.fn();
     render(ConfirmModalTest, {
       props: {
         open: true,
         title: "Delete this item?",
         loading: true,
         preventCloseOnClickOutside: false,
-        oncancel,
-        onclose,
+        onopenchange: oncancel,
       },
     });
 
@@ -191,14 +188,13 @@ describe("ConfirmModal", () => {
     await tick();
 
     expect(oncancel).not.toHaveBeenCalled();
-    expect(onclose).not.toHaveBeenCalled();
     expect(isOpen()).toBe(true);
   });
 
   it("ignores an outside click by default", async () => {
     const oncancel = vi.fn();
     render(ConfirmModalTest, {
-      props: { open: true, title: "Delete this item?", oncancel },
+      props: { open: true, title: "Delete this item?", onopenchange: oncancel },
     });
 
     const overlay = document.querySelector(".bx--modal");
@@ -217,7 +213,7 @@ describe("ConfirmModal", () => {
         open: true,
         title: "Delete this item?",
         preventCloseOnClickOutside: false,
-        oncancel,
+        onopenchange: oncancel,
       },
     });
 
@@ -227,24 +223,25 @@ describe("ConfirmModal", () => {
     await tick();
 
     expect(oncancel).toHaveBeenCalledTimes(1);
-    expect(oncancel.mock.calls[0][0].detail).toEqual({
+    expect(oncancel.mock.calls[0][0]).toMatchObject({
+      open: false,
       trigger: "outside-click",
     });
     expect(isOpen()).toBe(false);
   });
 
-  it("stays open and sends no cancel when a close handler prevents the default", async () => {
-    const oncancel = vi.fn();
-    const onclose = vi.fn((event: CustomEvent) => event.preventDefault());
+  it("stays open when onopenchange prevents the default", async () => {
+    const onclose = vi.fn((detail: { preventDefault(): void }) =>
+      detail.preventDefault(),
+    );
     render(ConfirmModalTest, {
-      props: { open: true, title: "Delete this item?", oncancel, onclose },
+      props: { open: true, title: "Delete this item?", onopenchange: onclose },
     });
 
     await user.click(screen.getByLabelText("Close the modal"));
     await tick();
 
     expect(onclose).toHaveBeenCalledTimes(1);
-    expect(oncancel).not.toHaveBeenCalled();
     expect(isOpen()).toBe(true);
   });
 
@@ -311,7 +308,7 @@ describe("ConfirmModal", () => {
     await tick();
 
     expect(onconfirmerror).toHaveBeenCalledTimes(1);
-    expect(onconfirmerror.mock.calls[0][0].detail).toEqual({ error });
+    expect(onconfirmerror.mock.calls[0][0]).toEqual({ error });
     expect(isOpen()).toBe(true);
   });
 
@@ -333,15 +330,13 @@ describe("ConfirmModal", () => {
       () => new Promise<void>((resolve) => (finish = resolve)),
     );
     const oncancel = vi.fn();
-    const onclose = vi.fn();
     render(ConfirmModalTest, {
       props: {
         open: true,
         title: "Delete this item?",
         confirmText: "Delete",
         confirm,
-        oncancel,
-        onclose,
+        onopenchange: oncancel,
       },
     });
 
@@ -353,16 +348,13 @@ describe("ConfirmModal", () => {
     await user.keyboard("{Escape}");
     await tick();
     expect(confirm).toHaveBeenCalledTimes(1);
-    expect(onclose).not.toHaveBeenCalled();
+    expect(oncancel).not.toHaveBeenCalled();
     expect(isOpen()).toBe(true);
 
     finish();
-    await vi.waitFor(() => expect(onclose).toHaveBeenCalledTimes(1));
-
+    // Closing after the confirm settles is no user action: no callback.
+    await vi.waitFor(() => expect(isOpen()).toBe(false));
     expect(oncancel).not.toHaveBeenCalled();
-    expect(onclose.mock.calls[0][0].detail).toEqual({
-      trigger: "programmatic",
-    });
   });
 
   it("stays open and reports the error when a confirm promise rejects", async () => {
@@ -382,7 +374,7 @@ describe("ConfirmModal", () => {
     await tick();
     await tick();
 
-    expect(onconfirmerror.mock.calls[0][0].detail).toEqual({ error });
+    expect(onconfirmerror.mock.calls[0][0]).toEqual({ error });
     expect(screen.getByRole("alertdialog")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Delete" })).toHaveFocus();
   });

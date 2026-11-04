@@ -28,7 +28,7 @@
       modalHeading="Confirm deployment"
       primaryButtonText="Deploy"
       secondaryButtonText="Cancel"
-      on:click:button--secondary={() => (open = false)}
+      onsecondaryaction={() => (open = false)}
     >
       <p>
         Deploying build #4213 to production cannot be undone. This modal is

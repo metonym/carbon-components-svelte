@@ -177,10 +177,10 @@
       bind:open
       size="lg"
       preventCloseOnClickOutside
-      containerClass="bx--interstitial-screen"
+      class="bx--interstitial-screen"
       aria-label={ariaLabel}
       {...$$restProps}
-      on:close={(event) => {
+      onopenchange={(event) => {
         event.preventDefault();
         handleClose("close");
       }}

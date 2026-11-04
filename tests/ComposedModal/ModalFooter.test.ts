@@ -60,7 +60,7 @@ describe("ModalFooter", () => {
     await user.click(screen.getByRole("button", { name: "Cancel" }));
 
     expect(onsecondary).toHaveBeenCalledTimes(1);
-    expect(onsecondary.mock.calls[0][0].detail).toEqual({ text: "Cancel" });
+    expect(onsecondary.mock.calls[0][0]).toMatchObject({ text: "Cancel" });
     expect(onclose).toHaveBeenCalledTimes(1);
     expect(container.querySelector(".bx--modal")).not.toHaveClass("is-visible");
   });
@@ -80,7 +80,7 @@ describe("ModalFooter", () => {
     await user.click(screen.getByRole("button", { name: "Cancel" }));
 
     expect(onsecondary).toHaveBeenCalledTimes(1);
-    expect(onsecondary.mock.calls[0][0].detail).toEqual({ text: "Cancel" });
+    expect(onsecondary.mock.calls[0][0]).toMatchObject({ text: "Cancel" });
     expect(onclose).not.toHaveBeenCalled();
     expect(container.querySelector(".bx--modal")).toHaveClass("is-visible");
   });
@@ -260,32 +260,14 @@ describe("ModalFooter", () => {
 
     await user.click(screen.getByRole("button", { name: "Cancel" }));
     expect(onsecondary).toHaveBeenCalledTimes(1);
-    expect(onsecondary.mock.calls[0][0].detail).toEqual({ text: "Cancel" });
+    expect(onsecondary.mock.calls[0][0]).toMatchObject({ text: "Cancel" });
 
     await user.click(screen.getByRole("button", { name: "Reset" }));
     expect(onsecondary).toHaveBeenCalledTimes(2);
-    expect(onsecondary.mock.calls[1][0].detail).toEqual({ text: "Reset" });
+    expect(onsecondary.mock.calls[1][0]).toMatchObject({ text: "Reset" });
     expect(onclose).not.toHaveBeenCalled();
   });
 
-  it.each([
-    [
-      "primaryClass",
-      { primaryButtonText: "Save" },
-      "Save",
-      "custom-primary-class",
-    ],
-    [
-      "secondaryClass",
-      { secondaryButtonText: "Cancel" },
-      "Cancel",
-      "custom-secondary-class",
-    ],
-  ])("applies %s to its button", (prop, props, name, className) => {
-    render(ModalFooterTest, { props: { ...props, [prop]: className } });
-
-    expect(screen.getByRole("button", { name })).toHaveClass(className);
-  });
 
   it("should render slot content", () => {
     render(ModalFooterTest, {

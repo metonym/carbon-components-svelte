@@ -12,8 +12,8 @@
 
 <Button onclick={() => (open = true)}>Review terms</Button>
 
-<ComposedModal bind:open on:submit={() => (open = false)}>
-  <ModalHeader title="Accept terms of use" hideCloseButton />
+<ComposedModal bind:open onprimaryaction={() => (open = false)}>
+  <ModalHeader titleText="Accept terms of use" hideCloseButton />
   <ModalBody>
     <p>
       You must accept or decline the terms. The header close button is hidden,
@@ -23,6 +23,6 @@
   <ModalFooter
     primaryButtonText="Accept"
     secondaryButtonText="Decline"
-    on:click:button--secondary={() => (open = false)}
+    onsecondaryaction={() => (open = false)}
   />
 </ComposedModal>

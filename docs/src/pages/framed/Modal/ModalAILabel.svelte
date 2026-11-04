@@ -11,12 +11,12 @@
   modalHeading="Usage forecast"
   primaryButtonText="Apply budget"
   secondaryButtonText="Cancel"
-  on:click:button--secondary={() => (open = false)}
-  on:submit={() => (open = false)}
+  onsecondaryaction={() => (open = false)}
+  onprimaryaction={() => (open = false)}
 >
-  <AILabel slot="decorator">
+  {#snippet decorator()}<AILabel>
     <p>Generated from 90 days of billing data across your workspace.</p>
-  </AILabel>
+  </AILabel>{/snippet}
   <p>
     Spend is projected to grow 12% next month. Raise the monthly budget to
     $4,800 to avoid overage alerts.

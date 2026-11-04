@@ -26,10 +26,10 @@
       loadingDescription: "Saving...",
     },
   ]}
-  on:click:button--secondary={({ detail }) => {
+  onsecondaryaction={({ detail }) => {
     if (detail.text === "Save as draft") onSaveDraft();
   }}
-  on:submit={() => (open = false)}
+  onprimaryaction={() => (open = false)}
 >
   <p>Save your changes to the Cloudant database configuration.</p>
 </Modal>

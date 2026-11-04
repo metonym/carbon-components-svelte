@@ -25,10 +25,10 @@
 
 <ComposedModal
   bind:open
-  on:close={(e) =>
-    (closeEvents = [...closeEvents, e.detail?.trigger ?? "null"])}
+  onopenchange={(e) =>
+    (closeEvents = [...closeEvents, e?.trigger ?? "null"])}
 >
-  <ModalHeader title="Modal title" />
+  <ModalHeader titleText="Modal title" />
   <ModalBody>
     <p data-testid="modal-body">Modal content</p>
     <input

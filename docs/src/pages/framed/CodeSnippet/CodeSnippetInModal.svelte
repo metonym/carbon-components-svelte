@@ -11,7 +11,7 @@
   modalHeading="Install instructions"
   primaryButtonText="Done"
   secondaryButtonText="Cancel"
-  on:click:button--secondary={() => (open = false)}
+  onsecondaryaction={() => (open = false)}
 >
   <CodeSnippet code="npm i carbon-components-svelte" />
 </Modal>

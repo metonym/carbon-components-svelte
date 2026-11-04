@@ -13,8 +13,8 @@
 
 <Button onclick={() => (open = true)}>Create database</Button>
 
-<ComposedModal bind:open on:submit={() => (open = false)}>
-  <ModalHeader title="Create database">
+<ComposedModal bind:open onprimaryaction={() => (open = false)}>
+  <ModalHeader titleText="Create database">
     <Tag type="green" size="sm">Beta</Tag>
   </ModalHeader>
   <ModalBody>
@@ -23,6 +23,6 @@
   <ModalFooter
     primaryButtonText="Confirm"
     secondaryButtonText="Cancel"
-    on:click:button--secondary={() => (open = false)}
+    onsecondaryaction={() => (open = false)}
   />
 </ComposedModal>

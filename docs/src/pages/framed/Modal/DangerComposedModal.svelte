@@ -15,11 +15,9 @@
 <ComposedModal
   danger
   bind:open
-  on:open
-  on:close
-  on:submit={() => (open = false)}
+  onprimaryaction={() => (open = false)}
 >
-  <ModalHeader title="Delete all instances" />
+  <ModalHeader titleText="Delete all instances" />
   <ModalBody>
     <p>This is a permanent action and cannot be undone.</p>
   </ModalBody>

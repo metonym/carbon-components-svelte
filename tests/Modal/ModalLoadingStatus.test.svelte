@@ -23,9 +23,9 @@
   {primaryButtonLoading}
   {primaryButtonLoadingIconDescription}
   {secondaryButtons}
-  on:submit={() => onsubmit?.()}
-  on:click:button--secondary={() => onsecondary?.()}
-  on:loading:success={() => onloadingsuccess?.()}
+  onprimaryaction={() => onsubmit?.()}
+  onsecondaryaction={() => onsecondary?.()}
+  onloadingsuccess={() => onloadingsuccess?.()}
 >
   <input data-testid="field" />
 </Modal>

@@ -22,10 +22,10 @@
   secondaryButtonText="Cancel"
   primaryButtonLoading={saving}
   primaryButtonLoadingDescription="Saving..."
-  on:click:button--secondary={() => {
+  onsecondaryaction={() => {
     if (!saving) open = false;
   }}
-  on:submit={onSave}
+  onprimaryaction={onSave}
 >
   <p>Save your changes to the Cloudant database configuration.</p>
 </Modal>

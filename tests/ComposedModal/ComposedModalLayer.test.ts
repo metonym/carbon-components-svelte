@@ -4,8 +4,8 @@ import ComposedModalLayerTest from "./ComposedModalLayer.test.svelte";
 describe("ComposedModal Layer", () => {
   it("starts a Layer at level 0 and puts ModalBody on level 1", () => {
     render(ComposedModalLayerTest);
-    expect(screen.getByTestId("modal")).toHaveClass(
-      "bx--modal",
+    // The test id lands on the dialog; the layer class sits on the root.
+    expect(screen.getByTestId("modal").closest(".bx--modal")).toHaveClass(
       "bx--layer-one",
     );
     expect(screen.getByTestId("body")).toHaveClass(

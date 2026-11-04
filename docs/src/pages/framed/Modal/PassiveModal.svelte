@@ -6,7 +6,7 @@
 
 <Button kind="tertiary" onclick={() => (open = true)}>Learn more</Button>
 
-<Modal passiveModal bind:open modalHeading="IBM Cloudant" on:open on:close>
+<Modal passiveModal bind:open modalHeading="IBM Cloudant">
   <p>
     IBM Cloudant is a distributed, secure database with global availability and
     zero vendor lock-in used to build web and mobile apps at scale.

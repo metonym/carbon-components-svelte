@@ -8,8 +8,8 @@
 </script>
 
 {#if open}
-  <ComposedModal bind:open on:close={(e) => onclose?.(e)}>
-    <ModalHeader title="Unmount On Close" />
+  <ComposedModal bind:open onopenchange={(e) => onclose?.(e)}>
+    <ModalHeader titleText="Unmount On Close" />
     <ModalBody>Body</ModalBody>
   </ComposedModal>
 {/if}

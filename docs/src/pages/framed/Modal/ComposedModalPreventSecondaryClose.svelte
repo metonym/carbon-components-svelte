@@ -29,12 +29,12 @@
 
 <ComposedModal
   bind:open
-  on:submit={() => {
+  onprimaryaction={() => {
     name = draft;
     open = false;
   }}
 >
-  <ModalHeader title="Edit name" />
+  <ModalHeader titleText="Edit name" />
   <ModalBody hasForm>
     {#if showWarning}
       <InlineNotification
@@ -49,7 +49,7 @@
   <ModalFooter
     primaryButtonText="Save"
     secondaryButtonText="Cancel"
-    on:click:button--secondary={(e) => {
+    onsecondaryaction={(e) => {
       if (isDirty) {
         e.preventDefault();
         showWarning = true;

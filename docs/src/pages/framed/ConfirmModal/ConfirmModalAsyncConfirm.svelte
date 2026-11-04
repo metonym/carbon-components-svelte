@@ -22,13 +22,13 @@
 
 <ConfirmModal
   bind:open
-  title="Delete your account?"
+  titleText="Delete your account?"
   confirmText="Delete"
   loadingDescription="Deleting"
   confirm={deleteAccount}
-  on:confirm:error={(e) => {
+  onconfirmerror={(e) => {
     // The rejection can be any value; show its message when it's an Error.
-    const reason = e.detail.error;
+    const reason = e.error;
     error = reason instanceof Error ? reason.message : String(reason);
   }}
 >

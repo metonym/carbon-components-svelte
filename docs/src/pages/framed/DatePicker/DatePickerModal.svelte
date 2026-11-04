@@ -17,7 +17,7 @@
   modalHeading="Meeting date"
   primaryButtonText="Confirm"
   secondaryButtonText="Cancel"
-  on:click:button--secondary={() => (open = false)}
+  onsecondaryaction={() => (open = false)}
 >
   <DatePicker datePickerType="single">
     <DatePickerInput labelText="Meeting date" placeholder="mm/dd/yyyy" />

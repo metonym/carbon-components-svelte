@@ -47,7 +47,7 @@
 </Button>
 
 <ComposedModal bind:open>
-  <ModalHeader title="Create workspace" />
+  <ModalHeader titleText="Create workspace" />
   <ModalBody hasForm>
     <form id="workspace-form" on:submit|preventDefault={handleSubmit}>
       <Stack gap={6}>

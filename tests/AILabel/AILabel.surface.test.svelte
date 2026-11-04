@@ -120,14 +120,14 @@
 </div>
 <div data-testid="modal">
   <Modal open modalHeading="Forecast" passiveModal>
-    <AILabelOrIcon slot="decorator" {ai} />
+    {#snippet decorator()}<AILabelOrIcon {ai} />{/snippet}
     Body
   </Modal>
 </div>
 <div data-testid="composed-modal">
   <ComposedModal open>
     <ModalBody>Body</ModalBody>
-    <AILabelOrIcon slot="decorator" {ai} />
+    {#snippet decorator()}<AILabelOrIcon {ai} />{/snippet}
   </ComposedModal>
 </div>
 <div data-testid="plain">

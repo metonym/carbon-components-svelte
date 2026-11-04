@@ -2,218 +2,285 @@
   /** @template {import("../utils/icon-component.js").IconComponent} [Icon=any] */
 
   /**
-   * @event close
-   * @type {object}
-   * @property {"escape-key" | "outside-click" | "close-button" | "programmatic"} trigger
-   */
-
-  /** @event {null} open */
-
-  /**
-   * @event transitionend
-   * @type {object}
-   * @property {boolean} open
-   */
-
-  /**
-   * @event click:button--secondary
-   * @type {object}
-   * @property {string} text
-   */
-
-  /**
-   * @event {null} loading:success - Dispatched when `loadingStatus` is `"finished"`, after the `InlineLoading` success delay.
    * @restProps {div}
    */
 
-  /**
-   * @slot {{}} labelChildren - Custom label content. Replaces `modalLabel`.
-   * @deprecated use the `labelChildren` slot
-   * @slot {{}} label
-   */
+  const fallbackId = $props.id();
 
-  /**
-   * Set the size of the modal.
-   * Also accepts Carbon v11's `"md"`, the default width.
-   * @type {"xs" | "sm" | "md" | "lg" | undefined}
-   */
-  export let size = undefined;
+  let {
+    /**
+     * Set the size of the modal.
+     * Also accepts Carbon v11's `"md"`, the default width.
+     * @type {"xs" | "sm" | "md" | "lg" | undefined}
+     */
+    size = undefined,
 
-  /**
-   * Set to `true` to open the modal.
-   * @bindable writable
-   */
-  export let open = false;
+    /**
+     * Set to `true` to open the modal.
+     */
+    open = $bindable(false),
 
-  /** Set to `true` to use the danger variant */
-  export let danger = false;
+    /** Set to `true` to use the danger variant */
+    danger = false,
 
-  /** Set to `true` to enable alert mode */
-  export let alert = false;
+    /** Set to `true` to enable alert mode */
+    alert = false,
 
-  /** Set to `true` to use the passive variant */
-  export let passiveModal = false;
+    /** Set to `true` to use the passive variant */
+    passiveModal = false,
 
-  /** Set to `true` to remove the modal body padding so content spans edge to edge */
-  export let fullWidth = false;
+    /** Set to `true` to remove the modal body padding so content spans edge to edge */
+    fullWidth = false,
 
-  /**
-   * Specify the modal heading.
-   * @type {string | undefined}
-   */
-  export let modalHeading = undefined;
+    /**
+     * Specify the modal heading, or a snippet.
+     * @type {string | import("svelte").Snippet | undefined}
+     */
+    modalHeading = undefined,
 
-  /**
-   * Specify the modal label.
-   * Alternatively, use the "labelChildren" slot.
-   * @type {string | undefined}
-   */
-  export let modalLabel = undefined;
+    /**
+     * Specify the modal label, or a snippet.
+     * @type {string | import("svelte").Snippet | undefined}
+     */
+    modalLabel = undefined,
 
-  /**
-   * Specify the ARIA label for the modal.
-   * @type {string | undefined}
-   */
-  export let modalAriaLabel = undefined;
+    /**
+     * Specify the ARIA label for the modal.
+     * @type {string | undefined}
+     */
+    modalAriaLabel = undefined,
 
-  /**
-   * Specify the label of the close button.
-   * It names the button and shows in its tooltip.
-   */
-  export let iconDescription = "Close the modal";
+    /**
+     * Specify the label of the close button.
+     * It names the button and shows in its tooltip.
+     */
+    iconDescription = "Close the modal",
 
-  /** Set to `true` if the modal contains form elements */
-  export let hasForm = false;
+    /** Set to `true` if the modal contains form elements */
+    hasForm = false,
 
-  /**
-   * Specify the ID of a form element to associate with the primary button.
-   * This enables the primary button to submit the form from outside the form element.
-   * @type {string | undefined}
-   */
-  export let formId = undefined;
+    /**
+     * Specify the ID of a form element to associate with the primary button.
+     * This enables the primary button to submit the form from outside the form element.
+     * @type {string | undefined}
+     */
+    formId = undefined,
 
-  /** Set to `true` if the modal contains scrolling content */
-  export let hasScrollingContent = false;
+    /** Set to `true` if the modal contains scrolling content */
+    hasScrollingContent = false,
 
-  /** Specify the primary button text */
-  export let primaryButtonText = "";
+    /** Specify the primary button text */
+    primaryButtonText = "",
 
-  /** Set to `true` to disable the primary button */
-  export let primaryButtonDisabled = false;
+    /** Set to `true` to disable the primary button */
+    primaryButtonDisabled = false,
 
-  /**
-   * Set to `true` to show a loading state on the primary button.
-   * While loading, the button is non-interactive and submit is suppressed.
-   * Same as `loadingStatus="active"`, except that the secondary buttons
-   * stay enabled. `loadingStatus` wins when it is not `"inactive"`.
-   */
-  export let primaryButtonLoading = false;
+    /**
+     * Set to `true` to show a loading state on the primary button.
+     * While loading, the button is non-interactive and submit is suppressed.
+     * Same as `loadingStatus="active"`, except that the secondary buttons
+     * stay enabled. `loadingStatus` wins when it is not `"inactive"`.
+     */
+    primaryButtonLoading = false,
 
-  /**
-   * Set the loading status of the footer.
-   * Any status other than `"inactive"` shows `InlineLoading` with that
-   * status in the primary button, disables the footer buttons, and
-   * suppresses submit. `"finished"` dispatches `loading:success` after the
-   * success delay.
-   * @type {"inactive" | "active" | "finished" | "error"}
-   */
-  export let loadingStatus = "inactive";
+    /**
+     * Set the loading status of the footer.
+     * Any status other than `"inactive"` shows `InlineLoading` with that
+     * status in the primary button, disables the footer buttons, and
+     * suppresses the primary action. `"finished"` calls `onloadingsuccess`
+     * after the success delay.
+     * @type {"inactive" | "active" | "finished" | "error"}
+     */
+    loadingStatus = "inactive",
 
-  /**
-   * Specify the description for the primary button loading state.
-   * Passed to `InlineLoading` as `description`.
-   */
-  export let primaryButtonLoadingDescription = "Loading";
+    /**
+     * Specify the description for the primary button loading state.
+     * Passed to `InlineLoading` as `description`.
+     */
+    primaryButtonLoadingDescription = "Loading",
 
-  /**
-   * Specify the description for the primary button loading icon.
-   * Passed to `InlineLoading` as `iconDescription`.
-   * @type {string | undefined}
-   */
-  export let primaryButtonLoadingIconDescription = undefined;
+    /**
+     * Specify the description for the primary button loading icon.
+     * Passed to `InlineLoading` as `iconDescription`.
+     * @type {string | undefined}
+     */
+    primaryButtonLoadingIconDescription = undefined,
 
-  /**
-   * Specify the primary button icon.
-   * @type {Icon | undefined}
-   */
-  export let primaryButtonIcon = /** @type {Icon | undefined} */ (undefined);
+    /**
+     * Specify the primary button icon.
+     * @type {Icon | undefined}
+     */
+    primaryButtonIcon = /** @type {Icon | undefined} */ (undefined),
 
-  /**
-   * Set to `true` for the "submit" and "click:button--primary" events
-   * to be dispatched when pressing "Enter".
-   */
-  export let shouldSubmitOnEnter = true;
+    /**
+     * Set to `true` to call `onprimaryaction` when the user presses Enter
+     * in the modal (outside buttons, links, text areas and selects).
+     */
+    shouldSubmitOnEnter = true,
 
-  /** Specify the secondary button text */
-  export let secondaryButtonText = "";
+    /** Specify the secondary button text */
+    secondaryButtonText = "",
 
-  /**
-   * Set to `true` to show a loading state on the secondary button.
-   * Only applies to the `secondaryButtonText` path (not `secondaryButtons`).
-   * While loading, the button is non-interactive.
-   */
-  export let secondaryButtonLoading = false;
+    /**
+     * Set to `true` to show a loading state on the secondary button.
+     * Only applies to the `secondaryButtonText` path (not `secondaryButtons`).
+     * While loading, the button is non-interactive.
+     */
+    secondaryButtonLoading = false,
 
-  /**
-   * Specify the description for the secondary button loading state.
-   * Passed to `InlineLoading` as `description`.
-   */
-  export let secondaryButtonLoadingDescription = "Loading";
+    /**
+     * Specify the description for the secondary button loading state.
+     * Passed to `InlineLoading` as `description`.
+     */
+    secondaryButtonLoadingDescription = "Loading",
 
-  /**
-   * One or two secondary buttons for the modal footer.
-   * Supersedes `secondaryButtonText`. Each entry needs `text`; optional
-   * `kind` (defaults to `"secondary"`), `disabled`, `loading`, and
-   * `loadingDescription` (defaults to `"Loading"`) pass through to Button /
-   * the loading state. With two entries plus a primary button, the footer
-   * uses the three-button layout.
-   * @type {ReadonlyArray<{ text: string; kind?: import("../Button/Button.svelte").ButtonProps["kind"]; disabled?: boolean; loading?: boolean; loadingDescription?: string }>}
-   */
-  export let secondaryButtons = [];
+    /**
+     * One or two secondary buttons for the modal footer.
+     * Supersedes `secondaryButtonText`. Each entry needs `text`; optional
+     * `kind` (defaults to `"secondary"`), `disabled`, `loading`, and
+     * `loadingDescription` (defaults to `"Loading"`) pass through to Button /
+     * the loading state. With two entries plus a primary button, the footer
+     * uses the three-button layout.
+     * @type {ReadonlyArray<{ text: string; kind?: import("../Button/Button.svelte").ButtonProps["kind"]; disabled?: boolean; loading?: boolean; loadingDescription?: string }>}
+     */
+    secondaryButtons = [],
 
-  /**
-   * Specify a selector to be focused when opening the modal.
-   * Set to `null` to skip initial focus and move focus yourself.
-   * @type {null | string}
-   */
-  export let selectorPrimaryFocus = "[data-modal-primary-focus]";
+    /**
+     * Specify a selector to be focused when opening the modal.
+     * Set to `null` to skip initial focus and move focus yourself.
+     * @type {null | string}
+     */
+    selectorPrimaryFocus = "[data-modal-primary-focus]",
 
-  /**
-   * Control whether clicking outside the modal closes it.
-   * By default, a passive modal (`passiveModal`) closes and a modal with
-   * actions stays open, as in Carbon v11.
-   * Set to `true` to always keep the modal open on an outside click, or
-   * `false` to always close it.
-   * @type {boolean | undefined}
-   */
-  export let preventCloseOnClickOutside = undefined;
+    /**
+     * Control whether clicking outside the modal closes it.
+     * By default, a passive modal (`passiveModal`) closes and a modal with
+     * actions stays open, as in Carbon v11.
+     * Set to `true` to always keep the modal open on an outside click, or
+     * `false` to always close it.
+     * @type {boolean | undefined}
+     */
+    preventCloseOnClickOutside = undefined,
 
-  /**
-   * Set to `true` to hide the header close button.
-   * Provide an alternative dismiss path (footer actions or Escape).
-   */
-  export let hideCloseButton = false;
+    /**
+     * Set to `true` to hide the header close button.
+     * Provide an alternative dismiss path (footer actions or Escape).
+     */
+    hideCloseButton = false,
 
-  /**
-   * Set to `true` to build the modal's content the first time it opens
-   * instead of at mount, and keep it afterwards. A closed modal is still
-   * laid out (it is only made invisible), so this saves its nodes on pages
-   * that hold modals most visitors never open. Content is not in the DOM,
-   * or in server-rendered markup, until then.
-   */
-  export let lazy = false;
+    /**
+     * Set to `true` to build the modal's content the first time it opens
+     * instead of at mount, and keep it afterwards. A closed modal is still
+     * laid out (it is only made invisible), so this saves its nodes on pages
+     * that hold modals most visitors never open. Content is not in the DOM,
+     * or in server-rendered markup, until then.
+     */
+    lazy = false,
 
-  /** Set an id for the top-level element */
-  export let id = uniqueId();
+    /** Set an id for the top-level element 
+     * @type {string}
+     */
+    id = fallbackId,
 
-  /**
-   * Obtain a reference to the top-level HTML element.
-   * @bindable readonly
-   * @type {null | HTMLDivElement}
-   */
-  export let ref = null;
+    /**
+     * Obtain a reference to the top-level HTML element.
+     * @type {null | HTMLDivElement}
+     */
+    ref = $bindable(null),
 
-  import { createEventDispatcher, onMount, setContext } from "svelte";
+    /**
+     * Called when the user closes the modal: the close button, Escape, or
+     * an outside click. Call `preventDefault()` to keep it open. Not called
+     * when `open` changes from outside.
+     * @type {((detail: import("../utils/cancelable.js").Cancelable<{ open: boolean; trigger: "escape-key" | "outside-click" | "close-button" }>) => void) | undefined}
+     */
+    onopenchange = undefined,
+
+    /**
+     * Called after the open or close transition ends.
+     * @type {((detail: { open: boolean }) => void) | undefined}
+     */
+    onopenchangecomplete = undefined,
+
+    /**
+     * Called when the user activates the primary button, by click or by
+     * pressing Enter (see `shouldSubmitOnEnter`).
+     * @type {((detail: { trigger: "button" | "enter-key" }) => void) | undefined}
+     */
+    onprimaryaction = undefined,
+
+    /**
+     * Called when the user clicks a secondary button.
+     * @type {((detail: { text: string }) => void) | undefined}
+     */
+    onsecondaryaction = undefined,
+
+    /**
+     * Called when `loadingStatus` is `"finished"`, after the
+     * `InlineLoading` success delay.
+     * @type {(() => void) | undefined}
+     */
+    onloadingsuccess = undefined,
+
+    /**
+     * The modal content.
+     * @type {import("svelte").Snippet | undefined}
+     */
+    children = undefined,
+
+    /**
+     * Render an `AILabel` or another decorator in the header.
+     * @type {import("svelte").Snippet | undefined}
+     */
+    decorator = undefined,
+
+    /** @type {import("svelte/elements").ClassValue | undefined} */
+    class: className = undefined,
+
+    /** @type {string | undefined | null} */
+    "aria-label": consumerLabel = undefined,
+
+    /** @type {string | undefined | null} */
+    "aria-describedby": ariaDescribedBy = undefined,
+
+    /** @type {import("svelte/elements").MouseEventHandler<HTMLDivElement> | undefined | null} */
+    onmousedown = undefined,
+
+    ...rest
+  } = $props();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  import { onMount, setContext, untrack } from "svelte";
   import { readable, writable } from "svelte/store";
   import Decorator from "../AILabel/Decorator.svelte";
   import Button from "../Button/Button.svelte";
@@ -223,24 +290,45 @@
     MODAL_CONTEXT_KEY,
   } from "../constants/context-keys.js";
   import Close from "../icons/Close.svelte";
-  import { splitAriaNaming } from "../utils/aria-naming.js";
+  import { cancelable } from "../utils/cancelable.js";
   import { createDialogLifecycle } from "../utils/dialog-lifecycle.js";
   import { joinDescribedBy } from "../utils/field-status.js";
   import { focusQuietly, initialFocus, restoreFocus } from "../utils/focus.js";
   import { isImeComposition } from "../utils/ime-composition.js";
   import { scrollIntoViewWithin } from "../utils/scroll-into-view-within.js";
   import { trapFocus } from "../utils/trap-focus.js";
-  import { uniqueId } from "../utils/unique-id.js";
   import { trackModal } from "./modal-store.js";
 
-  const dispatch = createEventDispatcher();
   const focusReturn = restoreFocus();
 
-  let buttonRef = null;
-  let primaryButtonRef = null;
+  /** @type {null | HTMLAnchorElement | HTMLButtonElement} */
+  let buttonRef = $state(null);
+  /** @type {null | HTMLAnchorElement | HTMLButtonElement} */
+  let primaryButtonRef = $state(null);
   /** @type {null | HTMLDivElement} */
-  let innerModalRef = null;
+  let innerModalRef = $state(null);
 
+  /**
+   * The dialog lifecycle reports closes as events. A user close becomes a
+   * cancelable `onopenchange`; an open or a close set from outside calls
+   * nothing.
+   * @param {string} type
+   * @param {{ trigger?: string }} [detail]
+   */
+  function lifecycleEvent(type, detail) {
+    if (type !== "close" || !detail?.trigger || detail.trigger === "programmatic")
+      return true;
+    const payload = cancelable({
+      open: false,
+      trigger: /** @type {"escape-key" | "outside-click" | "close-button"} */ (
+        detail.trigger
+      ),
+    });
+    onopenchange?.(payload);
+    return !payload.defaultPrevented;
+  }
+
+  /** @param {HTMLElement} [node] */
   function focus(node) {
     const container = node || innerModalRef;
     const target = initialFocus({
@@ -261,7 +349,7 @@
   }
 
   const lifecycle = createDialogLifecycle({
-    dispatch,
+    dispatch: lifecycleEvent,
     setOpen: (value) => {
       open = value;
     },
@@ -275,8 +363,10 @@
   });
   const { close, outsideDismiss } = lifecycle;
 
-  const sharedOpen = writable(open);
-  $: $sharedOpen = open;
+  const sharedOpen = writable(untrack(() => open));
+  $effect.pre(() => {
+    sharedOpen.set(open);
+  });
   trackModal(sharedOpen);
 
   setContext(MODAL_CONTEXT_KEY, {});
@@ -284,11 +374,9 @@
   // and its body is a layer at level 1, so a `Layer` inside sits at 2.
   setContext(LAYER_CONTEXT_KEY, readable(2));
 
-  // Initial mount already runs the reactive block below, which handles
-  // dispatching "open" and the `prevOpen`/`focusReturn.save()` bookkeeping.
-  // What it can't do is focus the modal: reactive statements run *before*
-  // the DOM is committed, so `innerModalRef` isn't attached yet. `onMount`
-  // runs after mount, so the DOM is already in place — no `tick()` needed.
+  // The lifecycle effect below handles the `prevOpen`/`focusReturn.save()`
+  // bookkeeping. It runs before the DOM is committed, so it can't focus
+  // the modal; `onMount` runs after mount, with the DOM in place.
   onMount(() => {
     lifecycle.setMounted();
     if (open) {
@@ -296,63 +384,95 @@
     }
   });
 
-  $: lifecycle.syncOpen(open);
+  $effect.pre(() => {
+    lifecycle.syncOpen(open);
+  });
 
   // `lazy`: the body and footer mount on the first open and then stay.
-  let openedOnce = open;
-  $: if (open) openedOnce = true;
-  $: renderContent = !lazy || openedOnce;
+  let openedOnce = $state(untrack(() => open));
+  $effect.pre(() => {
+    if (open) openedOnce = true;
+  });
+  const renderContent = $derived(!lazy || openedOnce);
 
-  $: modalLabelId = `bx--modal-header__label--modal-${id}`;
-  $: modalHeadingId = `bx--modal-header__heading--modal-${id}`;
-  $: modalBodyId = `bx--modal-body--${id}`;
-  // The root carries `role="presentation"`, so consumer naming and
-  // description go on the dialog element instead.
-  $: ({
-    ariaLabel: consumerLabel,
-    ariaLabelledBy,
-    ariaDescribedBy,
-    rest: wrapperProps,
-  } = splitAriaNaming($$restProps));
+  const modalLabelId = $derived(`bx--modal-header__label--modal-${id}`);
+  const modalHeadingId = $derived(`bx--modal-header__heading--modal-${id}`);
+  const modalBodyId = $derived(`bx--modal-body--${id}`);
   // A consumer `aria-label` names the dialog. The scrolling region keeps
-  // the built-in name so the consumer label stays on the dialog alone.
-  $: builtInLabel = modalLabel ?? modalAriaLabel ?? modalHeading;
-  $: ariaLabel = consumerLabel ?? builtInLabel;
+  // the built-in name so the consumer label stays on the dialog alone. A
+  // snippet label or heading names nothing; use `modalAriaLabel` then.
+  const builtInLabel = $derived(
+    [modalLabel, modalAriaLabel, modalHeading].find(
+      (value) => value != null && typeof value !== "function",
+    ),
+  );
+  const ariaLabel = $derived(consumerLabel ?? builtInLabel);
 
-  $: footerBusy = Boolean(loadingStatus) && loadingStatus !== "inactive";
+  const footerBusy = $derived(
+    Boolean(loadingStatus) && loadingStatus !== "inactive",
+  );
   // `primaryButtonLoading` is the boolean form of "active"; a status
   // other than "inactive" takes precedence.
-  $: primaryStatus = footerBusy
-    ? loadingStatus
-    : primaryButtonLoading
-      ? "active"
-      : "inactive";
-  $: primaryBusy = primaryStatus !== "inactive";
+  const primaryStatus = $derived(
+    footerBusy ? loadingStatus : primaryButtonLoading ? "active" : "inactive",
+  );
+  const primaryBusy = $derived(primaryStatus !== "inactive");
+
+  /** @param {"button" | "enter-key"} trigger */
+  function primaryAction(trigger) {
+    if (primaryBusy) return;
+    onprimaryaction?.({ trigger });
+  }
 
   /**
-   * Starts active for a filled slot, so the server renders the AI surface.
-   * `Decorator` clears it when no `AILabel` claims the slot.
+   * Starts active when a decorator is passed, so the server renders the AI
+   * surface. `Decorator` clears it when no `AILabel` claims it.
    * @type {import("svelte/store").Writable<undefined | "active" | "revert">}
    */
-  const aiLabelState = writable($$slots.decorator ? "active" : undefined);
+  const aiLabelState = writable(untrack(() => decorator) ? "active" : undefined);
 </script>
 
-<!-- svelte-ignore a11y-mouse-events-have-key-events -->
+{#snippet content(/** @type {string | import("svelte").Snippet | undefined} */ source)}
+  {#if typeof source === "function"}{@render source()}{:else}{source}{/if}
+{/snippet}
+
+{#snippet closeButton()}
+  <div class="bx--modal-close-button">
+    <Button
+      bind:ref={buttonRef}
+      kind="ghost"
+      class="bx--modal-close"
+      {iconDescription}
+      aria-label={iconDescription}
+      tooltipPosition="left"
+      onclick={() => {
+        close("close-button");
+      }}
+    >
+      {#snippet iconChildren()}<Close
+          size={20}
+          class="bx--modal-close__icon"
+          aria-hidden="true"
+        />{/snippet}
+    </Button>
+  </div>
+{/snippet}
+
 <div
   bind:this={ref}
   role="presentation"
   {id}
-  class:bx--modal={true}
-  class:bx--layer-one={true}
-  class:bx--modal-tall={!passiveModal}
-  class:is-visible={open}
-  class:bx--modal--danger={danger}
-  class:bx--modal--decorator={$$slots.decorator}
-  class:bx--modal--ai-label={$aiLabelState === "active"}
+  class={[
+    "bx--modal",
+    "bx--layer-one",
+    !passiveModal && "bx--modal-tall",
+    open && "is-visible",
+    danger && "bx--modal--danger",
+    decorator && "bx--modal--decorator",
+    $aiLabelState === "active" && "bx--modal--ai-label",
+  ]}
   inert={open ? undefined : true}
-  {...wrapperProps}
-  on:keydown
-  on:keydown={(event) => {
+  onkeydown={(event) => {
     if (open) {
       if (event.key === "Escape") {
         // Escape that cancels an IME composition is not a close.
@@ -388,23 +508,18 @@
         if (formId && primaryButtonRef) {
           primaryButtonRef.click();
         } else {
-          dispatch("submit");
-          dispatch("click:button--primary");
+          primaryAction("enter-key");
         }
       }
     }
   }}
-  on:click
-  on:mousedown={(event) => {
+  onmousedown={(event) => {
     if (event.target === event.currentTarget) outsideDismiss.pressOutside();
   }}
-  on:mouseup={outsideDismiss.release}
-  on:mouseover
-  on:mouseenter
-  on:mouseleave
-  on:transitionend={(event) => {
+  onmouseup={outsideDismiss.release}
+  ontransitionend={(event) => {
     if (event.propertyName === "transform") {
-      dispatch("transitionend", { open });
+      onopenchangecomplete?.({ open });
       if (!open) focusReturn.restore(ref);
     }
   }}
@@ -419,78 +534,46 @@
     )}
     aria-modal="true"
     aria-label={ariaLabel}
-    aria-labelledby={ariaLabelledBy}
-    class:bx--modal-container={true}
-    class:bx--modal-container--xs={size === "xs"}
-    class:bx--modal-container--sm={size === "sm"}
-    class:bx--modal-container--lg={size === "lg"}
-    class:bx--modal-container--full-width={fullWidth}
-    on:mousedown={outsideDismiss.pressInside}
+    {...rest}
+    class={[
+      "bx--modal-container",
+      size === "xs" && "bx--modal-container--xs",
+      size === "sm" && "bx--modal-container--sm",
+      size === "lg" && "bx--modal-container--lg",
+      fullWidth && "bx--modal-container--full-width",
+      className,
+    ]}
+    onmousedown={(event) => {
+      outsideDismiss.pressInside();
+      onmousedown?.(event);
+    }}
   >
-    <div class:bx--modal-header={true}>
+    <div class="bx--modal-header">
       {#if passiveModal && !hideCloseButton}
-        <div class:bx--modal-close-button={true}>
-          <Button
-            bind:ref={buttonRef}
-            kind="ghost"
-            class="bx--modal-close"
-            {iconDescription}
-            aria-label={iconDescription}
-            tooltipPosition="left"
-            onclick={() => {
-              close("close-button");
-            }}
-          >
-            {#snippet iconChildren()}<Close
-              size={20}
-              class="bx--modal-close__icon"
-              aria-hidden="true"
-            />{/snippet}
-          </Button>
-        </div>
+        {@render closeButton()}
       {/if}
-      {#if modalLabel || $$slots.labelChildren || $$slots.label}
-        <h2 id={modalLabelId} class:bx--modal-header__label={true}>
-          <slot name="labelChildren"
-            ><slot name="label">{modalLabel}</slot></slot
-          >
+      {#if modalLabel}
+        <h2 id={modalLabelId} class="bx--modal-header__label">
+          {@render content(modalLabel)}
         </h2>
       {/if}
-      <h2 id={modalHeadingId} class:bx--modal-header__heading={true}>
-        <slot name="heading">{modalHeading}</slot>
+      <h2 id={modalHeadingId} class="bx--modal-header__heading">
+        {@render content(modalHeading)}
       </h2>
-      {#if $$slots.decorator}
+      {#if decorator}
         <Decorator
           class="bx--modal--inner__decorator"
           state={aiLabelState}
           labelSize="sm"
         >
-          <slot name="decorator" />
+          {@render decorator()}
         </Decorator>
       {/if}
       {#if !passiveModal && !hideCloseButton}
-        <div class:bx--modal-close-button={true}>
-          <Button
-            bind:ref={buttonRef}
-            kind="ghost"
-            class="bx--modal-close"
-            {iconDescription}
-            aria-label={iconDescription}
-            tooltipPosition="left"
-            onclick={() => {
-              close("close-button");
-            }}
-          >
-            {#snippet iconChildren()}<Close
-              size={20}
-              class="bx--modal-close__icon"
-              aria-hidden="true"
-            />{/snippet}
-          </Button>
-        </div>
+        {@render closeButton()}
       {/if}
     </div>
-    <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+    <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
     <div
       id={modalBodyId}
       class:bx--modal-content={true}
@@ -501,7 +584,7 @@
       role={hasScrollingContent ? "region" : undefined}
       aria-label={hasScrollingContent ? builtInLabel : undefined}
       aria-labelledby={modalLabel ? modalLabelId : modalHeadingId}
-      on:focusin={(event) => {
+      onfocusin={(event) => {
         // Keep a newly-focused element (e.g. via Tab) from being hidden
         // under the scroll gradient at the bottom of the content area.
         if (event.target instanceof HTMLElement) {
@@ -510,7 +593,7 @@
       }}
     >
       {#if renderContent}
-        <slot />
+        {@render children?.()}
       {/if}
     </div>
     {#if hasScrollingContent}
@@ -530,7 +613,7 @@
               disabled={button.disabled || button.loading || footerBusy}
               onclick={() => {
                 if (button.loading || footerBusy) return;
-                dispatch("click:button--secondary", { text: button.text });
+                onsecondaryaction?.({ text: button.text });
               }}
             >
               {#if button.loading}
@@ -551,9 +634,7 @@
             disabled={secondaryButtonLoading || footerBusy}
             onclick={() => {
               if (secondaryButtonLoading || footerBusy) return;
-              dispatch("click:button--secondary", {
-                text: secondaryButtonText,
-              });
+              onsecondaryaction?.({ text: secondaryButtonText });
             }}
           >
             {#if secondaryButtonLoading}
@@ -575,11 +656,7 @@
           icon={primaryBusy ? undefined : primaryButtonIcon}
           type={formId ? "submit" : "button"}
           form={formId}
-          onclick={() => {
-            if (primaryBusy) return;
-            dispatch("submit");
-            dispatch("click:button--primary");
-          }}
+          onclick={() => primaryAction("button")}
         >
           {#if primaryBusy}
             <InlineLoading
@@ -587,7 +664,7 @@
               status={primaryStatus}
               description={primaryButtonLoadingDescription}
               iconDescription={primaryButtonLoadingIconDescription}
-              on:success={() => dispatch("loading:success")}
+              on:success={() => onloadingsuccess?.()}
             />
           {:else}
             {primaryButtonText}

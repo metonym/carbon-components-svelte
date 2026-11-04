@@ -14,13 +14,10 @@
     { text: "Cancel", kind: "ghost" },
     { text: "Save draft", kind: "secondary" },
   ]}
-  on:click:button--secondary={({ detail }) => {
+  onsecondaryaction={({ detail }) => {
     if (detail.text === "Cancel") open = false;
     if (detail.text === "Save draft") console.log("Save draft");
   }}
-  on:open
-  on:close
-  on:submit
 >
   <p>Create a new Cloudant database in the US South region.</p>
 </Modal>

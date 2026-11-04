@@ -14,7 +14,7 @@
 <Button onclick={() => (open = true)}>Create API key</Button>
 
 <ComposedModal preventCloseOnClickOutside bind:open>
-  <ModalHeader title="API key created" />
+  <ModalHeader titleText="API key created" />
   <ModalBody>
     <Stack gap={5}>
       <p>

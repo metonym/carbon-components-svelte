@@ -11,7 +11,7 @@
   modalHeading="API credentials"
   primaryButtonText="Done"
   secondaryButtonText="Cancel"
-  on:click:button--secondary={() => (open = false)}
+  onsecondaryaction={() => (open = false)}
 >
   <CopyInput labelText="API token" value="sk-1234567890abcdef" />
 </Modal>
