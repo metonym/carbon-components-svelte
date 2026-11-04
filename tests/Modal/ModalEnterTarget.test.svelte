@@ -4,8 +4,11 @@
   export let open = true;
   export let shouldSubmitOnEnter = true;
   export let primaryButtonDisabled = false;
-  export let onsubmit: ((event: CustomEvent) => void) | undefined = undefined;
-  export let onclickbuttonprimary: ((event: CustomEvent) => void) | undefined =
+  export let onsubmit: ((detail: { trigger: string }) => void) | undefined =
+    undefined;
+  export let onclickbuttonprimary:
+    | ((detail: { trigger: string }) => void)
+    | undefined =
     undefined;
 </script>
 

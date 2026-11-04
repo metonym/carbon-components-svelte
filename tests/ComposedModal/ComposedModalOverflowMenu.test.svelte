@@ -6,7 +6,8 @@
   import OverflowMenuItem from "carbon-components-svelte/OverflowMenu/OverflowMenuItem.svelte";
   import type { ComponentProps } from "svelte";
 
-  export let onclose: ((event: CustomEvent) => void) | undefined = undefined;
+  export let onclose: ((detail: { trigger: string }) => void) | undefined =
+    undefined;
   export let portalMenu: ComponentProps<OverflowMenu>["portalMenu"] = false;
 </script>
 

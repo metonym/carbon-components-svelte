@@ -723,7 +723,7 @@ export const interactive: AriaEntry[] = [
     name: "ConfirmModal",
     render: (attrs) =>
       render(ConfirmModal, {
-        props: { open: true, title: "Delete this project?", ...attrs },
+        props: { open: true, titleText: "Delete this project?", ...attrs },
       }),
     target: () => screen.getByRole("alertdialog"),
   },

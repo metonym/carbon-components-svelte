@@ -22,7 +22,7 @@
      * Follows the field when the owning form resets.
      * @type {null | number | string}
      */
-    value = $bindable(""),
+    value = $bindable(/** @type {null | number | string} */ ("")),
 
     /** Set to `true` to disable the input */
     disabled = false,
@@ -412,8 +412,8 @@
             warnText,
             helperText,
             isFluid,
-            errorId,
-            warnId,
+            errorId: errorId ?? "",
+            warnId: warnId ?? "",
             helperId,
             includeErrorId: false,
           }),

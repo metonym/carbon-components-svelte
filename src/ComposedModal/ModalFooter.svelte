@@ -137,7 +137,9 @@
   // `primaryButtonLoading` is the boolean form of "active"; a status
   // other than "inactive" takes precedence.
   const primaryStatus = $derived(
-    footerBusy ? loadingStatus : primaryButtonLoading ? "active" : "inactive",
+    /** @type {"active" | "error" | "inactive" | "finished" | undefined} */ (
+      footerBusy ? loadingStatus : primaryButtonLoading ? "active" : "inactive"
+    ),
   );
   const primaryBusy = $derived(primaryStatus !== "inactive");
 

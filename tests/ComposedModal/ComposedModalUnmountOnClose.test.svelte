@@ -4,7 +4,8 @@
   import ModalHeader from "carbon-components-svelte/ComposedModal/ModalHeader.svelte";
 
   export let open = false;
-  export let onclose: ((event: CustomEvent) => void) | undefined = undefined;
+  export let onclose: ((detail: { trigger: string }) => void) | undefined =
+    undefined;
 </script>
 
 {#if open}

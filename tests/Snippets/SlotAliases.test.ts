@@ -20,7 +20,7 @@ describe("Svelte 5 snippets for renamed slots", () => {
     expect(trigger).not.toHaveTextContent("Ignored");
   });
 
-  it("renders the Modal labelChildren snippet as the label", () => {
+  it("renders the Modal modalLabel snippet as the label", () => {
     render(SlotAliases);
 
     expect(

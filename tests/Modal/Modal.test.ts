@@ -674,7 +674,7 @@ describe("Modal", () => {
     "outside-click",
   ] as const)("calls onopenchange with the %s trigger", async (trigger) => {
     const closeHandler = vi.fn();
-    const { rerender } = render(ModalTest, {
+    render(ModalTest, {
       props: {
         open: true,
         modalHeading: "Close Trigger Test",
@@ -683,7 +683,7 @@ describe("Modal", () => {
       },
     });
 
-    await closeVia[trigger](rerender);
+    await closeVia[trigger]();
 
     expect(closeHandler).toHaveBeenCalledTimes(1);
     expect(closeHandler.mock.calls[0][0]).toMatchObject({

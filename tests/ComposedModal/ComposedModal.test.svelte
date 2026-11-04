@@ -10,8 +10,7 @@
   export let danger: ComponentProps<ComposedModal>["danger"] = false;
   export let preventCloseOnClickOutside: ComponentProps<ComposedModal>["preventCloseOnClickOutside"] =
     undefined;
-  export let containerClass: ComponentProps<ComposedModal>["containerClass"] =
-    "";
+  export let containerClass = "";
   export let selectorPrimaryFocus: ComponentProps<ComposedModal>["selectorPrimaryFocus"] =
     "[data-modal-primary-focus]";
 

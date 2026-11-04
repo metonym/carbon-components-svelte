@@ -14,8 +14,6 @@
   export let primaryButtonLoading: ComponentProps<ModalFooter>["primaryButtonLoading"] = false;
   export let primaryButtonLoadingDescription: ComponentProps<ModalFooter>["primaryButtonLoadingDescription"] =
     "Loading";
-  export let primaryClass: ComponentProps<ModalFooter>["primaryClass"] =
-    undefined;
   export let secondaryButtonText: ComponentProps<ModalFooter>["secondaryButtonText"] =
     "";
   export let secondaryButtonLoading: ComponentProps<ModalFooter>["secondaryButtonLoading"] = false;
@@ -23,8 +21,6 @@
     "Loading";
   export let secondaryButtons: ComponentProps<ModalFooter>["secondaryButtons"] =
     [];
-  export let secondaryClass: ComponentProps<ModalFooter>["secondaryClass"] =
-    undefined;
   export let danger: ComponentProps<ModalFooter>["danger"] = false;
   export let slotContent = "";
   /** When true, `on:click:button--secondary` calls preventDefault() so the modal stays open. */
