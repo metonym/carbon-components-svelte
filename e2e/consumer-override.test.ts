@@ -148,13 +148,13 @@ const cases: Case[] = [
   },
   {
     name: "unselected tab underline",
-    target: (page) => page.getByTestId("tabs").locator(".my-tab a").nth(1),
+    target: (page) => page.getByTestId("tabs").locator("a.my-tab").nth(1),
     property: "border-bottom-color",
     value: RED,
   },
   {
     name: "selected tab underline",
-    target: (page) => page.getByTestId("tabs").locator(".my-tab a").nth(0),
+    target: (page) => page.getByTestId("tabs").locator("a.my-tab").nth(0),
     property: "border-bottom-color",
     value: RED,
   },

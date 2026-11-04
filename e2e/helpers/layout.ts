@@ -80,9 +80,11 @@ async function measure(roots: Element[], request: Request): Promise<Result> {
   const px = (n: number) => `${Math.round(n * 100) / 100}px`;
 
   // A short CSS path: up to four steps, ending early at an id or test id.
-  // Ids from `uniqueId` (src/utils/unique-id.js), and ids built from them
-  // such as `menu-ccs-…`, change on every mount, so the path steps past them.
-  const generated = /(^|-)(ccs|ctag|cua|structured-list)-/;
+  // Ids from `uniqueId` (src/utils/unique-id.js) and from `$props.id()`
+  // (`c12` on the client, `s12` on the server), and ids built from them
+  // such as `menu-ccs-…` or `c12-panel`, change between mounts, so the path
+  // steps past them.
+  const generated = /(^|-)(ccs|ctag|cua|structured-list)-|(^|-)[cs]\d+($|-)/;
   const path = (el: Element) => {
     const steps: string[] = [];
     let node: Element | null = el;

@@ -1,3 +1,4 @@
+import { fieldByTestId } from "./helpers/field";
 import { expect, test } from "./helpers/host";
 
 test.describe("Checkbox", () => {
@@ -26,7 +27,7 @@ test.describe("Checkbox", () => {
   test("can be located and interacted with by data-testid", async ({
     page,
   }) => {
-    const wrapper = page.getByTestId("checkbox-agree");
+    const wrapper = fieldByTestId(page, "checkbox-agree");
     await expect(wrapper).toBeVisible();
     const checkbox = wrapper.getByRole("checkbox");
     await checkbox.click({ force: true });
@@ -43,9 +44,8 @@ test.describe("Checkbox", () => {
   test("a checked, indeterminate box draws the dash before hydration", async ({
     page,
   }) => {
-    const label = page.getByTestId("checkbox-mixed").locator("label");
-    await page
-      .getByTestId("checkbox-mixed")
+    const label = fieldByTestId(page, "checkbox-mixed").locator("label");
+    await fieldByTestId(page, "checkbox-mixed")
       .locator("input")
       .evaluate((input: HTMLInputElement) => {
         input.indeterminate = false;
@@ -60,9 +60,8 @@ test.describe("Checkbox", () => {
   });
 
   test("uses v11's checkbox metrics", async ({ page }) => {
-    const metrics = await page
-      .getByTestId("checkbox-agree")
-      .evaluate((wrapper) => {
+    const metrics = await fieldByTestId(page, "checkbox-agree").evaluate(
+      (wrapper) => {
         const label = wrapper.querySelector(".bx--checkbox-label");
         const text = wrapper.querySelector(".bx--checkbox-label-text");
         if (!label || !text) throw new Error("no label");
@@ -78,7 +77,8 @@ test.describe("Checkbox", () => {
           stroke: check.borderBottomWidth,
           checkTop: check.top,
         };
-      });
+      },
+    );
     const { stroke, ...rest } = metrics;
     expect(rest).toEqual({
       gap: "6px",
@@ -94,9 +94,9 @@ test.describe("Checkbox", () => {
 
   test.describe("noMargin", () => {
     test("has no outer margin", async ({ page }) => {
-      const wrapper = page
-        .getByTestId("checkbox-row")
-        .locator(".bx--checkbox-wrapper");
+      const wrapper = fieldByTestId(page, "checkbox-row").locator(
+        ".bx--checkbox-wrapper",
+      );
       await expect(wrapper).toHaveCSS("margin-top", "0px");
       await expect(wrapper).toHaveCSS("margin-bottom", "0px");
     });

@@ -1,17 +1,18 @@
 import AxeBuilder from "@axe-core/playwright";
+import { fieldByTestId } from "./helpers/field";
 import { expect, test } from "./helpers/host";
 
 test.describe("Toggle a11y", () => {
   test("has no detectable accessibility violations", async ({ page }) => {
     await page.goto("/toggle.html");
-    await expect(page.getByTestId("toggle-notifications")).toBeVisible();
+    await expect(fieldByTestId(page, "toggle-notifications")).toBeVisible();
 
     const staticResults = await new AxeBuilder({ page })
       .include("#app")
       .analyze();
     expect(staticResults.violations).toEqual([]);
 
-    await page.getByTestId("toggle-notifications").locator("label").click();
+    await fieldByTestId(page, "toggle-notifications").locator("label").click();
     await expect(
       page.getByRole("switch", { name: "Enable notifications" }),
     ).toBeChecked();

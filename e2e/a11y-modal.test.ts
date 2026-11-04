@@ -1,4 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
+import { modalByTestId } from "./helpers/field";
 import { expect, test } from "./helpers/host";
 
 test.describe("Modal a11y", () => {
@@ -17,7 +18,7 @@ test.describe("Modal a11y", () => {
   test("has no violations in each loading status", async ({ page }) => {
     await page.goto("/modal-v11.html");
     await page.getByTestId("open-modal").click();
-    await expect(page.getByTestId("modal")).toHaveClass(/is-visible/);
+    await expect(modalByTestId(page, "modal")).toHaveClass(/is-visible/);
     const primary = page.locator('[data-testid="modal"] .bx--btn--primary');
 
     for (const status of ["active", "finished", "error"]) {
