@@ -20,12 +20,11 @@
     item.text.toLowerCase().includes(value.toLowerCase())}
   bind:selectedId
   bind:value
-  let:item
 >
-  <Stack gap={2}>
-    <strong>{item.text}</strong>
-    <span>{item.description}</span>
-  </Stack>
+  {#snippet children({ item })}<Stack gap={2}>
+      <strong>{item.text}</strong>
+      <span>{item.description}</span>
+    </Stack>{/snippet}
 </ComboBox>
 
 <style>

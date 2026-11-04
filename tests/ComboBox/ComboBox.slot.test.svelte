@@ -8,6 +8,6 @@
   ];
 </script>
 
-<ComboBox {items} labelText="Default label">
-  <span slot="labelChildren">Custom label content</span>
+<ComboBox {items}>
+  {#snippet labelText()}<span>Custom label content</span>{/snippet}
 </ComboBox>

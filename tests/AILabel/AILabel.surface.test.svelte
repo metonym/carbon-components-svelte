@@ -88,7 +88,7 @@
 </div>
 <div data-testid="combo-box">
   <ComboBox labelText="Region search" {items}>
-    <AILabelOrIcon slot="decorator" {ai} />
+    {#snippet decorator()}<AILabelOrIcon {ai} />{/snippet}
   </ComboBox>
 </div>
 <div data-testid="multi-select">

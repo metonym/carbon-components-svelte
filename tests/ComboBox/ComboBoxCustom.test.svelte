@@ -36,10 +36,9 @@
   {typeahead}
   labelText="Contact with icons"
   placeholder="Select contact method"
-  on:select={(e) => onSelect(e.detail)}
-  let:item
+  onselectedchange={(e) => onSelect(e)}
 >
-  <span>Item {item.text}</span>
+  {#snippet children({ item })}<span>Item {item.text}</span>{/snippet}
 </ComboBox>
 
 <button type="button" on:click={() => comboBoxRef?.clear(clearOptions)}>

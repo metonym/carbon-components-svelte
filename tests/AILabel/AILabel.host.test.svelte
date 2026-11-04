@@ -52,7 +52,7 @@
 </div>
 <div data-testid="combo-box">
   <ComboBox labelText="Region search" {items}>
-    <AILabel slot="decorator" />
+    {#snippet decorator()}<AILabel />{/snippet}
   </ComboBox>
 </div>
 <div data-testid="multi-select">

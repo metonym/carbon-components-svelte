@@ -9,20 +9,12 @@
   ];
 </script>
 
-<ComboBox
-  {items}
-  selectedId="0"
-  open
-  labelText="Item icons"
-  let:item
-  let:selected
-  let:highlighted
->
-  <span
-    data-testid="item-{item.id}"
-    data-selected={selected}
-    data-highlighted={highlighted}
-  >
-    {item.text}
-  </span>
+<ComboBox {items} selectedId="0" open labelText="Item icons">
+  {#snippet children({ item, selected, highlighted })}<span
+      data-testid="item-{item.id}"
+      data-selected={selected}
+      data-highlighted={highlighted}
+    >
+      {item.text}
+    </span>{/snippet}
 </ComboBox>

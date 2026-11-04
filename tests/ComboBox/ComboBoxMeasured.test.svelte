@@ -32,7 +32,8 @@
   {wrapOptions}
   {filterMode}
   {shouldFilterItem}
-  let:item
 >
-  <span data-measured-height={item.height}>{item.text}</span>
+  {#snippet children({ item })}<span data-measured-height={item.height}
+      >{item.text}</span
+    >{/snippet}
 </ComboBox>

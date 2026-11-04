@@ -173,9 +173,9 @@ Put an AI label in the `decorator` slot of a field to mark its value as AI-gener
       </AILabel>
     </Dropdown>
     <ComboBox labelText="Region" selectedId="us-east-1" items={[{ id: "us-east-1", text: "US East (N. Virginia)" }, { id: "eu-west-1", text: "EU West (Ireland)" }]}>
-      <AILabel slot="decorator">
+      {#snippet decorator()}<AILabel>
         <p>Detected from the host that sent the first alert.</p>
-      </AILabel>
+      </AILabel>{/snippet}
     </ComboBox>
     <DatePicker datePickerType="single">
       <DatePickerInput labelText="Follow-up date" placeholder="mm/dd/yyyy">

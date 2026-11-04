@@ -38,6 +38,11 @@ export type ListBoxCase = {
   homeEndMove: boolean;
   /** ArrowDown moves on from the selected item, not from the first one. */
   navigatesFromSelection: boolean;
+  /**
+   * Migrated to runes: callbacks fire for user actions only, so setting
+   * `open` calls nothing, and the menu's own `scroll` is not forwarded.
+   */
+  callbacks?: boolean;
   /** Fixture that renders this case inside `<form data-testid="form">`. */
   form: ComponentType;
   /** Props the form fixture needs to render this case. */
@@ -78,6 +83,7 @@ export const cases: ListBoxCase[] = [
   },
   {
     name: "ComboBox",
+    callbacks: true,
     component: ComboBox,
     props: { labelText: "Contact", placeholder: "Select…" },
     openKeys: ["{ArrowDown}", "{Enter}"],

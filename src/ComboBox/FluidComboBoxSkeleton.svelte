@@ -1,14 +1,24 @@
+<script>
+  /**
+   * @restProps {div}
+   */
+  let {
+    /** @type {import("svelte/elements").ClassValue | undefined} */
+    class: className = undefined,
+
+    ...rest
+  } = $props();
+</script>
+
 <div
-  class:bx--list-box__wrapper--fluid={true}
-  class:bx--list-box__wrapper--fluid--skeleton={true}
-  {...$$restProps}
-  on:click
-  on:mouseover
-  on:mouseenter
-  on:mouseleave
+  {...rest}
+  class={[
+    "bx--list-box__wrapper--fluid bx--list-box__wrapper--fluid--skeleton",
+    className,
+  ]}
 >
-  <div class:bx--skeleton={true} class:bx--list-box={true}>
-    <span class:bx--list-box__label={true}></span>
-    <div class:bx--list-box__field={true}></div>
+  <div class="bx--skeleton bx--list-box">
+    <span class="bx--list-box__label"></span>
+    <div class="bx--list-box__field"></div>
   </div>
 </div>

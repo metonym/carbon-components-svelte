@@ -13,7 +13,7 @@
   shouldFilterItem={(item, value) =>
     item.text.toLowerCase().includes(value.toLowerCase())}
 >
-  <svelte:fragment slot="empty" let:value>
+  {#snippet empty({ value })}
     {`Nothing like "${value}"`}
-  </svelte:fragment>
+  {/snippet}
 </ComboBox>

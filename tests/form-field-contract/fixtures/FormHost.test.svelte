@@ -18,6 +18,8 @@
     {...fieldProps}
     onvaluechange={onInput}
     onvaluecommit={onChange}
+    oninput={onInput}
+    onclear={onClear}
     on:input={onInput}
     on:change={onChange}
     on:clear={onClear}

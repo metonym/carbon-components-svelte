@@ -56,6 +56,11 @@ describe.each(caseRows)("%s open event", (_, c) => {
 
     await rerender({ open: true });
 
+    if (c.callbacks) {
+      // `onopenchange` is for user actions only.
+      expect(onOpen).not.toHaveBeenCalled();
+      return;
+    }
     expect(onOpen).toHaveBeenCalledTimes(1);
     expect(onOpen.mock.calls[0][0].detail).toEqual({ trigger: "programmatic" });
   });

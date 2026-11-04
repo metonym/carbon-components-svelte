@@ -3,7 +3,7 @@ import type ComboBoxComponent from "carbon-components-svelte/ComboBox/ComboBox.s
 import type { ComboBoxItem } from "carbon-components-svelte/ComboBox/ComboBox.svelte";
 import ComboBoxReal from "carbon-components-svelte/ComboBox/ComboBox.svelte";
 import { fuzzyMatch } from "carbon-components-svelte/utils/fuzzy-match";
-import type { ComponentEvents, ComponentProps } from "svelte";
+import type { ComponentProps } from "svelte";
 import { tick } from "svelte";
 import { user } from "../utils/user";
 import ComboBoxSlot from "./ComboBox.slot.test.svelte";
@@ -506,7 +506,7 @@ describe("ComboBox", () => {
     await user.keyboard("{Enter}");
 
     expect(onClear).toHaveBeenCalledOnce();
-    expect(onClear.mock.calls[0][0].type).toBe("clear");
+    expect(onClear.mock.calls[0][0]).toEqual({ trigger: "keydown" });
     expect(onSelect).not.toHaveBeenCalled();
     expect(getInput()).toHaveValue("");
   });
@@ -534,7 +534,7 @@ describe("ComboBox", () => {
     await tick();
 
     expect(onClear).toHaveBeenCalledOnce();
-    expect(onClear.mock.calls[0][0].type).toBe("clear");
+    expect(onClear.mock.calls[0][0]).toEqual({ trigger: "keydown" });
     expect(onSelect).not.toHaveBeenCalled();
     // Wait for binding updates to complete
     await tick();
@@ -759,7 +759,7 @@ describe("ComboBox", () => {
       expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
     });
 
-    it("dispatches clear with the keyboard event when Escape clears a selection", async () => {
+    it("calls onclear with the escape-key trigger when Escape clears a selection", async () => {
       const onClear = vi.fn();
       render(ComboBox, { props: { selectedId: "1", onClear } });
 
@@ -767,7 +767,7 @@ describe("ComboBox", () => {
       await user.keyboard("{Escape}");
 
       expect(onClear).toHaveBeenCalledOnce();
-      expect(onClear.mock.calls[0][0].detail).toBeInstanceOf(KeyboardEvent);
+      expect(onClear.mock.calls[0][0]).toEqual({ trigger: "escape-key" });
     });
 
     it("does not dispatch clear when Escape only clears typed text", async () => {
@@ -855,7 +855,7 @@ describe("ComboBox", () => {
 
     expect(getInput()).toHaveValue("");
     expect(onClear).toHaveBeenCalledOnce();
-    expect(onClear.mock.calls[0][0].type).toBe("clear");
+    expect(onClear.mock.calls[0][0]).toEqual({ trigger: "click" });
     expect(onSelect).not.toHaveBeenCalled();
   });
 
@@ -1482,7 +1482,7 @@ describe("ComboBox", () => {
       });
     });
 
-    it("should support generic types with ComponentProps and ComponentEvents", () => {
+    it("should support generic types with ComponentProps", () => {
       type Product = {
         id: string;
         text: string;
@@ -1493,7 +1493,6 @@ describe("ComboBox", () => {
 
       type ComponentType = ComboBoxComponent<Product>;
       type Props = ComponentProps<ComponentType>;
-      type Events = ComponentEvents<ComponentType>;
 
       type ItemsProp = NonNullable<Props["items"]>;
       expectTypeOf<ItemsProp>().toEqualTypeOf<readonly Product[]>();
@@ -1508,9 +1507,9 @@ describe("ComboBox", () => {
       expectTypeOf(shouldFilterItem).parameter(1).toEqualTypeOf<string>();
       expectTypeOf(shouldFilterItem).returns.toEqualTypeOf<boolean>();
 
-      type SelectEvent = Events["select"];
-      type SelectEventDetail =
-        SelectEvent extends CustomEvent<infer T> ? T : never;
+      type SelectEventDetail = Parameters<
+        NonNullable<Props["onselectedchange"]>
+      >[0];
       type SelectedItem = SelectEventDetail["selectedItem"];
       expectTypeOf<SelectedItem>().toEqualTypeOf<Product>();
     });
@@ -1518,7 +1517,6 @@ describe("ComboBox", () => {
     it("should default to ComboBoxItem when generic is not specified", () => {
       type ComponentType = ComboBoxComponent;
       type Props = ComponentProps<ComponentType>;
-      type Events = ComponentEvents<ComponentType>;
 
       expectTypeOf<NonNullable<Props["items"]>>().toHaveProperty("length");
 
@@ -1526,9 +1524,9 @@ describe("ComboBox", () => {
       expectTypeOf<ItemElement>().toHaveProperty("id");
       expectTypeOf<ItemElement>().toHaveProperty("text");
 
-      type SelectEvent = Events["select"];
-      type SelectEventDetail =
-        SelectEvent extends CustomEvent<infer T> ? T : never;
+      type SelectEventDetail = Parameters<
+        NonNullable<Props["onselectedchange"]>
+      >[0];
       type SelectedItem = SelectEventDetail["selectedItem"];
       expectTypeOf<SelectedItem>().toHaveProperty("id");
       expectTypeOf<SelectedItem>().toHaveProperty("text");
@@ -1559,14 +1557,13 @@ describe("ComboBox", () => {
       it("should default Id to any when not specified", () => {
         type ComponentType = ComboBoxComponent;
         type Props = ComponentProps<ComponentType>;
-        type Events = ComponentEvents<ComponentType>;
 
         // biome-ignore lint/suspicious/noExplicitAny: Testing default any type
         expectTypeOf<Props["selectedId"]>().toEqualTypeOf<any | undefined>();
 
-        type SelectEvent = Events["select"];
-        type SelectEventDetail =
-          SelectEvent extends CustomEvent<infer T> ? T : never;
+        type SelectEventDetail = Parameters<
+          NonNullable<Props["onselectedchange"]>
+        >[0];
         // biome-ignore lint/suspicious/noExplicitAny: Testing default any type
         expectTypeOf<SelectEventDetail["selectedId"]>().toEqualTypeOf<any>();
       });
@@ -1587,9 +1584,9 @@ describe("ComboBox", () => {
         type UnionId = "a" | "b" | "c";
         type UnionItem = { id: UnionId; text: string };
         type UnionComponent = ComboBoxComponent<UnionItem>;
-        type UnionEvents = ComponentEvents<UnionComponent>;
-        type UnionSelectDetail =
-          UnionEvents["select"] extends CustomEvent<infer T> ? T : never;
+        type UnionSelectDetail = Parameters<
+          NonNullable<ComponentProps<UnionComponent>["onselectedchange"]>
+        >[0];
         expectTypeOf<
           UnionSelectDetail["selectedId"]
         >().toEqualTypeOf<UnionId>();
@@ -1611,15 +1608,14 @@ describe("ComboBox", () => {
 
         type ComponentType = ComboBoxComponent<InferredItem>;
         type Props = ComponentProps<ComponentType>;
-        type Events = ComponentEvents<ComponentType>;
 
         expectTypeOf<Props["selectedId"]>().toEqualTypeOf<
           InferredId | undefined
         >();
 
-        type SelectEvent = Events["select"];
-        type SelectEventDetail =
-          SelectEvent extends CustomEvent<infer T> ? T : never;
+        type SelectEventDetail = Parameters<
+          NonNullable<Props["onselectedchange"]>
+        >[0];
         expectTypeOf<
           SelectEventDetail["selectedId"]
         >().toEqualTypeOf<InferredId>();
@@ -2108,7 +2104,7 @@ describe("ComboBox", () => {
       );
     });
 
-    it("should render the checkmark when iconRight is absent", () => {
+    it("should render the checkmark when iconEnd is absent", () => {
       render(ComboBoxItemIcon);
 
       const selected = screen
@@ -2136,7 +2132,7 @@ describe("ComboBox", () => {
       ).toHaveLength(2);
     });
 
-    it("should render iconRight instead of the checkmark", () => {
+    it("should render iconEnd from the icon snippets fixture instead of the checkmark", () => {
       render(ComboBoxIconSlots);
 
       expect(screen.getByTestId("right-0")).toHaveAttribute(
@@ -2171,15 +2167,6 @@ describe("ComboBox", () => {
       expect(
         document.querySelector(".bx--list-box__menu-item__selected-icon"),
       ).toBeNull();
-    });
-
-    it("should prefer iconEnd over iconRight", () => {
-      render(ComboBoxIconEnd, { props: { withIconRight: true } });
-
-      expect(screen.getByTestId("end-0")).toBeInTheDocument();
-      expect(screen.getByTestId("end-1")).toBeInTheDocument();
-      expect(screen.queryByTestId("right-0")).toBeNull();
-      expect(screen.queryByTestId("right-1")).toBeNull();
     });
   });
 

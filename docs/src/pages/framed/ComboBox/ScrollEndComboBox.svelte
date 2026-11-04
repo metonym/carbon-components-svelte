@@ -37,7 +37,7 @@
     virtualize={{ containerHeight: 240, threshold: 1 }}
     {loading}
     loadingText="Loading more…"
-    on:scrollend={loadMore}
+    onmenuscrollend={loadMore}
   />
   {#if !hasMore}
     <p>Loaded all {TOTAL} items.</p>
