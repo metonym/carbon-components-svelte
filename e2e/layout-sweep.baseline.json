@@ -1716,6 +1716,14 @@
     "variant": "320",
     "check": "overflow",
     "kind": "widens page",
+    "path": "div#operational-tag-start-content",
+    "message": "div#operational-tag-start-content: spans 133.64px to 357.64px"
+  },
+  {
+    "fixture": "rtl-tooltips.html",
+    "variant": "320",
+    "check": "overflow",
+    "kind": "widens page",
     "path": "div#popover-top-left",
     "message": "div#popover-top-left: spans 144px to 336px"
   },
@@ -1726,14 +1734,6 @@
     "kind": "widens page",
     "path": "div#popover-top-start",
     "message": "div#popover-top-start: spans 144px to 336px"
-  },
-  {
-    "fixture": "rtl-tooltips.html",
-    "variant": "320",
-    "check": "overflow",
-    "kind": "widens page",
-    "path": "div#toggletip-start-content",
-    "message": "div#toggletip-start-content: spans 148px to 322.2px"
   },
   {
     "fixture": "rtl-tooltips.html",

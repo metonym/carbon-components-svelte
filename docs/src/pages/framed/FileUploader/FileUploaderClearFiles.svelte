@@ -25,7 +25,7 @@
 <Button
   kind="tertiary"
   disabled={!files.length}
-  onclick={fileUploader.clearFiles}
+  onclick={() => fileUploader.clearFiles()}
 >
   Clear (programmatic)
 </Button>
