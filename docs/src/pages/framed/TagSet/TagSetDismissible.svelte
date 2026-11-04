@@ -8,12 +8,12 @@
     { id: "early", label: "Early adopter", type: "green" },
   ];
 
-  function handleTagClose({ detail }) {
+  function handleTagClose(detail) {
     tags = tags.filter((tag) => tag.id !== detail.tag.value);
   }
 </script>
 
-<TagSet on:close:tag={handleTagClose}>
+<TagSet ontagdismiss={handleTagClose}>
   {#each tags as tag (tag.id)}
     <Tag type={tag.type} value={tag.id} filter>{tag.label}</Tag>
   {/each}

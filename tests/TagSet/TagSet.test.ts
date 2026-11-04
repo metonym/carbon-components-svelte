@@ -233,7 +233,7 @@ describe("TagSet", () => {
     );
   });
 
-  it("dispatches click:overflow when the indicator is clicked", async () => {
+  it("calls onoverflowclick when the indicator is clicked", async () => {
     const onOverflowClick = vi.fn();
     const { container } = render(TagSetFixture, { onOverflowClick });
 
@@ -243,11 +243,11 @@ describe("TagSet", () => {
     await user.click(trigger);
 
     expect(onOverflowClick).toHaveBeenCalledExactlyOnceWith(
-      expect.objectContaining({ detail: { count: 3 } }),
+      expect.objectContaining({ count: 3 }),
     );
   });
 
-  it("overrides the tooltip content via the overflowTooltip slot", async () => {
+  it("overrides the tooltip content via the overflowTooltip snippet", async () => {
     const { container } = render(TagSetCustomTooltipFixture);
 
     stubMeasurements(container, 110, 50);
@@ -262,7 +262,7 @@ describe("TagSet", () => {
     expect(screen.queryByText(/^Tag 2, Tag 3, Tag 4$/)).not.toBeInTheDocument();
   });
 
-  it("dispatches overflow:change with the current overflow count when it changes", async () => {
+  it("calls onoverflowchange with the current overflow count when it changes", async () => {
     const onOverflowChange = vi.fn();
     const { container } = render(TagSetFixture, { onOverflowChange });
     await tick();

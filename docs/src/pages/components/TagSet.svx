@@ -159,13 +159,13 @@ Set `overflowDirection` to `"top"` to show the tooltip above the indicator inste
 
 ### Custom content
 
-Override the `overflowTooltip` slot to replace the default plain-text tooltip with custom content.
+Pass an `overflowTooltip` snippet to replace the default plain-text tooltip with custom content. It receives `{ tags, count }`.
 
 <FileSource src="/framed/TagSet/TagSetCustomOverflowTooltip" />
 
 ## Overflow popover
 
-Set `overflowMode="popover"` to turn the "+N" indicator into a button that opens the hidden tags themselves, in their own colors. Unlike the hover tooltip, it works on touch screens, and dismissible tags can still be closed from inside it. Closing one moves focus to the next tag in the popover. The `overflowTooltip` slot replaces the popover content.
+Set `overflowMode="popover"` to turn the "+N" indicator into a button that opens the hidden tags themselves, in their own colors. Unlike the hover tooltip, it works on touch screens, and dismissible tags can still be closed from inside it. Closing one moves focus to the next tag in the popover. The `overflowTooltip` snippet replaces the popover content.
 
 <FileSource src="/framed/TagSet/TagSetOverflowPopover" />
 
@@ -177,13 +177,13 @@ Set `overflowType` to choose how the hidden tags are listed: `"default"` lists t
 
 ## View all
 
-With more hidden tags than `viewAllThreshold` (10 by default), the popover lists the first ten and a "View all" button. It opens a modal of every tag with a search field, so long sets stay reachable from the keyboard and on touch screens. In tooltip mode, selecting "+N" opens the modal; call `preventDefault()` on `click:overflow` to handle the click yourself. Set `viewAllText`, `allTagsTitle`, `allTagsSearchLabel` and `allTagsResultsLabel` to translate it.
+With more hidden tags than `viewAllThreshold` (10 by default), the popover lists the first ten and a "View all" button. It opens a modal of every tag with a search field, so long sets stay reachable from the keyboard and on touch screens. In tooltip mode, selecting "+N" opens the modal; call `preventDefault()` in `onoverflowclick` to handle the click yourself. Set `viewAllText`, `allTagsTitle`, `allTagsSearchLabel` and `allTagsResultsLabel` to translate it.
 
 <FileSource src="/framed/TagSet/TagSetViewAll" />
 
 ## Dismissible
 
-Set `filter` on a `Tag` to render it as closable. `TagSet` dispatches `close:tag` with `{ tag, index }` instead of taking a per-tag handler: remove the tag from your own state in response. Set `value` on each `Tag` to read it back as `tag.value`, so you can remove by id rather than by position or label.
+Set `filter` on a `Tag` to render it as closable. `TagSet` calls `ontagdismiss({ tag, index })` instead of taking a per-tag handler: remove the tag from your own state in response. Set `value` on each `Tag` to read it back as `tag.value`, so you can remove by id rather than by position or label.
 
 <FileSource src="/framed/TagSet/TagSetDismissible" />
 
@@ -212,10 +212,10 @@ Respond to interactions with the "+N" overflow indicator.
 
 ### Overflow click
 
-Use `on:click:overflow` to listen for clicks on the "+N" indicator. The event detail includes the current overflow count.
+Use `onoverflowclick` to respond to clicks on the "+N" indicator. It receives the current overflow `count`.
 
 <Box maxWidth="12rem">
-  <TagSet on:click:overflow={(e) => console.log(e.detail.count)}>
+  <TagSet onoverflowclick={(e) => console.log(e.count)}>
     <Tag type="red">Production</Tag>
     <Tag type="blue">Staging</Tag>
     <Tag type="purple">Development</Tag>
@@ -226,10 +226,10 @@ Use `on:click:overflow` to listen for clicks on the "+N" indicator. The event de
 
 ### Overflow count change
 
-Use `on:overflow:change` to listen for changes to the overflow count, whether from a resize, a slotted-children change, or a `maxVisible` change. The event detail includes the new count.
+Use `onoverflowchange` to follow the overflow count as it changes, whether from a resize, tags added or removed, or a `maxVisible` change. It receives the new `count`. It reports layout rather than a user action, so it's called once the set has measured, not for the first render.
 
 <Box maxWidth="12rem">
-  <TagSet on:overflow:change={(e) => console.log(e.detail.count)}>
+  <TagSet onoverflowchange={(e) => console.log(e.count)}>
     <Tag type="red">Production</Tag>
     <Tag type="blue">Staging</Tag>
     <Tag type="purple">Development</Tag>
@@ -240,7 +240,7 @@ Use `on:overflow:change` to listen for changes to the overflow count, whether fr
 
 ## Sizes
 
-Set `size` on `TagSet` to apply it to every slotted tag (including the "+N" overflow indicator) that doesn't set its own `size`.
+Set `size` on `TagSet` to apply it to every tag (including the "+N" overflow indicator) that doesn't set its own `size`.
 
 ### Small
 

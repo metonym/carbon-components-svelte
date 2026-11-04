@@ -13,7 +13,7 @@
   <TagSet
     overflowMode="popover"
     maxVisible={2}
-    on:close:tag={({ detail }) =>
+    ontagdismiss={(detail) =>
       (tags = tags.filter((tag) => tag !== detail.tag.value))}
   >
     {#each tags as tag (tag)}

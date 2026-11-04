@@ -359,8 +359,8 @@
     setDraft(rejected[0] ?? "");
   }
 
-  /** @param {{ detail: { index: number } }} event */
-  function handleTagClose({ detail }) {
+  /** @param {{ index: number }} detail */
+  function handleTagClose(detail) {
     if (!interactive) return;
     const { index } = detail;
     const tag = value[index];
@@ -608,7 +608,7 @@
       navigation="roving"
       multiline
       size={tagSize}
-      on:close:tag={handleTagClose}
+      ontagdismiss={handleTagClose}
     >
       {#if tagPlacement === "inline"}
         {#each value as tag, index (index)}
@@ -667,7 +667,7 @@
       navigation="roving"
       multiline
       size={tagSize}
-      on:close:tag={handleTagClose}
+      ontagdismiss={handleTagClose}
     >
       {#each value as tag, index (index)}
         {@const props = tagSlotProps(tag)}

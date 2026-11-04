@@ -993,9 +993,9 @@
    * the checked state, as `clear()` does: with the menu closed,
    * `top-after-reopen` re-sorts from `selectedIds`, which would otherwise
    * restore the check.
-   * @param {{ detail: { tag: { value?: string | number } } }} event
+   * @param {{ tag: { value?: string | number } }} detail
    */
-  function handleTagClose({ detail }) {
+  function handleTagClose(detail) {
     if (effectiveDisabled || readonly) return;
     const id = detail.tag.value;
     const entry = entries.find((item) => item.id === id);
@@ -2416,7 +2416,7 @@
         multiline={tagOverflow === "wrap"}
         overflowMode="popover"
         size={tagSize}
-        on:close:tag={handleTagClose}
+        ontagdismiss={handleTagClose}
       >
         {#each selectedTagItems as item, index (item.id)}
           {@const props = {

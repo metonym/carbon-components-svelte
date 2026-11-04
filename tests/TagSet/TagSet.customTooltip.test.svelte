@@ -9,9 +9,9 @@
   {#each labels as label}
     <Tag>{label}</Tag>
   {/each}
-  <svelte:fragment slot="overflowTooltip" let:count>
+  {#snippet overflowTooltip({ count })}
     {count}
     hidden
     <a href="/all-tags">View all</a>
-  </svelte:fragment>
+  {/snippet}
 </TagSet>

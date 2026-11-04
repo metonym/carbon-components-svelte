@@ -20,7 +20,7 @@
 <TagSet
   {navigation}
   {maxVisible}
-  on:close:tag={({ detail }) => {
+  ontagdismiss={(detail) => {
     onTagClose(detail);
     labels = labels.filter((label) => label !== detail.tag.value);
   }}

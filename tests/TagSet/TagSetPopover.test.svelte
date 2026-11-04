@@ -15,17 +15,17 @@
     {#each labels as label (label)}
       <Tag>{label}</Tag>
     {/each}
-    <svelte:fragment slot="overflowTooltip" let:count>
+    {#snippet overflowTooltip({ count })}
       <a href="#all">View all {count}</a>
-    </svelte:fragment>
+    {/snippet}
   </TagSet>
 {:else}
   <TagSet
     overflowMode="popover"
     {navigation}
     maxVisible={2}
-    on:click:overflow={onOverflowClick}
-    on:close:tag={({ detail }) => {
+    onoverflowclick={onOverflowClick}
+    ontagdismiss={(detail) => {
       onTagClose(detail);
       labels = labels.filter((label) => label !== detail.tag.value);
     }}

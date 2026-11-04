@@ -19,10 +19,10 @@
   {overflowMode}
   {overflowType}
   maxVisible={2}
-  on:click:overflow={(event) => {
+  onoverflowclick={(event) => {
     if (preventOverflowClick) event.preventDefault();
   }}
-  on:close:tag={({ detail }) => {
+  ontagdismiss={(detail) => {
     onTagClose(detail.tag.value);
     labels = labels.filter((label) => label !== detail.tag.value);
   }}
