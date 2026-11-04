@@ -23,12 +23,12 @@
   {type}
   {disabled}
   {download}
-  on:download={onDownload}
-  on:download:error={(event) => onDownloadError(event.detail)}
-  on:focus={() => onFocus()}
-  on:blur={() => onBlur()}
-  on:keydown={() => onKeydown()}
-  on:keyup={() => onKeyup()}
+  ondownload={onDownload}
+  ondownloaderror={(event) => onDownloadError(event)}
+  onfocus={() => onFocus()}
+  onblur={() => onBlur()}
+  onkeydown={() => onKeydown()}
+  onkeyup={() => onKeyup()}
 >
   Download CSV
 </LinkDownload>

@@ -253,8 +253,7 @@ Add the `bx--icon--mirror-rtl` class to mirror your own forward or back icon, su
       <CardBody>إدارة الأعضاء والصلاحيات والتكاملات.</CardBody>
     </Card>
     <Link href="#">
-      عرض سجل النشر
-      <ArrowRight slot="icon" class="bx--icon--mirror-rtl" />
+      عرض سجل النشر <ArrowRight class="bx--icon--mirror-rtl" />
     </Link>
   </Stack>
 </LayoutDirection>

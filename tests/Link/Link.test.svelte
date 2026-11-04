@@ -18,17 +18,17 @@
 <div data-testid="default-link">
   <Link
     href="https://www.carbondesignsystem.com/"
-    on:click={(e) => {
+    onclick={(e) => {
       e.preventDefault();
       onClick(e);
     }}
-    on:mouseover={() => onMouseover()}
-    on:mouseenter={() => onMouseenter()}
-    on:mouseleave={() => onMouseleave()}
-    on:focus={() => onFocus()}
-    on:blur={() => onBlur()}
-    on:keydown={() => onKeydown()}
-    on:keyup={() => onKeyup()}
+    onmouseover={() => onMouseover()}
+    onmouseenter={() => onMouseenter()}
+    onmouseleave={() => onMouseleave()}
+    onfocus={() => onFocus()}
+    onblur={() => onBlur()}
+    onkeydown={() => onKeydown()}
+    onkeyup={() => onKeyup()}
   >
     Carbon Design System
   </Link>
@@ -52,12 +52,6 @@
   </Link>
 </div>
 
-<div data-testid="link-with-icon-slot">
-  <Link href="https://www.carbondesignsystem.com/">
-    Carbon Design System
-    <svelte:fragment slot="icon"><Carbon /></svelte:fragment>
-  </Link>
-</div>
 
 <div data-testid="link-large">
   <Link size="lg" href="https://www.carbondesignsystem.com/">
@@ -75,7 +69,7 @@
   <Link
     disabled
     href="https://www.carbondesignsystem.com/"
-    on:click={() => onDisabledClick()}
+    onclick={() => onDisabledClick()}
   >
     Carbon Design System
   </Link>
@@ -99,12 +93,6 @@
   </Link>
 </div>
 
-<div data-testid="link-inline-icon-slot">
-  <Link inline href="https://www.carbondesignsystem.com/">
-    Carbon Design System
-    <svelte:fragment slot="icon"><Carbon /></svelte:fragment>
-  </Link>
-</div>
 
 <div data-testid="link-disabled-blank">
   <Link
@@ -112,7 +100,7 @@
     size="lg"
     target="_blank"
     href="https://www.carbondesignsystem.com/"
-    on:click={() => onDisabledClick()}
+    onclick={() => onDisabledClick()}
   >
     Carbon Design System
   </Link>

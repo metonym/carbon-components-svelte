@@ -122,8 +122,7 @@ To mirror your own forward or back icon, add the `bx--icon--mirror-rtl` class. A
 <LayoutDirection dir="rtl" lang="ar">
   <Stack gap={5}>
     <Link href="#">
-      عرض سجل النشر
-      <ArrowRight slot="icon" class="bx--icon--mirror-rtl" />
+      عرض سجل النشر <ArrowRight class="bx--icon--mirror-rtl" />
     </Link>
     <PaginationNav
       total={5}

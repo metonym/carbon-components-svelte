@@ -328,7 +328,7 @@
               <Link
                 href="#"
                 size="xl"
-                on:click={(e) => {
+                onclick={(e) => {
                   e.preventDefault();
                   clearFilters();
                 }}
