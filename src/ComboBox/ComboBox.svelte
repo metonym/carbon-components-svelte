@@ -333,8 +333,11 @@
     portalMenu = undefined,
 
     /**
-     * Called when the user opens or closes the menu. Not called when `open`
-     * is set from outside.
+     * Called when the user opens or closes the menu. Opening reports
+     * `"click"`, `"keydown"` or `"input"`; closing reports `"click"` (the
+     * chevron), `"keydown"` (Enter without a pick), `"escape-key"`,
+     * `"outside-click"` or `"select"`. Not called when `open` is set from
+     * outside.
      * @type {((detail: { open: boolean; trigger: "click" | "keydown" | "input" | "escape-key" | "outside-click" | "select" }) => void) | undefined}
      */
     onopenchange = undefined,
@@ -618,7 +621,7 @@
   /**
    * Close the dropdown and surface the dismissal cause.
    * Guarded on `open` so redundant assignments don't call `onopenchange` twice.
-   * @type {(trigger: "escape-key" | "outside-click" | "select") => void}
+   * @type {(trigger: "click" | "keydown" | "escape-key" | "outside-click" | "select") => void}
    */
   const close = createMenuCloseHandler({
     getOpen: () => open,
@@ -1276,7 +1279,7 @@
 
   /**
    * Enter: select the highlighted item or the exact match, or toggle the
-   * menu. Closing without a selection calls no `onopenchange`, as before.
+   * menu.
    */
   function handleEnter() {
     // Enter on a highlighted disabled option -> the menu stays open.
@@ -1311,6 +1314,8 @@
       value = itemToString(chosen);
       if (wasOpen) onopenchange?.({ open: false, trigger: "select" });
       selectAsUser(chosen);
+    } else if (wasOpen) {
+      onopenchange?.({ open: false, trigger: "keydown" });
     }
     highlightedIndex = -1;
     highlightOrigin = null;
@@ -1680,7 +1685,7 @@
           onclick={(event) => {
             if (effectiveDisabled || readonly) return;
             event.stopPropagation();
-            if (open) open = false;
+            if (open) close("click");
             else openMenu("click");
           }}
           {translateWithId}

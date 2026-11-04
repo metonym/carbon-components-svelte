@@ -41,10 +41,4 @@
   on:close={onClose}
   on:scroll={onScroll}
   on:scrollend={onScrollend}
-  onopenchange={(detail: { open: boolean; trigger: string }) =>
-    (detail.open ? onOpen : onClose)(
-      new CustomEvent("trigger", { detail: { trigger: detail.trigger } }),
-    )}
-  onmenuscrollend={(detail: ScrollMetrics["detail"]) =>
-    onScrollend(new CustomEvent("scrollend", { detail }))}
 />

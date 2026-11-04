@@ -282,9 +282,10 @@
 
     /**
      * Called when the user opens or closes the menu. Opening reports
-     * `"click"` or `"keydown"`; closing reports `"escape-key"` (Escape, Tab
-     * or Alt+ArrowUp), `"outside-click"` or `"select"`. Not called when
-     * `open` is set from outside.
+     * `"click"` or `"keydown"`; closing reports `"click"` (the field or the
+     * chevron), `"keydown"` (Enter or Space without a new pick),
+     * `"escape-key"` (Escape, Tab or Alt+ArrowUp), `"outside-click"` or
+     * `"select"`. Not called when `open` is set from outside.
      * @type {((detail: { open: boolean; trigger: "click" | "keydown" | "escape-key" | "outside-click" | "select" }) => void) | undefined}
      */
     onopenchange = undefined,
@@ -543,7 +544,7 @@
   /**
    * Close the menu and report the dismissal cause. Only reports a change
    * from open to closed, so redundant closes don't double-fire.
-   * @param {"escape-key" | "outside-click" | "select"} trigger
+   * @param {"click" | "keydown" | "escape-key" | "outside-click" | "select"} trigger
    */
   function close(trigger) {
     if (!open) return;
@@ -915,9 +916,9 @@
   /** @param {Item} item */
   function selectItem(item) {
     if (item.id === selectedId) {
-      // Same rule as selectHighlighted: re-picking the current item is not a
-      // selection, so close without `onselectedchange` or `onopenchange`.
-      open = false;
+      // Re-picking the current item is not a selection, so it closes the
+      // menu without `onselectedchange`.
+      close("select");
       return;
     }
     select(item);
@@ -937,9 +938,8 @@
     if (highlighted && highlighted.id !== selectedId) {
       select(highlighted);
     } else {
-      // Toggling closed via Enter/Space without picking a (new) item is not a
-      // meaningful dismissal trigger, so close silently.
-      open = false;
+      // Enter or Space without picking a new item only closes the menu.
+      close("keydown");
     }
   }
 
@@ -1253,8 +1253,8 @@
       // Options close the menu themselves. Anything else in the menu, such
       // as a group header, is not a dismissal.
       if (listRef?.contains(target)) return;
-      if (open || !ref?.contains(target)) open = false;
-      else openMenu("click");
+      if (open) close("click");
+      else if (ref?.contains(target)) openMenu("click");
     }}
     disabled={effectiveDisabled}
     {open}
@@ -1339,7 +1339,7 @@
           onclick={(event) => {
             event.stopPropagation();
             if (effectiveDisabled || readonly) return;
-            if (open) open = false;
+            if (open) close("click");
             else openMenu("click");
           }}
           {translateWithId}
