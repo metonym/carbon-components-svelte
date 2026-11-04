@@ -80,7 +80,7 @@
     overflowDirection = "bottom",
 
     /** @type {(count: number) => string} */
-    overflowLabel = (count) => `+${count} more tags`,
+    overflowLabel = (/** @type {number} */ count) => `+${count} more tags`,
 
     /** @type {"xs" | "sm" | "default" | "lg" | "md" | undefined} */
     size = undefined,
