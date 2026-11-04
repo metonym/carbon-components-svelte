@@ -1,52 +1,68 @@
 <script>
-  /** Set to `true` to disable the list box field */
-  export let disabled = false;
-
-  /** Set to `true` to use the read-only variant */
-  export let readonly = false;
-
-  /** Specify the role attribute */
-  export let role = "combobox";
-
   /**
-   * Specify the tabindex
-   * @type {number | string | undefined}
+   * @restProps {button}
    */
-  export let tabindex = "-1";
 
-  /** Set an id for the top-level element */
-  export let id = uniqueId();
+  const fallbackId = $props.id();
 
-  /**
-   * Obtain a reference to the top-level HTML element.
-   * @bindable readonly
-   * @type {null | HTMLButtonElement}
-   */
-  export let ref = null;
+  let {
+    /** Set to `true` to disable the list box field */
+    disabled = false,
 
-  import { getContext, onMount } from "svelte";
-  import { uniqueId } from "../utils/unique-id.js";
+    /** Set to `true` to use the read-only variant */
+    readonly = false,
+
+    /** Specify the role attribute */
+    role = "combobox",
+
+    /**
+     * Specify the tabindex
+     * @type {number | string | undefined}
+     */
+    tabindex = "-1",
+
+    /**
+     * Set an id for the top-level element
+     * @type {string}
+     */
+    id = fallbackId,
+
+    /**
+     * Obtain a reference to the top-level HTML element.
+     * @type {null | HTMLButtonElement}
+     */
+    ref = $bindable(null),
+
+    /** @type {import("svelte").Snippet | undefined} */
+    children = undefined,
+
+    /** @type {import("svelte/elements").ClassValue | undefined} */
+    class: className = undefined,
+
+    /** @type {boolean | "true" | "false" | undefined | null} */
+    "aria-expanded": ariaExpanded = undefined,
+
+    /** @type {import("svelte/elements").KeyboardEventHandler<HTMLButtonElement> | undefined | null} */
+    onkeydown = undefined,
+
+    ...rest
+  } = $props();
+
+  import { getContext } from "svelte";
+  import { on } from "svelte/events";
 
   const ctx = getContext("carbon:MultiSelect");
 
-  // `bind:this` may already have nulled `ref` by the time the cleanup runs,
-  // so keep the node that was declared for `releaseRef`.
-  let declaredRef = null;
-
-  $: if (ctx && ref) {
-    declaredRef = ref;
-    ctx.declareRef({ key: "field", ref });
-  }
-
-  onMount(() => () => {
-    if (declaredRef) ctx?.releaseRef?.({ key: "field", ref: declaredRef });
+  // Declare the node to a `MultiSelect`, and release that same node when it
+  // goes away: `bind:this` has nulled `ref` by then.
+  $effect(() => {
+    const node = ref;
+    if (!ctx || !node) return;
+    ctx.declareRef({ key: "field", ref: node });
+    return () => ctx.releaseRef?.({ key: "field", ref: node });
   });
 
-  // `aria-expanded` reaches the button through `$$restProps`; callers pass
-  // a string, so Svelte 3 and 4 write `"true"` on the server.
-  $: ariaExpanded = $$props["aria-expanded"];
-  $: expanded = ariaExpanded === true || ariaExpanded === "true";
-  $: menuId = `menu-${id}`;
+  const expanded = $derived(ariaExpanded === true || ariaExpanded === "true");
 </script>
 
 <button
@@ -54,23 +70,23 @@
   type="button"
   {id}
   {role}
-  aria-controls={expanded ? menuId : undefined}
+  aria-controls={expanded ? `menu-${id}` : undefined}
   aria-disabled={disabled ? "true" : "false"}
   aria-readonly={readonly ? "true" : undefined}
+  aria-expanded={ariaExpanded}
   tabindex={disabled ? "-1" : tabindex}
-  class:bx--list-box__field={true}
-  {...$$restProps}
-  on:click
-  on:mouseover
-  on:mouseenter
-  on:mouseleave
-  on:keydown
-  on:keydown={(event) => {
-    // ListBox decides whether Escape propagates, based on the open state.
-    if (event.key !== "Escape") event.stopPropagation();
-  }}
-  on:focus
-  on:blur
+  {...rest}
+  class={["bx--list-box__field", className]}
+  {@attach (node) =>
+    // A listener on the element, not a delegated `onkeydown`, so it can stop
+    // the event before an ancestor's own listener sees it. It runs the
+    // consumer's `onkeydown` itself: a delegated one on this element would
+    // run after the stop.
+    on(node, "keydown", (event) => {
+      onkeydown?.(event);
+      // ListBox decides whether Escape propagates, based on the open state.
+      if (event.key !== "Escape") event.stopPropagation();
+    })}
 >
-  <slot />
+  {@render children?.()}
 </button>

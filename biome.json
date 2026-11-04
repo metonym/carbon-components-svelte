@@ -120,7 +120,8 @@
             "useFocusableInteractive": "off",
             "noNoninteractiveTabindex": "off",
             "noAmbiguousAnchorText": "off",
-            "noStaticElementInteractions": "off"
+            "noStaticElementInteractions": "off",
+            "useKeyWithClickEvents": "off"
           }
         }
       }

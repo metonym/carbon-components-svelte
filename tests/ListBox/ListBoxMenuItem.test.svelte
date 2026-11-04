@@ -19,9 +19,9 @@
   {highlighted}
   {disabled}
   {hasLeftIcon}
-  on:click={(e) => onclick?.(e)}
-  on:mouseenter={(e) => onmouseenter?.(e)}
-  on:mouseleave={(e) => onmouseleave?.(e)}
+  onclick={(e) => onclick?.(e)}
+  onmouseenter={(e) => onmouseenter?.(e)}
+  onmouseleave={(e) => onmouseleave?.(e)}
   {...$$restProps}
 >
   {#if slotContent}

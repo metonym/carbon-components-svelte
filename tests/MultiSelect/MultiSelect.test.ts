@@ -893,7 +893,9 @@ describe("MultiSelect", () => {
     for (const id of ids) expect(document.getElementById(id)).not.toBeNull();
   });
 
-  it("passes the click event as the clear event detail", async () => {
+  // Interim: `ListBoxSelection` calls `onclear({ trigger })`, so the legacy
+  // `clear` event has no DOM event detail until MultiSelect migrates.
+  it("dispatches clear once from the clear button", async () => {
     const onClear = vi.fn();
     render(MultiSelect, {
       props: { items, selectedIds: ["0", "1"], onClear },
@@ -901,7 +903,6 @@ describe("MultiSelect", () => {
 
     await user.click(screen.getByRole("button", { name: /clear/i }));
     expect(onClear).toHaveBeenCalledOnce();
-    expect(onClear).toHaveBeenCalledWith(expect.any(MouseEvent));
   });
 
   it("clears all selections when clear button is clicked", async () => {

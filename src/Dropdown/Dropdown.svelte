@@ -901,6 +901,11 @@
       close("outside-click");
     }
   }
+
+  import { createBubbler } from "svelte/legacy";
+
+  // Re-dispatches a runes child's events to this component's `on:` listeners.
+  const bubble = createBubbler();
 </script>
 
 <div
@@ -918,7 +923,11 @@
   class:bx--list-box__wrapper--fluid--disabled={isFluid && effectiveDisabled}
   class:bx--list-box__wrapper--fluid--readonly={isFluid && readonly}
   class:bx--list-box__wrapper--fluid--condensed={isFluid && condensed}
-  {@attach dismiss(() => ({ enabled: open, type: "click", handler: handleOutsideClick }))}
+  {@attach dismiss(() => ({
+    enabled: open,
+    type: "click",
+    handler: handleOutsideClick,
+  }))}
   {...wrapperProps}
 >
   {#if labelText || $$slots.labelChildren}
@@ -946,7 +955,7 @@
     {type}
     size={effectiveSize}
     class={dropdownListBoxClass}
-    on:click={(event) => {
+    onclick={(event) => {
       if (effectiveDisabled || readonly) return;
       // Options close the menu themselves. Anything else in the menu, such
       // as a group header, is not a dismissal.
@@ -1124,15 +1133,19 @@
         </span>
         {#if clearable && selectedId !== undefined}
           <ListBoxSelection
-            on:clear
-            on:clear={() => clear({ open: openOnClear })}
+            onclear={() => {
+              // Interim until this component migrates: its consumers still
+              // listen with `on:clear`.
+              dispatch("clear", null);
+              clear({ open: openOnClear });
+            }}
             translateWithId={translateWithIdSelection}
             disabled={effectiveDisabled}
             {readonly}
           />
         {/if}
         <ListBoxMenuIcon
-          on:click={(event) => {
+          onclick={(event) => {
             event.stopPropagation();
             if (effectiveDisabled || readonly) return;
             if (open) open = false;
@@ -1150,8 +1163,8 @@
         {readonly}
         focusTarget={ref}
         {form}
-        on:invalid={() => (requiredError = true)}
-        on:reset={() => (requiredError = false)}
+        onrequiredinvalid={() => (requiredError = true)}
+        onformreset={() => (requiredError = false)}
       />
     {/if}
     {#if open}
@@ -1167,8 +1180,11 @@
         {highlightedId}
         {wrapOptions}
         aria-busy={loading || undefined}
-        on:scroll
-        on:scroll={handleMenuScroll}
+        onscroll={(e) => {
+          $$restProps.onscroll?.(e);
+          bubble("scroll")(e);
+          handleMenuScroll(e);
+        }}
         bind:ref={listRef}
         style={isWindowed
           ? `max-height: ${menuMaxHeight}; overflow-y: auto;`
@@ -1226,14 +1242,14 @@
                       aria-setsize={items.length}
                       aria-posinset={actualIndex + 1}
                       data-virtual-index={isMeasured ? rowIndex : undefined}
-                      on:click={(event) => {
+                      onclick={(event) => {
                         if (item.disabled) {
                           event.stopPropagation();
                           return;
                         }
                         selectItem(item);
                       }}
-                      on:mousedown={(event) => {
+                      onmousedown={(event) => {
                         // Keep focus on the field so screen readers don't
                         // re-announce it on every option click.
                         event.preventDefault();
@@ -1244,14 +1260,14 @@
                           class:bx--list-box__menu-item__icon={true}
                           class:bx--list-box__menu-item__icon--left={true}
                         >
-                          <HighlightSlot {optionId} let:highlighted>
-                            <slot
-                              name="icon"
-                              {item}
-                              index={actualIndex}
-                              {selected}
-                              {highlighted}
-                            />
+                          <HighlightSlot {optionId}>
+                            {#snippet children({ highlighted })}<slot
+                                name="icon"
+                                {item}
+                                index={actualIndex}
+                                {selected}
+                                {highlighted}
+                              />{/snippet}
                           </HighlightSlot>
                         </span>
                       {:else if item.icon}
@@ -1263,13 +1279,13 @@
                         </span>
                       {/if}
                       {#if $$slots.default}
-                        <HighlightSlot {optionId} let:highlighted>
-                          <slot
-                            {item}
-                            index={actualIndex}
-                            {selected}
-                            {highlighted}
-                          />
+                        <HighlightSlot {optionId}>
+                          {#snippet children({ highlighted })}<slot
+                              {item}
+                              index={actualIndex}
+                              {selected}
+                              {highlighted}
+                            />{/snippet}
                         </HighlightSlot>
                       {:else}
                         {itemToString(item)}
@@ -1279,21 +1295,21 @@
                           class:bx--list-box__menu-item__icon={true}
                           class:bx--list-box__menu-item__icon--right={true}
                         >
-                          <HighlightSlot {optionId} let:highlighted>
-                            <slot
-                              name="iconEnd"
-                              {item}
-                              index={actualIndex}
-                              {selected}
-                              {highlighted}
-                              ><slot
-                                name="iconRight"
+                          <HighlightSlot {optionId}>
+                            {#snippet children({ highlighted })}<slot
+                                name="iconEnd"
                                 {item}
                                 index={actualIndex}
                                 {selected}
                                 {highlighted}
-                              /></slot
-                            >
+                                ><slot
+                                  name="iconRight"
+                                  {item}
+                                  index={actualIndex}
+                                  {selected}
+                                  {highlighted}
+                                /></slot
+                              >{/snippet}
                           </HighlightSlot>
                         </span>
                       {:else if selected}
@@ -1348,14 +1364,14 @@
                     disabled={item.disabled}
                     hasLeftIcon={Boolean($$slots.icon || item.icon)}
                     data-virtual-index={isMeasured ? rowIndex : undefined}
-                    on:click={(event) => {
+                    onclick={(event) => {
                       if (item.disabled) {
                         event.stopPropagation();
                         return;
                       }
                       selectItem(item);
                     }}
-                    on:mousedown={(event) => {
+                    onmousedown={(event) => {
                       // Keep focus on the field so screen readers don't
                       // re-announce it on every option click.
                       event.preventDefault();
@@ -1366,14 +1382,14 @@
                         class:bx--list-box__menu-item__icon={true}
                         class:bx--list-box__menu-item__icon--left={true}
                       >
-                        <HighlightSlot {optionId} let:highlighted>
-                          <slot
-                            name="icon"
-                            {item}
-                            {index}
-                            {selected}
-                            {highlighted}
-                          />
+                        <HighlightSlot {optionId}>
+                          {#snippet children({ highlighted })}<slot
+                              name="icon"
+                              {item}
+                              {index}
+                              {selected}
+                              {highlighted}
+                            />{/snippet}
                         </HighlightSlot>
                       </span>
                     {:else if item.icon}
@@ -1385,8 +1401,13 @@
                       </span>
                     {/if}
                     {#if $$slots.default}
-                      <HighlightSlot {optionId} let:highlighted>
-                        <slot {item} {index} {selected} {highlighted} />
+                      <HighlightSlot {optionId}>
+                        {#snippet children({ highlighted })}<slot
+                            {item}
+                            {index}
+                            {selected}
+                            {highlighted}
+                          />{/snippet}
                       </HighlightSlot>
                     {:else}
                       {itemToString(item)}
@@ -1396,21 +1417,21 @@
                         class:bx--list-box__menu-item__icon={true}
                         class:bx--list-box__menu-item__icon--right={true}
                       >
-                        <HighlightSlot {optionId} let:highlighted>
-                          <slot
-                            name="iconEnd"
-                            {item}
-                            {index}
-                            {selected}
-                            {highlighted}
-                            ><slot
-                              name="iconRight"
+                        <HighlightSlot {optionId}>
+                          {#snippet children({ highlighted })}<slot
+                              name="iconEnd"
                               {item}
                               {index}
                               {selected}
                               {highlighted}
-                            /></slot
-                          >
+                              ><slot
+                                name="iconRight"
+                                {item}
+                                {index}
+                                {selected}
+                                {highlighted}
+                              /></slot
+                            >{/snippet}
                         </HighlightSlot>
                       </span>
                     {:else if selected}

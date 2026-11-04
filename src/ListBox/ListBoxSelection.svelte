@@ -1,23 +1,56 @@
 <script>
   /**
-   * @event {KeyboardEvent | MouseEvent} clear
-   */
-
-  /**
+   * @restProps {div}
    * @typedef {"clearAll" | "clearSelection"} ListBoxSelectionTranslationId
    */
+  let {
+    /**
+     * Specify the number of selected items. When set, the selection renders
+     * as a tag with the count; rest props go to the tag, and its close
+     * button takes the naming and description attributes.
+     * @type {number | undefined}
+     */
+    selectionCount = undefined,
 
-  /**
-   * Specify the number of selected items.
-   * @type {number | undefined}
-   */
-  export let selectionCount = undefined;
+    /** Set to `true` to disable the list box selection */
+    disabled = false,
 
-  /** Set to `true` to disable the list box selection */
-  export let disabled = false;
+    /** Set to `true` to use the read-only variant */
+    readonly = false,
 
-  /** Set to `true` to use the read-only variant */
-  export let readonly = false;
+    /**
+     * Override the default translation ids.
+     * @type {(id: ListBoxSelectionTranslationId) => string}
+     */
+    translateWithId = (/** @type {ListBoxSelectionTranslationId} */ id) =>
+      defaultTranslations[id],
+
+    /**
+     * Obtain a reference to the clear button.
+     * @type {null | HTMLDivElement}
+     */
+    ref = $bindable(null),
+
+    /**
+     * Called when the user clears the selection, by click or Enter or Space.
+     * @type {((detail: { trigger: "click" | "keydown" }) => void) | undefined}
+     */
+    onclear = undefined,
+
+    /** @type {import("svelte/elements").ClassValue | undefined} */
+    class: className = undefined,
+
+    /** @type {string | undefined | null} */
+    "aria-label": ariaLabel = undefined,
+
+    /** @type {string | undefined | null} */
+    "aria-labelledby": ariaLabelledBy = undefined,
+
+    /** @type {string | undefined | null} */
+    "aria-describedby": ariaDescribedBy = undefined,
+
+    ...rest
+  } = $props();
 
   /** Default translation ids */
   export const translationIds = /** @type {const} */ ({
@@ -25,87 +58,78 @@
     clearSelection: "clearSelection",
   });
 
-  /**
-   * Override the default translation ids.
-   * @type {(id: ListBoxSelectionTranslationId) => string}
-   */
-  export let translateWithId = function translateWithId(id) {
-    return defaultTranslations[id];
-  };
-
-  /**
-   * Obtain a reference to the top-level HTML element.
-   * @bindable readonly
-   * @type {null | HTMLDivElement}
-   */
-  export let ref = null;
-
-  import { createEventDispatcher, getContext, onMount } from "svelte";
+  import { getContext } from "svelte";
+  import { on } from "svelte/events";
   import Close from "../icons/Close.svelte";
-  import { splitAriaNaming } from "../utils/aria-naming.js";
 
   const defaultTranslations = {
     [translationIds.clearAll]: "Clear all selected items",
     [translationIds.clearSelection]: "Clear selected item",
   };
-  const dispatch = createEventDispatcher();
   const ctx = getContext("carbon:MultiSelect");
 
-  // `bind:this` may already have nulled `ref` by the time the cleanup runs,
-  // so keep the node that was declared for `releaseRef`.
-  let declaredRef = null;
-
-  $: if (ctx && ref) {
-    declaredRef = ref;
-    ctx.declareRef({ key: "selection", ref });
-  }
-
-  onMount(() => () => {
-    if (declaredRef) ctx?.releaseRef?.({ key: "selection", ref: declaredRef });
+  // Declare the node to a `MultiSelect`, and release that same node when it
+  // goes away: `bind:this` has nulled `ref` by then.
+  $effect(() => {
+    const node = ref;
+    if (!ctx || !node) return;
+    ctx.declareRef({ key: "selection", ref: node });
+    return () => ctx.releaseRef?.({ key: "selection", ref: node });
   });
 
-  // With a selection count, the close icon takes focus, not the tag, so it
-  // gets the naming and description attributes.
-  $: ({ ariaLabel, ariaLabelledBy, ariaDescribedBy, rest } =
-    splitAriaNaming($$restProps));
-
-  $: translationId =
+  const translationId = $derived(
     selectionCount !== undefined && selectionCount > 1
       ? translationIds.clearAll
-      : translationIds.clearSelection;
-  $: description =
-    translateWithId?.(translationId) ?? defaultTranslations[translationId];
+      : translationIds.clearSelection,
+  );
+  const description = $derived(
+    translateWithId?.(translationId) ?? defaultTranslations[translationId],
+  );
+
+  // Listeners on the element, not delegated attributes, so they stop the
+  // events before an ancestor's own listeners, such as the field's, see them.
+  /** @param {HTMLElement} node */
+  function stopEvents(node) {
+    const offClick = on(node, "click", handleClick);
+    const offKeydown = on(node, "keydown", handleKeydown);
+    return () => {
+      offClick();
+      offKeydown();
+    };
+  }
 
   /** @param {MouseEvent} event */
-  function handleClear(event) {
-    if (!disabled && !readonly) {
-      dispatch("clear", event);
-    }
+  function handleClick(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (!disabled && !readonly) onclear?.({ trigger: "click" });
   }
 
   /** @param {KeyboardEvent} event */
-  function handleClearKeydown(event) {
+  function handleKeydown(event) {
+    event.stopPropagation();
     if (
       !disabled &&
       !readonly &&
       (event.key === "Enter" || event.key === " ")
     ) {
-      dispatch("clear", event);
+      onclear?.({ trigger: "keydown" });
     }
   }
 </script>
 
 {#if selectionCount !== undefined}
   <div
-    class:bx--tag={true}
-    class:bx--tag--filter={true}
-    class:bx--tag--high-contrast={true}
-    class:bx--tag--disabled={disabled}
     aria-hidden={readonly ? "true" : undefined}
     {...rest}
+    class={[
+      "bx--tag bx--tag--filter bx--tag--high-contrast",
+      disabled && "bx--tag--disabled",
+      className,
+    ]}
   >
     <span
-      class:bx--tag__label={true}
+      class="bx--tag__label"
       title={selectionCount?.toString()}
       aria-hidden={readonly || undefined}
     >
@@ -115,9 +139,8 @@
       bind:this={ref}
       role="button"
       tabindex="-1"
-      class:bx--tag__close-icon={true}
-      on:click|preventDefault|stopPropagation={handleClear}
-      on:keydown|stopPropagation={handleClearKeydown}
+      class="bx--tag__close-icon"
+      {@attach stopEvents}
       {disabled}
       aria-disabled={readonly || undefined}
       aria-label={ariaLabel ?? description}
@@ -133,20 +156,16 @@
   <div
     bind:this={ref}
     role="button"
-    aria-label={description}
+    aria-label={ariaLabel ?? description}
+    aria-labelledby={ariaLabelledBy}
+    aria-describedby={ariaDescribedBy}
     title={description}
     tabindex="-1"
-    class:bx--list-box__selection={true}
-    class:bx--tag--filter={selectionCount}
-    class:bx--list-box__selection--multi={selectionCount}
     aria-disabled={readonly ? "true" : undefined}
-    {...$$restProps}
-    on:click|preventDefault|stopPropagation={handleClear}
-    on:keydown|stopPropagation={handleClearKeydown}
+    {...rest}
+    class={["bx--list-box__selection", className]}
+    {@attach stopEvents}
   >
-    {#if selectionCount !== undefined}
-      {selectionCount}
-    {/if}
     <Close />
   </div>
 {/if}

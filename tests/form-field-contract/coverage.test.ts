@@ -24,13 +24,14 @@ const skeletonOwners = Object.keys(sources)
   .sort();
 
 const contracts: [keyof Exemptions, keyof FieldCase, string[]][] = [
-  ["fluid", "fluid", matching(/export let fluid\b/)],
-  ["state", "state", matching(/export let warnText\b/)],
+  // A prop declared with `export let`, or in a runes `$props()` destructure.
+  ["fluid", "fluid", matching(/^\s*(?:export let )?fluid\b\s*=/m)],
+  ["state", "state", matching(/^\s*(?:export let )?warnText\b\s*=/m)],
   ["reset", "reset", matching(/use:(formReset|attachFormReset)\b/)],
   [
     "selectOnFocus",
     "selectOnFocus",
-    matching(/export let selectTextOnFocus\b/),
+    matching(/^\s*(?:export let )?selectTextOnFocus\b\s*=/m),
   ],
   ["fluidSkeleton", "fluidSkeleton", skeletonOwners],
 ];

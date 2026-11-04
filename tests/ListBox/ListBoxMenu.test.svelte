@@ -27,7 +27,7 @@
   {open}
   {wrapOptions}
   {align}
-  on:scroll={(e) => onscroll?.(e)}
+  onscroll={(e) => onscroll?.(e)}
   {...$$restProps}
 >
   {#if slotContent}

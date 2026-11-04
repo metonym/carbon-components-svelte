@@ -1609,6 +1609,11 @@
       destroy: action.destroy,
     };
   }
+
+  import { createBubbler } from "svelte/legacy";
+
+  // Re-dispatches a runes child's events to this component's `on:` listeners.
+  const bubble = createBubbler();
 </script>
 
 <div
@@ -1701,8 +1706,12 @@
           {#if selectionCount > 0}
             <ListBoxSelection
               {selectionCount}
-              on:clear
-              on:clear={() => clear({ open: openOnClear })}
+              onclear={() => {
+                // Interim until this component migrates: its consumers still
+                // listen with `on:clear`.
+                dispatch("clear", null);
+                clear({ open: openOnClear });
+              }}
               translateWithId={translateWithIdSelection}
               disabled={effectiveDisabled}
               {readonly}
@@ -1827,7 +1836,7 @@
           {/if}
           {#if value}
             <ListBoxSelection
-              on:clear={() => {
+              onclear={() => {
                 value = "";
                 open = false;
                 // `bind:value` writes the DOM value without firing "input",
@@ -1846,7 +1855,7 @@
             />
           {/if}
           <ListBoxMenuIcon
-            on:click={(event) => {
+            onclick={(event) => {
               if (effectiveDisabled) return;
               event.stopPropagation();
               if (open) open = false;
@@ -1882,15 +1891,15 @@
             fieldDescribedById,
             $$restProps["aria-describedby"],
           )}
-          on:focus={() => {
+          onfocus={() => {
             fieldFocused = true;
           }}
-          on:click={() => {
+          onclick={() => {
             if (effectiveDisabled) return;
             if (open) open = false;
             else openMenu("click");
           }}
-          on:keydown={(event) => {
+          onkeydown={(event) => {
             // The field is only aria-disabled, so a click can still focus it.
             if (effectiveDisabled) return;
             if (
@@ -1976,7 +1985,7 @@
               typeaheadSearch(event.key);
             }
           }}
-          on:blur={(event) => {
+          onblur={(event) => {
             fieldFocused = false;
             dispatch("blur", event);
           }}
@@ -1987,8 +1996,12 @@
           {#if selectionCount > 0}
             <ListBoxSelection
               {selectionCount}
-              on:clear
-              on:clear={() => clear({ open: openOnClear })}
+              onclear={() => {
+                // Interim until this component migrates: its consumers still
+                // listen with `on:clear`.
+                dispatch("clear", null);
+                clear({ open: openOnClear });
+              }}
               translateWithId={translateWithIdSelection}
               disabled={effectiveDisabled}
               {readonly}
@@ -2009,8 +2022,8 @@
         {readonly}
         focusTarget={filterable ? inputRef : fieldRef}
         form={$$restProps.form}
-        on:invalid={() => (requiredError = true)}
-        on:reset={() => (requiredError = false)}
+        onrequiredinvalid={() => (requiredError = true)}
+        onformreset={() => (requiredError = false)}
       />
     {/if}
     {#if open}
@@ -2027,8 +2040,11 @@
         aria-multiselectable="true"
         aria-readonly={readonly || undefined}
         aria-busy={loading || undefined}
-        on:scroll
-        on:scroll={handleMenuScroll}
+        onscroll={(e) => {
+          $$restProps.onscroll?.(e);
+          bubble("scroll")(e);
+          handleMenuScroll(e);
+        }}
         bind:ref={listRef}
         style={isWindowed
           ? `max-height: ${menuMaxHeight}; overflow-y: auto;`
@@ -2110,68 +2126,68 @@
                       data-virtual-index={isMeasured ? rowIndex : undefined}
                       active={item.isSelectAll ? false : item.checked}
                       disabled={itemDisabled}
-                      on:click={(event) =>
+                      onclick={(event) =>
                         handleOptionClick(
                           event,
                           item,
                           actualIndex,
                           itemDisabled,
                         )}
-                      on:mousedown={(event) => {
+                      onmousedown={(event) => {
                         // Keep focus on the field so screen readers don't
                         // re-announce it on every option click.
                         event.preventDefault();
                       }}
                     >
-                      <HighlightSlot {optionId} let:highlighted>
-                        <div
-                          class:bx--form-item={true}
-                          class:bx--checkbox-wrapper={true}
-                          class:bx--checkbox-wrapper--readonly={readonly}
-                        >
-                          <input
-                            type="checkbox"
-                            class:bx--checkbox={true}
-                            id="checkbox-{id}-{item.id}"
-                            value={optionInput.value === "" ||
-                            optionInput.value == null
-                              ? "on"
-                              : optionInput.value}
-                            tabindex="-1"
-                            style="display: none;"
-                            checked={optionChecked}
-                            indeterminate={optionIndeterminate}
-                            disabled={itemDisabled}
-                            aria-readonly={readonly || undefined}
-                          />
-                          <label
-                            for="checkbox-{id}-{item.id}"
-                            use:optionOverflowTitle={"title" in optionInput
-                              ? optionInput.title
-                              : useTitleInItem
-                                ? itemToString(item)
-                                : undefined}
-                            data-contained-checkbox-state={optionIndeterminate
-                              ? "mixed"
-                              : undefined}
-                            data-contained-checkbox-disabled={optionIndeterminate &&
-                            itemDisabled
-                              ? "true"
-                              : undefined}
-                            class:bx--checkbox-label={true}
+                      <HighlightSlot {optionId}>
+                        {#snippet children({ highlighted })}<div
+                            class:bx--form-item={true}
+                            class:bx--checkbox-wrapper={true}
+                            class:bx--checkbox-wrapper--readonly={readonly}
                           >
-                            <span class:bx--checkbox-label-text={true}>
-                              <slot
-                                {item}
-                                index={actualIndex}
-                                selected={optionChecked}
-                                {highlighted}
-                              >
-                                {optionInput.labelText ?? itemToString(item)}
-                              </slot>
-                            </span>
-                          </label>
-                        </div>
+                            <input
+                              type="checkbox"
+                              class:bx--checkbox={true}
+                              id="checkbox-{id}-{item.id}"
+                              value={optionInput.value === "" ||
+                              optionInput.value == null
+                                ? "on"
+                                : optionInput.value}
+                              tabindex="-1"
+                              style="display: none;"
+                              checked={optionChecked}
+                              indeterminate={optionIndeterminate}
+                              disabled={itemDisabled}
+                              aria-readonly={readonly || undefined}
+                            />
+                            <label
+                              for="checkbox-{id}-{item.id}"
+                              use:optionOverflowTitle={"title" in optionInput
+                                ? optionInput.title
+                                : useTitleInItem
+                                  ? itemToString(item)
+                                  : undefined}
+                              data-contained-checkbox-state={optionIndeterminate
+                                ? "mixed"
+                                : undefined}
+                              data-contained-checkbox-disabled={optionIndeterminate &&
+                              itemDisabled
+                                ? "true"
+                                : undefined}
+                              class:bx--checkbox-label={true}
+                            >
+                              <span class:bx--checkbox-label-text={true}>
+                                <slot
+                                  {item}
+                                  index={actualIndex}
+                                  selected={optionChecked}
+                                  {highlighted}
+                                >
+                                  {optionInput.labelText ?? itemToString(item)}
+                                </slot>
+                              </span>
+                            </label>
+                          </div>{/snippet}
                       </HighlightSlot>
                     </ListBoxMenuItem>
                   {/if}
@@ -2244,63 +2260,63 @@
                     data-virtual-index={isMeasured ? rowIndex : undefined}
                     active={item.isSelectAll ? false : item.checked}
                     disabled={itemDisabled}
-                    on:click={(event) =>
+                    onclick={(event) =>
                       handleOptionClick(event, item, index, itemDisabled)}
-                    on:mousedown={(event) => {
+                    onmousedown={(event) => {
                       // Keep focus on the field so screen readers don't
                       // re-announce it on every option click.
                       event.preventDefault();
                     }}
                   >
-                    <HighlightSlot {optionId} let:highlighted>
-                      <div
-                        class:bx--form-item={true}
-                        class:bx--checkbox-wrapper={true}
-                        class:bx--checkbox-wrapper--readonly={readonly}
-                      >
-                        <input
-                          type="checkbox"
-                          class:bx--checkbox={true}
-                          id="checkbox-{id}-{item.id}"
-                          value={optionInput.value === "" ||
-                          optionInput.value == null
-                            ? "on"
-                            : optionInput.value}
-                          tabindex="-1"
-                          style="display: none;"
-                          checked={optionChecked}
-                          indeterminate={optionIndeterminate}
-                          disabled={itemDisabled}
-                          aria-readonly={readonly || undefined}
-                        />
-                        <label
-                          for="checkbox-{id}-{item.id}"
-                          use:optionOverflowTitle={"title" in optionInput
-                            ? optionInput.title
-                            : useTitleInItem
-                              ? itemToString(item)
-                              : undefined}
-                          data-contained-checkbox-state={optionIndeterminate
-                            ? "mixed"
-                            : undefined}
-                          data-contained-checkbox-disabled={optionIndeterminate &&
-                          itemDisabled
-                            ? "true"
-                            : undefined}
-                          class:bx--checkbox-label={true}
+                    <HighlightSlot {optionId}>
+                      {#snippet children({ highlighted })}<div
+                          class:bx--form-item={true}
+                          class:bx--checkbox-wrapper={true}
+                          class:bx--checkbox-wrapper--readonly={readonly}
                         >
-                          <span class:bx--checkbox-label-text={true}>
-                            <slot
-                              {item}
-                              {index}
-                              selected={optionChecked}
-                              {highlighted}
-                            >
-                              {optionInput.labelText ?? itemToString(item)}
-                            </slot>
-                          </span>
-                        </label>
-                      </div>
+                          <input
+                            type="checkbox"
+                            class:bx--checkbox={true}
+                            id="checkbox-{id}-{item.id}"
+                            value={optionInput.value === "" ||
+                            optionInput.value == null
+                              ? "on"
+                              : optionInput.value}
+                            tabindex="-1"
+                            style="display: none;"
+                            checked={optionChecked}
+                            indeterminate={optionIndeterminate}
+                            disabled={itemDisabled}
+                            aria-readonly={readonly || undefined}
+                          />
+                          <label
+                            for="checkbox-{id}-{item.id}"
+                            use:optionOverflowTitle={"title" in optionInput
+                              ? optionInput.title
+                              : useTitleInItem
+                                ? itemToString(item)
+                                : undefined}
+                            data-contained-checkbox-state={optionIndeterminate
+                              ? "mixed"
+                              : undefined}
+                            data-contained-checkbox-disabled={optionIndeterminate &&
+                            itemDisabled
+                              ? "true"
+                              : undefined}
+                            class:bx--checkbox-label={true}
+                          >
+                            <span class:bx--checkbox-label-text={true}>
+                              <slot
+                                {item}
+                                {index}
+                                selected={optionChecked}
+                                {highlighted}
+                              >
+                                {optionInput.labelText ?? itemToString(item)}
+                              </slot>
+                            </span>
+                          </label>
+                        </div>{/snippet}
                     </HighlightSlot>
                   </ListBoxMenuItem>
                 {/if}
