@@ -39,7 +39,7 @@
   </RadioButtonGroup>
 </div>
 <div data-testid="tag">
-  <Tag>Forecast<AILabel slot="decorator" /></Tag>
+  <Tag>Forecast{#snippet decorator()}<AILabel />{/snippet}</Tag>
 </div>
 <div data-testid="tile">
   <Tile>Forecast<AILabel slot="decorator" size="xl" bind:revertActive /></Tile>

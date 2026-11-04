@@ -12,7 +12,7 @@
     data-testid="tag-filter"
     filter={true}
     title="Clear filter"
-    on:close={() => (showTag = false)}
+    ondismiss={() => (showTag = false)}
   >
     Carbon
   </Tag>

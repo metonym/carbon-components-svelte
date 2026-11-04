@@ -26,12 +26,12 @@
   <SelectableTag {disabled}>{label}</SelectableTag>
 {:else if roving}
   <TagSet navigation="roving" multiline>
-    <Tag {maxWidth} {filter} {interactive} {href} {disabled} on:close>
+    <Tag {maxWidth} {filter} {interactive} {href} {disabled}>
       {label}
     </Tag>
   </TagSet>
 {:else}
-  <Tag {maxWidth} {filter} {interactive} {href} {disabled} {tabindex} on:close>
+  <Tag {maxWidth} {filter} {interactive} {href} {disabled} {tabindex}>
     {label}
   </Tag>
 {/if}

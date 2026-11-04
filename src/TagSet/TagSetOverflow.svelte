@@ -195,7 +195,7 @@
                       disabled={tag.disabled}
                       value={tag.value}
                       {size}
-                      on:close={() => handleTagClose(tag)}
+                      ondismiss={() => handleTagClose(tag)}
                     >
                       {tag.label}
                     </Tag>

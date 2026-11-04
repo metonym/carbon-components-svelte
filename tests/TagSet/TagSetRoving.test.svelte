@@ -27,7 +27,7 @@
 >
   <Tag filter={leadingFilter}>Read only</Tag>
   {#each labels as label (label)}
-    <Tag filter value={label} on:close={() => onClose(label)}>{label}</Tag>
+    <Tag filter value={label} ondismiss={() => onClose(label)}>{label}</Tag>
   {/each}
   <Tag interactive>Interactive</Tag>
   <SelectableTag>Selectable</SelectableTag>

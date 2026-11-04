@@ -2,10 +2,10 @@ import { render, screen } from "@testing-library/svelte";
 import FilterIconTags from "./Tag.filterIcon.test.svelte";
 
 describe("Tag filter with an icon", () => {
-  it("renders the icon prop and the icon slot before the label", () => {
+  it("renders the icon prop before the label", () => {
     render(FilterIconTags);
 
-    for (const text of ["Icon prop", "Icon slot"]) {
+    for (const text of ["Icon prop", "Second icon"]) {
       const tag = screen.getByText(text).closest(".bx--tag");
       assert(tag);
       const icon = tag.querySelector(".bx--tag__custom-icon");

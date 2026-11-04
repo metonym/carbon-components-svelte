@@ -227,7 +227,6 @@ describe("Tag", () => {
     ["Large tag", "bx--tag--lg"],
     ["Large filterable", "bx--tag--lg"],
     ["Large filterable", "bx--tag--filter"],
-    ["Inline tag", "bx--tag--inline"],
   ])("%s has %s", (label, cls) => {
     render(Tag);
 
@@ -293,7 +292,7 @@ describe("Tag", () => {
     expect(onMouseleave).toHaveBeenCalled();
   });
 
-  it("renders icon slot", () => {
+  it("renders the icon of an interactive tag", () => {
     render(Tag);
 
     const iconTag = screen.getByText("Icon slot");

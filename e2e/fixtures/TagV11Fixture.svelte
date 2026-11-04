@@ -55,7 +55,7 @@
     <Tag {size} filter>Filter</Tag>
     <Tag {size} interactive>Interactive</Tag>
     <Tag {size} href="#tag">Link</Tag>
-    <Tag {size} inline>Inline</Tag>
+    <Tag {size}>Inline</Tag>
     <OperationalTag {size}>Operational</OperationalTag>
     <SelectableTag {size}>Selectable</SelectableTag>
     <TagSkeleton {size} />

@@ -31,7 +31,7 @@
     }}
   >
     {#each labels as label (label)}
-      <Tag filter value={label} type="blue" on:close={() => onClose(label)}>
+      <Tag filter value={label} type="blue" ondismiss={() => onClose(label)}>
         {label}
       </Tag>
     {/each}

@@ -1,17 +1,26 @@
 <script>
-  /** @type {"xs" | "sm" | "default" | "lg" | "md"} */
-  export let size = "default";
+  /**
+   * @restProps {span}
+   */
+  let {
+    /** @type {"xs" | "sm" | "default" | "lg" | "md"} */
+    size = "default",
+
+    /** @type {import("svelte/elements").ClassValue | undefined} */
+    class: className = undefined,
+
+    ...rest
+  } = $props();
 </script>
 
 <span
-  class:bx--tag={true}
-  class:bx--tag--xs={size === "xs"}
-  class:bx--tag--sm={size === "sm"}
-  class:bx--tag--lg={size === "lg"}
-  class:bx--skeleton={true}
-  {...$$restProps}
-  on:click
-  on:mouseover
-  on:mouseenter
-  on:mouseleave
+  {...rest}
+  class={[
+    "bx--tag",
+    size === "xs" && "bx--tag--xs",
+    size === "sm" && "bx--tag--sm",
+    size === "lg" && "bx--tag--lg",
+    "bx--skeleton",
+    className,
+  ]}
 ></span>
