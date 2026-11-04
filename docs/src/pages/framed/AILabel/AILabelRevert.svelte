@@ -13,9 +13,9 @@
   onvaluechange={() => (revertActive = value !== suggestion)}
 >
   {#snippet decorator()}<AILabel
-    bind:revertActive
-    on:revert={() => (value = suggestion)}
-  >
-    <p>Suggested from the alert that opened this incident.</p>
-  </AILabel>{/snippet}
+      bind:revertActive
+      on:revert={() => (value = suggestion)}
+    >
+      <p>Suggested from the alert that opened this incident.</p>
+    </AILabel>{/snippet}
 </TextInput>

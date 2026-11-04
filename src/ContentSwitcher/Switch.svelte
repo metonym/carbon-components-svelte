@@ -145,10 +145,13 @@
   onclick={handleClick}
 >
   {#if hasIcon}
-    {#if children}{@render children({ selected: isSelected })}{:else}<Icon />{/if}
+    {#if children}{@render children({ selected: isSelected })}{:else}<Icon
+      />{/if}
   {:else}
     <span class="bx--content-switcher__label" use:titleWhenTruncated>
-      {#if children}{@render children({ selected: isSelected })}{:else}{text}{/if}
+      {#if children}{@render children({
+          selected: isSelected,
+        })}{:else}{text}{/if}
     </span>
   {/if}
 </button>

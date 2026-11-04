@@ -29,11 +29,7 @@
   <DatePicker portalMenu datePickerType="single">
     <DatePickerInput labelText="Meeting date" placeholder="mm/dd/yyyy" />
   </DatePicker>
-  <Button
-    kind="secondary"
-    type="button"
-    onclick={() => popover?.hidePopover()}
-  >
+  <Button kind="secondary" type="button" onclick={() => popover?.hidePopover()}>
     Close
   </Button>
 </Box>

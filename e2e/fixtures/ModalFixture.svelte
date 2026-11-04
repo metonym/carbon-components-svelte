@@ -25,8 +25,7 @@
   secondaryButtonText="Cancel"
   onprimaryaction={() => (events = [...events, "primary"])}
   onsecondaryaction={() => (events = [...events, "secondary"])}
-  onopenchange={(e) =>
-    (closeEvents = [...closeEvents, e?.trigger ?? "null"])}
+  onopenchange={(e) => (closeEvents = [...closeEvents, e?.trigger ?? "null"])}
 >
   <p data-testid="modal-body">Modal content</p>
   <Select data-testid="modal-select" labelText="Contact method">

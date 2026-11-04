@@ -51,7 +51,9 @@
 
   // Paired by position with the switch at the same index.
   const switchId = $derived(ctx.pairs.switchByPanel[id]);
-  const selected = $derived(switchId !== undefined && ctx.currentId === switchId);
+  const selected = $derived(
+    switchId !== undefined && ctx.currentId === switchId,
+  );
   let selectedOnce = $state(false);
   $effect.pre(() => {
     if (selected) selectedOnce = true;

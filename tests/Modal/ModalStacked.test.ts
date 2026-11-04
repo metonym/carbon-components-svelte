@@ -3,7 +3,8 @@ import { user } from "../utils/user";
 import ModalStacked from "./ModalStacked.test.svelte";
 
 /** The overlay root of the modal whose dialog carries `testId`. */
-const overlay = (testId: string) => screen.getByTestId(testId).closest(".bx--modal");
+const overlay = (testId: string) =>
+  screen.getByTestId(testId).closest(".bx--modal");
 
 describe("Stacked modals", () => {
   it("closes only the topmost modal when Escape is pressed", async () => {

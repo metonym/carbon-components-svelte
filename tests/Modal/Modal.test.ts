@@ -668,34 +668,37 @@ describe("Modal", () => {
     ).toBeInTheDocument();
   });
 
-  it.each([
-    "close-button",
-    "escape-key",
-    "outside-click",
-  ] as const)("calls onopenchange with the %s trigger", async (trigger) => {
-    const closeHandler = vi.fn();
-    render(ModalTest, {
-      props: {
-        open: true,
-        modalHeading: "Close Trigger Test",
-        preventCloseOnClickOutside: false,
-        onclose: closeHandler,
-      },
-    });
+  it.each(["close-button", "escape-key", "outside-click"] as const)(
+    "calls onopenchange with the %s trigger",
+    async (trigger) => {
+      const closeHandler = vi.fn();
+      render(ModalTest, {
+        props: {
+          open: true,
+          modalHeading: "Close Trigger Test",
+          preventCloseOnClickOutside: false,
+          onclose: closeHandler,
+        },
+      });
 
-    await closeVia[trigger]();
+      await closeVia[trigger]();
 
-    expect(closeHandler).toHaveBeenCalledTimes(1);
-    expect(closeHandler.mock.calls[0][0]).toMatchObject({
-      open: false,
-      trigger,
-    });
-  });
+      expect(closeHandler).toHaveBeenCalledTimes(1);
+      expect(closeHandler.mock.calls[0][0]).toMatchObject({
+        open: false,
+        trigger,
+      });
+    },
+  );
 
   it("calls no onopenchange when open is set to false from outside", async () => {
     const closeHandler = vi.fn();
     const { rerender } = render(ModalTest, {
-      props: { open: true, modalHeading: "Programmatic", onclose: closeHandler },
+      props: {
+        open: true,
+        modalHeading: "Programmatic",
+        onclose: closeHandler,
+      },
     });
 
     await closeVia.programmatic(rerender);

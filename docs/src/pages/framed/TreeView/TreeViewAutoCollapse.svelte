@@ -51,9 +51,7 @@
     <Button size="small" onclick={() => (activeId = 8)}>
       Select Blockchain
     </Button>
-    <Button size="small" onclick={() => (activeId = 12)}>
-      Select MongoDB
-    </Button>
+    <Button size="small" onclick={() => (activeId = 12)}>Select MongoDB</Button>
   </ButtonSet>
   <div>
     <TreeView

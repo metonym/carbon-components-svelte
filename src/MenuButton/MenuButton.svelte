@@ -190,13 +190,36 @@
     aria-haspopup="menu"
     aria-expanded={open}
     aria-label={$$restProps["aria-label"] ?? labelText}
-    onmousedown={(e) => { ((event) => event.preventDefault())(e); $$restProps.onmousedown?.(e); bubble("mousedown")(e); }}
-    onclick={(e) => { $$restProps.onclick?.(e); bubble("click")(e); (toggle)(e); }}
-    onfocus={(e) => { $$restProps.onfocus?.(e); bubble("focus")(e); }}
-    onblur={(e) => { $$restProps.onblur?.(e); bubble("blur")(e); }}
-    onmouseover={(e) => { $$restProps.onmouseover?.(e); bubble("mouseover")(e); }}
-    onmouseenter={(e) => { $$restProps.onmouseenter?.(e); bubble("mouseenter")(e); }}
-    onmouseleave={(e) => { $$restProps.onmouseleave?.(e); bubble("mouseleave")(e); }}
+    onmousedown={(e) => {
+      ((event) => event.preventDefault())(e);
+      $$restProps.onmousedown?.(e);
+      bubble("mousedown")(e);
+    }}
+    onclick={(e) => {
+      $$restProps.onclick?.(e);
+      bubble("click")(e);
+      toggle(e);
+    }}
+    onfocus={(e) => {
+      $$restProps.onfocus?.(e);
+      bubble("focus")(e);
+    }}
+    onblur={(e) => {
+      $$restProps.onblur?.(e);
+      bubble("blur")(e);
+    }}
+    onmouseover={(e) => {
+      $$restProps.onmouseover?.(e);
+      bubble("mouseover")(e);
+    }}
+    onmouseenter={(e) => {
+      $$restProps.onmouseenter?.(e);
+      bubble("mouseenter")(e);
+    }}
+    onmouseleave={(e) => {
+      $$restProps.onmouseleave?.(e);
+      bubble("mouseleave")(e);
+    }}
   >
     <slot name="labelChildren">{labelText}</slot>
   </Button>

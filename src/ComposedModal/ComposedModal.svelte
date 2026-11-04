@@ -121,17 +121,6 @@
     ...rest
   } = $props();
 
-
-
-
-
-
-
-
-
-
-
-
   import { onMount, setContext, tick, untrack } from "svelte";
   import { readable, writable } from "svelte/store";
   import Decorator from "../AILabel/Decorator.svelte";
@@ -181,7 +170,11 @@
    * @param {{ trigger?: string }} [detail]
    */
   function lifecycleEvent(type, detail) {
-    if (type !== "close" || !detail?.trigger || detail.trigger === "programmatic")
+    if (
+      type !== "close" ||
+      !detail?.trigger ||
+      detail.trigger === "programmatic"
+    )
       return true;
     const payload = cancelable({
       open: false,
@@ -319,7 +312,9 @@
   });
 
   /** @type {import("svelte/store").Writable<undefined | "active" | "revert">} */
-  const aiLabelState = writable(untrack(() => decorator) ? "active" : undefined);
+  const aiLabelState = writable(
+    untrack(() => decorator) ? "active" : undefined,
+  );
 </script>
 
 <div
@@ -369,7 +364,10 @@
     bind:this={innerModalRef}
     tabindex="-1"
     role={alert ? "alertdialog" : "dialog"}
-    aria-describedby={joinDescribedBy(alert ? bodyId : undefined, ariaDescribedBy)}
+    aria-describedby={joinDescribedBy(
+      alert ? bodyId : undefined,
+      ariaDescribedBy,
+    )}
     aria-modal="true"
     aria-label={ariaLabel}
     aria-labelledby={ariaLabelledby}

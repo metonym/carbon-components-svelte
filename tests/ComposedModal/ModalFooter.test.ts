@@ -268,7 +268,6 @@ describe("ModalFooter", () => {
     expect(onclose).not.toHaveBeenCalled();
   });
 
-
   it("should render slot content", () => {
     render(ModalFooterTest, {
       props: {

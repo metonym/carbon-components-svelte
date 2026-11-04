@@ -182,7 +182,9 @@
    * surface. `Decorator` clears it when no `AILabel` claims it.
    * @type {import("svelte/store").Writable<undefined | "active" | "revert">}
    */
-  const aiLabelState = writable(untrack(() => decorator) ? "active" : undefined);
+  const aiLabelState = writable(
+    untrack(() => decorator) ? "active" : undefined,
+  );
 
   /** @param {string} raw */
   function parse(raw) {

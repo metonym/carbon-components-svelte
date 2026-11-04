@@ -658,7 +658,11 @@
 
 <button
   bind:this={buttonRef}
-  {@attach dismiss(() => ({ enabled: open, type: "click", handler: handleOutsideClick }))}
+  {@attach dismiss(() => ({
+    enabled: open,
+    type: "click",
+    handler: handleOutsideClick,
+  }))}
   {@attach dismiss(() => ({
     enabled: tooltipOpen,
     type: "keydown",

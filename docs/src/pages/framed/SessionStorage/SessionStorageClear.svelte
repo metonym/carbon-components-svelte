@@ -32,9 +32,7 @@
   </div>
 
   <Stack gap={3} orientation="horizontal">
-    <Button size="small" onclick={() => storage.clearItem()}>
-      Clear item
-    </Button>
+    <Button size="small" onclick={() => storage.clearItem()}>Clear item</Button>
     <Button size="small" kind="danger" onclick={() => storage.clearAll()}>
       Clear all
     </Button>

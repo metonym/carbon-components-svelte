@@ -74,13 +74,34 @@
   ]
     .filter(Boolean)
     .join(" ")}
-  onclick={(e) => { $$restProps.onclick?.(e); bubble("click")(e); }}
-  onmousedown={(e) => { $$restProps.onmousedown?.(e); bubble("mousedown")(e); }}
-  onfocus={(e) => { $$restProps.onfocus?.(e); bubble("focus")(e); }}
-  onblur={(e) => { $$restProps.onblur?.(e); bubble("blur")(e); }}
-  onmouseover={(e) => { $$restProps.onmouseover?.(e); bubble("mouseover")(e); }}
-  onmouseenter={(e) => { $$restProps.onmouseenter?.(e); bubble("mouseenter")(e); }}
-  onmouseleave={(e) => { $$restProps.onmouseleave?.(e); bubble("mouseleave")(e); }}
+  onclick={(e) => {
+    $$restProps.onclick?.(e);
+    bubble("click")(e);
+  }}
+  onmousedown={(e) => {
+    $$restProps.onmousedown?.(e);
+    bubble("mousedown")(e);
+  }}
+  onfocus={(e) => {
+    $$restProps.onfocus?.(e);
+    bubble("focus")(e);
+  }}
+  onblur={(e) => {
+    $$restProps.onblur?.(e);
+    bubble("blur")(e);
+  }}
+  onmouseover={(e) => {
+    $$restProps.onmouseover?.(e);
+    bubble("mouseover")(e);
+  }}
+  onmouseenter={(e) => {
+    $$restProps.onmouseenter?.(e);
+    bubble("mouseenter")(e);
+  }}
+  onmouseleave={(e) => {
+    $$restProps.onmouseleave?.(e);
+    bubble("mouseleave")(e);
+  }}
 >
   <slot />
 </Button>

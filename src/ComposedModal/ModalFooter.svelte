@@ -105,20 +105,6 @@
     ...rest
   } = $props();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   import { onMount } from "svelte";
   import Button from "../Button/Button.svelte";
   import InlineLoading from "../InlineLoading/InlineLoading.svelte";

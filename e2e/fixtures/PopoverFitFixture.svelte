@@ -79,8 +79,7 @@
   style="overflow: auto; height: 5rem; margin: 6rem 1rem 1rem; border: 1px solid; padding: 0.5rem"
 >
   <div data-testid="scroll" style="position: relative; display: inline-block">
-    <Button size="sm" onclick={() => (open.scroll = !open.scroll)}
-      >Panel</Button
+    <Button size="sm" onclick={() => (open.scroll = !open.scroll)}>Panel</Button
     >
     <Popover open={open.scroll} caret align="bottom-left"
       ><div style="padding: 1rem; width: 16rem">{text}</div></Popover
@@ -140,8 +139,7 @@
   data-testid="bottom"
   style="position: relative; display: inline-block; margin: 0 1rem 0.5rem"
 >
-  <Button size="sm" onclick={() => (open.bottom = !open.bottom)}>Bottom</Button
-  >
+  <Button size="sm" onclick={() => (open.bottom = !open.bottom)}>Bottom</Button>
   <Popover open={open.bottom} caret align="bottom-left"
     ><div style="padding: 1rem; width: 16rem">{text}</div></Popover
   >

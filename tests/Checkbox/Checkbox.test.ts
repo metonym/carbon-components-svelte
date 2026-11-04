@@ -292,9 +292,7 @@ describe("Checkbox", () => {
   it("marks the read-only wrapper for styling", () => {
     render(CheckboxReadonly, { readonly: true });
 
-    expect(wrapper("checkbox")).toHaveClass(
-      "bx--checkbox-wrapper--readonly",
-    );
+    expect(wrapper("checkbox")).toHaveClass("bx--checkbox-wrapper--readonly");
   });
 
   it("describes the field as read-only for screen readers that ignore aria-readonly", () => {
@@ -358,9 +356,7 @@ describe("Checkbox", () => {
   it("marks the invalid state for styling", () => {
     render(CheckboxValidation, { invalid: true });
 
-    expect(wrapper("checkbox")).toHaveClass(
-      "bx--checkbox-wrapper--invalid",
-    );
+    expect(wrapper("checkbox")).toHaveClass("bx--checkbox-wrapper--invalid");
     expect(screen.getByRole("checkbox")).toHaveAttribute(
       "data-invalid",
       "true",
@@ -381,7 +377,9 @@ describe("Checkbox", () => {
     render(CheckboxValidation, { warn: true });
 
     expect(wrapper("checkbox")).toHaveClass("bx--checkbox-wrapper--warning");
-    expect(wrapper("checkbox")).not.toHaveClass("bx--checkbox-wrapper--invalid");
+    expect(wrapper("checkbox")).not.toHaveClass(
+      "bx--checkbox-wrapper--invalid",
+    );
   });
 
   it.each([{ disabled: true }, { readonly: true }])(

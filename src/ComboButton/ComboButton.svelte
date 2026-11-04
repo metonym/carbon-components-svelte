@@ -199,13 +199,34 @@
     aria-label={ariaLabel ?? labelText}
     aria-labelledby={ariaLabelledBy}
     aria-describedby={ariaDescribedBy}
-    onclick={(e) => { $$restProps.onclick?.(e); bubble("click")(e); }}
-    onmousedown={(e) => { $$restProps.onmousedown?.(e); bubble("mousedown")(e); }}
-    onfocus={(e) => { $$restProps.onfocus?.(e); bubble("focus")(e); }}
-    onblur={(e) => { $$restProps.onblur?.(e); bubble("blur")(e); }}
-    onmouseover={(e) => { $$restProps.onmouseover?.(e); bubble("mouseover")(e); }}
-    onmouseenter={(e) => { $$restProps.onmouseenter?.(e); bubble("mouseenter")(e); }}
-    onmouseleave={(e) => { $$restProps.onmouseleave?.(e); bubble("mouseleave")(e); }}
+    onclick={(e) => {
+      $$restProps.onclick?.(e);
+      bubble("click")(e);
+    }}
+    onmousedown={(e) => {
+      $$restProps.onmousedown?.(e);
+      bubble("mousedown")(e);
+    }}
+    onfocus={(e) => {
+      $$restProps.onfocus?.(e);
+      bubble("focus")(e);
+    }}
+    onblur={(e) => {
+      $$restProps.onblur?.(e);
+      bubble("blur")(e);
+    }}
+    onmouseover={(e) => {
+      $$restProps.onmouseover?.(e);
+      bubble("mouseover")(e);
+    }}
+    onmouseenter={(e) => {
+      $$restProps.onmouseenter?.(e);
+      bubble("mouseenter")(e);
+    }}
+    onmouseleave={(e) => {
+      $$restProps.onmouseleave?.(e);
+      bubble("mouseleave")(e);
+    }}
   >
     <slot name="labelChildren">{labelText}</slot>
   </Button>
@@ -224,13 +245,38 @@
       : ''}"
     aria-haspopup="menu"
     aria-expanded={open}
-    onmousedown={(e) => { ((event) => event.preventDefault())(e); $$restProps.onmousedown?.(e); bubble("mousedown")(e); (dispatchTriggerEvent("mousedown"))(e); }}
+    onmousedown={(e) => {
+      ((event) => event.preventDefault())(e);
+      $$restProps.onmousedown?.(e);
+      bubble("mousedown")(e);
+      dispatchTriggerEvent("mousedown")(e);
+    }}
     onclick={toggleOpen}
-    onfocus={(e) => { $$restProps.onfocus?.(e); bubble("focus")(e); (dispatchTriggerEvent("focus"))(e); }}
-    onblur={(e) => { $$restProps.onblur?.(e); bubble("blur")(e); (dispatchTriggerEvent("blur"))(e); }}
-    onmouseover={(e) => { $$restProps.onmouseover?.(e); bubble("mouseover")(e); (dispatchTriggerEvent("mouseover"))(e); }}
-    onmouseenter={(e) => { $$restProps.onmouseenter?.(e); bubble("mouseenter")(e); (dispatchTriggerEvent("mouseenter"))(e); }}
-    onmouseleave={(e) => { $$restProps.onmouseleave?.(e); bubble("mouseleave")(e); (dispatchTriggerEvent("mouseleave"))(e); }}
+    onfocus={(e) => {
+      $$restProps.onfocus?.(e);
+      bubble("focus")(e);
+      dispatchTriggerEvent("focus")(e);
+    }}
+    onblur={(e) => {
+      $$restProps.onblur?.(e);
+      bubble("blur")(e);
+      dispatchTriggerEvent("blur")(e);
+    }}
+    onmouseover={(e) => {
+      $$restProps.onmouseover?.(e);
+      bubble("mouseover")(e);
+      dispatchTriggerEvent("mouseover")(e);
+    }}
+    onmouseenter={(e) => {
+      $$restProps.onmouseenter?.(e);
+      bubble("mouseenter")(e);
+      dispatchTriggerEvent("mouseenter")(e);
+    }}
+    onmouseleave={(e) => {
+      $$restProps.onmouseleave?.(e);
+      bubble("mouseleave")(e);
+      dispatchTriggerEvent("mouseleave")(e);
+    }}
   />
   <Menu
     anchor={triggerRef}

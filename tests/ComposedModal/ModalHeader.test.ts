@@ -74,7 +74,6 @@ describe("ModalHeader", () => {
     expect(onclick).toHaveBeenCalledTimes(1);
   });
 
-
   it("should render slot content", () => {
     render(ModalHeaderTest, {
       props: {

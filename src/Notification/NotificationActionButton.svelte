@@ -32,10 +32,22 @@
     $describedBy,
     $$restProps["aria-describedby"],
   )}
-  onclick={(e) => { $$restProps.onclick?.(e); bubble("click")(e); }}
-  onmouseover={(e) => { $$restProps.onmouseover?.(e); bubble("mouseover")(e); }}
-  onmouseenter={(e) => { $$restProps.onmouseenter?.(e); bubble("mouseenter")(e); }}
-  onmouseleave={(e) => { $$restProps.onmouseleave?.(e); bubble("mouseleave")(e); }}
+  onclick={(e) => {
+    $$restProps.onclick?.(e);
+    bubble("click")(e);
+  }}
+  onmouseover={(e) => {
+    $$restProps.onmouseover?.(e);
+    bubble("mouseover")(e);
+  }}
+  onmouseenter={(e) => {
+    $$restProps.onmouseenter?.(e);
+    bubble("mouseenter")(e);
+  }}
+  onmouseleave={(e) => {
+    $$restProps.onmouseleave?.(e);
+    bubble("mouseleave")(e);
+  }}
 >
   <slot />
 </Button>

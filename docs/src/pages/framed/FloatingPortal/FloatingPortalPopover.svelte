@@ -56,11 +56,7 @@
     <OverflowMenuItem text="Duplicate" />
     <OverflowMenuItem danger text="Delete" />
   </OverflowMenu>
-  <Button
-    kind="secondary"
-    type="button"
-    onclick={() => popover?.hidePopover()}
-  >
+  <Button kind="secondary" type="button" onclick={() => popover?.hidePopover()}>
     Close
   </Button>
 </Box>

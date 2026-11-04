@@ -295,8 +295,12 @@
     loadingIndicator(loading, loadingDelay);
   });
 
-  const { position: effectiveTooltipPosition, alignment: effectiveTooltipAlignment } =
-    $derived(tooltipPlacement(tooltipAlign, tooltipPosition, tooltipAlignment));
+  const {
+    position: effectiveTooltipPosition,
+    alignment: effectiveTooltipAlignment,
+  } = $derived(
+    tooltipPlacement(tooltipAlign, tooltipPosition, tooltipAlignment),
+  );
 
   // Without an iconDescription there is nothing to show in a tooltip or
   // announce as the accessible name via the assistive-text span; skip the
@@ -520,7 +524,9 @@
           "default"),
   );
   const isLink = $derived(Boolean(href) && !isDisabled);
-  const iconStyle = $derived(hasIconOnly ? "margin-inline-start: 0" : undefined);
+  const iconStyle = $derived(
+    hasIconOnly ? "margin-inline-start: 0" : undefined,
+  );
   const iconProps = $derived({
     class: "bx--btn__icon",
     "aria-hidden": /** @type {const} */ ("true"),
@@ -633,7 +639,8 @@
 
 {#snippet content()}
   {#if hasIconOnly && iconDescription && !showSpinner}
-    <span class="bx--assistive-text">{iconDescription}{@render shortcutKeys()}</span
+    <span class="bx--assistive-text"
+      >{iconDescription}{@render shortcutKeys()}</span
     >
   {/if}
   {#if !hasIconOnly}

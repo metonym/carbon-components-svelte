@@ -96,10 +96,10 @@
         onclick={() => handleClose("close")}
       >
         {#snippet iconChildren()}<Close
-          size={20}
-          class="bx--modal-close__icon"
-          aria-hidden="true"
-        />{/snippet}
+            size={20}
+            class="bx--modal-close__icon"
+            aria-hidden="true"
+          />{/snippet}
       </Button>
     </div>
   </header>

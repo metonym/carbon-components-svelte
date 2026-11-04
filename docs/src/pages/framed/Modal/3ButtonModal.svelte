@@ -14,9 +14,9 @@
     { text: "Cancel", kind: "ghost" },
     { text: "Save draft", kind: "secondary" },
   ]}
-  onsecondaryaction={({ detail }) => {
-    if (detail.text === "Cancel") open = false;
-    if (detail.text === "Save draft") console.log("Save draft");
+  onsecondaryaction={({ text }) => {
+    if (text === "Cancel") open = false;
+    if (text === "Save draft") console.log("Save draft");
   }}
 >
   <p>Create a new Cloudant database in the US South region.</p>

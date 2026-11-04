@@ -58,8 +58,7 @@ start at 320 px. -->
       >
     </span>
     <span data-testid="modal-popover" style="position: relative">
-      <Button size="sm" onclick={() => (open.modal = !open.modal)}>Plan</Button
-      >
+      <Button size="sm" onclick={() => (open.modal = !open.modal)}>Plan</Button>
       <Popover open={open.modal} portalPopover caret align="bottom"
         ><div style="padding: 1rem; width: 16rem">{text}</div></Popover
       >

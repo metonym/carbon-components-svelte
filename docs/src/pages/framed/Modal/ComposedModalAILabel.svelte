@@ -21,6 +21,6 @@
   </ModalBody>
   <ModalFooter primaryButtonText="Apply budget" />
   {#snippet decorator()}<AILabel>
-    <p>Generated from 90 days of billing data across your workspace.</p>
-  </AILabel>{/snippet}
+      <p>Generated from 90 days of billing data across your workspace.</p>
+    </AILabel>{/snippet}
 </ComposedModal>

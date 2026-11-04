@@ -49,7 +49,6 @@ describe("Link", () => {
     expect(iconWrapper.tagName).toBe("SPAN");
   });
 
-
   it.each([
     ["inline", "link-inline", "bx--link--inline"],
     ["muted", "link-muted", "bx--link--muted"],

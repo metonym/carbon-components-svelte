@@ -43,9 +43,7 @@
             positions.
           </p>
           <ButtonSet>
-            <Button onclick={() => triggerToast("top-right")}>
-              Top right
-            </Button>
+            <Button onclick={() => triggerToast("top-right")}>Top right</Button>
             <Button onclick={() => triggerToast("bottom-right")}>
               Bottom right
             </Button>

@@ -483,7 +483,11 @@
   bind:this={anchorRef}
   class:bx--search-menu={true}
   class:bx--search-menu--bar={$$slots.before}
-  {@attach dismiss(() => ({ enabled: open, type: "click", handler: handleOutsideClick }))}
+  {@attach dismiss(() => ({
+    enabled: open,
+    type: "click",
+    handler: handleOutsideClick,
+  }))}
 >
   {#if $$slots.before}
     <!-- svelte-ignore a11y-no-static-element-interactions -->

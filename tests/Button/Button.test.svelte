@@ -50,7 +50,9 @@
 
 <Button href="https://example.com" target="_blank">External link</Button>
 
-<Button>{#snippet child({ props })}<p {...props}>Custom element</p>{/snippet}</Button>
+<Button
+  >{#snippet child({ props })}<p {...props}>Custom element</p>{/snippet}</Button
+>
 
 <Button disabled>Disabled button</Button>
 

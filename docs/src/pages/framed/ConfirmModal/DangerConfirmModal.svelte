@@ -4,8 +4,7 @@
   let open = false;
 </script>
 
-<Button kind="danger" onclick={() => (open = true)}
-  >Delete all instances</Button
+<Button kind="danger" onclick={() => (open = true)}>Delete all instances</Button
 >
 
 <ConfirmModal

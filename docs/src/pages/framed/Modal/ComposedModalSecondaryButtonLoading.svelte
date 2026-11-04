@@ -35,8 +35,8 @@
         loadingDescription: "Saving...",
       },
     ]}
-    onsecondaryaction={({ detail }) => {
-      if (detail.text === "Save as draft") onSaveDraft();
+    onsecondaryaction={({ text }) => {
+      if (text === "Save as draft") onSaveDraft();
     }}
   />
 </ComposedModal>

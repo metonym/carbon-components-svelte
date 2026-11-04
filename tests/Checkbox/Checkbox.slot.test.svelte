@@ -4,6 +4,6 @@
 
 <Checkbox data-testid="checkbox-slot">
   {#snippet labelText()}<span data-testid="custom-label">
-    Custom label content
-  </span>{/snippet}
+      Custom label content
+    </span>{/snippet}
 </Checkbox>

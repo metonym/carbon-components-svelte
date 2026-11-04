@@ -8,18 +8,26 @@
 
 <ContentSwitcher bind:selectedIndex>
   <Switch text="One">
-    {#snippet children({ selected })}<span data-testid="slot-one">{selected ? "on" : "off"}</span>{/snippet}
+    {#snippet children({ selected })}<span data-testid="slot-one"
+        >{selected ? "on" : "off"}</span
+      >{/snippet}
   </Switch>
   <Switch text="Two">
-    {#snippet children({ selected })}<span data-testid="slot-two">{selected ? "on" : "off"}</span>{/snippet}
+    {#snippet children({ selected })}<span data-testid="slot-two"
+        >{selected ? "on" : "off"}</span
+      >{/snippet}
   </Switch>
 </ContentSwitcher>
 
 <ContentSwitcher>
   <Switch icon={Dashboard} text="Icon one">
-    {#snippet children({ selected })}<span data-testid="icon-slot-one">{selected ? "on" : "off"}</span>{/snippet}
+    {#snippet children({ selected })}<span data-testid="icon-slot-one"
+        >{selected ? "on" : "off"}</span
+      >{/snippet}
   </Switch>
   <Switch icon={Dashboard} text="Icon two">
-    {#snippet children({ selected })}<span data-testid="icon-slot-two">{selected ? "on" : "off"}</span>{/snippet}
+    {#snippet children({ selected })}<span data-testid="icon-slot-two"
+        >{selected ? "on" : "off"}</span
+      >{/snippet}
   </Switch>
 </ContentSwitcher>

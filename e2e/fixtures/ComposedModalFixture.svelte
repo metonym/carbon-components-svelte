@@ -25,8 +25,7 @@
 
 <ComposedModal
   bind:open
-  onopenchange={(e) =>
-    (closeEvents = [...closeEvents, e?.trigger ?? "null"])}
+  onopenchange={(e) => (closeEvents = [...closeEvents, e?.trigger ?? "null"])}
 >
   <ModalHeader titleText="Modal title" />
   <ModalBody>

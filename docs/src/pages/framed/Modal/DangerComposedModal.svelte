@@ -12,11 +12,7 @@
 
 <Button kind="danger" onclick={() => (open = true)}>Delete all</Button>
 
-<ComposedModal
-  danger
-  bind:open
-  onprimaryaction={() => (open = false)}
->
+<ComposedModal danger bind:open onprimaryaction={() => (open = false)}>
   <ModalHeader titleText="Delete all instances" />
   <ModalBody>
     <p>This is a permanent action and cannot be undone.</p>

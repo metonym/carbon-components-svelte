@@ -52,7 +52,6 @@
   </Link>
 </div>
 
-
 <div data-testid="link-large">
   <Link size="lg" href="https://www.carbondesignsystem.com/">
     Carbon Design System
@@ -92,7 +91,6 @@
     Carbon Design System
   </Link>
 </div>
-
 
 <div data-testid="link-disabled-blank">
   <Link

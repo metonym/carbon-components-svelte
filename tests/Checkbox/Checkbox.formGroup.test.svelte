@@ -35,8 +35,16 @@
       legendText="Channel"
       onselectedchange={(e) => onChange(e.selected)}
     >
-      <Checkbox value="a" labelText="A" oncheckedchange={(e) => onCheck(e.checked)} />
-      <Checkbox value="b" labelText="B" oncheckedchange={(e) => onCheck(e.checked)} />
+      <Checkbox
+        value="a"
+        labelText="A"
+        oncheckedchange={(e) => onCheck(e.checked)}
+      />
+      <Checkbox
+        value="b"
+        labelText="B"
+        oncheckedchange={(e) => onCheck(e.checked)}
+      />
     </CheckboxGroup>
   {/if}
 </form>

@@ -7,9 +7,7 @@
   export let onsubmit: ((detail: { trigger: string }) => void) | undefined =
     undefined;
   export let onclickbuttonprimary:
-    | ((detail: { trigger: string }) => void)
-    | undefined =
-    undefined;
+    ((detail: { trigger: string }) => void) | undefined = undefined;
 </script>
 
 <Modal
@@ -19,7 +17,10 @@
   secondaryButtonText="Cancel"
   {shouldSubmitOnEnter}
   {primaryButtonDisabled}
-  onprimaryaction={(e) => { ((e) => onsubmit?.(e))(e); ((e) => onclickbuttonprimary?.(e))(e); }}
+  onprimaryaction={(e) => {
+    ((e) => onsubmit?.(e))(e);
+    ((e) => onclickbuttonprimary?.(e))(e);
+  }}
 >
   <textarea data-testid="modal-textarea"></textarea>
   <a href="#details" data-testid="modal-link">Learn more</a>

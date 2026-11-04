@@ -16,7 +16,9 @@
 </script>
 
 <div data-testid="checkbox">
-  <Checkbox labelText="Enable failover">{#snippet decorator()}<AILabel />{/snippet}</Checkbox>
+  <Checkbox labelText="Enable failover"
+    >{#snippet decorator()}<AILabel />{/snippet}</Checkbox
+  >
 </div>
 <div data-testid="checkbox-inline">
   <Checkbox labelText="Inline">

@@ -13,7 +13,11 @@
   export let onloadingsuccess: (() => void) | undefined = undefined;
 </script>
 
-<ComposedModal open selectorPrimaryFocus={null} onprimaryaction={() => onsubmit?.()}>
+<ComposedModal
+  open
+  selectorPrimaryFocus={null}
+  onprimaryaction={() => onsubmit?.()}
+>
   <ModalHeader titleText="Save changes" />
   <ModalBody>Save your changes.</ModalBody>
   <ModalFooter

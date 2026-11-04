@@ -97,9 +97,6 @@
 <Button data-testid="set-selected" onclick={() => (selectedIds = [0, 7])}>
   Set selected
 </Button>
-<Button
-  data-testid="set-same"
-  onclick={() => (selectedIds = [...selectedIds])}
->
+<Button data-testid="set-same" onclick={() => (selectedIds = [...selectedIds])}>
   Set same
 </Button>

@@ -33,7 +33,9 @@ describe("ComposedModal", () => {
     });
 
     expect(screen.getByRole("dialog")).toHaveAttribute("aria-label", "");
-    expect(document.querySelector(".bx--modal")).not.toHaveAttribute("aria-label");
+    expect(document.querySelector(".bx--modal")).not.toHaveAttribute(
+      "aria-label",
+    );
   });
 
   it("names the dialog from the title without labelling the root", () => {
@@ -49,7 +51,9 @@ describe("ComposedModal", () => {
       "aria-label",
       "Title only",
     );
-    expect(document.querySelector(".bx--modal")).not.toHaveAttribute("aria-label");
+    expect(document.querySelector(".bx--modal")).not.toHaveAttribute(
+      "aria-label",
+    );
     // The heading id reference is dropped once the header has registered.
     expect(screen.getByRole("dialog")).not.toHaveAttribute("aria-labelledby");
   });
@@ -310,7 +314,6 @@ describe("ComposedModal", () => {
     });
     await tick();
     await tick();
-
   });
 
   it("restores focus only when the modal's own transform transition ends", async () => {
@@ -738,7 +741,8 @@ describe("ComposedModal", () => {
       },
     });
 
-    if (viaSubmit) await user.click(screen.getByRole("button", { name: "Save" }));
+    if (viaSubmit)
+      await user.click(screen.getByRole("button", { name: "Save" }));
     else await rerender({ open: false });
     await flushProgrammaticClose();
 

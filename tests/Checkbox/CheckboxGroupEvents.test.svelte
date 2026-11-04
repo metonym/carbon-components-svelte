@@ -16,11 +16,7 @@
 
   function handleCheck(value: string, checked: boolean) {
     checkCounts[value as keyof typeof checkCounts]++;
-    onCheck(
-      value,
-      checked,
-      checkCounts[value as keyof typeof checkCounts],
-    );
+    onCheck(value, checked, checkCounts[value as keyof typeof checkCounts]);
   }
 </script>
 

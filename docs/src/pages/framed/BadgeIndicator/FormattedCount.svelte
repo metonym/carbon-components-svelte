@@ -21,7 +21,9 @@
     iconDescription="Notifications"
     tooltipAlignment="start"
   >
-    {#snippet badge()}<BadgeIndicator count={formatCount(notifications)} />{/snippet}
+    {#snippet badge()}<BadgeIndicator
+        count={formatCount(notifications)}
+      />{/snippet}
   </Button>
   <Button kind="ghost" icon={Email} iconDescription="Messages">
     {#snippet badge()}<BadgeIndicator count={formatCount(messages)} />{/snippet}

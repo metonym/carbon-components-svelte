@@ -23,9 +23,9 @@
     primaryButtonText="Proceed"
     primaryButtonDisabled={!checked}
     secondaryButtons={[{ text: "Cancel" }, { text: "Review" }]}
-    onsecondaryaction={({ detail }) => {
-      if (detail.text === "Cancel") open = false;
-      if (detail.text === "Review") console.log("Review");
+    onsecondaryaction={({ text }) => {
+      if (text === "Cancel") open = false;
+      if (text === "Review") console.log("Review");
     }}
   />
 </ComposedModal>
