@@ -1,61 +1,77 @@
 <script>
   /**
-   * Set an id for the panel element.
-   * Prefer a stable value when switches are added or removed.
+   * @restProps {div}
    */
-  export let id = uniqueId();
 
-  /**
-   * Set to `true` to defer mounting panel content until its switch is first selected
-   */
-  export let lazy = false;
+  const fallbackId = $props.id();
 
-  /**
-   * Set to `true` to unmount panel content when its switch is deselected
-   */
-  export let unmountOnHide = false;
+  let {
+    /**
+     * Set an id for the panel element.
+     * Prefer a stable value when switches are added or removed.
+     * @type {string}
+     */
+    id = fallbackId,
 
-  /**
-   * Obtain a reference to the panel HTML element.
-   * @type {null | HTMLDivElement}
-   * @bindable readonly
-   */
-  export let ref = null;
+    /**
+     * Set to `true` to defer mounting panel content until its switch is first selected
+     */
+    lazy = false,
 
-  import { getContext, onMount } from "svelte";
-  import { uniqueId } from "../utils/unique-id.js";
+    /**
+     * Set to `true` to unmount panel content when its switch is deselected
+     */
+    unmountOnHide = false,
 
-  const { currentId, pairs, addPanel, removePanel } = getContext(
-    "carbon:ContentSwitcher",
-  );
+    /**
+     * Obtain a reference to the panel HTML element.
+     * @type {null | HTMLDivElement}
+     */
+    ref = $bindable(null),
 
-  addPanel(id);
+    /**
+     * The panel content.
+     * @type {import("svelte").Snippet | undefined}
+     */
+    children = undefined,
 
-  onMount(() => {
-    return () => {
-      removePanel(id);
-    };
-  });
+    /** @type {string | undefined | null} */
+    "aria-label": ariaLabel = undefined,
 
-  let selectedOnce = false;
+    ...rest
+  } = $props();
+
+  import { onMount, untrack } from "svelte";
+  import { getContentSwitcher } from "./content-switcher-context.js";
+
+  const ctx = getContentSwitcher();
+
+  untrack(() => ctx.addPanel(id));
+  onMount(() => () => ctx.removePanel(id));
 
   // Paired by position with the switch at the same index.
-  $: switchId = $pairs.switchByPanel[id];
-  $: selected = switchId !== undefined && $currentId === switchId;
-  $: if (selected) selectedOnce = true;
-  $: shouldMount = unmountOnHide ? selected : lazy ? selectedOnce : true;
+  const switchId = $derived(ctx.pairs.switchByPanel[id]);
+  const selected = $derived(switchId !== undefined && ctx.currentId === switchId);
+  let selectedOnce = $state(false);
+  $effect.pre(() => {
+    if (selected) selectedOnce = true;
+  });
+  const shouldMount = $derived(
+    unmountOnHide ? selected : lazy ? selectedOnce || selected : true,
+  );
 </script>
 
 <div
   bind:this={ref}
   role="tabpanel"
   tabindex="0"
-  aria-labelledby={$$restProps["aria-label"] ? undefined : switchId}
-  hidden={selected ? undefined : ""}
+  aria-label={ariaLabel}
+  aria-labelledby={ariaLabel ? undefined : switchId}
+  hidden={selected ? undefined : true}
   {id}
-  {...$$restProps}
+  {...rest}
 >
   {#if shouldMount}
-    <slot />
+    {@render children?.()}
   {/if}
 </div>

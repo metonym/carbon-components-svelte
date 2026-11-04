@@ -160,7 +160,7 @@
 </script>
 
 <Stack gap={6}>
-  <ContentSwitcher {selectedIndex} on:change={handleTreeSwitch}>
+  <ContentSwitcher {selectedIndex} onselectedchange={(e) => handleTreeSwitch(e.index)}>
     <Switch text="Large Tree (1000+ nodes)" />
     <Switch text="Deep Tree (100 levels)" />
   </ContentSwitcher>

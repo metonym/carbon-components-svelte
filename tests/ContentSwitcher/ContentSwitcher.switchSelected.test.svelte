@@ -7,7 +7,7 @@
   export let selectedIndex = 0;
 </script>
 
-<ContentSwitcher bind:selectedIndex on:change={(e) => onChange(e.detail)}>
+<ContentSwitcher bind:selectedIndex onselectedchange={(e) => onChange(e.index)}>
   <Switch text="A" />
   <Switch text="B" selected={second} />
   <Switch text="C" />

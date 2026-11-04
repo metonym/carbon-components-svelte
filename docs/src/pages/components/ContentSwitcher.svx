@@ -24,7 +24,7 @@ Create a content switcher with switch components. Each switch needs a text label
 
 ## Switching views
 
-Pass one `SwitchPanel` per switch to the `content` slot. Panels pair with switches by position. The component shows the panel for the selected switch and sets `role="tabpanel"`, `aria-labelledby`, and each switch's `aria-controls`. Name the switcher with `aria-label`.
+Pass one `SwitchPanel` per switch in the `content` snippet. Panels pair with switches by position. The component shows the panel for the selected switch and sets `role="tabpanel"`, `aria-labelledby`, and each switch's `aria-controls`. Name the switcher with `aria-label`.
 
 Set `lazy` to mount a panel's content the first time its switch is selected, or `unmountOnHide` to unmount it when the switch is deselected.
 
@@ -32,11 +32,11 @@ Set `lazy` to mount a panel's content the first time its switch is selected, or 
   <Switch text="Latest news" />
   <Switch text="Trending" />
   <Switch text="Recommended" />
-  <Box slot="content" paddingY={5}>
+  {#snippet content()}<Box paddingY={5}>
     <SwitchPanel>Headlines from the last 24 hours.</SwitchPanel>
     <SwitchPanel>Stories with the most reads this week.</SwitchPanel>
     <SwitchPanel>Picked from your reading history.</SwitchPanel>
-  </Box>
+  </Box>{/snippet}
 </ContentSwitcher>
 
 ## Selection
@@ -98,9 +98,9 @@ Listen for content switcher selection changes.
 
 ### Change
 
-Listen for `on:change` to know when the selected switch index changes, whether from a click, keyboard navigation, or a `selectedIndex`/`selectedId` update. `event.detail` is the new selected index. The index and the selected switch can change independently when switches are added, removed, or reordered, so use `bind:selectedId` to track which switch is selected.
+Pass `onselectedchange` to know when the user selects a switch, by click or keyboard navigation. It receives `{ index, id }`. Setting `selectedIndex` or `selectedId` yourself calls nothing. The index and the selected switch can change independently when switches are added, removed, or reordered, so use `bind:selectedId` to track which switch is selected.
 
-<ContentSwitcher on:change={(e) => console.log(e.detail)}>
+<ContentSwitcher onselectedchange={(e) => console.log(e.index)}>
   <Switch text="Latest news" />
   <Switch text="Trending" />
   <Switch text="Recommended" />
@@ -112,9 +112,9 @@ Switches can be conditionally rendered using Svelte's `{#if}` blocks. The compon
 
 <FileSource src="/framed/ContentSwitcher/ContentSwitcherConditional" />
 
-## Custom switch slot
+## Custom switch content
 
-Override the default slot in the switch to customize how each option displays. An icon placed before the text is centered on it, and long text still truncates with an ellipsis.
+Pass children to a switch to customize how each option displays. An icon placed before the text is centered on it, and long text still truncates with an ellipsis.
 
 <ContentSwitcher>
   <Switch><Bullhorn /> Latest news</Switch>
@@ -123,15 +123,15 @@ Override the default slot in the switch to customize how each option displays. A
 
 ### Selected state
 
-The default slot exposes `selected`, so custom content can change with the selection.
+The children snippet receives `{ selected }`, so custom content can change with the selection.
 
 <ContentSwitcher>
-  <Switch text="Latest news" let:selected>
-    {#if selected}<Checkmark />{/if} Latest news
-  </Switch>
-  <Switch text="Trending" let:selected>
-    {#if selected}<Checkmark />{/if} Trending
-  </Switch>
+  <Switch text="Latest news">
+    {#snippet children({ selected })}{#if selected}<Checkmark />{/if} Latest news
+  {/snippet}</Switch>
+  <Switch text="Trending">
+    {#snippet children({ selected })}{#if selected}<Checkmark />{/if} Trending
+  {/snippet}</Switch>
 </ContentSwitcher>
 
 ## Icon-only

@@ -1,143 +1,154 @@
 <script>
   /**
    * @template {import("../utils/icon-component.js").IconComponent} [Icon=any]
+   * @restProps {button}
    */
 
-  /**
-   * @slot {{ selected: boolean; }}
-   */
+  const fallbackId = $props.id();
 
-  /**
-   * Specify the switch text.
-   * Alternatively, use the default slot.
-   * @example
-   * ```svelte
-   * <Switch>
-   *   <span>Custom Text</span>
-   * </Switch>
-   * ```
-   */
-  export let text = "Provide text";
+  let {
+    /**
+     * Specify the switch text.
+     * Alternatively, pass children.
+     * @example
+     * ```svelte
+     * <Switch>
+     *   <span>Custom Text</span>
+     * </Switch>
+     * ```
+     */
+    text = "Provide text",
 
-  /**
-   * Render an icon-only switch.
-   * The parent `ContentSwitcher` becomes icon-only when every `Switch` sets `icon`.
-   * `text` is used as the accessible label and the tooltip shown on hover and focus.
-   * @type {Icon | undefined}
-   */
-  export let icon = /** @type {Icon | undefined} */ (undefined);
+    /**
+     * Render an icon-only switch.
+     * The parent `ContentSwitcher` becomes icon-only when every `Switch` sets `icon`.
+     * `text` is used as the accessible label and the tooltip shown on hover and focus.
+     * @type {Icon | undefined}
+     */
+    icon: Icon = undefined,
 
-  /**
-   * Set to `true` for the switch to be selected.
-   * @bindable writable
-   */
-  export let selected = false;
+    /** Set to `true` for the switch to be selected. */
+    selected = $bindable(false),
 
-  /** Set to `true` to disable the switch */
-  export let disabled = false;
+    /** Set to `true` to disable the switch */
+    disabled = false,
 
-  /**
-   * Align the portalled tooltip to the switch.
-   * @type {"start" | "center" | "end"}
-   */
-  export let tooltipAlignment = "center";
+    /**
+     * Align the portalled tooltip to the switch.
+     * @type {"start" | "center" | "end"}
+     */
+    tooltipAlignment = "center",
 
-  /** Set an id for the button element */
-  export let id = uniqueId();
+    /**
+     * Set an id for the button element
+     * @type {string}
+     */
+    id = fallbackId,
 
-  /**
-   * Obtain a reference to the button HTML element.
-   * @bindable readonly
-   * @type {null | HTMLButtonElement}
-   */
-  export let ref = null;
+    /**
+     * Obtain a reference to the button HTML element.
+     * @type {null | HTMLButtonElement}
+     */
+    ref = $bindable(null),
 
-  import { getContext, onMount } from "svelte";
-  import { get } from "svelte/store";
+    /**
+     * Custom switch content, replacing `text` (or the icon).
+     * @type {import("svelte").Snippet<[{ selected: boolean }]> | undefined}
+     */
+    children = undefined,
+
+    /** @type {import("svelte/elements").ClassValue | undefined} */
+    class: className = undefined,
+
+    /** @type {string | undefined | null} */
+    "aria-label": ariaLabel = undefined,
+
+    /** @type {import("svelte/elements").MouseEventHandler<HTMLButtonElement> | undefined | null} */
+    onclick = undefined,
+
+    ...rest
+  } = $props();
+
+  import { onMount, untrack } from "svelte";
   import AnchoredTooltip from "../Portal/AnchoredTooltip.svelte";
   import { titleWhenTruncated } from "../utils/title-when-truncated.js";
-  import { uniqueId } from "../utils/unique-id.js";
+  import { getContentSwitcher } from "./content-switcher-context.js";
 
-  const ctx = getContext("carbon:ContentSwitcher");
-  const tabStopId = ctx.tabStopId;
-  const pairs = ctx.pairs;
+  const ctx = getContentSwitcher();
+  const hasIcon = $derived(Icon !== undefined);
+  const isSelected = $derived(ctx.currentId === id);
 
-  let hasIcon = icon !== undefined;
+  untrack(() =>
+    ctx.add({
+      id,
+      text,
+      selected,
+      icon: Icon !== undefined,
+      disabled,
+    }),
+  );
+  onMount(() => () => ctx.remove(id));
 
-  // Last `selected` value seen here, so the block below reacts to caller writes
-  // and not to the currentId echo.
-  let prevSelected = selected;
-
-  ctx.add({ id, text, selected, icon: hasIcon, disabled });
-
-  const unsubscribe = ctx.currentId.subscribe((currentId) => {
-    selected = prevSelected = currentId === id;
-  });
-
-  $: if (selected !== prevSelected) {
+  // `selected` both selects this switch when set from outside and follows
+  // the switcher's selection for `bind:selected`. Remember the last value on
+  // each side to tell which one moved.
+  let prevSelected = untrack(() => selected);
+  $effect.pre(() => {
+    if (selected === prevSelected) return;
     prevSelected = selected;
-    if (selected) {
-      ctx.update(id);
-    } else if (get(ctx.currentId) === id) {
+    untrack(() => {
+      if (selected) ctx.select(id, false);
       // A content switcher always has one selected switch.
-      selected = prevSelected = true;
-    }
-  }
-
-  // Report later `disabled` changes; the initial value goes through `add()`.
-  let prevDisabled = disabled;
-  $: if (disabled !== prevDisabled) {
-    prevDisabled = disabled;
-    ctx.setDisabled(id, disabled);
-  }
-
-  // Same for `icon`, so the switcher re-infers its icon-only variant.
-  $: if ((icon !== undefined) !== hasIcon) {
-    hasIcon = icon !== undefined;
-    ctx.setIcon(id, hasIcon);
-  }
-
-  onMount(() => {
-    return () => {
-      ctx.remove(id);
-      unsubscribe();
-    };
+      else if (ctx.currentId === id) selected = prevSelected = true;
+    });
   });
+  $effect.pre(() => {
+    const next = isSelected;
+    untrack(() => {
+      if (selected !== next) selected = prevSelected = next;
+    });
+  });
+
+  // Report later changes; the initial values go through `add()`.
+  $effect.pre(() => {
+    const patch = { disabled, icon: Icon !== undefined };
+    untrack(() => ctx.patch(id, patch));
+  });
+
+  /** @param {MouseEvent & { currentTarget: EventTarget & HTMLButtonElement }} event */
+  function handleClick(event) {
+    onclick?.(event);
+    ctx.select(id, true);
+  }
 </script>
 
 <button
   bind:this={ref}
   type="button"
   role="tab"
-  tabindex={$tabStopId === id || ($tabStopId === null && selected && !disabled)
+  tabindex={ctx.tabStopId === id ||
+  (ctx.tabStopId === null && isSelected && !disabled)
     ? 0
     : -1}
-  aria-selected={selected ? "true" : "false"}
-  aria-label={hasIcon ? text : undefined}
-  aria-controls={$pairs.panelBySwitch[id]}
+  aria-selected={isSelected ? "true" : "false"}
+  aria-label={ariaLabel ?? (hasIcon ? text : undefined)}
+  aria-controls={ctx.pairs.panelBySwitch[id]}
   {disabled}
   {id}
-  class:bx--content-switcher-btn={true}
-  class:bx--content-switcher-btn--icon={hasIcon}
-  class:bx--content-switcher--selected={selected}
-  {...$$restProps}
-  on:click
-  on:click={() => {
-    ctx.update(id);
-  }}
-  on:mouseover
-  on:mouseenter
-  on:mouseleave
-  on:focus
-  on:blur
-  on:keyup
-  on:keydown
+  {...rest}
+  class={[
+    "bx--content-switcher-btn",
+    hasIcon && "bx--content-switcher-btn--icon",
+    isSelected && "bx--content-switcher--selected",
+    className,
+  ]}
+  onclick={handleClick}
 >
   {#if hasIcon}
-    <slot {selected}><svelte:component this={icon} /></slot>
+    {#if children}{@render children({ selected: isSelected })}{:else}<Icon />{/if}
   {:else}
-    <span class:bx--content-switcher__label={true} use:titleWhenTruncated>
-      <slot {selected}>{text}</slot>
+    <span class="bx--content-switcher__label" use:titleWhenTruncated>
+      {#if children}{@render children({ selected: isSelected })}{:else}{text}{/if}
     </span>
   {/if}
 </button>

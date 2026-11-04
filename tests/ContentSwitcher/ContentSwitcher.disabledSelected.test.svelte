@@ -11,7 +11,7 @@
 </script>
 
 <button type="button">before</button>
-<ContentSwitcher {selectionMode} on:change={(e) => onChange(e.detail)}>
+<ContentSwitcher {selectionMode} onselectedchange={(e) => onChange(e.index)}>
   <Switch text="A" disabled={disabledFirst || allDisabled} />
   <Switch text="B" disabled={allDisabled} />
   <Switch text="C" disabled={allDisabled} />

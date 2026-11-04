@@ -11,11 +11,11 @@
   {#each items as item (item)}
     <Switch id={item} text={item.toUpperCase()} />
   {/each}
-  <svelte:fragment slot="content">
+  {#snippet content()}
     {#each items as item (item)}
       <SwitchPanel id="{item}-panel">{item}</SwitchPanel>
     {/each}
-  </svelte:fragment>
+  {/snippet}
 </ContentSwitcher>
 
 <div data-testid="selected-index">{selectedIndex}</div>

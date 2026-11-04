@@ -9,7 +9,7 @@
   export let selectLast = false;
 </script>
 
-<ContentSwitcher bind:selectedIndex on:change={(e) => onChange(e.detail)}>
+<ContentSwitcher bind:selectedIndex onselectedchange={(e) => onChange(e.index)}>
   {#if showFirst}
     <Switch text="First" />
   {/if}

@@ -730,7 +730,8 @@ describe("ContentSwitcher", () => {
       const last = screen.getByRole("tab", { name: "Last" });
       expect(last).toHaveAttribute("aria-selected", "true");
       expect(last).toHaveAttribute("tabindex", "0");
-      expect(onChange).toHaveBeenCalledWith(1);
+      // Not a user action: no `onselectedchange`.
+      expect(onChange).not.toHaveBeenCalled();
     });
 
     it("keeps a middle switch selected when an earlier switch is removed", async () => {
@@ -747,7 +748,8 @@ describe("ContentSwitcher", () => {
         "aria-selected",
         "true",
       );
-      expect(onChange).toHaveBeenCalledWith(0);
+      // Not a user action: no `onselectedchange`.
+      expect(onChange).not.toHaveBeenCalled();
     });
 
     it("does not dispatch change when clicking the re-anchored switch", async () => {
@@ -798,7 +800,8 @@ describe("ContentSwitcher", () => {
         "aria-selected",
         "true",
       );
-      expect(onChange).toHaveBeenCalledWith(2);
+      // Not a user action: no `onselectedchange`.
+      expect(onChange).not.toHaveBeenCalled();
     });
 
     it("keeps selectedIndex when a later switch is removed", async () => {
@@ -866,7 +869,8 @@ describe("ContentSwitcher", () => {
       expect(middle).toHaveAttribute("aria-selected", "true");
       expect(middle).toHaveAttribute("tabindex", "0");
       expect(screen.getByTestId("selected-index")).toHaveTextContent("1");
-      expect(onChange).toHaveBeenCalledWith(1);
+      // Not a user action: no `onselectedchange`.
+      expect(onChange).not.toHaveBeenCalled();
     });
 
     it("clamps a programmatic out-of-range write", async () => {
@@ -883,7 +887,8 @@ describe("ContentSwitcher", () => {
         "true",
       );
       expect(screen.getByTestId("selected-index")).toHaveTextContent("2");
-      expect(onChange).toHaveBeenCalledWith(2);
+      // Not a user action: no `onselectedchange`.
+      expect(onChange).not.toHaveBeenCalled();
     });
   });
 
@@ -911,7 +916,8 @@ describe("ContentSwitcher", () => {
           .filter((tab) => tab.getAttribute("aria-selected") === "true"),
       ).toHaveLength(1);
       expect(screen.getByTestId("selected-index")).toHaveTextContent("1");
-      expect(onChange).toHaveBeenCalledWith(1);
+      // Not a user action: no `onselectedchange`.
+      expect(onChange).not.toHaveBeenCalled();
     });
 
     it("re-selects after another switch was clicked", async () => {
