@@ -14,7 +14,7 @@
   import { createEventDispatcher, getContext, onMount, tick } from "svelte";
   import PortalTooltip from "../Portal/PortalTooltip.svelte";
   import { MODAL_CONTEXT_KEY } from "../constants/context-keys.js";
-  import { dismiss } from "../utils/dismiss.js";
+  import { dismiss } from "../utils/dismiss.svelte.js";
   import { createOpenCloseDispatcher } from "../utils/dispatch-open-close.js";
   import { joinDescribedBy } from "../utils/field-status.js";
   import { clippedBy } from "../utils/fit-align.js";
@@ -283,12 +283,12 @@
   bind:this={ref}
   use:ignoreTooltipClicks
   use:closeOverControls={{ onCover: handleTooltipCover }}
-  use:dismiss={{
+  {@attach dismiss(() => ({
     enabled: open || portalOpen,
     type: "keydown",
     handler: handleKeydown,
     options: { capture: true },
-  }}
+  }))}
   {disabled}
   type="button"
   class:bx--tooltip__trigger={true}

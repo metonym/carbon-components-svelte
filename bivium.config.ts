@@ -21,10 +21,9 @@ export default {
         // Components only `test:types` renders, to check their types.
         "tests/DataTable/DataTable{DeepNesting,ExplicitGenerics,Skeleton}.test.svelte",
       ],
-      // The Svelte 3/4 harnesses run the same unit tests. Vite reads
-      // tests/tsconfig.json to transform the tests, and vite.config.ts takes
-      // its test options from tests/utils.ts.
-      wiring: ["tests-svelte{3,4}/**", "tests/tsconfig.json", "tests/utils.ts"],
+      // Vite reads tests/tsconfig.json to transform the tests, and
+      // vite.config.ts takes its test options from tests/utils.ts.
+      wiring: ["tests/tsconfig.json", "tests/utils.ts"],
       // Vitest loads it before every test (`setupFiles`), so every test
       // depends on it and on what it imports.
       setup: "tests/setup-tests.ts",

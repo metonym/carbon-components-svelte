@@ -187,7 +187,7 @@
   import { toCssLength } from "../utils/css-length.js";
   import { debounce as debounceFn } from "../utils/debounce.js";
   import { createLoadingIndicator } from "../utils/delayed-loading.js";
-  import { dismiss } from "../utils/dismiss.js";
+  import { dismiss } from "../utils/dismiss.svelte.js";
   import { buildFieldIds, joinDescribedBy } from "../utils/field-status.js";
   import { fuzzyMatch } from "../utils/fuzzy-match.js";
   import { isImeComposition } from "../utils/ime-composition.js";
@@ -483,7 +483,7 @@
   bind:this={anchorRef}
   class:bx--search-menu={true}
   class:bx--search-menu--bar={$$slots.before}
-  use:dismiss={{ enabled: open, type: "click", handler: handleOutsideClick }}
+  {@attach dismiss(() => ({ enabled: open, type: "click", handler: handleOutsideClick }))}
 >
   {#if $$slots.before}
     <!-- svelte-ignore a11y-no-static-element-interactions -->

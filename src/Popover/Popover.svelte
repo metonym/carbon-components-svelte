@@ -66,7 +66,7 @@
 
   import { createEventDispatcher, onMount, tick } from "svelte";
   import FloatingPortal from "../Portal/FloatingPortal.svelte";
-  import { dismiss } from "../utils/dismiss.js";
+  import { dismiss } from "../utils/dismiss.svelte.js";
   import {
     clippedBy,
     fitPopoverAlign,
@@ -312,13 +312,13 @@
     >
       <div
         bind:this={ref}
-        use:dismiss={{
+        {@attach dismiss(() => ({
           enabled: open,
           listeners: [
             { type: "click", handler: handleOutsideClick },
             { type: "keydown", handler: handleEscape },
           ],
-        }}
+        }))}
         {...$$restProps}
         class={portalClass(
           portalSide ?? side,
@@ -339,13 +339,13 @@
 {:else}
   <div
     bind:this={ref}
-    use:dismiss={{
+    {@attach dismiss(() => ({
       enabled: open,
       listeners: [
         { type: "click", handler: handleOutsideClick },
         { type: "keydown", handler: handleEscape },
       ],
-    }}
+    }))}
     class:bx--popover={true}
     class:bx--popover--caret={caret}
     class:bx--popover--high-contrast={highContrast}

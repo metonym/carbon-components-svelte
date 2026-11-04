@@ -103,7 +103,7 @@
     COPY_FEEDBACK_TIMEOUT_MS,
     createCopyFeedbackState,
   } from "../utils/copy-feedback.js";
-  import { dismiss } from "../utils/dismiss.js";
+  import { dismiss } from "../utils/dismiss.svelte.js";
   import { isImeComposition } from "../utils/ime-composition.js";
   import { noop } from "../utils/noop.js";
   import { tooltipPlacement } from "../utils/tooltip-align.js";
@@ -270,12 +270,12 @@
 
 <button
   bind:this={ref}
-  use:dismiss={{
+  {@attach dismiss(() => ({
     enabled: tooltipOpen || feedbackOpen,
     type: "keydown",
     handler: handleKeydown,
     options: { capture: true },
-  }}
+  }))}
   type="button"
   aria-busy={copyPending ? "true" : undefined}
   class:bx--copy-btn={true}

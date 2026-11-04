@@ -12,22 +12,21 @@ import {
  */
 
 /**
- * Keyboard listeners register as soon as the action is enabled. Only the
+ * Keyboard listeners register as soon as listening is enabled. Only the
  * pointer listeners need the deferral below, and a key pressed right after
  * opening (Chrome runs queued input before timers) must not be missed.
  */
 const IMMEDIATE_TYPES = new Set(["keydown", "keyup"]);
 
 /**
- * Svelte action: `window` listeners while `enabled` is true.
- * Controls with the same `(type, options)` share one listener.
- * Handler updates in place without re-registering. SSR-safe.
+ * `window` listeners while `enabled` is true. Controls with the same
+ * `(type, options)` share one listener. `update` swaps handlers in place
+ * without re-registering. SSR-safe. The `dismiss` attachment wraps this.
  *
- * @param {unknown} _node Host element (unused; listeners attach to `window`).
- * @param {import("./dismiss.js").DismissParams} options
- * @returns {{ update: (options: import("./dismiss.js").DismissParams) => void, destroy: () => void }}
+ * @param {import("./dismiss-controller.js").DismissParams} options
+ * @returns {import("./dismiss-controller.js").DismissController}
  */
-export function dismiss(_node, options) {
+export function createDismiss(options) {
   let specs = normalize(options);
   let enabled = !!options.enabled;
   let immediate = !!options.immediate;
@@ -76,7 +75,7 @@ export function dismiss(_node, options) {
   if (enabled) add();
 
   return {
-    /** @param {import("./dismiss.js").DismissParams} next */
+    /** @param {import("./dismiss-controller.js").DismissParams} next */
     update(next) {
       const nextSpecs = normalize(next);
       const nextEnabled = !!next.enabled;
@@ -110,7 +109,7 @@ export function dismiss(_node, options) {
 }
 
 /**
- * @param {import("./dismiss.js").DismissParams} options
+ * @param {import("./dismiss-controller.js").DismissParams} options
  * @returns {Array<{ type: string, handler: (event: Event) => void, options: boolean | AddEventListenerOptions | undefined }>}
  */
 function normalize(options) {

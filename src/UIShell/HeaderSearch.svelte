@@ -142,7 +142,7 @@
   import Close from "../icons/Close.svelte";
   import IconSearch from "../icons/IconSearch.svelte";
   import { debounce as debounceFn } from "../utils/debounce.js";
-  import { dismiss } from "../utils/dismiss.js";
+  import { dismiss } from "../utils/dismiss.svelte.js";
   import { returnFocus } from "../utils/focus.js";
   import { fuzzyMatch } from "../utils/fuzzy-match.js";
   import { isImeComposition } from "../utils/ime-composition.js";
@@ -437,11 +437,11 @@
 <div
   bind:this={refSearch}
   {id}
-  use:dismiss={{
+  {@attach dismiss(() => ({
     enabled: active,
     type: "mouseup",
     handler: handleOutsideMouseup,
-  }}
+  }))}
   class:bx--header__search={true}
   class:bx--header__search--shortcut={hasShortcutHint}
   role="search"

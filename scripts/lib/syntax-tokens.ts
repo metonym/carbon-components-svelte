@@ -4,8 +4,7 @@ import { fileURLToPath } from "node:url";
 import { formatTokenName, g10, g90, g100, white } from "@carbon/themes";
 import pkg from "@carbon/themes/package.json" with { type: "json" };
 
-// Resolved from this file, not the working directory: the Svelte 3 and 4
-// test harnesses run from tests-svelte3/ and tests-svelte4/.
+// Resolved from this file, not the working directory.
 const fromRoot = (path: string) =>
   fileURLToPath(new URL(`../../${path}`, import.meta.url));
 

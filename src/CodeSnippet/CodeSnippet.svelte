@@ -232,7 +232,7 @@
     COPY_FEEDBACK_TIMEOUT_MS,
     createCopyFeedbackState,
   } from "../utils/copy-feedback.js";
-  import { dismiss } from "../utils/dismiss.js";
+  import { dismiss } from "../utils/dismiss.svelte.js";
   import { joinDescribedBy } from "../utils/field-status.js";
   import { isImeComposition } from "../utils/ime-composition.js";
   import { isScrollNearEnd } from "../utils/is-scroll-near-end.js";
@@ -525,12 +525,12 @@
   {:else}
     <button
       bind:this={copyRef}
-      use:dismiss={{
+      {@attach dismiss(() => ({
         enabled: feedbackOpen,
         type: "keydown",
         handler: handleFeedbackKeydown,
         options: { capture: true },
-      }}
+      }))}
       type="button"
       {disabled}
       aria-busy={copyPending ? "true" : undefined}

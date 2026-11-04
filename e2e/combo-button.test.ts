@@ -79,7 +79,7 @@ test.describe("ComboButton", () => {
     const trigger = page.getByRole("button", { name: "Additional actions" });
     await trigger.focus();
     await page.keyboard.press("Enter");
-    // dismiss.js defers registering its window listeners (including this
+    // dismiss-controller.js defers registering its window listeners (including this
     // Escape handler) past the enabling keypress by a macrotask (setTimeout),
     // so the menu already being visible isn't enough - that happens
     // synchronously, before the deferred registration runs. Wait past that

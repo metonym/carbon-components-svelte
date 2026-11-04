@@ -321,7 +321,7 @@ export {
   toColumnSettings,
 } from "./utils/column-settings.js";
 export { createLoadingDelay, delayedLoading } from "./utils/delayed-loading.js";
-export { dismiss } from "./utils/dismiss.js";
+export { dismiss } from "./utils/dismiss.svelte.js";
 export { downloadFile } from "./utils/download-file.js";
 export {
   filterTreeById,

@@ -71,7 +71,7 @@
   import FloatingPortal from "../Portal/FloatingPortal.svelte";
   import { MODAL_CONTEXT_KEY } from "../constants/context-keys.js";
   import { splitAriaNaming } from "../utils/aria-naming.js";
-  import { dismiss } from "../utils/dismiss.js";
+  import { dismiss } from "../utils/dismiss.svelte.js";
   import { createOpenCloseDispatcher } from "../utils/dispatch-open-close.js";
   import { joinDescribedBy } from "../utils/field-status.js";
   import { clippedBy, slideIntoWindow } from "../utils/fit-align.js";
@@ -221,12 +221,12 @@
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <span
-  use:dismiss={{
+  {@attach dismiss(() => ({
     enabled: open,
     type: "keydown",
     handler: handleKeydown,
     options: { capture: true },
-  }}
+  }))}
   class:bx--tooltip--definition={true}
   class:bx--tooltip--a11y={true}
   {...wrapperProps}

@@ -72,7 +72,7 @@
   import { PROFILE_MENU_CONTEXT_KEY } from "../constants/context-keys.js";
   import ChevronDown from "../icons/ChevronDown.svelte";
   import { toCssLength } from "../utils/css-length.js";
-  import { dismiss } from "../utils/dismiss.js";
+  import { dismiss } from "../utils/dismiss.svelte.js";
   import { createDomNodeRegistry } from "../utils/dom-node-registry.js";
   import { returnFocusOnClose } from "../utils/focus.js";
   import { isImeComposition } from "../utils/ime-composition.js";
@@ -162,13 +162,13 @@
 <span class:bx--header-switcher={true}>
   <button
     bind:this={ref}
-    use:dismiss={{
+    {@attach dismiss(() => ({
       enabled: isOpen,
       listeners: [
         { type: "click", handler: handleOutsideClick },
         { type: "keydown", handler: handleKeydown },
       ],
-    }}
+    }))}
     type="button"
     aria-expanded={isOpen ? "true" : "false"}
     aria-controls={isOpen ? menuId : undefined}

@@ -57,10 +57,6 @@
     "test:src-svelte-types": "bun scripts/check-svelte-types.ts",
     "test:package-exports": "bun check --project tsconfig.package-exports.json",
     "test:types": "svelte-typecheck --workspace tests --checker bun",
-    "test:svelte3": "cd tests-svelte3 && bunx vitest",
-    "test:types:svelte3": "cd tests-svelte3 && bun run test:types",
-    "test:svelte4": "cd tests-svelte4 && bunx vitest",
-    "test:types:svelte4": "cd tests-svelte4 && bun run test:types",
     "test:e2e": "playwright test",
     "lint": "bun fmt && biome check --write .",
     "lint:changed": "bun fmt --staged && biome check --write --staged --no-errors-on-unmatched .",
@@ -91,6 +87,9 @@
   },
   "dependencies": {
     "@ibm/telemetry-js": "^1.10.2"
+  },
+  "peerDependencies": {
+    "svelte": "^5.57.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",

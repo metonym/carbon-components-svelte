@@ -1,9 +1,9 @@
-import { dismiss } from "../../src/utils/dismiss.js";
+import { createDismiss } from "../../src/utils/dismiss-controller.js";
 
 /** Registration is deferred by a macrotask; flush it before dispatching test events. */
 const flush = () => new Promise((resolve) => setTimeout(resolve));
 
-describe("dismiss action", () => {
+describe("createDismiss", () => {
   let node: HTMLElement;
 
   beforeEach(() => {
@@ -17,7 +17,7 @@ describe("dismiss action", () => {
 
   it("does not fire for the click that enables it (same dispatch)", async () => {
     const handler = vi.fn();
-    const action = dismiss(node, { enabled: true, type: "click", handler });
+    const action = createDismiss({ enabled: true, type: "click", handler });
 
     // No flush: dispatch immediately, simulating the enabling click still
     // completing its own dispatch before the deferred registration runs.
@@ -33,7 +33,7 @@ describe("dismiss action", () => {
 
   it("toggles the listener as enabled flips", async () => {
     const handler = vi.fn();
-    const action = dismiss(node, { enabled: false, type: "click", handler });
+    const action = createDismiss({ enabled: false, type: "click", handler });
     await flush();
 
     window.dispatchEvent(new MouseEvent("click"));
@@ -54,7 +54,7 @@ describe("dismiss action", () => {
 
   it("removes the listener on destroy", async () => {
     const handler = vi.fn();
-    const action = dismiss(node, { enabled: true, type: "click", handler });
+    const action = createDismiss({ enabled: true, type: "click", handler });
     await flush();
 
     action.destroy();
@@ -64,7 +64,7 @@ describe("dismiss action", () => {
 
   it("does not register after destroy races the deferred registration", async () => {
     const handler = vi.fn();
-    const action = dismiss(node, { enabled: true, type: "click", handler });
+    const action = createDismiss({ enabled: true, type: "click", handler });
     action.destroy();
     await flush();
 
@@ -74,7 +74,7 @@ describe("dismiss action", () => {
 
   it("shares one handler across multiple event types", async () => {
     const handler = vi.fn();
-    const action = dismiss(node, {
+    const action = createDismiss({
       enabled: true,
       type: ["click", "focusin"],
       handler,
@@ -91,7 +91,7 @@ describe("dismiss action", () => {
   it("supports distinct handlers per type via listeners", async () => {
     const onClick = vi.fn();
     const onKeydown = vi.fn();
-    const action = dismiss(node, {
+    const action = createDismiss({
       enabled: true,
       listeners: [
         { type: "click", handler: onClick },
@@ -113,7 +113,7 @@ describe("dismiss action", () => {
     const first = vi.fn();
     const second = vi.fn();
 
-    const action = dismiss(node, {
+    const action = createDismiss({
       enabled: true,
       type: "click",
       handler: first,
@@ -142,7 +142,7 @@ describe("dismiss action", () => {
   it("passes the passive flag through to addEventListener", async () => {
     const addSpy = vi.spyOn(window, "addEventListener");
     const handler = vi.fn();
-    const action = dismiss(node, {
+    const action = createDismiss({
       enabled: true,
       type: "touchmove",
       handler,
@@ -159,7 +159,7 @@ describe("dismiss action", () => {
 
   it("forwards the real event to the handler", async () => {
     let received: Event | undefined;
-    const action = dismiss(node, {
+    const action = createDismiss({
       enabled: true,
       type: "click",
       handler: (event) => {
@@ -191,7 +191,7 @@ describe("dismiss keyboard listeners", () => {
   it("register immediately, before the deferred pointer listeners", async () => {
     const onKeydown = vi.fn();
     const onClick = vi.fn();
-    const action = dismiss(node, {
+    const action = createDismiss({
       enabled: true,
       listeners: [
         { type: "click", handler: onClick },
@@ -215,7 +215,7 @@ describe("dismiss keyboard listeners", () => {
 
   it("register immediately when enabled by an update", () => {
     const handler = vi.fn();
-    const action = dismiss(node, { enabled: false, type: "keydown", handler });
+    const action = createDismiss({ enabled: false, type: "keydown", handler });
 
     action.update({ enabled: true, type: "keydown", handler });
     window.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
@@ -237,7 +237,7 @@ describe("dismiss keyboard listeners", () => {
         { type: "keydown", handler },
       ],
     };
-    const action = dismiss(node, params);
+    const action = createDismiss(params);
     action.update({ ...params });
     action.update({ ...params });
     await flush();

@@ -1,6 +1,6 @@
 // @ts-check
 import { derived, get, writable } from "svelte/store";
-import { dismiss as windowListener } from "./dismiss.js";
+import { createDismiss } from "./dismiss-controller.js";
 import { isImeComposition } from "./ime-composition.js";
 import { ignoreTooltipClicks } from "./tooltip-clicks.js";
 import { closeOverControls } from "./tooltip-cover.js";
@@ -179,14 +179,14 @@ export function createAnchoredTooltip({
     for (const [type, listener] of listeners) {
       node.addEventListener(type, listener);
     }
-    /** @type {import("./dismiss.js").DismissParams} */
+    /** @type {import("./dismiss-controller.js").DismissParams} */
     const escapeOptions = {
       enabled: false,
       type: "keydown",
       handler: handleWindowKeydown,
       options: { capture: true },
     };
-    const escapeListener = windowListener(null, escapeOptions);
+    const escapeListener = createDismiss(escapeOptions);
     const unsubscribe = open.subscribe(($open) => {
       escapeListener.update({ ...escapeOptions, enabled: $open });
     });

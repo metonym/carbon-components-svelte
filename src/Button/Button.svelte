@@ -203,7 +203,7 @@
     MODAL_CONTEXT_KEY,
   } from "../constants/context-keys.js";
   import { createLoadingIndicator } from "../utils/delayed-loading.js";
-  import { dismiss } from "../utils/dismiss.js";
+  import { dismiss } from "../utils/dismiss.svelte.js";
   import { clippedBy } from "../utils/fit-align.js";
   import { formButtonSize } from "../utils/form-button-size.js";
   import { isImeComposition } from "../utils/ime-composition.js";
@@ -557,7 +557,7 @@
     <div class:bx--btn__badge-wrapper={true}>
       <a
         bind:this={ref}
-        use:dismiss={escapeListener}
+        {@attach dismiss(() => escapeListener)}
         use:keyboardShortcut={shortcutParams}
         use:ignoreTooltipClicks
         use:closeOverControls={{ onCover: handleTooltipCover }}
@@ -628,7 +628,7 @@
   {:else}
     <a
       bind:this={ref}
-      use:dismiss={escapeListener}
+      {@attach dismiss(() => escapeListener)}
       use:keyboardShortcut={shortcutParams}
       use:ignoreTooltipClicks
       use:closeOverControls={{ onCover: handleTooltipCover }}
@@ -700,7 +700,7 @@
     <button
       type="button"
       bind:this={ref}
-      use:dismiss={escapeListener}
+      {@attach dismiss(() => escapeListener)}
       use:keyboardShortcut={shortcutParams}
       use:ignoreTooltipClicks
       use:closeOverControls={{ onCover: handleTooltipCover }}
@@ -772,7 +772,7 @@
   <button
     type="button"
     bind:this={ref}
-    use:dismiss={escapeListener}
+    {@attach dismiss(() => escapeListener)}
     use:keyboardShortcut={shortcutParams}
     use:ignoreTooltipClicks
     use:closeOverControls={{ onCover: handleTooltipCover }}

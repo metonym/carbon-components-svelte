@@ -26,11 +26,11 @@
   <Box marginTop={3} maxWidth="20rem">
     <div
       bind:this={panel}
-      use:dismiss={{
+      {@attach dismiss(() => ({
         enabled: open,
         type: "click",
         handler: handleOutsideClick,
-      }}
+      }))}
     >
       <Tile>
         <p>US East (N. Virginia)</p>

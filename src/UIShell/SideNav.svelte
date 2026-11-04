@@ -114,7 +114,7 @@
     releaseBodyScrollLock,
   } from "../utils/body-scroll-lock.js";
   import { createDelayedSetter } from "../utils/delayed-setter.js";
-  import { dismiss } from "../utils/dismiss.js";
+  import { dismiss } from "../utils/dismiss.svelte.js";
   import { isImeComposition } from "../utils/ime-composition.js";
   import {
     getLayoutDirection,
@@ -395,11 +395,11 @@
 {/if}
 <nav
   bind:this={navRef}
-  use:dismiss={{
+  {@attach dismiss(() => ({
     enabled: dismissible,
     type: "keydown",
     handler: handleEscape,
-  }}
+  }))}
   on:keydown={(event) => {
     if (isOpen && !fixed && $isSideNavMobile && event.key === "Tab") {
       trapFocus({ container: navRef, event });

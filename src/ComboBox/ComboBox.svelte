@@ -415,7 +415,7 @@
   import { clampIndex } from "../utils/clamp-index.js";
   import { debounce } from "../utils/debounce.js";
   import { createLoadingIndicator } from "../utils/delayed-loading.js";
-  import { dismiss } from "../utils/dismiss.js";
+  import { dismiss } from "../utils/dismiss.svelte.js";
   import {
     buildFieldIds,
     joinDescribedBy,
@@ -1181,7 +1181,7 @@
   class:bx--list-box__wrapper--fluid--disabled={isFluid && effectiveDisabled}
   class:bx--list-box__wrapper--fluid--readonly={isFluid && readonly}
   class:bx--list-box__wrapper--fluid--condensed={isFluid && condensed}
-  use:dismiss={{ enabled: open, type: "click", handler: handleOutsideClick }}
+  {@attach dismiss(() => ({ enabled: open, type: "click", handler: handleOutsideClick }))}
 >
   {#if labelText || $$slots.labelChildren}
     <label

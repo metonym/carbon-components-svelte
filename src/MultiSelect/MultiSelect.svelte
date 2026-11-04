@@ -538,7 +538,7 @@
   import { debounce } from "../utils/debounce.js";
   import { deepEqual } from "../utils/deep-equal.js";
   import { createLoadingIndicator } from "../utils/delayed-loading.js";
-  import { dismiss } from "../utils/dismiss.js";
+  import { dismiss } from "../utils/dismiss.svelte.js";
   import {
     buildFieldIds,
     joinDescribedBy,
@@ -1615,11 +1615,11 @@
   use:fieldsetDisabled={(value) => (inDisabledFieldset = value)}
   bind:this={multiSelectRef}
   use:formReset={handleOptionFormReset}
-  use:dismiss={{
+  {@attach dismiss(() => ({
     enabled: open,
     type: ["click", "focusin"],
     handler: handleOutsideInteraction,
-  }}
+  }))}
   class:bx--multi-select__wrapper={true}
   class:bx--list-box__wrapper={true}
   class:bx--multi-select__wrapper--inline={inline}

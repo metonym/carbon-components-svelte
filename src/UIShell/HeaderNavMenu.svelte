@@ -55,7 +55,7 @@
   } from "svelte";
   import { get, readable, writable } from "svelte/store";
   import ChevronDown from "../icons/ChevronDown.svelte";
-  import { dismiss } from "../utils/dismiss.js";
+  import { dismiss } from "../utils/dismiss.svelte.js";
   import { createDomNodeRegistry } from "../utils/dom-node-registry.js";
   import { returnFocus } from "../utils/focus.js";
   import { isOutsideClick } from "../utils/is-outside-click.js";
@@ -221,11 +221,11 @@
 
 <li
   role="none"
-  use:dismiss={{
+  {@attach dismiss(() => ({
     enabled: expanded,
     type: "click",
     handler: handleOutsideClick,
-  }}
+  }))}
   class:bx--header__submenu={true}
   class:bx--header__submenu--current={isCurrentSubmenu}
   on:click={(event) => {

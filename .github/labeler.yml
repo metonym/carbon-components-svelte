@@ -15,7 +15,7 @@
 
 "tests only":
   - changed-files:
-      - any-glob-to-all-files: "{tests/**,tests-svelte3/**,tests-svelte4/**,e2e/**}"
+      - any-glob-to-all-files: "{tests/**,e2e/**}"
 
 dependencies:
   - changed-files:
@@ -42,10 +42,6 @@ tooling:
           - "playwright.config.ts"
           - "ostia.config.ts"
           - "tsconfig*.json"
-
-"svelte 3/4 compat":
-  - changed-files:
-      - any-glob-to-any-file: "{tests-svelte3,tests-svelte4}/**"
 
 # Areas.
 

@@ -92,8 +92,6 @@ jobs:
               - 'src/**'
               - 'css/**'
               - 'tests/**'
-              - 'tests-svelte3/**'
-              - 'tests-svelte4/**'
               - 'scripts/**'
               - 'e2e/**'
               - 'crassus.config.ts'
@@ -360,59 +358,6 @@ jobs:
           case "$TESTS" in
             "" | all) bunx playwright test --project=chromium --shard="$SHARD" --pass-with-no-tests ;;
             *) read -ra files <<< "$TESTS" && bunx playwright test --project=chromium --shard="$SHARD" --pass-with-no-tests "${files[@]}" ;;
-          esac
-
-  test-svelte-compat:
-    name: test-svelte-compat (${{ matrix.label }}, ${{ matrix.shard }}/2)
-    needs: [changes]
-    # Skipped when bivium selects no unit tests, unless `test:types` has to run.
-    if: |
-      github.event_name == 'workflow_dispatch' ||
-      (needs.changes.outputs.unit == 'true' &&
-        (needs.changes.outputs.unit-tests != 'none' || needs.changes.outputs.types == 'true'))
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        dir: [tests-svelte3, tests-svelte4]
-        shard: [1, 2]
-        include:
-          - dir: tests-svelte3
-            label: Svelte 3
-          - dir: tests-svelte4
-            label: Svelte 4 compat
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
-      - run: bun ci
-
-      - name: Setup ${{ matrix.label }}
-        run: |
-          cd ${{ matrix.dir }}
-          bun ci
-
-      # static-checks fails on sveld diagnostics; this job only needs types.
-      - name: Generate types
-        run: bun run build:docs --no-strict
-
-      - name: Test types (${{ matrix.label }})
-        if: matrix.shard == 1 && (github.event_name != 'pull_request' || needs.changes.outputs.types == 'true')
-        run: |
-          cd ${{ matrix.dir }}
-          bun run test:types
-
-      # Selected files outside this harness's `include` (Svelte 5-only
-      # tests) are dropped, and a shard can get none, so an empty match passes.
-      - name: Test (${{ matrix.label }})
-        env:
-          TESTS: ${{ needs.changes.outputs.unit-tests }}
-          SHARD: ${{ matrix.shard }}/2
-        run: |
-          cd ${{ matrix.dir }}
-          case "$TESTS" in
-            "" | all) bunx vitest run --shard="$SHARD" --passWithNoTests ;;
-            none) echo "No unit tests affected." ;;
-            *) read -ra files <<< "$TESTS" && bunx vitest run --shard="$SHARD" --passWithNoTests "${files[@]/#/../}" ;;
           esac
 
   deploy-docs:

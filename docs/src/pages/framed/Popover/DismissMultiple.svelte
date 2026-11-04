@@ -30,13 +30,13 @@
   <Box marginTop={3} maxWidth="20rem">
     <div
       bind:this={panel}
-      use:dismiss={{
+      {@attach dismiss(() => ({
         enabled: open,
         listeners: [
           { type: "keydown", handler: handleKeydown },
           { type: "click", handler: handleClick },
         ],
-      }}
+      }))}
     >
       <Tile>
         <p>Build 4821 passed on main.</p>
