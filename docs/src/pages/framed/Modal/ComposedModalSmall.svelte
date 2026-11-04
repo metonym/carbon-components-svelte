@@ -10,16 +10,16 @@
   let open = false;
 </script>
 
-<Button on:click={() => (open = true)}>Create database</Button>
+<Button onclick={() => (open = true)}>Create database</Button>
 
-<ComposedModal size="sm" bind:open on:submit={() => (open = false)}>
-  <ModalHeader title="Create database" />
+<ComposedModal size="sm" bind:open onprimaryaction={() => (open = false)}>
+  <ModalHeader titleText="Create database" />
   <ModalBody>
     <p>Create a new Cloudant database in the US South region.</p>
   </ModalBody>
   <ModalFooter
     primaryButtonText="Confirm"
     secondaryButtonText="Cancel"
-    on:click:button--secondary={() => (open = false)}
+    onsecondaryaction={() => (open = false)}
   />
 </ComposedModal>

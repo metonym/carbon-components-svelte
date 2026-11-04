@@ -20,8 +20,8 @@
 <TreeView labelText="Project" {nodes} expandedIds={["src"]} />
 
 <ExpandableTile>
-  <div slot="above">Storage</div>
-  <div slot="below">2.4 TB of 5 TB used</div>
+  {#snippet above()}<div>Storage</div>{/snippet}
+  {#snippet below()}<div>2.4 TB of 5 TB used</div>{/snippet}
 </ExpandableTile>
 
 <OverflowMenu open size="xl" iconDescription="More">

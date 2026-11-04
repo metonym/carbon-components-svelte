@@ -5,6 +5,6 @@
 </script>
 
 <ExpandableTile data-testid="toggle" hasInteractiveContent={interactive}>
-  <div slot="above">Above the fold</div>
-  <div slot="below">Below the fold</div>
+  {#snippet above()}<div>Above the fold</div>{/snippet}
+  {#snippet below()}<div>Below the fold</div>{/snippet}
 </ExpandableTile>

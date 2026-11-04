@@ -14,7 +14,7 @@
   <Button
     kind="tertiary"
     bind:ref={todayButton}
-    on:click={() => (selectedDates = [new Date()])}
+    onclick={() => (selectedDates = [new Date()])}
   >
     Jump to today
   </Button>

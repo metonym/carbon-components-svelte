@@ -20,7 +20,7 @@
     <Button
       size="small"
       disabled={selectedIndex === 2}
-      on:click={() => (selectedIndex = 2)}
+      onclick={() => (selectedIndex = 2)}
     >
       Set selected to 2
     </Button>

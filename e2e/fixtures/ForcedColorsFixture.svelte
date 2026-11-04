@@ -169,7 +169,7 @@
     exceeded the memory limit configured for the production namespace.
   </Truncate>
 
-  <Tabs selected={1}>
+  <Tabs selectedIndex={1}>
     <Tab label="Tab" />
     <Tab label="Selected tab" />
     <Tab label="Disabled tab" disabled />
@@ -199,7 +199,7 @@
   </Card>
   <Card data-testid="card-static"><CardBody>Static card</CardBody></Card>
 
-  <Button data-testid="side-panel-open" on:click={() => (sidePanelOpen = true)}>
+  <Button data-testid="side-panel-open" onclick={() => (sidePanelOpen = true)}>
     Open side panel
   </Button>
   <SidePanel bind:open={sidePanelOpen} resizable title="Side panel">
@@ -342,10 +342,13 @@
     valueUpper={60}
   />
 
-  <ToastNotification title="Upload failed" subtitle="The connection timed out.">
-    <svelte:fragment slot="actions">
+  <ToastNotification
+    titleText="Upload failed"
+    subtitleText="The connection timed out."
+  >
+    {#snippet actions()}
       <NotificationActionButton>Retry</NotificationActionButton>
-    </svelte:fragment>
+    {/snippet}
   </ToastNotification>
 
   <PaginationNav total={5} page={2} />
@@ -459,8 +462,8 @@
       <Tab label="Logs" />
     </Tabs>
     <ExpandableTile>
-      <div slot="above">Deployment</div>
-      <div slot="below">Region: US East</div>
+      {#snippet above()}<div>Deployment</div>{/snippet}
+      {#snippet below()}<div>Region: US East</div>{/snippet}
     </ExpandableTile>
     <RadioTile value="us-east" checked>US East</RadioTile>
     <ToggleButtonGroup labelText="View" selected={[]}>
@@ -502,7 +505,7 @@
   </ul>
 
   <div data-testid="tabs-vertical">
-    <TabsVertical orientation="vertical" selected={1}>
+    <TabsVertical orientation="vertical" selectedIndex={1}>
       <Tab label="Vertical tab" />
       <Tab label="Selected vertical tab" />
       <Tab label="Disabled vertical tab" disabled />
@@ -510,7 +513,7 @@
   </div>
 
   <div data-testid="tabs-container">
-    <Tabs type="container" selected={1}>
+    <Tabs type="container" selectedIndex={1}>
       <Tab label="Overview" />
       <Tab label="Logs" />
       <Tab label="Metrics" />

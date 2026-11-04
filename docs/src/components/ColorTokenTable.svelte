@@ -43,7 +43,7 @@
               <Stack orientation="horizontal" gap={2} align="center">
                 {themes[theme]}
                 {#if theme === currentTheme}
-                  <Tag size="sm" type="blue" inline>Current</Tag>
+                  <Tag size="sm" type="blue">Current</Tag>
                 {/if}
               </Stack>
             </StructuredListCell>

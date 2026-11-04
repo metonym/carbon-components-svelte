@@ -13,11 +13,11 @@
 
 <ButtonSet>
   <Button
-    on:click={() => {
+    onclick={() => {
       const id = queue.add({
         kind: "info",
-        title: "Removable notification",
-        subtitle: "This notification can be removed programmatically.",
+        titleText: "Removable notification",
+        subtitleText: "This notification can be removed programmatically.",
         timeout: 0,
       });
       notificationIds = [...notificationIds, id];
@@ -26,7 +26,7 @@
     Add notification
   </Button>
   <Button
-    on:click={() => {
+    onclick={() => {
       if (notificationIds.length > 0) {
         const id = notificationIds[notificationIds.length - 1];
         queue.remove(id);
@@ -37,7 +37,7 @@
     Remove last
   </Button>
   <Button
-    on:click={() => {
+    onclick={() => {
       queue.clear();
       notificationIds = [];
     }}

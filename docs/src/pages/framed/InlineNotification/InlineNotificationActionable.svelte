@@ -10,7 +10,7 @@
 </script>
 
 <Stack gap={5} align="start">
-  <Button kind="danger" disabled={open} on:click={() => (open = true)}>
+  <Button kind="danger" disabled={open} onclick={() => (open = true)}>
     Delete API key
   </Button>
 
@@ -18,13 +18,13 @@
     bind:open
     actionable
     kind="success"
-    title="API key deleted:"
-    subtitle="Requests that use the key now fail."
+    titleText="API key deleted:"
+    subtitleText="Requests that use the key now fail."
   >
-    <svelte:fragment slot="actions">
-      <NotificationActionButton on:click={() => (open = false)}>
+    {#snippet actions()}
+      <NotificationActionButton onclick={() => (open = false)}>
         Undo
       </NotificationActionButton>
-    </svelte:fragment>
+    {/snippet}
   </InlineNotification>
 </Stack>

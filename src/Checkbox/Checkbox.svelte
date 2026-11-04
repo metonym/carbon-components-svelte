@@ -1,133 +1,154 @@
 <script>
   /**
    * @template [T=any]
-   * @restProps {div}
-   * @event {boolean} check
+   * @restProps {input}
    */
 
-  /**
-   * Specify the value of the checkbox.
-   * Submitted as `"on"` when empty, like a native checkbox.
-   * @type {T}
-   */
-  export let value = /** @type {T} */ ("");
+  const fallbackId = $props.id();
 
-  /**
-   * Specify whether the checkbox is checked.
-   * Follows the box when the owning form resets.
-   * @bindable writable
-   */
-  export let checked = false;
+  let {
+    /**
+     * Specify the value of the checkbox.
+     * Submitted as `"on"` when empty, like a native checkbox.
+     * @type {T}
+     */
+    value = /** @type {T} */ (""),
 
-  /**
-   * Specify the bound group.
-   * @type {ReadonlyArray<T> | undefined}
-   * @bindable writable
-   */
-  export let group = undefined;
+    /**
+     * Specify whether the checkbox is checked.
+     * Follows the box when the owning form resets. Inside a
+     * `CheckboxGroup` or with `group`, the group decides instead.
+     */
+    checked = $bindable(false),
 
-  /**
-   * Specify whether the checkbox is indeterminate.
-   * @bindable writable
-   */
-  export let indeterminate = false;
+    /**
+     * Specify the bound group.
+     * @type {ReadonlyArray<T> | undefined}
+     */
+    group = $bindable(undefined),
 
-  /** Set to `true` to display the skeleton state */
-  export let skeleton = false;
+    /** Specify whether the checkbox is indeterminate. */
+    indeterminate = $bindable(false),
 
-  /** Set to `true` to mark the field as required */
-  export let required = false;
+    /** Set to `true` to display the skeleton state */
+    skeleton = false,
 
-  /** Set to `true` for the checkbox to be read-only */
-  export let readonly = false;
+    /** Set to `true` to mark the field as required */
+    required = false,
 
-  /**
-   * Specify the assistive text announced to screen readers when read-only.
-   * Exposed because VoiceOver does not announce `aria-readonly`.
-   */
-  export let readonlyText = "Read-only";
+    /** Set to `true` for the checkbox to be read-only */
+    readonly = false,
 
-  /** Set to `true` to disable the checkbox */
-  export let disabled = false;
+    /**
+     * Specify the assistive text announced to screen readers when read-only.
+     * Exposed because VoiceOver does not announce `aria-readonly`.
+     */
+    readonlyText = "Read-only",
 
-  /** Specify the label text */
-  export let labelText = "";
+    /** Set to `true` to disable the checkbox */
+    disabled = false,
 
-  /** Set to `true` to visually hide the label text */
-  export let hideLabel = false;
+    /**
+     * Specify the label text, or a snippet.
+     * @type {string | import("svelte").Snippet}
+     */
+    labelText = "",
 
-  /**
-   * Set to `true` to omit the outer margin that spaces a stack of
-   * checkboxes, as when the checkbox sits in a table cell or a row
-   * that spaces its own content.
-   */
-  export let noMargin = false;
+    /** Set to `true` to visually hide the label text */
+    hideLabel = false,
 
-  /** Specify the helper text */
-  export let helperText = "";
+    /**
+     * Set to `true` to omit the outer margin that spaces a stack of
+     * checkboxes, as when the checkbox sits in a table cell or a row
+     * that spaces its own content.
+     */
+    noMargin = false,
 
-  /** Set to `true` to indicate an invalid state */
-  export let invalid = false;
+    /** Specify the helper text */
+    helperText = "",
 
-  /** Specify the invalid state text */
-  export let invalidText = "";
+    /** Set to `true` to indicate an invalid state */
+    invalid = false,
 
-  /** Set to `true` to indicate a warning state */
-  export let warn = false;
+    /** Specify the invalid state text */
+    invalidText = "",
 
-  /** Specify the warning state text */
-  export let warnText = "";
+    /** Set to `true` to indicate a warning state */
+    warn = false,
 
-  /** Set a name for the input element */
-  export let name = "";
+    /** Specify the warning state text */
+    warnText = "",
 
-  /**
-   * Specify the id of a form element outside the component to associate
-   * the checkbox with.
-   * @type {string | undefined}
-   */
-  export let form = undefined;
+    /** Set a name for the input element */
+    name = "",
 
-  /**
-   * Set the native `title` attribute on the label element. When unset,
-   * the label takes its full text as `title` while it is truncated.
-   * @type {string | undefined}
-   * @bindable readonly
-   */
-  export let title = undefined;
+    /**
+     * Specify the id of a form element outside the component to associate
+     * the checkbox with.
+     * @type {string | undefined}
+     */
+    form = undefined,
 
-  /** Set an id for the input label */
-  export let id = uniqueId();
+    /**
+     * Set the native `title` attribute on the label element. When unset,
+     * the label takes its full text as `title` while it is truncated.
+     * @type {string | undefined}
+     */
+    title = undefined,
 
-  /**
-   * Set the tabindex for the input element.
-   * @type {number | string | undefined}
-   */
-  export let tabindex = undefined;
+    /**
+     * Set an id for the input label
+     * @type {string}
+     */
+    id = fallbackId,
 
-  /**
-   * Set to `true` to hide the input from the accessibility tree via CSS
-   * (not just tabindex/aria-hidden, which axe-core's nested-interactive
-   * check does not treat as sufficient). Use when this Checkbox is
-   * nested inside another interactive/widget-role element that already
-   * owns the checked-state semantics (e.g. a listbox option) and the
-   * checkbox itself is purely decorative.
-   */
-  export let decorative = false;
+    /**
+     * Set to `true` to hide the input from the accessibility tree via CSS
+     * (not just tabindex/aria-hidden, which axe-core's nested-interactive
+     * check does not treat as sufficient). Use when this Checkbox is
+     * nested inside another interactive/widget-role element that already
+     * owns the checked-state semantics (e.g. a listbox option) and the
+     * checkbox itself is purely decorative.
+     */
+    decorative = false,
 
-  /**
-   * Obtain a reference to the input HTML element.
-   * @bindable readonly
-   * @type {null | HTMLInputElement}
-   */
-  export let ref = null;
+    /**
+     * Obtain a reference to the input HTML element.
+     * @type {null | HTMLInputElement}
+     */
+    ref = $bindable(null),
 
-  import { createEventDispatcher, getContext } from "svelte";
-  import { readable, writable } from "svelte/store";
+    /**
+     * Called when the user checks or unchecks the box.
+     * @type {((detail: { checked: boolean }) => void) | undefined}
+     */
+    oncheckedchange = undefined,
+
+    /**
+     * Render an AI label or other decorator beside the label.
+     * @type {import("svelte").Snippet | undefined}
+     */
+    decorator = undefined,
+
+    /** @type {import("svelte/elements").ClassValue | undefined} */
+    class: className = undefined,
+
+    /** @type {string | undefined | null} */
+    "aria-describedby": ariaDescribedBy = undefined,
+
+    /** @type {import("svelte/elements").MouseEventHandler<HTMLInputElement> | undefined | null} */
+    onclick = undefined,
+
+    /** @type {import("svelte/elements").FormEventHandler<HTMLInputElement> | undefined | null} */
+    onchange = undefined,
+
+    ...rest
+  } = $props();
+
+  import { writable } from "svelte/store";
   import Decorator from "../AILabel/Decorator.svelte";
   import WarningAltFilled from "../icons/WarningAltFilled.svelte";
   import WarningFilled from "../icons/WarningFilled.svelte";
-  import { splitAriaNaming } from "../utils/aria-naming.js";
   import {
     buildFieldIds,
     joinDescribedBy,
@@ -137,124 +158,109 @@
   import { fieldsetDisabled } from "../utils/fieldset-disabled.js";
   import { formReset } from "../utils/form-reset.js";
   import { overflowTitle } from "../utils/overflow-title.js";
-  import { uniqueId } from "../utils/unique-id.js";
   import CheckboxSkeleton from "./CheckboxSkeleton.svelte";
+  import {
+    getCheckboxGroup,
+    hasCheckboxGroup,
+  } from "./checkbox-group-context.js";
+
+  const ctx = hasCheckboxGroup() ? getCheckboxGroup() : undefined;
 
   // A disabled `<fieldset>` around the component disables it too.
-  let inDisabledFieldset = false;
-  $: effectiveDisabled = disabled || inDisabledFieldset;
+  let inDisabledFieldset = $state(false);
+  const effectiveDisabled = $derived(disabled || inDisabledFieldset);
 
-  const dispatch = createEventDispatcher();
-
-  // Naming and description belong on the input, not the wrapper.
-  $: ({
-    ariaLabel,
-    ariaLabelledBy,
-    ariaDescribedBy,
-    rest: wrapperProps,
-  } = splitAriaNaming($$restProps));
-
-  const ctx = getContext("carbon:CheckboxGroup");
-
-  const {
-    selectedValues,
-    groupName,
-    groupForm,
-    groupRequired,
-    readonly: groupReadonly,
-    disabled: groupDisabled,
-    invalid: groupInvalid,
-    warn: groupWarn,
-    update: ctxUpdate,
-  } = ctx ?? {
-    selectedValues: readable([]),
-    groupName: readable(undefined),
-    groupForm: readable(undefined),
-    groupRequired: readable(undefined),
-    readonly: readable(false),
-    disabled: readable(false),
-    invalid: readable(false),
-    warn: readable(false),
-  };
-
-  $: useGroup = !ctx && Array.isArray(group);
+  const useGroup = $derived(!ctx && Array.isArray(group));
+  // Inside a group, the group's selection decides; `checked` is left alone.
+  const isChecked = $derived(
+    ctx
+      ? ctx.selected.includes(value)
+      : useGroup
+        ? /** @type {ReadonlyArray<T>} */ (group).includes(value)
+        : checked,
+  );
   // A native checkbox with no value submits "on"; `""` would post an empty,
   // falsy field for a checked box. Only the DOM attribute is mapped; group
   // membership still compares `value` itself.
-  $: nativeValue = value === "" || value == null ? "on" : value;
-  $: if (ctx) checked = $selectedValues.includes(value);
-  $: if (useGroup) checked = group.includes(value);
+  const nativeValue = $derived(value === "" || value == null ? "on" : value);
 
-  $: effectiveName = ctx ? ($groupName ?? name) : name;
+  const effectiveName = $derived(ctx ? (ctx.name ?? name) : name);
   // Native validation requires every `required` checkbox. A required group
   // needs only one, so require every box until one is checked.
-  $: effectiveRequired = ctx
-    ? $groupRequired
-      ? $selectedValues.length === 0
-      : ($groupRequired ?? required)
-    : required;
-  $: effectiveReadonly = $groupReadonly || readonly;
-  $: effectiveInvalid = $groupInvalid || invalid;
-  $: effectiveWarn = $groupWarn || warn;
-  $: ({ showInvalid, showWarn } = resolveValidationVisibility({
-    invalid: effectiveInvalid,
-    warn: effectiveWarn,
-    // A disabled group disables its boxes natively, through `<fieldset
-    // disabled>`, so its state is read here only to hide the invalid state.
-    disabled: effectiveDisabled || $groupDisabled,
-    readonly: effectiveReadonly,
-  }));
-
-  // Track previous checked value to avoid duplicate dispatches in Svelte 5
-  // The reactive statement will only dispatch when checked changes externally (e.g., via bind:checked)
-  let prevChecked = checked;
-  $: {
-    const hasChanged = prevChecked !== checked;
-    if (hasChanged) {
-      prevChecked = checked;
-      dispatch("check", checked);
-    }
-  }
+  const effectiveRequired = $derived(
+    ctx
+      ? ctx.required
+        ? ctx.selected.length === 0
+        : (ctx.required ?? required)
+      : required,
+  );
+  const effectiveReadonly = $derived(!!ctx?.readonly || readonly);
+  const { showInvalid, showWarn } = $derived(
+    resolveValidationVisibility({
+      invalid: !!ctx?.invalid || invalid,
+      warn: !!ctx?.warn || warn,
+      // A disabled group disables its boxes natively, through `<fieldset
+      // disabled>`, so its state is read here only to hide the invalid state.
+      disabled: effectiveDisabled || !!ctx?.disabled,
+      readonly: effectiveReadonly,
+    }),
+  );
+  const { helperId, errorId, warnId, readonlyId } = $derived(buildFieldIds(id));
+  // A decorative checkbox's owner (e.g. a MultiSelect option) already
+  // announces read-only, so skip the per-checkbox description.
+  const describeReadonly = $derived(effectiveReadonly && !decorative);
 
   /** @type {null | HTMLSpanElement} */
-  let labelRef = null;
+  let labelRef = $state(null);
 
-  /** @type {(nextChecked: boolean) => void} */
-  function setGroupMembership(nextChecked) {
-    const hasValue = group.includes(value);
-    if (nextChecked && !hasValue) {
-      group = [...group, value];
-    } else if (!nextChecked && hasValue) {
-      group = group.filter((_value) => _value !== value);
+  /**
+   * Route a change to whatever owns the checked state.
+   * @param {boolean} nextChecked
+   * @param {boolean} fromReset
+   */
+  function commit(nextChecked, fromReset) {
+    if (ctx) {
+      ctx.toggle(value, nextChecked, fromReset);
+    } else if (useGroup) {
+      const current = /** @type {ReadonlyArray<T>} */ (group);
+      const has = current.includes(value);
+      if (nextChecked && !has) group = [...current, value];
+      else if (!nextChecked && has) group = current.filter((v) => v !== value);
+    } else {
+      checked = nextChecked;
     }
   }
 
   // A form reset restores the box without a change event. Sync the state to
-  // it, like the other form controls, and fire no `check`. A read-only
+  // it, like the other form controls, and call no callback. A read-only
   // checkbox keeps its state, so put the box back instead. So does a
   // decorative one: its owner (a tree node, a listbox option) holds the
   // state and never learns about the reset.
   function handleFormReset() {
     if (!ref) return;
     if (effectiveReadonly || decorative) {
-      ref.checked = checked;
+      ref.checked = isChecked;
       return;
     }
-    const nextChecked = ref.checked;
-    prevChecked = nextChecked;
-    if (ctxUpdate) {
-      ctxUpdate(value, nextChecked, true);
-    } else if (useGroup) {
-      setGroupMembership(nextChecked);
-    } else {
-      checked = nextChecked;
-    }
+    commit(ref.checked, true);
   }
 
-  $: ({ helperId, errorId, warnId, readonlyId } = buildFieldIds(id));
-  // A decorative checkbox's owner (e.g. a MultiSelect option) already
-  // announces read-only, so skip the per-checkbox description.
-  $: describeReadonly = effectiveReadonly && !decorative;
+  /** @param {MouseEvent & { currentTarget: EventTarget & HTMLInputElement }} event */
+  function handleClick(event) {
+    if (effectiveReadonly) event.preventDefault();
+    onclick?.(event);
+  }
+
+  /** @param {Event & { currentTarget: EventTarget & HTMLInputElement }} event */
+  function handleChange(event) {
+    if (effectiveReadonly) return;
+    // Read the input, not the Svelte state: the two disagree after a
+    // form reset, and inverting stale state would undo the click.
+    const nextChecked = event.currentTarget.checked;
+    commit(nextChecked, false);
+    oncheckedchange?.({ checked: nextChecked });
+    onchange?.(event);
+  }
 
   /** @type {import("svelte/store").Writable<undefined | "active" | "revert">} */
   const aiLabelState = writable(undefined);
@@ -265,29 +271,24 @@
   }
 </script>
 
+{#snippet content(/** @type {string | import("svelte").Snippet} */ source)}
+  {#if typeof source === "function"}{@render source()}{:else}{source}{/if}
+{/snippet}
+
 {#if skeleton}
-  <CheckboxSkeleton
-    {...$$restProps}
-    on:click
-    on:mouseover
-    on:mouseenter
-    on:mouseleave
-  />
+  <CheckboxSkeleton {...rest} class={className} />
 {:else}
   <div
-    class:bx--form-item={true}
-    class:bx--form-item--fit={true}
-    class:bx--checkbox-wrapper={true}
-    class:bx--checkbox-wrapper--no-margin={noMargin}
-    class:bx--checkbox-wrapper--readonly={effectiveReadonly}
-    class:bx--checkbox-wrapper--invalid={showInvalid}
-    class:bx--checkbox-wrapper--warning={showWarn}
-    class:bx--checkbox-wrapper--decorator={$$slots.decorator}
-    {...wrapperProps}
-    on:click
-    on:mouseover
-    on:mouseenter
-    on:mouseleave
+    class={[
+      "bx--form-item",
+      "bx--form-item--fit",
+      "bx--checkbox-wrapper",
+      noMargin && "bx--checkbox-wrapper--no-margin",
+      effectiveReadonly && "bx--checkbox-wrapper--readonly",
+      showInvalid && "bx--checkbox-wrapper--invalid",
+      showWarn && "bx--checkbox-wrapper--warning",
+      decorator && "bx--checkbox-wrapper--decorator",
+    ]}
   >
     <input
       use:fieldsetDisabled={(value) => (inDisabledFieldset = value)}
@@ -295,20 +296,17 @@
       use:formReset={handleFormReset}
       type="checkbox"
       value={nativeValue}
-      {checked}
+      checked={isChecked}
       {disabled}
       {id}
-      {tabindex}
       style:display={decorative ? "none" : undefined}
       bind:indeterminate
       name={effectiveName}
-      form={$groupForm ?? form}
+      form={ctx?.form ?? form}
       required={effectiveRequired}
       aria-readonly={effectiveReadonly || undefined}
       aria-invalid={showInvalid || undefined}
       data-invalid={showInvalid || undefined}
-      aria-label={ariaLabel}
-      aria-labelledby={ariaLabelledBy}
       aria-describedby={joinDescribedBy(
         describeReadonly ? readonlyId : null,
         resolveStatusDescribedBy({
@@ -317,40 +315,16 @@
           invalidText,
           warnText,
           helperText,
-          errorId,
-          warnId,
+          errorId: errorId ?? "",
+          warnId: warnId ?? "",
           helperId,
         }),
         ariaDescribedBy,
       )}
-      class:bx--checkbox={true}
-      on:click={(event) => {
-        if (effectiveReadonly) {
-          event.preventDefault();
-        }
-      }}
-      on:change={(event) => {
-        if (effectiveReadonly) {
-          event.stopImmediatePropagation();
-          return;
-        }
-        // Read the input, not the Svelte state: the two disagree after a
-        // form reset, and inverting stale state would undo the click.
-        const nextChecked = event.currentTarget.checked;
-        if (ctxUpdate) {
-          ctxUpdate(value, nextChecked);
-        } else if (useGroup) {
-          setGroupMembership(nextChecked);
-        } else {
-          prevChecked = nextChecked;
-          checked = nextChecked;
-          // Dispatch directly for user-initiated changes to avoid duplicate events in Svelte 5
-          dispatch("check", nextChecked);
-        }
-      }}
-      on:change
-      on:focus
-      on:blur
+      {...rest}
+      class={["bx--checkbox", className]}
+      onclick={handleClick}
+      onchange={handleChange}
     />
     <label
       for={id}
@@ -359,38 +333,35 @@
       data-contained-checkbox-disabled={indeterminate && effectiveDisabled
         ? "true"
         : undefined}
-      class:bx--checkbox-label={true}
+      class="bx--checkbox-label"
     >
       <span
         bind:this={labelRef}
-        class:bx--checkbox-label-text={true}
-        class:bx--visually-hidden={hideLabel}
+        class={["bx--checkbox-label-text", hideLabel && "bx--visually-hidden"]}
       >
-        <slot name="labelChildren">{labelText}</slot>
+        {@render content(labelText)}
       </span>
     </label>
-    {#if $$slots.decorator}
+    {#if decorator}
       <Decorator
         class="bx--checkbox-wrapper-inner--decorator"
         state={aiLabelState}
         labelSize={labelSizeForKind}
         labelAlign="start"
       >
-        <slot name="decorator" />
+        {@render decorator()}
       </Decorator>
     {/if}
     {#if describeReadonly}
-      <span id={readonlyId} class:bx--visually-hidden={true}
-        >{readonlyText}</span
-      >
+      <span id={readonlyId} class="bx--visually-hidden">{readonlyText}</span>
     {/if}
     <!-- Hidden by CSS unless invalid or warning, so only built then. -->
     {#if showInvalid || showWarn}
-      <div class:bx--checkbox__validation-msg={true}>
+      <div class="bx--checkbox__validation-msg">
         {#if showInvalid}
           <WarningFilled class="bx--checkbox__invalid-icon" />
           {#if invalidText}
-            <div id={errorId} class:bx--form-requirement={true} role="alert">
+            <div id={errorId} class="bx--form-requirement" role="alert">
               {invalidText}
             </div>
           {/if}
@@ -399,7 +370,7 @@
             class="bx--checkbox__invalid-icon bx--checkbox__invalid-icon--warning"
           />
           {#if warnText}
-            <div id={warnId} class:bx--form-requirement={true}>{warnText}</div>
+            <div id={warnId} class="bx--form-requirement">{warnText}</div>
           {/if}
         {/if}
       </div>
@@ -407,8 +378,10 @@
     {#if helperText && !showInvalid && !showWarn}
       <div
         id={helperId}
-        class:bx--form__helper-text={true}
-        class:bx--form__helper-text--disabled={effectiveDisabled}
+        class={[
+          "bx--form__helper-text",
+          effectiveDisabled && "bx--form__helper-text--disabled",
+        ]}
       >
         {helperText}
       </div>

@@ -6,7 +6,7 @@
   export let disabled = false;
   export let labelText = "Checkbox label";
   export let helperText = "";
-  export let onCheck: (event: CustomEvent<boolean>) => void = () => {};
+  export let onCheck: (checked: boolean) => void = () => {};
   export let onClick: (event: MouseEvent) => void = () => {};
   export let onChange: (event: Event) => void = () => {};
   export let onFocus: (event: FocusEvent) => void = () => {};
@@ -22,9 +22,9 @@
   {helperText}
   {tabindex}
   data-testid="checkbox"
-  on:check={onCheck}
-  on:click={onClick}
-  on:change={onChange}
-  on:focus={onFocus}
-  on:blur={onBlur}
+  oncheckedchange={(e) => onCheck(e.checked)}
+  onclick={onClick}
+  onchange={onChange}
+  onfocus={onFocus}
+  onblur={onBlur}
 />

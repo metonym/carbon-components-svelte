@@ -14,7 +14,7 @@
 <Grid fullWidth padding>
   <Row>
     <Column>
-      <Button on:click={() => (open = !open)}>
+      <Button onclick={() => (open = !open)}>
         {open ? "Hide" : "Show"}
         full-width grid overlay
       </Button>

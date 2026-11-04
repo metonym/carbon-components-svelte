@@ -16,16 +16,18 @@
 </script>
 
 <div data-testid="checkbox">
-  <Checkbox labelText="Enable failover"><AILabel slot="decorator" /></Checkbox>
+  <Checkbox labelText="Enable failover"
+    >{#snippet decorator()}<AILabel />{/snippet}</Checkbox
+  >
 </div>
 <div data-testid="checkbox-inline">
   <Checkbox labelText="Inline">
-    <AILabel slot="decorator" kind="inline" />
+    {#snippet decorator()}<AILabel kind="inline" />{/snippet}
   </Checkbox>
 </div>
 <div data-testid="checkbox-group">
   <CheckboxGroup legendText="Channels">
-    <AILabel slot="decorator" kind="inline" />
+    {#snippet decorator()}<AILabel kind="inline" />{/snippet}
     <Checkbox labelText="Email" />
   </CheckboxGroup>
 </div>
@@ -39,26 +41,36 @@
   </RadioButtonGroup>
 </div>
 <div data-testid="tag">
-  <Tag>Forecast<AILabel slot="decorator" /></Tag>
+  <Tag>Forecast{#snippet decorator()}<AILabel />{/snippet}</Tag>
 </div>
 <div data-testid="tile">
-  <Tile>Forecast<AILabel slot="decorator" size="xl" bind:revertActive /></Tile>
+  <Tile
+    >Forecast{#snippet decorator()}<AILabel
+        size="xl"
+        bind:revertActive
+      />{/snippet}</Tile
+  >
 </div>
 <div data-testid="clickable-tile">
-  <ClickableTile href="#">Open<AILabel slot="decorator" /></ClickableTile>
+  <ClickableTile href="#"
+    >Open{#snippet decorator()}<AILabel />{/snippet}</ClickableTile
+  >
 </div>
 <div data-testid="selectable-tile">
-  <SelectableTile bind:selected>Plan<AILabel slot="decorator" /></SelectableTile
+  <SelectableTile bind:selected
+    >Plan{#snippet decorator()}<AILabel />{/snippet}</SelectableTile
   >
 </div>
 <div data-testid="radio-tile">
-  <RadioTile value="a">Plan<AILabel slot="decorator" /></RadioTile>
+  <RadioTile value="a"
+    >Plan{#snippet decorator()}<AILabel />{/snippet}</RadioTile
+  >
 </div>
 <div data-testid="expandable-tile">
   <ExpandableTile>
-    <div slot="above">Details</div>
-    <div slot="below">More</div>
-    <AILabel slot="decorator" />
+    {#snippet above()}<div>Details</div>{/snippet}
+    {#snippet below()}<div>More</div>{/snippet}
+    {#snippet decorator()}<AILabel />{/snippet}
   </ExpandableTile>
 </div>
 <div data-testid="plain-tile"><SelectableTile>Plain</SelectableTile></div>

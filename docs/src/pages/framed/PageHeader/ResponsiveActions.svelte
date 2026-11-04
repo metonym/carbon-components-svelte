@@ -15,8 +15,8 @@
 
 <Breakpoint bind:size />
 
-<PageHeader title="db-prod-01" subtitle="PostgreSQL 16 · us-south">
-  <svelte:fragment slot="actions">
+<PageHeader titleText="db-prod-01" subtitle="PostgreSQL 16 · us-south">
+  {#snippet actions()}
     {#if compact}
       <OverflowMenu size="xl" flipped iconDescription="Actions">
         <OverflowMenuItem text="Restart" />
@@ -30,5 +30,5 @@
         <Button>Connect</Button>
       </ButtonSet>
     {/if}
-  </svelte:fragment>
+  {/snippet}
 </PageHeader>

@@ -3,10 +3,16 @@ import { tick } from "svelte";
 import { user } from "../utils/user";
 import Snippets from "./Snippets.test.svelte";
 
-/** Renders the fixture and clicks the trigger button inside `testid`. */
+/**
+ * Renders the fixture and clicks the trigger button: `testid` itself, where
+ * rest props land on the field, or a button inside it.
+ */
 const openDropdown = async (testid: string) => {
   render(Snippets);
-  const button = screen.getByTestId(testid).querySelector("button");
+  const target = screen.getByTestId(testid);
+  const button = target.matches("button")
+    ? target
+    : target.querySelector("button");
   if (!button) throw new Error("expected dropdown trigger button");
   await user.click(button);
 };
@@ -155,7 +161,7 @@ describe("Svelte 5 Snippets", () => {
     });
   });
 
-  describe("Dropdown icon/iconRight", () => {
+  describe("Dropdown icon/iconEnd", () => {
     it("should render icon and iconRight snippets with selected", async () => {
       await openDropdown("dropdown-icon-snippets");
 

@@ -27,7 +27,7 @@
   data-testid="btn-click-guard"
   {loading}
   {loadingDelay}
-  on:click={onClick}
+  onclick={onClick}
 >
   Submit
 </Button>

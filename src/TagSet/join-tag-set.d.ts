@@ -1,7 +1,7 @@
 import type { Readable } from "svelte/store";
 
 export type TagSetMemberItem = {
-  node: HTMLElement;
+  node: HTMLElement | null | undefined;
   label: string;
   value?: string | number;
   type?: string;
@@ -12,7 +12,7 @@ export type TagSetMemberItem = {
 
 export type TagSetMember = {
   /** The set's `size`. */
-  size: Readable<"sm" | "default" | "lg" | undefined>;
+  size: Readable<"xs" | "sm" | "default" | "lg" | undefined>;
   /** The set's `navigation`. */
   navigation: Readable<"tab" | "roving">;
   /** Whether the tag is collapsed into the "+N" indicator. */
@@ -26,7 +26,8 @@ export type TagSetMember = {
 };
 
 /**
- * Join the parent `TagSet`, if any. Call during component init. Outside a
- * set, returns inert stores and no-op methods.
+ * Join the parent `TagSet`, if any. Call during component init: the tag
+ * registers then and reports its element and label, from `getItem`, once
+ * mounted. Outside a set, returns inert stores and no-op methods.
  */
 export function joinTagSet(getItem: () => TagSetMemberItem): TagSetMember;

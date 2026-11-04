@@ -17,7 +17,7 @@
   let selectedIds = ["bold"];
 </script>
 
-<Button bind:ref={anchor} on:click={() => (open = !open)}>Edit</Button>
+<Button bind:ref={anchor} onclick={() => (open = !open)}>Edit</Button>
 
 <Menu {anchor} bind:open labelText="Edit menu">
   <MenuItem icon={Cut} shortcutText="⌘X" on:click={() => console.log("Cut")}>

@@ -79,12 +79,12 @@
   class="my-toast"
   data-testid="toast"
   kind="success"
-  title="Saved"
+  titleText="Saved"
   hideCloseButton
 >
-  <svelte:fragment slot="subtitleChildren">
+  {#snippet subtitleText()}
     Done. <Link data-testid="toast-link" href="#">Undo</Link>
-  </svelte:fragment>
+  {/snippet}
 </ToastNotification>
 
 <ToastNotification
@@ -92,7 +92,7 @@
   data-testid="toast-low"
   kind="info"
   lowContrast
-  title="Heads up"
+  titleText="Heads up"
   hideCloseButton
 />
 
@@ -100,6 +100,6 @@
   class="my-inline"
   data-testid="inline"
   kind="error"
-  title="Failed"
+  titleText="Failed"
   hideCloseButton
 />

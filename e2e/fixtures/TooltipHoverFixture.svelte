@@ -51,7 +51,7 @@
     kind="ghost"
     icon={Edit}
     iconDescription="Edit service"
-    on:click={() => edits++}
+    onclick={() => edits++}
   />
   <Button
     kind="ghost"
@@ -81,7 +81,7 @@
             iconDescription={name}
             tooltipPosition={toolbar.position}
             portalTooltip={toolbar.portal}
-            on:click={() => press(toolbar.id, name)}
+            onclick={() => press(toolbar.id, name)}
           />
         {/each}
       </div>

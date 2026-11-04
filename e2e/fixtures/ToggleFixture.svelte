@@ -25,8 +25,8 @@
     size="sm"
     labelText="Live prices"
     hideLabel
-    labelA="Paused"
-    labelB="Live"
+    offText="Paused"
+    onText="Live"
   />
   <span data-testid="toggle-row-neighbor">Updated 2 min ago</span>
 </div>

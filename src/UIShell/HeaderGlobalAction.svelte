@@ -29,17 +29,45 @@
   ]
     .filter(Boolean)
     .join(" ");
+
+  import { createBubbler } from "svelte/legacy";
+
+  // Re-dispatches a runes child's events to this component's `on:` listeners.
+  const bubble = createBubbler();
 </script>
 
 {#if $$slots.badge}
   <div class:bx--btn__badge-wrapper={true}>
-    <Button bind:ref {...$$restProps} class={buttonClass} size="lg" on:click>
-      <svelte:component this={icon} slot="icon" size={20} />
+    <Button
+      bind:ref
+      {...$$restProps}
+      class={buttonClass}
+      size="lg"
+      onclick={(e) => {
+        $$restProps.onclick?.(e);
+        bubble("click")(e);
+      }}
+    >
+      {#snippet iconChildren()}<svelte:component
+          this={icon}
+          size={20}
+        />{/snippet}
     </Button>
     <slot name="badge" />
   </div>
 {:else}
-  <Button bind:ref {...$$restProps} class={buttonClass} on:click>
-    <svelte:component this={icon} slot="icon" size={20} />
+  <Button
+    bind:ref
+    {...$$restProps}
+    class={buttonClass}
+    onclick={(e) => {
+      $$restProps.onclick?.(e);
+      bubble("click")(e);
+    }}
+  >
+    {#snippet iconChildren()}<svelte:component
+        this={icon}
+        size={20}
+      />{/snippet}
   </Button>
 {/if}

@@ -10,7 +10,7 @@
   let open = false;
 </script>
 
-<Button on:click={() => (open = true)}>Open dialog</Button>
+<Button onclick={() => (open = true)}>Open dialog</Button>
 
 <Dialog bind:open modal aria-label="Meeting scheduler">
   <Stack gap={5}>
@@ -22,6 +22,6 @@
     <DatePicker portalMenu datePickerType="single">
       <DatePickerInput labelText="Meeting date" placeholder="mm/dd/yyyy" />
     </DatePicker>
-    <Button kind="secondary" on:click={() => (open = false)}>Close</Button>
+    <Button kind="secondary" onclick={() => (open = false)}>Close</Button>
   </Stack>
 </Dialog>

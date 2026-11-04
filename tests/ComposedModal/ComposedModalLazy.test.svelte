@@ -7,7 +7,7 @@
 </script>
 
 <ComposedModal lazy bind:open>
-  <ModalHeader title="Rename project" />
+  <ModalHeader titleText="Rename project" />
   <ModalBody>
     <label>
       Name

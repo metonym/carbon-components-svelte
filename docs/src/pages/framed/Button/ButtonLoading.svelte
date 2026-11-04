@@ -23,12 +23,12 @@
 </script>
 
 <Stack orientation="horizontal" gap={5}>
-  <Button loading={submitting} on:click={onSubmit}>Submit</Button>
+  <Button loading={submitting} onclick={onSubmit}>Submit</Button>
   <Button
     loading={adding}
     loadingDescription="Adding item"
     iconDescription="Add item"
     icon={Add}
-    on:click={onAdd}
+    onclick={onAdd}
   />
 </Stack>

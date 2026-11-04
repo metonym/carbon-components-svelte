@@ -15,10 +15,10 @@
 </script>
 
 <Dropdown {items} selectedId="0" open labelText="Icon slots">
-  <svelte:fragment slot="icon" let:item>
+  {#snippet icon({ item })}
     <span data-testid="left-{item.id}">L</span>
-  </svelte:fragment>
-  <svelte:fragment slot="iconRight" let:item let:selected>
+  {/snippet}
+  {#snippet iconEnd({ item, selected })}
     <span data-testid="right-{item.id}" data-selected={selected}>R</span>
-  </svelte:fragment>
+  {/snippet}
 </Dropdown>

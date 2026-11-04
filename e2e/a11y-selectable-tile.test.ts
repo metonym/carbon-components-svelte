@@ -1,4 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
+import { tileByTestId } from "./helpers/field";
 import { expect, test } from "./helpers/host";
 
 test.describe("SelectableTile a11y", () => {
@@ -11,7 +12,7 @@ test.describe("SelectableTile a11y", () => {
       .analyze();
     expect(staticResults.violations).toEqual([]);
 
-    await page.getByTestId("selectable-tile-x").click();
+    await tileByTestId(page, "selectable-tile-x").click();
     await expect(page.getByTestId("selected-values")).toHaveText("x");
 
     const selectedResults = await new AxeBuilder({ page })

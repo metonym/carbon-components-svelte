@@ -23,8 +23,8 @@
       if (!value) return true;
       return item.text.toLowerCase().includes(value.toLowerCase());
     }}
-    on:select={(e) => {
-      console.log("Selected item:", e.detail);
+    onselectedchange={(e) => {
+      console.log("Selected item:", e);
     }}
   />
   <div>

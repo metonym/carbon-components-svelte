@@ -9,7 +9,7 @@
 </script>
 
 <Stack gap={6}>
-  <Button kind="secondary" on:click={() => inputRef?.click()}>
+  <Button kind="secondary" onclick={() => inputRef?.click()}>
     Open file picker
   </Button>
   <FileUploaderDropContainer

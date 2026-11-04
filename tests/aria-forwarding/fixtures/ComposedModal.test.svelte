@@ -5,6 +5,6 @@
 </script>
 
 <ComposedModal open alert {...$$restProps}>
-  <ModalHeader title="Delete file" />
+  <ModalHeader titleText="Delete file" />
   <ModalBody>This cannot be undone.</ModalBody>
 </ComposedModal>

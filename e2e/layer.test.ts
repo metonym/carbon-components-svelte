@@ -1,3 +1,4 @@
+import { modalByTestId } from "./helpers/field";
 import { expect, test } from "./helpers/host";
 
 // Gray 100 gives each level its own color, so a component that ignores
@@ -135,7 +136,7 @@ test("modal content sits one Layer level up", async ({ page }) => {
       MODAL_CASES.map(([name, selector, token]) =>
         expect
           .soft(
-            page.getByTestId(modal).locator(selector).first(),
+            modalByTestId(page, modal).locator(selector).first(),
             `${theme} ${modal} ${name}`,
           )
           .toHaveCSS("background-color", colors[token]),
@@ -144,7 +145,7 @@ test("modal content sits one Layer level up", async ({ page }) => {
     const fields = MODAL_FIELDS.map((selector) =>
       expect
         .soft(
-          page.getByTestId("modal").locator(selector).first(),
+          modalByTestId(page, "modal").locator(selector).first(),
           `${theme} ${selector}`,
         )
         .toHaveCSS("background-color", colors.field),

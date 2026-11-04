@@ -218,8 +218,8 @@
   aria-label="Plan details"
   aria-describedby="note"
 >
-  <div slot="above">Above the fold</div>
-  <div slot="below">Below the fold</div>
+  {#snippet above()}<div>Above the fold</div>{/snippet}
+  {#snippet below()}<div>Below the fold</div>{/snippet}
 </ExpandableTile>
 
 <h2>File uploaders</h2>
@@ -245,7 +245,7 @@
 
 <h2>Disclosure</h2>
 <Accordion>
-  <AccordionItem title="Shipping policy" aria-describedby="note">
+  <AccordionItem titleText="Shipping policy" aria-describedby="note">
     Content
   </AccordionItem>
 </Accordion>
@@ -253,10 +253,10 @@
 <Tabs>
   <Tab label="Calendar" aria-describedby="note" />
   <Tab label="Settings" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Calendar content</TabContent>
     <TabContent>Settings content</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
 <h2>Tooltips</h2>

@@ -12,7 +12,7 @@ description: Clickable tiles are interactive content areas that link to another 
 
 Create a clickable tile with an href to link to another page.
 Press <DocKbd label="Enter" /> or <DocKbd label="Space" /> to follow the link; both
-fire `on:click` like a mouse click.
+call `onclick` like a mouse click.
 
 <ClickableTile href="https://cloud.ibm.com/docs/api-gateway/">
 API documentation
@@ -49,11 +49,11 @@ readers, so let the tile's text name the destination.
 
 ## Prevent default
 
-Handle the `click` event to override default link behavior. Call `e.preventDefault()` to stop navigation.
+Pass `onclick` to override default link behavior. Call `e.preventDefault()` to stop navigation.
 
 <ClickableTile
   href="/incidents/new"
-  on:click={(e) => {
+  onclick={(e) => {
     e.preventDefault();
     // custom behavior
   }}
@@ -63,13 +63,13 @@ Handle the `click` event to override default link behavior. Call `e.preventDefau
 
 ## AI label
 
-Put an `AILabel` in the `decorator` slot to mark the tile's content as AI-generated. The tile shows the AI surface, and the label sits in the top-right corner, outside the link at the `"xs"` size.
+Put an `AILabel` in the `decorator` snippet to mark the tile's content as AI-generated. The tile shows the AI surface, and the label sits in the top-right corner, outside the link at the `"xs"` size.
 
 <ClickableTile href="https://www.carbondesignsystem.com/">
   Open the usage forecast
-  <AILabel slot="decorator">
+  {#snippet decorator()}<AILabel>
     <p>Projected from the last six months of spend.</p>
-  </AILabel>
+  </AILabel>{/snippet}
 </ClickableTile>
 
 ### Rounded corners
@@ -78,9 +78,9 @@ Set `rounded` to `true` to round the corners of a tile with a decorator. Carbon 
 
 <ClickableTile href="https://www.carbondesignsystem.com/" rounded>
   Open the usage forecast
-  <AILabel slot="decorator">
+  {#snippet decorator()}<AILabel>
     <p>Projected from the last six months of spend.</p>
-  </AILabel>
+  </AILabel>{/snippet}
 </ClickableTile>
 
 ## On a layer

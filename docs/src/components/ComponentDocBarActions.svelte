@@ -72,7 +72,7 @@
           icon={tocToggleIcon}
           iconDescription={tocToggleDescription}
           tooltipPosition="bottom"
-          on:click={() => dispatch("tocToggle")}
+          onclick={() => dispatch("tocToggle")}
         />
       </TooltipGroup>
     </div>

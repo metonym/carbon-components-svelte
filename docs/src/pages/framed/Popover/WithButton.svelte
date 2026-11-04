@@ -6,7 +6,7 @@
 </script>
 
 <Box bind:ref position="relative">
-  <Button on:click={() => (open = !open)}>Quick settings</Button>
+  <Button onclick={() => (open = !open)}>Quick settings</Button>
   <Popover
     bind:open
     align="bottom-left"

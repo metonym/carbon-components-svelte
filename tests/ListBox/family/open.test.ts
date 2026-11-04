@@ -51,14 +51,32 @@ describe.each(caseRows)("%s open event", (_, c) => {
     },
   );
 
-  it('dispatches open with trigger "programmatic" when `open` is set', async () => {
-    const { onOpen, rerender } = setup();
+  it.skipIf(c.callbacks)(
+    'dispatches open with trigger "programmatic" when `open` is set',
+    async () => {
+      const { onOpen, rerender } = setup();
 
-    await rerender({ open: true });
+      await rerender({ open: true });
 
-    expect(onOpen).toHaveBeenCalledTimes(1);
-    expect(onOpen.mock.calls[0][0].detail).toEqual({ trigger: "programmatic" });
-  });
+      expect(onOpen).toHaveBeenCalledTimes(1);
+      expect(onOpen.mock.calls[0][0].detail).toEqual({
+        trigger: "programmatic",
+      });
+    },
+  );
+
+  // Callbacks report what the user does, not a prop set from outside.
+  it.runIf(c.callbacks)(
+    "does not call onopenchange when `open` is set",
+    async () => {
+      const { onOpen, rerender } = setup();
+
+      await rerender({ open: true });
+
+      expect(screen.getByRole("listbox")).toBeInTheDocument();
+      expect(onOpen).not.toHaveBeenCalled();
+    },
+  );
 
   it("does not dispatch open when mounted open", () => {
     const { onOpen } = setup(true);

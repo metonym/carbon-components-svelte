@@ -28,7 +28,7 @@
           size="small"
           kind="secondary"
           disabled={plan === value}
-          on:click={() => (plan = value)}
+          onclick={() => (plan = value)}
         >
           Select "{value}"
         </Button>

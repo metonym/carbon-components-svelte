@@ -25,7 +25,7 @@ start at 320 px. -->
       >
     </span>
     <span data-testid="page-popover" style="position: relative">
-      <Button size="sm" on:click={() => (open.page = !open.page)}
+      <Button size="sm" onclick={() => (open.page = !open.page)}
         >Popover on the page</Button
       >
       <Popover open={open.page} portalPopover caret align={pageAlign}
@@ -34,13 +34,13 @@ start at 320 px. -->
     </span>
   </div>
   <div style="display: flex; gap: 1rem; margin-top: 1rem">
-    <Button size="sm" kind="tertiary" on:click={() => (modalOpen = true)}
+    <Button size="sm" kind="tertiary" onclick={() => (modalOpen = true)}
       >Open modal</Button
     >
-    <Button size="sm" kind="ghost" on:click={() => (pageAlign = "right-end")}
+    <Button size="sm" kind="ghost" onclick={() => (pageAlign = "right-end")}
       >Align right-end</Button
     >
-    <Button size="sm" kind="ghost" on:click={() => (pageAlign = "bottom-start")}
+    <Button size="sm" kind="ghost" onclick={() => (pageAlign = "bottom-start")}
       >Align bottom-start</Button
     >
   </div>
@@ -50,7 +50,7 @@ start at 320 px. -->
   bind:open={modalOpen}
   passiveModal
   modalHeading="Popover in a Modal"
-  on:close={() => (open.modal = false)}
+  onopenchange={() => (open.modal = false)}
 >
   <div style="display: flex; gap: 1rem; align-items: center">
     <span data-testid="modal-toggletip">
@@ -58,8 +58,7 @@ start at 320 px. -->
       >
     </span>
     <span data-testid="modal-popover" style="position: relative">
-      <Button size="sm" on:click={() => (open.modal = !open.modal)}>Plan</Button
-      >
+      <Button size="sm" onclick={() => (open.modal = !open.modal)}>Plan</Button>
       <Popover open={open.modal} portalPopover caret align="bottom"
         ><div style="padding: 1rem; width: 16rem">{text}</div></Popover
       >

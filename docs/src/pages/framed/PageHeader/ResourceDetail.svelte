@@ -30,20 +30,20 @@
   grid
   eyebrow="Database"
   eyebrowIcon={DataBase}
-  title="db-prod-01"
+  titleText="db-prod-01"
   subtitle="PostgreSQL 16 · us-south"
 >
-  <svelte:fragment slot="breadcrumb">
+  {#snippet breadcrumb()}
     <Breadcrumb noTrailingSlash>
       <BreadcrumbItem href="/">Resources</BreadcrumbItem>
       <BreadcrumbItem href="/">Databases</BreadcrumbItem>
       <BreadcrumbItem href="/" isCurrentPage>db-prod-01</BreadcrumbItem>
     </Breadcrumb>
-  </svelte:fragment>
-  <svelte:fragment slot="titleEnd">
+  {/snippet}
+  {#snippet titleEnd()}
     <Tag type="green" size="sm">Running</Tag>
-  </svelte:fragment>
-  <svelte:fragment slot="actions">
+  {/snippet}
+  {#snippet actions()}
     <ComboButton
       size="lg"
       labelText="Connect"
@@ -54,22 +54,22 @@
       <MenuItem>Create backup</MenuItem>
       <MenuItem kind="danger">Delete</MenuItem>
     </ComboButton>
-  </svelte:fragment>
-  <svelte:fragment slot="meta">
+  {/snippet}
+  {#snippet meta()}
     <DescriptionList columns={4}>
       <DescriptionListItem term="Plan">Standard</DescriptionListItem>
       <DescriptionListItem term="Storage">42 GB</DescriptionListItem>
       <DescriptionListItem term="Version">16.2</DescriptionListItem>
       <DescriptionListItem term="Created">March 14, 2026</DescriptionListItem>
     </DescriptionList>
-  </svelte:fragment>
-  <svelte:fragment slot="tabs">
+  {/snippet}
+  {#snippet tabs()}
     <Tabs>
       <Tab label="Overview" />
       <Tab label="Backups" />
       <Tab label="Settings" />
     </Tabs>
-  </svelte:fragment>
+  {/snippet}
   <TabContent>
     <Row padding>
       <Column sm={4} md={4} lg={5}>

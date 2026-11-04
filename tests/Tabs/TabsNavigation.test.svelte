@@ -15,7 +15,7 @@
   this={Component}
   navigation
   aria-label="Component"
-  bind:selected
+  bind:selectedIndex={selected}
 >
   {#each items as item (item)}
     <Tab
@@ -25,5 +25,5 @@
       disabled={item === "changelog"}
     />
   {/each}
-  <div slot="content" data-testid="page">Page {selected}</div>
+  {#snippet content()}<div data-testid="page">Page {selected}</div>{/snippet}
 </svelte:component>

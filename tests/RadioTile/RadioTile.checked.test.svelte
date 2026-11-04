@@ -7,10 +7,14 @@
 
   export let selected: ComponentProps<TileGroup>["selected"] = "a";
   export let checkedB = false;
-  export let onSelect: (event: CustomEvent) => void = () => {};
+  export let onSelect: (value: string | undefined) => void = () => {};
 </script>
 
-<TileGroup bind:selected legendText="Pick one" on:select={onSelect}>
+<TileGroup
+  bind:selected
+  legendText="Pick one"
+  onselectedchange={(e) => onSelect(e.selected)}
+>
   <RadioTile value="a">A</RadioTile>
   <RadioTile value="b" bind:checked={checkedB}>B</RadioTile>
 </TileGroup>

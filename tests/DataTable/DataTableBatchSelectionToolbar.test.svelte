@@ -48,7 +48,7 @@
     >
       <Button
         kind="danger"
-        on:click={async () => {
+        onclick={async () => {
           ondelete?.(selectedRowIds);
           if (moveFocusOnDelete) {
             selectedRowIds = [];
@@ -59,7 +59,7 @@
       >
         Delete
       </Button>
-      <Button on:click={() => onrestart?.(selectedRowIds)}>Restart</Button>
+      <Button onclick={() => onrestart?.(selectedRowIds)}>Restart</Button>
     </ToolbarBatchActions>
     <ToolbarContent><Button>Create balancer</Button></ToolbarContent>
   </Toolbar>

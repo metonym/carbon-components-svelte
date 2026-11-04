@@ -12,7 +12,7 @@
   }
 </script>
 
-<Button on:click={() => (open = true)}>Save changes</Button>
+<Button onclick={() => (open = true)}>Save changes</Button>
 
 <Modal
   bind:open
@@ -26,10 +26,10 @@
       loadingDescription: "Saving...",
     },
   ]}
-  on:click:button--secondary={({ detail }) => {
-    if (detail.text === "Save as draft") onSaveDraft();
+  onsecondaryaction={({ text }) => {
+    if (text === "Save as draft") onSaveDraft();
   }}
-  on:submit={() => (open = false)}
+  onprimaryaction={() => (open = false)}
 >
   <p>Save your changes to the Cloudant database configuration.</p>
 </Modal>

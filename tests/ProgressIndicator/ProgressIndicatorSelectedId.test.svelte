@@ -7,7 +7,7 @@
   export let showStepA = true;
 </script>
 
-<ProgressIndicator bind:currentIndex bind:selectedId>
+<ProgressIndicator bind:currentIndex bind:currentId={selectedId}>
   {#if showStepA}
     <ProgressStep id="step-a" label="Step A" complete />
   {/if}

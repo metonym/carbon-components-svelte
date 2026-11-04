@@ -12,7 +12,7 @@
     {/each}
   </div>
 
-  <Button on:click={() => (group = ["Staging"])}>Set to ["Staging"]</Button>
+  <Button onclick={() => (group = ["Staging"])}>Set to ["Staging"]</Button>
 
   <div>
     <strong>Selected:</strong>

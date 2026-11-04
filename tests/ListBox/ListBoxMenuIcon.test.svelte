@@ -13,6 +13,6 @@
 <ListBoxMenuIcon
   {open}
   {translateWithId}
-  on:click={(e) => onclick?.(e)}
+  onclick={(e) => onclick?.(e)}
   {...$$restProps}
 />

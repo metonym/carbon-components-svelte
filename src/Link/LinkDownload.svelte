@@ -1,72 +1,73 @@
 <script>
   /** @extendProps {"./Link.svelte"} LinkProps */
 
-  /**
-   * @event download
-   * @event download:error
-   * @type {object}
-   * @property {unknown} error
-   */
+  let {
+    /**
+     * Specify the content to download.
+     * @type {string | Blob | undefined}
+     */
+    data = undefined,
 
-  /**
-   * Specify the content to download.
-   * @type {string | Blob | undefined}
-   */
-  export let data = undefined;
+    /** Specify the downloaded file name. */
+    filename = "download",
 
-  /** Specify the downloaded file name. */
-  export let filename = "download";
+    /**
+     * Specify the MIME type used to build the `Blob` when `data` is a string.
+     * @type {string | undefined}
+     */
+    type = undefined,
 
-  /**
-   * Specify the MIME type used to build the `Blob` when `data` is a string.
-   * @type {string | undefined}
-   */
-  export let type = undefined;
+    /** Set to `true` to disable the link. */
+    disabled = false,
 
-  /** Set to `true` to disable the link. */
-  export let disabled = false;
+    /**
+     * Override the default download behavior (creates an object URL for
+     * `data` and clicks a temporary anchor).
+     * @type {(data: string | Blob, filename: string, type: string) => void | Promise<void>}
+     */
+    download = downloadFile,
 
-  /**
-   * Override the default download behavior (creates an object URL for
-   * `data` and clicks a temporary anchor).
-   * @type {(data: string | Blob, filename: string, type: string) => void | Promise<void>}
-   */
-  export let download = downloadFile;
+    /**
+     * Called after the download starts.
+     * @type {(() => void) | undefined}
+     */
+    ondownload = undefined,
 
-  import { createEventDispatcher } from "svelte";
+    /**
+     * Called when `download` throws or rejects.
+     * @type {((detail: { error: unknown }) => void) | undefined}
+     */
+    ondownloaderror = undefined,
+
+    /** @type {import("svelte/elements").MouseEventHandler<HTMLAnchorElement> | undefined | null} */
+    onclick = undefined,
+
+    /** @type {import("svelte").Snippet | undefined} */
+    children = undefined,
+
+    ...rest
+  } = $props();
+
   import { downloadFile } from "../utils/download-file.js";
   import Link from "./Link.svelte";
 
-  const dispatch = createEventDispatcher();
-
+  /** @param {MouseEvent & { currentTarget: EventTarget & HTMLAnchorElement }} event */
   async function handleClick(event) {
+    onclick?.(event);
     event.preventDefault();
     if (disabled) return;
 
     try {
       if (download === downloadFile ? data !== undefined : true) {
         await download(data, filename, type);
-        dispatch("download");
+        ondownload?.();
       }
     } catch (error) {
-      dispatch("download:error", { error });
+      ondownloaderror?.({ error });
     }
   }
 </script>
 
-<Link
-  href="#"
-  {disabled}
-  {...$$restProps}
-  on:click
-  on:click={handleClick}
-  on:mouseover
-  on:mouseenter
-  on:mouseleave
-  on:focus
-  on:blur
-  on:keydown
-  on:keyup
->
-  <slot />
+<Link href="#" {disabled} {...rest} onclick={handleClick}>
+  {@render children?.()}
 </Link>

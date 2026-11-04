@@ -76,11 +76,11 @@
 
 <Stack gap={6}>
   <ButtonSet>
-    <Button size="small" on:click={filterBySingleId}>Filter single ID</Button>
-    <Button size="small" on:click={filterByMultipleIds}>
+    <Button size="small" onclick={filterBySingleId}>Filter single ID</Button>
+    <Button size="small" onclick={filterByMultipleIds}>
       Filter multiple IDs
     </Button>
-    <Button size="small" kind="tertiary" on:click={resetFilter}>Reset</Button>
+    <Button size="small" kind="tertiary" onclick={resetFilter}>Reset</Button>
   </ButtonSet>
   <div>
     <TreeView labelText="Shared Drive" nodes={filteredNodes} {expandedIds} />

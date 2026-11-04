@@ -31,27 +31,27 @@ Hide the label visually by setting `hideLabel` to `true`. The label remains avai
 
 ### Custom
 
-Customize toggle labels with `labelA` and `labelB`. The toggle's width includes the longer of the two, so it does not shift neighboring content when the state changes. Set both to `""` to show the switch alone.
+Customize the state text with `offText` and `onText`. The toggle's width includes the longer of the two, so it does not shift neighboring content when the state changes. Set both to `""` to show the switch alone.
 
-<Toggle labelText="Maintenance mode" labelA="No" labelB="Yes" />
+<Toggle labelText="Maintenance mode" offText="No" onText="Yes" />
 
-### Slottable
+### Custom state content
 
-Use slots to customize the toggle labels with additional styling or content.
+Pass snippets to `offText` and `onText` for additional styling or content.
 
 <Toggle labelText="Two-factor authentication">
-  <Text slot="labelA" tag="span" type="inherit" color="error">No</Text>
-  <Text slot="labelB" tag="span" type="inherit" color="success">Yes</Text>
+  {#snippet offText()}<Text tag="span" type="inherit" color="error">No</Text>{/snippet}
+  {#snippet onText()}<Text tag="span" type="inherit" color="success">Yes</Text>{/snippet}
 </Toggle>
 
 ### Custom label
 
-Use the `labelChildren` slot to provide custom label content instead of `labelText`.
+Pass a snippet to `labelText` to render custom label content.
 
-<Toggle labelText="Fallback label">
-  <svelte:fragment slot="labelChildren">
+<Toggle>
+  {#snippet labelText()}
     Automatic security updates <strong>(recommended)</strong>
-  </svelte:fragment>
+  {/snippet}
 </Toggle>
 
 ## States
@@ -102,9 +102,9 @@ Use two-way binding with `bind:toggled` to track and update the toggle state pro
 
 ## Events
 
-Use `on:toggle` to listen for state changes. The event dispatches `{ toggled: boolean }` as `event.detail`.
+Use `ontoggledchange` to listen for state changes the user makes. It receives `{ toggled: boolean }`.
 
-<Toggle labelText="Email digest" on:toggle={e => console.log(e.detail)} />
+<Toggle labelText="Email digest" ontoggledchange={({ toggled }) => console.log(toggled)} />
 
 ## Form value
 

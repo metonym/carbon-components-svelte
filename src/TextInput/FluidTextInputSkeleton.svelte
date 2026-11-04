@@ -1,12 +1,19 @@
+<script>
+  /**
+   * @restProps {div}
+   */
+  let {
+    /** @type {import("svelte/elements").ClassValue | undefined} */
+    class: className = undefined,
+
+    ...rest
+  } = $props();
+</script>
+
 <div
-  class:bx--form-item={true}
-  class:bx--text-input--fluid__skeleton={true}
-  {...$$restProps}
-  on:click
-  on:mouseover
-  on:mouseenter
-  on:mouseleave
+  {...rest}
+  class={["bx--form-item", "bx--text-input--fluid__skeleton", className]}
 >
-  <span class:bx--label={true} class:bx--skeleton={true}></span>
-  <div class:bx--skeleton={true} class:bx--text-input={true}></div>
+  <span class="bx--label bx--skeleton"></span>
+  <div class="bx--skeleton bx--text-input"></div>
 </div>

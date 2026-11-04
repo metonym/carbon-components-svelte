@@ -65,5 +65,5 @@
   {items}
   {loading}
   emptyText={(value) => `No channels match "${value}"`}
-  on:select={(e) => (selected = e.detail.selected)}
+  onselectedchange={(e) => (selected = e.selected)}
 />

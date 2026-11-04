@@ -6,7 +6,7 @@
 </script>
 
 <Dropdown labelText="Region" {items} open>
-  <svelte:fragment slot="group" let:group let:items={groupItems}>
+  {#snippet group({ group, items: groupItems })}
     {`${group} (${groupItems.length})`}
-  </svelte:fragment>
+  {/snippet}
 </Dropdown>

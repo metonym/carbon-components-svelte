@@ -23,10 +23,9 @@
   modalHeading="Modal title"
   primaryButtonText="Save"
   secondaryButtonText="Cancel"
-  on:click:button--primary={() => (events = [...events, "primary"])}
-  on:click:button--secondary={() => (events = [...events, "secondary"])}
-  on:close={(e) =>
-    (closeEvents = [...closeEvents, e.detail?.trigger ?? "null"])}
+  onprimaryaction={() => (events = [...events, "primary"])}
+  onsecondaryaction={() => (events = [...events, "secondary"])}
+  onopenchange={(e) => (closeEvents = [...closeEvents, e?.trigger ?? "null"])}
 >
   <p data-testid="modal-body">Modal content</p>
   <Select data-testid="modal-select" labelText="Contact method">

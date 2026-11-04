@@ -11,9 +11,9 @@
   <Tab label="Calendar" icon={Calendar} secondaryLabel="(12 events)" />
   <Tab label="Information" icon={Information} secondaryLabel="(3 new)" />
   <Tab label="Settings" icon={Settings} secondaryLabel="(2 pending)" disabled />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Calendar content</TabContent>
     <TabContent>Information content</TabContent>
     <TabContent>Settings content</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>

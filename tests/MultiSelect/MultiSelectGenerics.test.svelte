@@ -14,14 +14,13 @@
   {items}
   label="Choose products"
   labelText="Products"
-  on:select={(e) => onSelect(e.detail.selected)}
-  let:item
+  onselectedchange={(e) => onSelect(e.selected)}
 >
-  {@const { id, text, price, category } = item}
-  <div>
-    <strong>{text}</strong>
-    - ${price}
-    - {id}
-    <span>({category})</span>
-  </div>
+  {#snippet children({ item })}{@const { id, text, price, category } = item}
+    <div>
+      <strong>{text}</strong>
+      - ${price}
+      - {id}
+      <span>({category})</span>
+    </div>{/snippet}
 </MultiSelect>

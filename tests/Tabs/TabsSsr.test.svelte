@@ -7,13 +7,16 @@
   export let selectedId: string | undefined = undefined;
 </script>
 
-<Tabs {...selected === undefined ? {} : { selected }} {selectedId}>
+<Tabs
+  {...selected === undefined ? {} : { selectedIndex: selected }}
+  {selectedId}
+>
   <Tab id="tab-a" label="Tab 1" />
   <Tab id="tab-b" label="Tab 2" />
   <Tab id="tab-c" label="Tab 3" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Content 1</TabContent>
     <TabContent>Content 2</TabContent>
     <TabContent>Content 3</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>

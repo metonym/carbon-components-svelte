@@ -23,7 +23,7 @@
   <ButtonSet>
     <Button
       disabled={value > 0}
-      on:click={() => {
+      onclick={() => {
         const interval = setInterval(() => {
           const delta = Math.random() * 10;
 
@@ -41,7 +41,7 @@
     <Button
       kind="tertiary"
       disabled={value !== max}
-      on:click={() => {
+      onclick={() => {
         value = 0;
         status = "active";
       }}

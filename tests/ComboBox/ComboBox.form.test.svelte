@@ -12,8 +12,8 @@
   export let required: ComponentProps<ComboBox>["required"] = false;
   export let invalid: ComponentProps<ComboBox>["invalid"] = false;
   export let invalidText: ComponentProps<ComboBox>["invalidText"] = "";
-  export let onSelect: (event: CustomEvent) => void = () => {};
-  export let onClear: (event: CustomEvent) => void = () => {};
+  export let onSelect: ComponentProps<ComboBox>["onselectedchange"] = undefined;
+  export let onClear: ComponentProps<ComboBox>["onclear"] = undefined;
 </script>
 
 <form data-testid="form">
@@ -30,8 +30,8 @@
     {invalid}
     {invalidText}
     labelText="Contact"
-    on:select={onSelect}
-    on:clear={onClear}
+    onselectedchange={onSelect}
+    onclear={onClear}
   />
 </form>
 <p data-testid="bound-selected-id">{String(selectedId)}</p>

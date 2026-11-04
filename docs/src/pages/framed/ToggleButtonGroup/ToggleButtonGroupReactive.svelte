@@ -16,7 +16,7 @@
     <ToggleButton value="underline">Underline</ToggleButton>
   </ToggleButtonGroup>
   <p>Selected: {selected.join(", ") || "none"}</p>
-  <Button kind="tertiary" size="small" on:click={() => (selected = [])}>
+  <Button kind="tertiary" size="small" onclick={() => (selected = [])}>
     Clear selection
   </Button>
 </Stack>

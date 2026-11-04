@@ -16,7 +16,7 @@
 
 <div data-testid="dropdown">
   <Dropdown clearable labelText="Contact" selectedId="pager" {items}>
-    <AILabel slot="decorator" />
+    {#snippet decorator()}<AILabel />{/snippet}
   </Dropdown>
 </div>
 
@@ -29,7 +29,7 @@
     invalid
     invalidText="This contact method is no longer supported"
   >
-    <AILabel slot="decorator" />
+    {#snippet decorator()}<AILabel />{/snippet}
   </Dropdown>
 </div>
 
@@ -42,7 +42,7 @@
     warn
     warnText="This contact method is deprecated"
   >
-    <AILabel slot="decorator" />
+    {#snippet decorator()}<AILabel />{/snippet}
   </Dropdown>
 </div>
 
@@ -54,19 +54,19 @@
     invalid
     invalidText="This contact method is no longer supported"
   >
-    <AILabel slot="decorator" />
+    {#snippet decorator()}<AILabel />{/snippet}
   </ComboBox>
 </div>
 
 <!-- The revert button is wider than the label it replaces. -->
 <div data-testid="text-input">
   <TextInput labelText="Incident title" value="Database failover">
-    <AILabel slot="decorator" />
+    {#snippet decorator()}<AILabel />{/snippet}
   </TextInput>
 </div>
 
 <div data-testid="text-input-revert">
   <TextInput labelText="Incident title" value="Database failover">
-    <AILabel slot="decorator" revertActive />
+    {#snippet decorator()}<AILabel revertActive />{/snippet}
   </TextInput>
 </div>

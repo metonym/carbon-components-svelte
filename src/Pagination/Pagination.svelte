@@ -483,7 +483,7 @@
         class="bx--pagination__button bx--pagination__button--backward {internalBackButtonDisabled
           ? 'bx--pagination__button--no-index'
           : ''}"
-        on:click={() => {
+        onclick={() => {
           // `backButtonDisabled={false}` force-enables the button, but pages
           // still start at 1.
           if (page <= 1) return;
@@ -506,7 +506,7 @@
         class="bx--pagination__button bx--pagination__button--forward {internalForwardButtonDisabled
           ? 'bx--pagination__button--no-index'
           : ''}"
-        on:click={() => {
+        onclick={() => {
           // `forwardButtonDisabled={false}` force-enables the button; only
           // unknown pages may go past the last one.
           if (!pagesUnknown && page >= totalPages) return;

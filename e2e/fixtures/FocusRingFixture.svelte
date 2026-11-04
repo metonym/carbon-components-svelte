@@ -75,7 +75,7 @@
   <FileUploaderButton labelText="Browse" />
   <ContentSwitcher><Switch text="One" /><Switch text="Two" /></ContentSwitcher>
   <Tabs><Tab label="Tab 1" /><Tab label="Tab 2" /></Tabs>
-  <Accordion><AccordionItem title="Accordion">x</AccordionItem></Accordion>
+  <Accordion><AccordionItem titleText="Accordion">x</AccordionItem></Accordion>
   <CodeSnippet
     type="multi"
     code={"a\nb\nc\nd\ne\nf\ng\nh\ni\nj\nk\nl\nm\nn\no\np\nq\nr\ns\nt"}
@@ -87,8 +87,9 @@
     ><RadioTile value="a">Radio tile</RadioTile></TileGroup
   >
   <ExpandableTile hasInteractiveContent tileCollapsedLabel="More"
-    ><span slot="above">Expandable</span><span slot="below">b</span
-    ></ExpandableTile
+    >{#snippet above()}<span>Expandable</span>{#snippet below()}{/snippet}<span
+        >b</span
+      >{/snippet}</ExpandableTile
   >
   <PinCodeInput labelText="Pin" />
   <FluidForm>

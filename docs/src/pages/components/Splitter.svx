@@ -55,7 +55,7 @@ Use `bind:collapsed` to collapse the start pane to `min` from your own control, 
       <Box slot="end" padding={5}>deploy.yaml</Box>
     </Splitter>
   </Box>
-  <Button size="small" kind="tertiary" on:click={() => (collapsed = !collapsed)}>
+  <Button size="small" kind="tertiary" onclick={() => (collapsed = !collapsed)}>
     {collapsed ? "Show files" : "Hide files"}
   </Button>
 </Stack>

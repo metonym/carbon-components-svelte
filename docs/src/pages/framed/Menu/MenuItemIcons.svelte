@@ -7,7 +7,7 @@
   let open = false;
 </script>
 
-<Button bind:ref={anchor} on:click={() => (open = !open)}>Actions</Button>
+<Button bind:ref={anchor} onclick={() => (open = !open)}>Actions</Button>
 
 <Menu {anchor} bind:open labelText="Actions menu">
   <MenuItem icon={Cut} on:click={() => console.log("Cut")}>Cut</MenuItem>

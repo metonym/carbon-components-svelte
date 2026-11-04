@@ -5,8 +5,8 @@
   let openDelete = false;
 </script>
 
-<Button on:click={() => (openCreate = true)}>Create database</Button>
-<Button kind="danger-tertiary" on:click={() => (openDelete = true)}>
+<Button onclick={() => (openCreate = true)}>Create database</Button>
+<Button kind="danger-tertiary" onclick={() => (openDelete = true)}>
   Delete database
 </Button>
 
@@ -15,10 +15,7 @@
   modalHeading="Create database"
   primaryButtonText="Confirm"
   secondaryButtonText="Cancel"
-  on:click:button--secondary={() => (openCreate = false)}
-  on:open
-  on:close
-  on:submit
+  onsecondaryaction={() => (openCreate = false)}
 >
   <p>Create a new Cloudant database in the US South region.</p>
 </Modal>
@@ -29,10 +26,7 @@
   modalHeading="Delete database"
   primaryButtonText="Delete"
   secondaryButtonText="Cancel"
-  on:click:button--secondary={() => (openDelete = false)}
-  on:open
-  on:close
-  on:submit
+  onsecondaryaction={() => (openDelete = false)}
 >
   <p>This is a permanent action and cannot be undone.</p>
 </Modal>

@@ -12,10 +12,10 @@ Create an expandable tile that shows and hides content. The component uses a
 [resize observer](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver)
 to determine the height of the above-the-fold content.
 
-By default, the tile is collapsed. Use the above and below slots to define content that appears before and after expansion.
+By default, the tile is collapsed. Use the `above` and `below` snippets to define content that appears before and after expansion.
 
 <ExpandableTile>
-  <svelte:fragment slot="above">
+  {#snippet above()}
     <div>
       Payments API
     </div>
@@ -24,8 +24,8 @@ By default, the tile is collapsed. Use the above and below slots to define conte
     <div>
       Operational — 99.98% uptime over the last 30 days
     </div>
-  </svelte:fragment>
-  <svelte:fragment slot="below">No open incidents. Last deployment: 2 hours ago.</svelte:fragment>
+  {/snippet}
+  {#snippet below()}No open incidents. Last deployment: 2 hours ago.{/snippet}
 </ExpandableTile>
 
 ## Expanded state
@@ -42,9 +42,9 @@ and update the tile height.
 
 ### Reacting to toggles
 
-Listen for `toggle` to react when a user expands or collapses the tile. The
-event's `detail.expanded` is the next state, and setting `expanded` from code
-does not dispatch it. Call `preventDefault()` to keep the current state, for
+Pass `onexpandedchange` to react when a user expands or collapses the tile.
+It receives `{ expanded }`, the next state, and setting `expanded` from code
+does not call it. Call `preventDefault()` on it to keep the current state, for
 example to gate the details behind an acknowledgment.
 
 <FileSource src="/framed/ExpandableTile/ExpandableTileToggle" />
@@ -54,20 +54,20 @@ example to gate the details behind an acknowledgment.
 Display the tile expanded by default with `expanded`.
 
 <ExpandableTile expanded>
-  <svelte:fragment slot="above">Payments API — Operational, 99.98% uptime over the last 30 days</svelte:fragment>
-  <svelte:fragment slot="below">No open incidents. Last deployment: 2 hours ago.</svelte:fragment>
+  {#snippet above()}Payments API — Operational, 99.98% uptime over the last 30 days{/snippet}
+  {#snippet below()}No open incidents. Last deployment: 2 hours ago.{/snippet}
 </ExpandableTile>
 
 ## AI label
 
-Put an `AILabel` in the `decorator` slot to mark the tile's content as AI-generated. The tile shows the AI surface, and the label sits in the top-right corner at the `"xs"` size.
+Put an `AILabel` in the `decorator` snippet to mark the tile's content as AI-generated. The tile shows the AI surface, and the label sits in the top-right corner at the `"xs"` size.
 
 <ExpandableTile>
-  <Box slot="above" height="8rem">Incident summary</Box>
-  <div slot="below">The primary database failed over after a storage node stopped responding.</div>
-  <AILabel slot="decorator">
+  {#snippet above()}<Box height="8rem">Incident summary</Box>{/snippet}
+  {#snippet below()}<div>The primary database failed over after a storage node stopped responding.</div>{/snippet}
+  {#snippet decorator()}<AILabel>
     <p>Written from the incident timeline and the database logs.</p>
-  </AILabel>
+  </AILabel>{/snippet}
 </ExpandableTile>
 
 ### Rounded corners
@@ -75,11 +75,11 @@ Put an `AILabel` in the `decorator` slot to mark the tile's content as AI-genera
 Set `rounded` to `true` to round the corners of a tile with a decorator. Carbon reserves rounded tiles for AI content, so a tile without a decorator stays square.
 
 <ExpandableTile rounded>
-  <svelte:fragment slot="above">Incident summary</svelte:fragment>
-  <svelte:fragment slot="below">The primary database failed over after a storage node stopped responding.</svelte:fragment>
-  <AILabel slot="decorator">
+  {#snippet above()}Incident summary{/snippet}
+  {#snippet below()}The primary database failed over after a storage node stopped responding.{/snippet}
+  {#snippet decorator()}<AILabel>
     <p>Written from the incident timeline and the database logs.</p>
-  </AILabel>
+  </AILabel>{/snippet}
 </ExpandableTile>
 
 ## On a layer
@@ -89,8 +89,8 @@ Place the component in a [`Layer`](/components/Layer) to put it on the next surf
 <Layer withBackground>
   <Box padding={5}>
     <ExpandableTile>
-      <svelte:fragment slot="above">Payments API — Operational, 99.98% uptime over the last 30 days</svelte:fragment>
-      <svelte:fragment slot="below">No open incidents. Last deployment: 2 hours ago.</svelte:fragment>
+      {#snippet above()}Payments API — Operational, 99.98% uptime over the last 30 days{/snippet}
+      {#snippet below()}No open incidents. Last deployment: 2 hours ago.{/snippet}
     </ExpandableTile>
   </Box>
 </Layer>
@@ -101,12 +101,12 @@ Control how the tile measures and displays its collapsed height.
 
 ### CSS dimensions
 
-Wrap the slotted content in a [Box](/components/Box) with a fixed `height` to
+Wrap the snippet content in a [Box](/components/Box) with a fixed `height` to
 control the exact dimensions of the visible and hidden content.
 
 <ExpandableTile>
-  <Box slot="above" height="10rem">Payments API — Operational, 99.98% uptime over the last 30 days</Box>
-  <Box slot="below" height="10rem">No open incidents. Last deployment: 2 hours ago.</Box>
+  {#snippet above()}<Box height="10rem">Payments API — Operational, 99.98% uptime over the last 30 days</Box>{/snippet}
+  {#snippet below()}<Box height="10rem">No open incidents. Last deployment: 2 hours ago.</Box>{/snippet}
 </ExpandableTile>
 
 ### Manual height override
@@ -117,8 +117,8 @@ padding automatically with a resize observer. Set `tileMaxHeight` and
 the collapsed height ahead of time instead of relying on the observer.
 
 <ExpandableTile tileMaxHeight={64} tilePadding={32}>
-  <svelte:fragment slot="above">Payments API — Operational, 99.98% uptime over the last 30 days</svelte:fragment>
-  <svelte:fragment slot="below">No open incidents. Last deployment: 2 hours ago.</svelte:fragment>
+  {#snippet above()}Payments API — Operational, 99.98% uptime over the last 30 days{/snippet}
+  {#snippet below()}No open incidents. Last deployment: 2 hours ago.{/snippet}
 </ExpandableTile>
 
 ## Labels
@@ -130,8 +130,8 @@ Customize the chevron's visible label text and the tile's accessible tooltip tex
 Customize expand/collapse button labels with `tileExpandedLabel` and `tileCollapsedLabel`.
 
 <ExpandableTile tileExpandedLabel="View less" tileCollapsedLabel="View more">
-  <svelte:fragment slot="above">Payments API — Operational, 99.98% uptime over the last 30 days</svelte:fragment>
-  <svelte:fragment slot="below">No open incidents. Last deployment: 2 hours ago.</svelte:fragment>
+  {#snippet above()}Payments API — Operational, 99.98% uptime over the last 30 days{/snippet}
+  {#snippet below()}No open incidents. Last deployment: 2 hours ago.{/snippet}
 </ExpandableTile>
 
 ### Accessible text
@@ -147,8 +147,8 @@ button and this text describes it.
   tileCollapsedIconText="Show more details"
   tileExpandedIconText="Show fewer details"
 >
-  <svelte:fragment slot="above">Payments API — Operational, 99.98% uptime over the last 30 days</svelte:fragment>
-  <svelte:fragment slot="below">No open incidents. Last deployment: 2 hours ago.</svelte:fragment>
+  {#snippet above()}Payments API — Operational, 99.98% uptime over the last 30 days{/snippet}
+  {#snippet below()}No open incidents. Last deployment: 2 hours ago.{/snippet}
 </ExpandableTile>
 
 ## Interactive content
@@ -163,18 +163,18 @@ press <DocKbd label="Enter" /> or <DocKbd label="Space" /> to expand or collapse
 
 | Do | Why |
 | --- | --- |
-| Set `hasInteractiveContent` when you know a slot holds links, buttons, or inputs | The server renders the button, since it cannot look. The switch after mount recreates the slotted content and resets any state inside it. |
+| Set `hasInteractiveContent` when you know a snippet holds links, buttons, or inputs | The server renders the button, since it cannot look. The switch after mount recreates the snippet content and resets any state inside it. |
 | Give the chevron a visible label with `tileCollapsedLabel` and `tileExpandedLabel` | The chevron is the only toggle. A label makes it an obvious target and names it for voice control. |
-| Keep `hasInteractiveContent` fixed for the tile's lifetime | Changing it swaps the root element, which recreates the slotted content and resets any state inside it. |
+| Keep `hasInteractiveContent` fixed for the tile's lifetime | Changing it swaps the root element, which recreates the snippet content and resets any state inside it. |
 
 <ExpandableTile hasInteractiveContent tileExpandedLabel="View less" tileCollapsedLabel="View more">
-  <Stack slot="above" gap={4} inline>
+  {#snippet above()}<Stack gap={4} inline>
     <OutboundLink href="https://svelte.carbondesignsystem.com/">
       View documentation
     </OutboundLink>
-    <Button on:click={() => console.log("Alert acknowledged")}>
+    <Button onclick={() => console.log("Alert acknowledged")}>
       Acknowledge alert
     </Button>
-  </Stack>
-  <Box slot="below" paddingTop={4}>Escalated to the on-call engineer at 2:14 AM UTC.</Box>
+  </Stack>{/snippet}
+  {#snippet below()}<Box paddingTop={4}>Escalated to the on-call engineer at 2:14 AM UTC.</Box>{/snippet}
 </ExpandableTile>

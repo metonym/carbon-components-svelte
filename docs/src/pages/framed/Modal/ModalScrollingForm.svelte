@@ -4,7 +4,7 @@
   let open = false;
 </script>
 
-<Button on:click={() => (open = true)}>Provision resource</Button>
+<Button onclick={() => (open = true)}>Provision resource</Button>
 
 <Modal
   bind:open
@@ -14,7 +14,7 @@
   secondaryButtonText="Cancel"
   hasForm
   hasScrollingContent
-  on:click:button--secondary={() => (open = false)}
+  onsecondaryaction={() => (open = false)}
 >
   <Stack gap={5}>
     <TextInput labelText="Name" placeholder="Enter name" />

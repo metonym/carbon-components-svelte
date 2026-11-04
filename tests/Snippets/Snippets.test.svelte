@@ -80,7 +80,7 @@
 </Dropdown>
 
 <Dropdown data-testid="dropdown-label-children" {items} selectedId="1">
-  {#snippet labelChildren()}
+  {#snippet labelText()}
     <span data-testid="dropdown-custom-label">Custom label content</span>
   {/snippet}
 </Dropdown>
@@ -109,7 +109,7 @@
   {#snippet icon({ item })}
     <span data-testid="dropdown-icon-{item.id}">L</span>
   {/snippet}
-  {#snippet iconRight({ item, selected })}
+  {#snippet iconEnd({ item, selected })}
     <span data-testid="dropdown-icon-right-{item.id}" data-selected={selected}
       >R</span
     >
@@ -193,14 +193,14 @@
 <Tabs type="container" aria-label="Secondary label tabs">
   <Tab label="Engage" />
   <Tab label="Analyze">
-    {#snippet secondaryChildren()}
+    {#snippet secondaryLabel()}
       <span data-testid="tab-secondary-label-snippet">(12/16)</span>
     {/snippet}
   </Tab>
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Engage content</TabContent>
     <TabContent>Analyze content</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
 <TagInput labelText="Topics" value={["alpha", "beta"]}>
@@ -262,10 +262,10 @@
       >
     {/snippet}
   </Tab>
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Overview content</TabContent>
     <TabContent>Details content</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
 <TreeView labelText="Snippet tree" nodes={treeNodes} expandedIds={["parent"]}>

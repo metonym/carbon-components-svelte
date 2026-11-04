@@ -1,100 +1,98 @@
 <script>
-  import { getContext, onMount } from "svelte";
-  import { noop } from "../utils/noop.js";
+  /**
+   * @restProps {div}
+   */
+  let {
+    /** Set to `true` to enable the active state */
+    active = false,
+
+    /** Set to `true` to enable the highlighted state */
+    highlighted = false,
+
+    /** Set to `true` to disable the menu item */
+    disabled = false,
+
+    /** Set to `true` to add inline padding for a left-aligned icon */
+    hasLeftIcon = false,
+
+    /**
+     * Option element id. Used by the listbox highlight cursor.
+     * @type {string | undefined}
+     */
+    id = undefined,
+
+    /**
+     * Hide the option without unmounting it (`filterMode="hide"`).
+     * @type {boolean}
+     */
+    hidden = false,
+
+    /** @type {import("svelte").Snippet | undefined} */
+    children = undefined,
+
+    /** @type {import("svelte/elements").ClassValue | undefined} */
+    class: className = undefined,
+
+    ...rest
+  } = $props();
+
+  import { getContext } from "svelte";
   import { overflowTitle } from "../utils/overflow-title.js";
   import { scrollIntoViewWithin } from "../utils/scroll-into-view-within.js";
   import { HIGHLIGHT_CURSOR_KEY } from "./highlight-cursor.js";
-
-  /** Set to `true` to enable the active state */
-  export let active = false;
-
-  /** Set to `true` to enable the highlighted state */
-  export let highlighted = false;
-
-  /** Set to `true` to disable the menu item */
-  export let disabled = false;
-
-  /** Set to `true` to add inline padding for a left-aligned icon */
-  export let hasLeftIcon = false;
-
-  /**
-   * Option element id. Used by the listbox highlight cursor.
-   * @type {string | undefined}
-   */
-  export let id = undefined;
-
-  /**
-   * Hide the option without unmounting it (`filterMode="hide"`).
-   * Omit or pass `true`; a boolean `false` must not reach the DOM.
-   * @type {boolean}
-   */
-  export let hidden = false;
 
   const HIGHLIGHT_CLASS = "bx--list-box__menu-item--highlighted";
   const highlightCursor = getContext(HIGHLIGHT_CURSOR_KEY);
 
   /** @type {null | HTMLDivElement} */
-  let optionRef = null;
+  let optionRef = $state(null);
   /** @type {null | HTMLDivElement} */
-  let ref = null;
-  let unregisterHighlight = noop;
+  let ref = $state(null);
 
-  $: if (!highlightCursor && highlighted && ref && !ref.matches(":hover")) {
-    // Scroll highlighted item into view if using keyboard navigation.
-    // Scoped to the menu's own scroll container so a portaled menu (whose
-    // nearest scrollable ancestor is the document) does not scroll the page.
-    scrollIntoViewWithin(ref);
-  }
+  // Scroll the highlighted item into view for keyboard navigation, within
+  // the menu's own scroll container, so a portaled menu (whose nearest
+  // scrollable ancestor is the document) doesn't scroll the page.
+  $effect(() => {
+    if (!highlightCursor && highlighted && ref && !ref.matches(":hover")) {
+      scrollIntoViewWithin(ref);
+    }
+  });
 
-  // Do not put `--highlighted` on a `class:` directive when the listbox owns
-  // a cursor. Svelte 3 removes that class on every update if the expression
-  // is false, which undoes the cursor's classList write.
-  $: bindCursor(optionRef, id, highlighted);
-
-  /**
-   * @param {HTMLElement | null} node
-   * @param {string | undefined} optionId
-   * @param {boolean} isHighlighted
-   */
-  function bindCursor(node, optionId, isHighlighted) {
-    unregisterHighlight();
-    unregisterHighlight = noop;
+  // The highlight class isn't in the `class` attribute when the listbox
+  // owns a cursor: the cursor writes it with `classList`, and a re-render
+  // of the attribute would undo that. `--active` is a `class:` directive
+  // for the same reason: it toggles one class instead of writing them all.
+  $effect(() => {
+    const node = optionRef;
     if (!node) return;
     if (highlightCursor) {
-      if (optionId) {
-        unregisterHighlight = highlightCursor.register(optionId, node);
-      }
-      return;
+      return id ? highlightCursor.register(id, node) : undefined;
     }
-    node.classList.toggle(HIGHLIGHT_CLASS, isHighlighted);
-  }
-
-  onMount(() => () => unregisterHighlight());
+    node.classList.toggle(HIGHLIGHT_CLASS, highlighted);
+  });
 </script>
 
 <div
   bind:this={optionRef}
   {id}
-  hidden={hidden ? true : undefined}
+  hidden={hidden || undefined}
   role="option"
   tabindex="-1"
-  class:bx--list-box__menu-item={true}
-  class:bx--list-box__menu-item--active={active}
   aria-selected={active ? "true" : "false"}
   aria-disabled={disabled ? "true" : undefined}
-  disabled={disabled ? true : undefined}
-  {...$$restProps}
-  on:click
-  on:mousedown
-  on:mouseenter
-  on:mouseleave
+  disabled={disabled || undefined}
+  {...rest}
+  class={["bx--list-box__menu-item", className]}
+  class:bx--list-box__menu-item--active={active}
 >
   <div
     bind:this={ref}
     use:overflowTitle
-    class:bx--list-box__menu-item__option={true}
-    class:bx--list-box__menu-item__option--icon-left={hasLeftIcon}
+    class={[
+      "bx--list-box__menu-item__option",
+      hasLeftIcon && "bx--list-box__menu-item__option--icon-left",
+    ]}
   >
-    <slot />
+    {@render children?.()}
   </div>
 </div>

@@ -4,7 +4,7 @@
 
   export let selected: string[] = [];
   export let standaloneSelected = false;
-  export let onEvent: (event: CustomEvent) => void = () => {};
+  export let onEvent: (detail: unknown) => void = () => {};
 </script>
 
 <form data-testid="form">
@@ -12,9 +12,7 @@
     bind:selected
     name="regions"
     legendText="Regions"
-    on:select={onEvent}
-    on:deselect={onEvent}
-    on:change={onEvent}
+    onselectedchange={onEvent}
   >
     <SelectableTile value="a" data-testid="tile-a">A</SelectableTile>
     <SelectableTile value="b" data-testid="tile-b">B</SelectableTile>
@@ -24,8 +22,7 @@
     value="solo"
     name="solo"
     data-testid="tile-solo"
-    on:select={onEvent}
-    on:deselect={onEvent}
+    onselectedchange={onEvent}
   >
     Solo
   </SelectableTile>

@@ -22,14 +22,14 @@
   let open = false;
 </script>
 
-<Button kind="ghost" size="field" on:click={() => (open = !open)}>
+<Button kind="ghost" size="field" onclick={() => (open = !open)}>
   {open ? "Collapse" : "Expand"}
   all
 </Button>
 
 <Accordion>
   {#each items as item}
-    <AccordionItem title={item.title} {open}>
+    <AccordionItem titleText={item.title} {open}>
       <p>{item.description}</p>
     </AccordionItem>
   {/each}

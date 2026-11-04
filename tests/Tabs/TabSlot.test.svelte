@@ -4,22 +4,31 @@
   import Tabs from "carbon-components-svelte/Tabs/Tabs.svelte";
   import type { ComponentProps } from "svelte";
 
-  export let selected: ComponentProps<Tabs>["selected"] = 0;
+  export let selected: ComponentProps<Tabs>["selectedIndex"] = 0;
 </script>
 
-<Tabs {selected}>
-  <Tab label="Tab 1" let:selected>
-    <span data-testid="tab-0" data-selected={selected}>Tab 1</span>
+<Tabs selectedIndex={selected}>
+  <Tab label="Tab 1">
+    {#snippet children({ selected })}<span
+        data-testid="tab-0"
+        data-selected={selected}>Tab 1</span
+      >{/snippet}
   </Tab>
-  <Tab label="Tab 2" let:selected>
-    <span data-testid="tab-1" data-selected={selected}>Tab 2</span>
+  <Tab label="Tab 2">
+    {#snippet children({ selected })}<span
+        data-testid="tab-1"
+        data-selected={selected}>Tab 2</span
+      >{/snippet}
   </Tab>
-  <Tab label="Tab 3" let:selected>
-    <span data-testid="tab-2" data-selected={selected}>Tab 3</span>
+  <Tab label="Tab 3">
+    {#snippet children({ selected })}<span
+        data-testid="tab-2"
+        data-selected={selected}>Tab 3</span
+      >{/snippet}
   </Tab>
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Content 1</TabContent>
     <TabContent>Content 2</TabContent>
     <TabContent>Content 3</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>

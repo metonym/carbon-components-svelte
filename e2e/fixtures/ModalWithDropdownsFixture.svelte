@@ -34,7 +34,7 @@
   modalHeading="Add a contact"
   primaryButtonText="Add"
   secondaryButtonText="Cancel"
-  on:click:button--secondary={() => (open = false)}
+  onsecondaryaction={() => (open = false)}
 >
   <Stack gap={4}>
     <ComboBox

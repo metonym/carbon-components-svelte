@@ -154,6 +154,20 @@ if (
   };
 }
 
+// jsdom has no `inert` property. Svelte 5 sets `inert` as a property on an
+// element without a spread, so reflect it to the attribute, as browsers do.
+if (!("inert" in HTMLElement.prototype)) {
+  Object.defineProperty(HTMLElement.prototype, "inert", {
+    configurable: true,
+    get() {
+      return this.hasAttribute("inert");
+    },
+    set(value: unknown) {
+      this.toggleAttribute("inert", Boolean(value));
+    },
+  });
+}
+
 // jsdom's selector engine adds its own capture listeners to `window` (click,
 // keydown, focus, ...) the first time it matches a selector. Match once here
 // so that happens before a test spies on `window.addEventListener`.

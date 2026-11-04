@@ -476,7 +476,7 @@
     FORM_CONTEXT_KEY,
     MODAL_CONTEXT_KEY,
   } from "../constants/context-keys.js";
-  import { dismiss } from "../utils/dismiss.js";
+  import { dismiss } from "../utils/dismiss.svelte.js";
   import { clippedBy } from "../utils/fit-align.js";
   import { isImeComposition } from "../utils/ime-composition.js";
   import {
@@ -2001,7 +2001,7 @@
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <div
     bind:this={datePickerRef}
-    use:dismiss={{
+    {@attach dismiss(() => ({
       enabled: calendarOpen,
       listeners: [
         {
@@ -2011,7 +2011,7 @@
         },
         { type: "click", handler: handleOutsideClick },
       ],
-    }}
+    }))}
     {id}
     class:bx--date-picker={true}
     class:bx--date-picker--short={short}

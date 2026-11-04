@@ -16,8 +16,8 @@
     {...under === "switch" ? $$restProps : {}}
   />
   <Switch text="Two" icon={iconOnly ? Add : undefined} />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <SwitchPanel {...under === "panel" ? $$restProps : {}}>One</SwitchPanel>
     <SwitchPanel>Two</SwitchPanel>
-  </svelte:fragment>
+  {/snippet}
 </ContentSwitcher>

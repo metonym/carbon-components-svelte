@@ -22,5 +22,5 @@
   {:else}
     <Tab {label} {href} {disabled} {tabindex} {id} />
   {/if}
-  <svelte:fragment slot="content"><div>Test Content</div></svelte:fragment>
+  {#snippet content()}<div>Test Content</div>{/snippet}
 </Tabs>

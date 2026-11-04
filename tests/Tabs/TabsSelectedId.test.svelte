@@ -20,10 +20,10 @@
 
 <svelte:component
   this={Component}
-  bind:selected
+  bind:selectedIndex={selected}
   bind:selectedId
   {activation}
-  on:change={({ detail }) => onChange(detail)}
+  onselectedchange={({ index }) => onChange(index)}
 >
   {#if showTabA}
     <Tab id="tab-a" label="Tab A" />
@@ -34,7 +34,7 @@
   {#if showTabC}
     <Tab id="tab-c" label="Tab C" />
   {/if}
-  <svelte:fragment slot="content">
+  {#snippet content()}
     {#if showTabA}
       <TabContent id="panel-a">Content A</TabContent>
     {/if}
@@ -44,7 +44,7 @@
     {#if showTabC}
       <TabContent id="panel-c">Content C</TabContent>
     {/if}
-  </svelte:fragment>
+  {/snippet}
 </svelte:component>
 
 <button

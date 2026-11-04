@@ -1,141 +1,155 @@
 <script>
   /**
    * @template {import("../utils/icon-component.js").IconComponent} [Icon=any]
-   * @event {{ text: string }} click:button--secondary - Dispatched when a secondary button is clicked. For `secondaryButtonText`, the event is cancelable: call `preventDefault()` to keep the modal open. If not cancelled, the modal closes. Array `secondaryButtons` never auto-close.
-   * @event {null} loading:success - Dispatched when `loadingStatus` is `"finished"`, after the `InlineLoading` success delay.
+   * @restProps {div}
    */
 
-  /** Specify the primary button text */
-  export let primaryButtonText = "";
+  let {
+    /** Specify the primary button text */
+    primaryButtonText = "",
 
-  /**
-   * Specify the primary button icon.
-   * @type {Icon | undefined}
-   */
-  export let primaryButtonIcon = /** @type {Icon | undefined} */ (undefined);
+    /**
+     * Specify the primary button icon.
+     * @type {Icon | undefined}
+     */
+    primaryButtonIcon = /** @type {Icon | undefined} */ (undefined),
 
-  /** Set to `true` to disable the primary button */
-  export let primaryButtonDisabled = false;
+    /** Set to `true` to disable the primary button */
+    primaryButtonDisabled = false,
 
-  /**
-   * Set to `true` to show a loading state on the primary button.
-   * While loading, the button is non-interactive and submit is suppressed.
-   * Same as `loadingStatus="active"`, except that the secondary buttons
-   * stay enabled. `loadingStatus` wins when it is not `"inactive"`.
-   */
-  export let primaryButtonLoading = false;
+    /**
+     * Set to `true` to show a loading state on the primary button.
+     * While loading, the button is non-interactive and submit is suppressed.
+     * Same as `loadingStatus="active"`, except that the secondary buttons
+     * stay enabled. `loadingStatus` wins when it is not `"inactive"`.
+     */
+    primaryButtonLoading = false,
 
-  /**
-   * Set the loading status of the footer.
-   * Any status other than `"inactive"` shows `InlineLoading` with that
-   * status in the primary button, disables the footer buttons, and
-   * suppresses submit. `"finished"` dispatches `loading:success` after the
-   * success delay.
-   * @type {"inactive" | "active" | "finished" | "error"}
-   */
-  export let loadingStatus = "inactive";
+    /**
+     * Set the loading status of the footer.
+     * Any status other than `"inactive"` shows `InlineLoading` with that
+     * status in the primary button, disables the footer buttons, and
+     * suppresses the primary action. `"finished"` calls `onloadingsuccess`
+     * after the success delay.
+     * @type {"inactive" | "active" | "finished" | "error"}
+     */
+    loadingStatus = "inactive",
 
-  /**
-   * Specify the description for the primary button loading state.
-   * Passed to `InlineLoading` as `description`.
-   */
-  export let primaryButtonLoadingDescription = "Loading";
+    /**
+     * Specify the description for the primary button loading state.
+     * Passed to `InlineLoading` as `description`.
+     */
+    primaryButtonLoadingDescription = "Loading",
 
-  /**
-   * Specify the description for the primary button loading icon.
-   * Passed to `InlineLoading` as `iconDescription`.
-   * @type {string | undefined}
-   */
-  export let primaryButtonLoadingIconDescription = undefined;
+    /**
+     * Specify the description for the primary button loading icon.
+     * Passed to `InlineLoading` as `iconDescription`.
+     * @type {string | undefined}
+     */
+    primaryButtonLoadingIconDescription = undefined,
 
-  /**
-   * Specify a class for the primary button.
-   * @type {string | undefined}
-   */
-  export let primaryClass = undefined;
+    /** Specify the secondary button text */
+    secondaryButtonText = "",
 
-  /** Specify the secondary button text */
-  export let secondaryButtonText = "";
+    /**
+     * Set to `true` to show a loading state on the secondary button.
+     * Only applies to the `secondaryButtonText` path (not `secondaryButtons`).
+     * While loading, the button is non-interactive.
+     */
+    secondaryButtonLoading = false,
 
-  /**
-   * Set to `true` to show a loading state on the secondary button.
-   * Only applies to the `secondaryButtonText` path (not `secondaryButtons`).
-   * While loading, the button is non-interactive.
-   */
-  export let secondaryButtonLoading = false;
+    /**
+     * Specify the description for the secondary button loading state.
+     * Passed to `InlineLoading` as `description`.
+     */
+    secondaryButtonLoadingDescription = "Loading",
 
-  /**
-   * Specify the description for the secondary button loading state.
-   * Passed to `InlineLoading` as `description`.
-   */
-  export let secondaryButtonLoadingDescription = "Loading";
+    /**
+     * One or two secondary buttons for the modal footer.
+     * Supersedes `secondaryButtonText`. Each entry needs `text`; optional
+     * `kind` (defaults to `"secondary"`), `disabled`, `loading`, and
+     * `loadingDescription` (defaults to `"Loading"`) pass through to Button /
+     * the loading state. With two entries plus a primary button, the footer
+     * uses the three-button layout.
+     * @type {ReadonlyArray<{ text: string; kind?: import("../Button/Button.svelte").ButtonProps["kind"]; disabled?: boolean; loading?: boolean; loadingDescription?: string }>}
+     */
+    secondaryButtons = [],
 
-  /**
-   * One or two secondary buttons for the modal footer.
-   * Supersedes `secondaryButtonText`. Each entry needs `text`; optional
-   * `kind` (defaults to `"secondary"`), `disabled`, `loading`, and
-   * `loadingDescription` (defaults to `"Loading"`) pass through to Button /
-   * the loading state. With two entries plus a primary button, the footer
-   * uses the three-button layout.
-   * @type {ReadonlyArray<{ text: string; kind?: import("../Button/Button.svelte").ButtonProps["kind"]; disabled?: boolean; loading?: boolean; loadingDescription?: string }>}
-   */
-  export let secondaryButtons = [];
+    /** Set to `true` to use the danger variant */
+    danger = false,
 
-  /**
-   * Specify a class for the secondary button.
-   * @type {string | undefined}
-   */
-  export let secondaryClass = undefined;
+    /**
+     * Called when the user clicks a secondary button. For
+     * `secondaryButtonText`, call `preventDefault()` to keep the modal
+     * open; otherwise it closes. `secondaryButtons` never close it.
+     * @type {((detail: import("../utils/cancelable.js").Cancelable<{ text: string }>) => void) | undefined}
+     */
+    onsecondaryaction = undefined,
 
-  /** Set to `true` to use the danger variant */
-  export let danger = false;
+    /**
+     * Called when `loadingStatus` is `"finished"`, after the
+     * `InlineLoading` success delay.
+     * @type {(() => void) | undefined}
+     */
+    onloadingsuccess = undefined,
 
-  import { createEventDispatcher, getContext, onMount } from "svelte";
+    /**
+     * Content after the buttons.
+     * @type {import("svelte").Snippet | undefined}
+     */
+    children = undefined,
+
+    /** @type {import("svelte/elements").ClassValue | undefined} */
+    class: className = undefined,
+
+    ...rest
+  } = $props();
+
+  import { onMount } from "svelte";
   import Button from "../Button/Button.svelte";
   import InlineLoading from "../InlineLoading/InlineLoading.svelte";
+  import { cancelable } from "../utils/cancelable.js";
+  import { getComposedModal } from "./composed-modal-context.js";
 
-  const dispatch = createEventDispatcher();
-  const { closeModal, submit, registerFooter } = getContext(
-    "carbon:ComposedModal",
-  );
+  const modal = getComposedModal();
   // A footer makes the modal transactional, so an outside click keeps it
   // open by default. Register during init, as ModalHeader does.
-  const unregisterFooter = registerFooter();
+  const unregisterFooter = modal.registerFooter();
   onMount(() => unregisterFooter);
 
-  $: footerBusy = Boolean(loadingStatus) && loadingStatus !== "inactive";
+  const footerBusy = $derived(
+    Boolean(loadingStatus) && loadingStatus !== "inactive",
+  );
   // `primaryButtonLoading` is the boolean form of "active"; a status
   // other than "inactive" takes precedence.
-  $: primaryStatus = footerBusy
-    ? loadingStatus
-    : primaryButtonLoading
-      ? "active"
-      : "inactive";
-  $: primaryBusy = primaryStatus !== "inactive";
+  const primaryStatus = $derived(
+    /** @type {"active" | "error" | "inactive" | "finished" | undefined} */ (
+      footerBusy ? loadingStatus : primaryButtonLoading ? "active" : "inactive"
+    ),
+  );
+  const primaryBusy = $derived(primaryStatus !== "inactive");
 
   function handlePrimaryClick() {
     if (primaryBusy) return;
-    submit();
+    modal.primaryAction();
   }
 
   function handleSecondaryClick() {
     if (secondaryButtonLoading || footerBusy) return;
-    const shouldContinue = dispatch(
-      "click:button--secondary",
-      { text: secondaryButtonText },
-      { cancelable: true },
-    );
-    if (shouldContinue) {
-      closeModal();
-    }
+    const payload = cancelable({ text: secondaryButtonText });
+    onsecondaryaction?.(payload);
+    if (!payload.defaultPrevented) modal.closeModal();
   }
 </script>
 
 <div
-  class:bx--modal-footer={true}
-  class:bx--modal-footer--three-button={secondaryButtons.length === 2}
   aria-busy={primaryStatus === "active" ? "true" : undefined}
-  {...$$restProps}
+  {...rest}
+  class={[
+    "bx--modal-footer",
+    secondaryButtons.length === 2 && "bx--modal-footer--three-button",
+    className,
+  ]}
 >
   {#if secondaryButtons.length > 0}
     {#each secondaryButtons as button (button.text)}
@@ -143,9 +157,9 @@
         size="default"
         kind={button.kind ?? "secondary"}
         disabled={button.disabled || button.loading || footerBusy}
-        on:click={() => {
+        onclick={() => {
           if (button.loading || footerBusy) return;
-          dispatch("click:button--secondary", { text: button.text });
+          onsecondaryaction?.(cancelable({ text: button.text }));
         }}
       >
         {#if button.loading}
@@ -163,9 +177,8 @@
     <Button
       size="default"
       kind="secondary"
-      class={secondaryClass}
       disabled={secondaryButtonLoading || footerBusy}
-      on:click={handleSecondaryClick}
+      onclick={handleSecondaryClick}
     >
       {#if secondaryButtonLoading}
         <InlineLoading
@@ -183,9 +196,8 @@
       size="default"
       kind={danger ? "danger" : "primary"}
       disabled={primaryButtonDisabled || primaryBusy}
-      class={primaryClass}
       icon={primaryBusy ? undefined : primaryButtonIcon}
-      on:click={handlePrimaryClick}
+      onclick={handlePrimaryClick}
     >
       {#if primaryBusy}
         <InlineLoading
@@ -193,12 +205,12 @@
           status={primaryStatus}
           description={primaryButtonLoadingDescription}
           iconDescription={primaryButtonLoadingIconDescription}
-          on:success={() => dispatch("loading:success")}
+          on:success={() => onloadingsuccess?.()}
         />
       {:else}
         {primaryButtonText}
       {/if}
     </Button>
   {/if}
-  <slot />
+  {@render children?.()}
 </div>

@@ -9,7 +9,7 @@
   let popover = null;
 </script>
 
-<Button type="button" on:click={() => popover?.showPopover()}
+<Button type="button" onclick={() => popover?.showPopover()}
   >Open popover</Button
 >
 
@@ -29,11 +29,7 @@
   <DatePicker portalMenu datePickerType="single">
     <DatePickerInput labelText="Meeting date" placeholder="mm/dd/yyyy" />
   </DatePicker>
-  <Button
-    kind="secondary"
-    type="button"
-    on:click={() => popover?.hidePopover()}
-  >
+  <Button kind="secondary" type="button" onclick={() => popover?.hidePopover()}>
     Close
   </Button>
 </Box>

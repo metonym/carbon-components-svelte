@@ -1,35 +1,17 @@
 // @ts-check
-import { getContext, onMount } from "svelte";
-import { derived, readable } from "svelte/store";
+import { onMount } from "svelte";
+import { readable, toStore } from "svelte/store";
 import { noop } from "../utils/noop.js";
 import { uniqueId } from "../utils/unique-id.js";
+import { getTagSet, hasTagSet } from "./tag-set-context.js";
 
 /**
  * What a tag registers with its `TagSet`, minus the id the set assigns.
- * @typedef {Object} TagSetMemberItem
- * @property {HTMLElement} node
- * @property {string} label
- * @property {string | number} [value]
- * @property {string} [type]
- * @property {string} size
- * @property {boolean} disabled
- * @property {boolean} filter
+ * @typedef {Omit<import("./tag-set-context.js").TagSetItem, "id">} TagSetMemberItem
  */
 
 /**
- * The parts of the `carbon:TagSet` context a member uses.
- * @typedef {Object} TagSetContext
- * @property {import("svelte/store").Readable<"xs" | "sm" | "default" | "lg" | undefined>} size
- * @property {import("svelte/store").Readable<"tab" | "roving">} navigation
- * @property {import("svelte/store").Readable<Set<string>>} overflowIds
- * @property {import("svelte/store").Readable<string | null>} tabStopId
- * @property {(item: TagSetMemberItem & { id: string }) => void} register
- * @property {(id: string) => void} unregister
- * @property {(id: string, patch: Partial<TagSetMemberItem>) => void} update
- * @property {(id: string) => void} notifyClose
- */
-
-/**
+ * The set's state as stores, so legacy and runes tags read it the same way.
  * @typedef {Object} TagSetMember
  * @property {import("svelte/store").Readable<"xs" | "sm" | "default" | "lg" | undefined>} size - The set's `size`.
  * @property {import("svelte/store").Readable<"tab" | "roving">} navigation - The set's `navigation`.
@@ -52,38 +34,47 @@ const standalone = {
 /**
  * Join the parent `TagSet`, if any, so it can measure the tag, collapse it
  * into its "+N" indicator, and include it in roving focus. Call during
- * component init. Outside a set, returns inert stores and no-op methods.
+ * component init: the tag registers then, in document order, and reports
+ * its element and label once mounted. Outside a set, returns inert stores
+ * and no-op methods.
  *
- * @param {() => TagSetMemberItem} getItem - Read on mount to register the tag.
+ * @param {() => TagSetMemberItem} getItem - Read on mount, once the tag has rendered.
  * @returns {TagSetMember}
  */
 export function joinTagSet(getItem) {
-  /** @type {TagSetContext | undefined} */
-  const tagSet = getContext("carbon:TagSet");
+  const tagSet = hasTagSet() ? getTagSet() : undefined;
   if (!tagSet) return standalone;
 
   const id = uniqueId("ctag");
 
+  // The tag's element and label exist only once it renders; register its
+  // place now and fill them in on mount.
+  tagSet.register({
+    id,
+    node: null,
+    label: "",
+    size: "default",
+    disabled: false,
+    filter: false,
+  });
   onMount(() => {
-    tagSet.register({ id, ...getItem() });
+    tagSet.update(id, getItem());
     return () => tagSet.unregister(id);
   });
 
   return {
-    size: tagSet.size,
-    navigation: tagSet.navigation,
-    overflow: derived(tagSet.overflowIds, (ids) => ids.has(id)),
+    size: toStore(() => tagSet.size),
+    navigation: toStore(() => tagSet.navigation),
+    overflow: toStore(() => tagSet.isOverflow(id)),
     // A roving set owns the tab order: only its current tab stop is
     // tabbable. `undefined` until the set picks one, so server-rendered tags
     // keep their native order.
-    tabindex: derived(
-      [tagSet.navigation, tagSet.tabStopId],
-      ([navigation, tabStopId]) =>
-        navigation === "roving" && tabStopId !== null
-          ? tabStopId === id
-            ? 0
-            : -1
-          : undefined,
+    tabindex: toStore(() =>
+      tagSet.navigation === "roving" && tagSet.tabStopId !== null
+        ? tagSet.tabStopId === id
+          ? 0
+          : -1
+        : undefined,
     ),
     update: (patch) => tagSet.update(id, patch),
     notifyClose: () => tagSet.notifyClose(id),

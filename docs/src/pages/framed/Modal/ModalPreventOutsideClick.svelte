@@ -4,15 +4,13 @@
   let open = false;
 </script>
 
-<Button on:click={() => (open = true)}>Create API key</Button>
+<Button onclick={() => (open = true)}>Create API key</Button>
 
 <Modal
   passiveModal
   preventCloseOnClickOutside
   bind:open
   modalHeading="API key created"
-  on:open
-  on:close
 >
   <Stack gap={5}>
     <p>

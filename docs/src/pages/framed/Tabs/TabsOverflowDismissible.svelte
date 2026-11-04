@@ -19,18 +19,18 @@
   let selectedId = "tab-1";
   let tabs = labels.map((label, i) => ({ id: `tab-${i + 1}`, label }));
 
-  function handleDismiss({ detail }) {
-    tabs = tabs.filter((tab) => tab.id !== detail.id);
+  function handleDismiss({ id }) {
+    tabs = tabs.filter((tab) => tab.id !== id);
   }
 </script>
 
-<Tabs bind:selectedId dismissible on:dismiss={handleDismiss}>
+<Tabs bind:selectedId dismissible ondismiss={handleDismiss}>
   {#each tabs as tab (tab.id)}
     <Tab id={tab.id} label={tab.label} />
   {/each}
-  <svelte:fragment slot="content">
+  {#snippet content()}
     {#each tabs as tab (tab.id)}
       <TabContent>{tab.label} content</TabContent>
     {/each}
-  </svelte:fragment>
+  {/snippet}
 </Tabs>

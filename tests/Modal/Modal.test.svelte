@@ -30,13 +30,14 @@
   export let danger = false;
   export let alert = false;
   export let passiveModal = false;
-  export let onopen: ((event: CustomEvent) => void) | undefined = undefined;
-  export let onclose: ((event: CustomEvent) => void) | undefined = undefined;
-  export let onsubmit: ((event: CustomEvent) => void) | undefined = undefined;
-  export let onclickbuttonprimary: ((event: CustomEvent) => void) | undefined =
+  export let onclose: ComponentProps<Modal>["onopenchange"] = undefined;
+  export let ontransitionend: ComponentProps<Modal>["onopenchangecomplete"] =
     undefined;
-  export let onclickbuttonsecondary:
-    ((event: CustomEvent) => void) | undefined = undefined;
+  export let onsubmit: ComponentProps<Modal>["onprimaryaction"] = undefined;
+  export let onclickbuttonprimary: ComponentProps<Modal>["onprimaryaction"] =
+    undefined;
+  export let onclickbuttonsecondary: ComponentProps<Modal>["onsecondaryaction"] =
+    undefined;
   export let closeOnSecondary = false;
   export let includeInput = true;
   export let includeSecondInput = false;
@@ -67,11 +68,13 @@
   {danger}
   {alert}
   {passiveModal}
-  on:open={(e) => onopen?.(e)}
-  on:close={(e) => onclose?.(e)}
-  on:submit={(e) => onsubmit?.(e)}
-  on:click:button--primary={(e) => onclickbuttonprimary?.(e)}
-  on:click:button--secondary={(e) => {
+  onopenchange={(e) => onclose?.(e)}
+  onopenchangecomplete={(e) => ontransitionend?.(e)}
+  onprimaryaction={(e) => {
+    onsubmit?.(e);
+    onclickbuttonprimary?.(e);
+  }}
+  onsecondaryaction={(e) => {
     if (closeOnSecondary) open = false;
     onclickbuttonsecondary?.(e);
   }}

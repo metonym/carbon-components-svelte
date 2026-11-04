@@ -34,13 +34,14 @@
   placeholder="Search for a department"
   {shouldFilterItem}
   {items}
-  let:item
 >
-  {#each highlightSegments(item.text, fuzzyMatch(item.text, value).indices) as segment}
-    {#if segment.match}
-      <strong>{segment.text}</strong>
-    {:else}
-      {segment.text}
-    {/if}
-  {/each}
+  {#snippet children({
+    item,
+  })}{#each highlightSegments(item.text, fuzzyMatch(item.text, value).indices) as segment}
+      {#if segment.match}
+        <strong>{segment.text}</strong>
+      {:else}
+        {segment.text}
+      {/if}
+    {/each}{/snippet}
 </ComboBox>

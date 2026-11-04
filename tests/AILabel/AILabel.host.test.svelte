@@ -19,11 +19,11 @@
 
 <div data-testid="text-input">
   <TextInput labelText="Summary" size="xs">
-    <svelte:fragment slot="decorator">
+    {#snippet decorator()}
       {#if showLabel}
         <AILabel size="xl" bind:revertActive />
       {/if}
-    </svelte:fragment>
+    {/snippet}
   </TextInput>
 </div>
 <div data-testid="text-area">
@@ -48,21 +48,23 @@
   </DatePicker>
 </div>
 <div data-testid="dropdown">
-  <Dropdown labelText="Region" {items}><AILabel slot="decorator" /></Dropdown>
+  <Dropdown labelText="Region" {items}
+    >{#snippet decorator()}<AILabel />{/snippet}</Dropdown
+  >
 </div>
 <div data-testid="combo-box">
   <ComboBox labelText="Region search" {items}>
-    <AILabel slot="decorator" />
+    {#snippet decorator()}<AILabel />{/snippet}
   </ComboBox>
 </div>
 <div data-testid="multi-select">
   <MultiSelect labelText="Regions" {items}
-    ><AILabel slot="decorator" /></MultiSelect
+    >{#snippet decorator()}<AILabel />{/snippet}</MultiSelect
   >
 </div>
 <div data-testid="aligned">
   <TextInput labelText="Aligned">
-    <AILabel slot="decorator" align="start" />
+    {#snippet decorator()}<AILabel align="start" />{/snippet}
   </TextInput>
 </div>
 <div data-testid="plain">

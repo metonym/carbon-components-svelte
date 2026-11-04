@@ -1,4 +1,4 @@
-<script context="module">
+<script module>
   function isTopPosition(value) {
     return value.startsWith("top");
   }
@@ -63,9 +63,9 @@
    * @typedef {object} NotificationData
    * @property {string} [id] - Optional id for deduplication
    * @property {"error" | "info" | "info-square" | "success" | "warning" | "warning-alt"} [kind]
-   * @property {string} [title]
-   * @property {string} [subtitle]
-   * @property {string} [caption]
+   * @property {string} [titleText]
+   * @property {string} [subtitleText]
+   * @property {string} [captionText]
    * @property {number} [timeout] - Ignored when the notification has an `action` or is `actionable`
    * @property {boolean} [lowContrast]
    * @property {string} [closeButtonDescription]
@@ -80,47 +80,54 @@
    * @property {NotificationAction} [action] - Add an action button. The toast keeps focus where it is and does not time out.
    */
 
-  /**
-   * Specify the position of the notification queue.
-   * @type {"top-left" | "top-center" | "top-right" | "bottom-left" | "bottom-center" | "bottom-right"}
-   */
-  export let position = "top-right";
+  let {
+    /**
+     * Specify the position of the notification queue.
+     * @type {"top-left" | "top-center" | "top-right" | "bottom-left" | "bottom-center" | "bottom-right"}
+     */
+    position = "top-right",
 
-  /** Specify the top offset (CSS value) */
-  export let offsetTop = "3rem";
+    /** Specify the top offset (CSS value) */
+    offsetTop = "3rem",
 
-  /** Specify the bottom offset (CSS value) */
-  export let offsetBottom = "1rem";
+    /** Specify the bottom offset (CSS value) */
+    offsetBottom = "1rem",
 
-  /** Specify the left offset (CSS value) */
-  export let offsetLeft = "1rem";
+    /** Specify the left offset (CSS value) */
+    offsetLeft = "1rem",
 
-  /** Specify the right offset (CSS value) */
-  export let offsetRight = "1rem";
+    /** Specify the right offset (CSS value) */
+    offsetRight = "1rem",
 
-  /**
-   * Specify the z-index of the notification queue.
-   * By default, this matches the z-index of modals.
-   */
-  export let zIndex = 9000;
+    /**
+     * Specify the z-index of the notification queue.
+     * By default, this matches the z-index of modals.
+     */
+    zIndex = 9000,
 
-  /**
-   * Specify the maximum number of notifications to display.
-   * When this limit is exceeded, the oldest notification is automatically removed.
-   * Notifications without an `action` or `actionable` go first.
-   */
-  export let maxNotifications = 3;
+    /**
+     * Specify the maximum number of notifications to display.
+     * When this limit is exceeded, the oldest notification is automatically removed.
+     * Notifications without an `action` or `actionable` go first.
+     */
+    maxNotifications = 3,
 
-  /** Specify the accessible name of the notifications landmark */
-  export let labelText = "Notifications";
+    /** Specify the accessible name of the notifications landmark */
+    labelText = "Notifications",
 
-  import { onMount, setContext, tick } from "svelte";
-  import { writable } from "svelte/store";
+    /** @type {import("svelte/elements").ClassValue | undefined} */
+    class: className = undefined,
+
+    ...rest
+  } = $props();
+
+  import { onMount, tick } from "svelte";
   import { NOTIFICATION_QUEUE_COLLAPSE_MS } from "../constants/timing.js";
   import { focusActionableNotification } from "../utils/dismissible-notification.js";
   import { returnFocus } from "../utils/focus.js";
   import NotificationActionButton from "./NotificationActionButton.svelte";
   import ToastNotification from "./ToastNotification.svelte";
+  import { setNotificationQueue } from "./notification-context.js";
 
   /**
    * @typedef {NotificationData & { id: string, placeholder?: undefined }} QueuedNotification
@@ -128,7 +135,7 @@
    */
 
   /** @type {null | HTMLDivElement} */
-  let queueRef = null;
+  let queueRef = $state(null);
 
   /**
    * Where F6 took focus from, so F6 inside the queue can send it back.
@@ -141,7 +148,7 @@
    * Each entry renders one element, so `queueRef.children[index]` is its node.
    * @type {Array<QueuedNotification | Placeholder>}
    */
-  let notifications = [];
+  let notifications = $state.raw([]);
 
   /**
    * Arrival order of each toast. A toast that arrives during a hold is out
@@ -153,25 +160,28 @@
   let idCounter = 0;
   let arrivalCounter = 0;
 
-  let hovered = false;
-  let focused = false;
-  let collapsing = false;
+  let hovered = $state(false);
+  let focused = $state(false);
+  let collapsing = $state(false);
 
   /** @type {undefined | ReturnType<typeof setTimeout>} */
   let collapseTimer;
 
   // As in React Aria's toast region, every toast's timer pauses while the
   // pointer or focus is in the queue, then resumes with the time it had left.
-  const paused = writable(false);
-
-  setContext("carbon:NotificationQueue", { paused });
+  setNotificationQueue({
+    get paused() {
+      return hovered || focused;
+    },
+  });
 
   // The queue unmounts when it empties, which fires no leave events.
-  $: if (notifications.length === 0) {
-    hovered = false;
-    focused = false;
-  }
-  $: paused.set(hovered || focused);
+  $effect.pre(() => {
+    if (notifications.length === 0) {
+      hovered = false;
+      focused = false;
+    }
+  });
 
   onMount(() => () => clearTimeout(collapseTimer));
 
@@ -254,7 +264,7 @@
       arrivals.delete(dropped.id);
       notifications.splice(notifications.indexOf(dropped), 1);
     }
-    notifications = notifications;
+    notifications = [...notifications];
   }
 
   // Once the pointer and focus leave, put toasts that arrived during the
@@ -309,7 +319,7 @@
     if (!entry || !isToast(entry)) return false;
 
     notifications[index] = { ...entry, ...patch, id };
-    notifications = notifications;
+    notifications = [...notifications];
     return true;
   }
 
@@ -334,7 +344,7 @@
       notifications.splice(index, 1);
     }
     pruneFarEnd();
-    notifications = notifications;
+    notifications = [...notifications];
     settleFocus();
     return true;
   }
@@ -441,20 +451,24 @@
   }
 </script>
 
-<svelte:window on:keydown={handleWindowKeydown} />
+<svelte:window onkeydown={handleWindowKeydown} />
 
 {#if notifications.length > 0}
   <div
     bind:this={queueRef}
     role="region"
     aria-label={labelText}
-    class:bx--notification-queue={true}
-    class:bx--notification-queue--top-left={position === "top-left"}
-    class:bx--notification-queue--top-center={position === "top-center"}
-    class:bx--notification-queue--top-right={position === "top-right"}
-    class:bx--notification-queue--bottom-left={position === "bottom-left"}
-    class:bx--notification-queue--bottom-center={position === "bottom-center"}
-    class:bx--notification-queue--bottom-right={position === "bottom-right"}
+    {...rest}
+    class={[
+      "bx--notification-queue",
+      position === "top-left" && "bx--notification-queue--top-left",
+      position === "top-center" && "bx--notification-queue--top-center",
+      position === "top-right" && "bx--notification-queue--top-right",
+      position === "bottom-left" && "bx--notification-queue--bottom-left",
+      position === "bottom-center" && "bx--notification-queue--bottom-center",
+      position === "bottom-right" && "bx--notification-queue--bottom-right",
+      className,
+    ]}
     style:position="fixed"
     style:left={isLeftPosition(position)
       ? offsetLeft
@@ -468,7 +482,7 @@
       ? "translateX(-50%)"
       : undefined}
     style:z-index={zIndex}
-    on:pointerenter={(event) => {
+    onpointerenter={(event) => {
       // Touch has no hover. A tap would leave the queue paused.
       if (event.pointerType === "touch") return;
       hovered = true;
@@ -476,14 +490,14 @@
       clearTimeout(collapseTimer);
       collapsing = false;
     }}
-    on:pointerleave={() => {
+    onpointerleave={() => {
       hovered = false;
       collapse();
     }}
-    on:focusin={() => {
+    onfocusin={() => {
       focused = true;
     }}
-    on:focusout={(event) => {
+    onfocusout={(event) => {
       // Focus moving from one toast to another stays inside.
       const next = event.relatedTarget;
       focused = next instanceof Node && event.currentTarget.contains(next);
@@ -495,7 +509,7 @@
       {#if entry.placeholder}
         <div
           aria-hidden="true"
-          class:bx--notification-queue__placeholder={true}
+          class="bx--notification-queue__placeholder"
           style:block-size="{collapsing ? 0 : entry.placeholder.height}px"
         ></div>
       {:else}
@@ -506,22 +520,23 @@
           <ToastNotification
             {...toastProps(entry)}
             {timeout}
-            on:close={() => remove(id)}
+            onopenchange={() => remove(id)}
           >
-            <svelte:fragment slot="actions">
+            {#snippet actions()}
               <NotificationActionButton
                 href={action.href}
-                on:click={(event) => handleAction(id, action, event)}
+                onclick={(/** @type {MouseEvent} */ event) =>
+                  handleAction(id, action, event)}
               >
                 {action.label}
               </NotificationActionButton>
-            </svelte:fragment>
+            {/snippet}
           </ToastNotification>
         {:else}
           <ToastNotification
             {...toastProps(entry)}
             {timeout}
-            on:close={() => remove(id)}
+            onopenchange={() => remove(id)}
           />
         {/if}
       {/if}

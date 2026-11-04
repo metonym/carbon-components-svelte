@@ -129,7 +129,7 @@
   import { MODAL_CONTEXT_KEY } from "../constants/context-keys.js";
   import Information from "../icons/Information.svelte";
   import { splitAriaNaming } from "../utils/aria-naming.js";
-  import { dismiss } from "../utils/dismiss.js";
+  import { dismiss } from "../utils/dismiss.svelte.js";
   import { createOpenCloseDispatcher } from "../utils/dispatch-open-close.js";
   import { joinDescribedBy } from "../utils/field-status.js";
   import { clippedBy, windowShift } from "../utils/fit-align.js";
@@ -493,12 +493,12 @@
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
-  use:dismiss={{
+  {@attach dismiss(() => ({
     enabled: open,
     type: "keydown",
     handler: handleWindowKeydown,
     options: { capture: true },
-  }}
+  }))}
   style:position="relative"
   style:z-index={open ? 1 : undefined}
   {...wrapperProps}

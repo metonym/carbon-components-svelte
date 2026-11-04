@@ -15,7 +15,7 @@
     </TooltipDefinition>
   </div>
   <div>
-    <Button kind="tertiary" size="small" on:click={() => (open = !open)}>
+    <Button kind="tertiary" size="small" onclick={() => (open = !open)}>
       {open ? "Close tooltip" : "Open tooltip"}
     </Button>
   </div>

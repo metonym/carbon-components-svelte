@@ -84,7 +84,7 @@
   import Close from "../icons/Close.svelte";
   import Switcher from "../icons/Switcher.svelte";
   import { createAnchoredTooltip } from "../utils/anchored-tooltip.js";
-  import { dismiss } from "../utils/dismiss.js";
+  import { dismiss } from "../utils/dismiss.svelte.js";
   import { focusQuietly, returnFocusOnClose } from "../utils/focus.js";
   import { isImeComposition } from "../utils/ime-composition.js";
   import { isOutsideClick } from "../utils/is-outside-click.js";
@@ -189,13 +189,13 @@
 
 <button
   bind:this={ref}
-  use:dismiss={{
+  {@attach dismiss(() => ({
     enabled: isOpen,
     listeners: [
       { type: "click", handler: handleOutsideClick },
       { type: "keydown", handler: handleKeydown },
     ],
-  }}
+  }))}
   type="button"
   aria-expanded={isOpen ? "true" : "false"}
   aria-controls={isOpen ? `${id}-panel` : undefined}

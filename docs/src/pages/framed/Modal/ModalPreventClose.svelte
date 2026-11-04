@@ -7,7 +7,7 @@
 </script>
 
 <Button
-  on:click={() => {
+  onclick={() => {
     open = true;
     hasUnsavedChanges = true;
     showWarning = false;
@@ -21,18 +21,18 @@
   modalHeading="Edit profile"
   primaryButtonText="Save"
   secondaryButtonText="Discard changes"
-  on:click:button--secondary={() => {
+  onsecondaryaction={() => {
     hasUnsavedChanges = false;
     open = false;
   }}
-  on:close={(e) => {
-    console.log("Close triggered by:", e.detail.trigger);
+  onopenchange={(e) => {
+    console.log("Close triggered by:", e.trigger);
     if (hasUnsavedChanges) {
       e.preventDefault();
       showWarning = true;
     }
   }}
-  on:submit={() => {
+  onprimaryaction={() => {
     hasUnsavedChanges = false;
     open = false;
   }}
@@ -40,8 +40,8 @@
   {#if showWarning}
     <InlineNotification
       kind="warning"
-      title="Unsaved changes"
-      subtitle="Please save or discard your changes before closing."
+      titleText="Unsaved changes"
+      subtitleText="Please save or discard your changes before closing."
       hideCloseButton
     />
   {/if}

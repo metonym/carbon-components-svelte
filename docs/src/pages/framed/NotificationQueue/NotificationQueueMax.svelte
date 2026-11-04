@@ -8,11 +8,11 @@
 <NotificationQueue bind:this={queue} maxNotifications={5} />
 
 <Button
-  on:click={() => {
+  onclick={() => {
     count++;
     queue.add({
       kind: "success",
-      title: `Backup job ${count} completed`,
+      titleText: `Backup job ${count} completed`,
     });
   }}
 >

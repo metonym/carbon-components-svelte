@@ -10,20 +10,12 @@
   export let selectedId: ComponentProps<ComboBox>["selectedId"] = undefined;
 </script>
 
-<ComboBox
-  {items}
-  {selectedId}
-  labelText="Custom slot combobox"
-  let:item
-  let:index
-  let:selected
-  let:highlighted
->
-  <span
-    data-testid="custom-item"
-    data-selected={selected}
-    data-highlighted={highlighted}
-  >
-    Item {index + 1}: {item.text}
-  </span>
+<ComboBox {items} {selectedId} labelText="Custom slot combobox">
+  {#snippet children({ item, index, selected, highlighted })}<span
+      data-testid="custom-item"
+      data-selected={selected}
+      data-highlighted={highlighted}
+    >
+      Item {index + 1}: {item.text}
+    </span>{/snippet}
 </ComboBox>

@@ -1,5 +1,8 @@
+/** What closed the notification. */
+export type DismissTrigger = "close-button" | "escape-key" | "timeout";
+
 export interface DismissibleNotification {
-  close: (closeFromTimeout?: unknown) => void;
+  close: (trigger: DismissTrigger) => void;
   /** `hasAction` makes the notification ignore `timeout` (WCAG 2.2.1). */
   sync: (open: boolean, timeout: number, hasAction?: boolean) => void;
   syncFocusOnOpen: (open: boolean, enabled: boolean) => void;
@@ -17,7 +20,8 @@ export interface DismissibleNotification {
 }
 
 export interface DismissibleNotificationOptions {
-  dispatch: (name: string, detail?: object, options?: object) => boolean;
+  /** Returns `false` to keep the notification open. */
+  requestClose: (trigger: DismissTrigger) => boolean;
   getPauseOnHover: () => boolean;
   setOpen: (open: boolean) => void;
   getRef?: () => HTMLElement | null | undefined;

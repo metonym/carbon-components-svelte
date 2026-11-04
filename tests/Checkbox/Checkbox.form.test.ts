@@ -19,9 +19,7 @@ describe("Checkbox form participation", () => {
       await user.click(checkbox);
 
       expect(checkbox).toBeChecked();
-      expect(onCheck).toHaveBeenLastCalledWith(
-        expect.objectContaining({ detail: true }),
-      );
+      expect(onCheck).toHaveBeenLastCalledWith(true);
     });
 
     it("toggles normally when the DOM and state agree", async () => {
@@ -31,15 +29,11 @@ describe("Checkbox form participation", () => {
       const checkbox = screen.getByRole("checkbox", { name: "Agree" });
       await user.click(checkbox);
       expect(checkbox).toBeChecked();
-      expect(onCheck).toHaveBeenLastCalledWith(
-        expect.objectContaining({ detail: true }),
-      );
+      expect(onCheck).toHaveBeenLastCalledWith(true);
 
       await user.click(checkbox);
       expect(checkbox).not.toBeChecked();
-      expect(onCheck).toHaveBeenLastCalledWith(
-        expect.objectContaining({ detail: false }),
-      );
+      expect(onCheck).toHaveBeenLastCalledWith(false);
     });
 
     describe.each([

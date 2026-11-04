@@ -14,7 +14,7 @@
 <Grid narrow padding>
   <Row>
     <Column>
-      <Button on:click={() => (open = !open)}>
+      <Button onclick={() => (open = !open)}>
         {open ? "Hide" : "Show"}
         narrow grid overlay
       </Button>

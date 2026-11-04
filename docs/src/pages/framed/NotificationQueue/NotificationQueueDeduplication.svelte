@@ -13,12 +13,12 @@
 
 <ButtonSet>
   <Button
-    on:click={() => {
+    onclick={() => {
       queue.add({
         id: "id",
         kind: "warning",
-        title: "Duplicate notification",
-        subtitle:
+        titleText: "Duplicate notification",
+        subtitleText:
           "This notification has the same id. Click the button multiple times.",
       });
     }}
@@ -26,12 +26,12 @@
     Add duplicate
   </Button>
   <Button
-    on:click={() => {
+    onclick={() => {
       queue.add({
         id: `id-${count++}`,
         kind: "info",
-        title: "Unique notification",
-        subtitle: "This has a unique id, so it will always appear.",
+        titleText: "Unique notification",
+        subtitleText: "This has a unique id, so it will always appear.",
       });
     }}
   >

@@ -18,7 +18,7 @@
 </script>
 
 <Button
-  on:click={() => {
+  onclick={() => {
     open = true;
     draft = name;
     showWarning = false;
@@ -29,18 +29,18 @@
 
 <ComposedModal
   bind:open
-  on:submit={() => {
+  onprimaryaction={() => {
     name = draft;
     open = false;
   }}
 >
-  <ModalHeader title="Edit name" />
+  <ModalHeader titleText="Edit name" />
   <ModalBody hasForm>
     {#if showWarning}
       <InlineNotification
         kind="warning"
-        title="Unsaved changes"
-        subtitle="Save your changes, or keep editing. Cancel stays open while the form is dirty."
+        titleText="Unsaved changes"
+        subtitleText="Save your changes, or keep editing. Cancel stays open while the form is dirty."
         hideCloseButton
       />
     {/if}
@@ -49,7 +49,7 @@
   <ModalFooter
     primaryButtonText="Save"
     secondaryButtonText="Cancel"
-    on:click:button--secondary={(e) => {
+    onsecondaryaction={(e) => {
       if (isDirty) {
         e.preventDefault();
         showWarning = true;

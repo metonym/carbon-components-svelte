@@ -47,14 +47,14 @@
 <Stack gap={6}>
   <ButtonSet>
     <Button
-      on:click={() => {
+      onclick={() => {
         treeview?.expandNodes();
       }}
     >
       Expand all nodes
     </Button>
     <Button
-      on:click={() => {
+      onclick={() => {
         treeview?.collapseNodes();
         treeview?.expandNodes((node) => /^IBM/.test(node.text));
       }}

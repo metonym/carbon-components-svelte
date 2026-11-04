@@ -7,8 +7,8 @@
 <Tabs>
   <Tab id="tab-a" label="Tab 1" />
   <Tab id="tab-b" label="Tab 2" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Content 1</TabContent>
     <TabContent id="own-panel">Content 2</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>

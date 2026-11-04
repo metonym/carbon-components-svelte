@@ -1,114 +1,148 @@
 <script>
   /**
-   * @event {null | number | string} change
-   * @event {null | number | string} input
-   * @slot {{}} decorator - Render an `AILabel` or another decorator at the end of the field.
+   * @restProps {input}
    */
 
-  /**
-   * Set the size of the input.
-   * Inherits the parent `Form` size when unset.
-   * Also accepts Carbon v11's `"md"` (the 40px default, which overrides a
-   * `Form` size) and `"lg"` (`"xl"`).
-   * @type {"xs" | "sm" | "md" | "lg" | "xl" | undefined}
-   */
-  export let size = undefined;
+  const fallbackId = $props.id();
 
-  /**
-   * Specify the input value.
-   *
-   * `value` will be set to `null` if type="number" and the value is empty.
-   * Follows the field when the owning form resets.
-   * @type {null | number | string}
-   * @bindable writable
-   */
-  export let value = "";
+  let {
+    /**
+     * Set the size of the input.
+     * Inherits the parent `Form` size when unset.
+     * Also accepts Carbon v11's `"md"` (the 40px default, which overrides a
+     * `Form` size) and `"lg"` (`"xl"`).
+     * @type {"xs" | "sm" | "md" | "lg" | "xl" | undefined}
+     */
+    size = undefined,
 
-  /** Specify the placeholder text */
-  export let placeholder = "";
+    /**
+     * Specify the input value.
+     *
+     * `value` will be set to `null` if type="number" and the value is empty.
+     * Follows the field when the owning form resets.
+     * @type {null | number | string}
+     */
+    value = $bindable(/** @type {null | number | string} */ ("")),
 
-  /** Set to `true` to disable the input */
-  export let disabled = false;
+    /** Set to `true` to disable the input */
+    disabled = false,
 
-  /** Specify the helper text */
-  export let helperText = "";
+    /** Specify the helper text */
+    helperText = "",
 
-  /** Set an id for the input element */
-  export let id = uniqueId();
+    /**
+     * Set an id for the input element
+     * @type {string}
+     */
+    id = fallbackId,
 
-  /**
-   * Specify a name attribute for the input.
-   * @type {string | undefined}
-   */
-  export let name = undefined;
+    /**
+     * Specify the label text, or a snippet.
+     * @type {string | import("svelte").Snippet}
+     */
+    labelText = "",
 
-  /** Specify the label text */
-  export let labelText = "";
+    /** Set to `true` to visually hide the label text */
+    hideLabel = false,
 
-  /** Set to `true` to visually hide the label text */
-  export let hideLabel = false;
+    /**
+     * Specify the max character count allowed for the input.
+     * Displays a character counter to the right of the label.
+     * @type {number | undefined}
+     */
+    maxCount = undefined,
 
-  /**
-   * Specify the max character count allowed for the input.
-   * Displays a character counter to the right of the label.
-   * @type {number | undefined}
-   */
-  export let maxCount = undefined;
+    /**
+     * Override the counter text read by screen readers.
+     * @type {((count: number, max: number) => string) | undefined}
+     * @default `${count} of ${max} characters`
+     */
+    counterText = undefined,
 
-  /**
-   * Override the counter text read by screen readers.
-   * @type {((count: number, max: number) => string) | undefined}
-   * @default `${count} of ${max} characters`
-   */
-  export let counterText = undefined;
+    /**
+     * Specify the text announced when the limit is reached.
+     * @type {string | undefined}
+     * @default "Character limit reached"
+     */
+    limitReachedText = undefined,
 
-  /**
-   * Specify the text announced when the limit is reached.
-   * @type {string | undefined}
-   * @default "Character limit reached"
-   */
-  export let limitReachedText = undefined;
+    /** Set to `true` to indicate an invalid state */
+    invalid = false,
 
-  /** Set to `true` to indicate an invalid state */
-  export let invalid = false;
+    /** Specify the invalid state text */
+    invalidText = "",
 
-  /** Specify the invalid state text */
-  export let invalidText = "";
+    /** Set to `true` to indicate a warning state */
+    warn = false,
 
-  /** Set to `true` to indicate a warning state */
-  export let warn = false;
+    /** Specify the warning state text */
+    warnText = "",
 
-  /** Specify the warning state text */
-  export let warnText = "";
+    /**
+     * Obtain a reference to the input HTML element.
+     * @type {null | HTMLInputElement}
+     */
+    ref = $bindable(null),
 
-  /**
-   * Obtain a reference to the input HTML element.
-   * @bindable readonly
-   * @type {null | HTMLInputElement}
-   */
-  export let ref = null;
+    /** Set to `true` to use the inline variant */
+    inline = false,
 
-  /** Set to `true` to mark the field as required */
-  export let required = false;
+    /** Set to `true` to use the read-only variant */
+    readonly = false,
 
-  /** Set to `true` to use the inline variant */
-  export let inline = false;
+    /**
+     * Set to `true` to use the fluid variant.
+     * Inherited from the parent `FluidForm` context,
+     * so it does not need to be set when used inside `FluidForm`.
+     * Cannot be combined with the inline variant.
+     */
+    fluid = false,
 
-  /** Set to `true` to use the read-only variant */
-  export let readonly = false;
+    /** Set to `true` to select the input's text when it receives focus */
+    selectTextOnFocus = false,
 
-  /**
-   * Set to `true` to use the fluid variant.
-   * Inherited from the parent `FluidForm` context,
-   * so it does not need to be set when used inside `FluidForm`.
-   * Cannot be combined with the inline variant.
-   */
-  export let fluid = false;
+    /**
+     * Called as the user edits the value, with the parsed value: a number,
+     * or `null` when empty, for `type="number"`.
+     * @type {((detail: { value: null | number | string }) => void) | undefined}
+     */
+    onvaluechange = undefined,
 
-  /** Set to `true` to select the input's text when it receives focus */
-  export let selectTextOnFocus = false;
+    /**
+     * Called when the user commits the value (the native `change`: blur or
+     * Enter after an edit), with the parsed value.
+     * @type {((detail: { value: null | number | string }) => void) | undefined}
+     */
+    onvaluecommit = undefined,
 
-  import { createEventDispatcher, getContext, onMount, tick } from "svelte";
+    /**
+     * Render an `AILabel` or another decorator at the end of the field.
+     * @type {import("svelte").Snippet | undefined}
+     */
+    decorator = undefined,
+
+    /** @type {string | undefined | null} */
+    type = undefined,
+
+    /** @type {import("svelte/elements").ClassValue | undefined} */
+    class: className = undefined,
+
+    /** @type {string | undefined | null} */
+    "aria-describedby": ariaDescribedBy = undefined,
+
+    /** @type {import("svelte/elements").FormEventHandler<HTMLInputElement> | undefined | null} */
+    oninput = undefined,
+
+    /** @type {import("svelte/elements").FormEventHandler<HTMLInputElement> | undefined | null} */
+    onchange = undefined,
+
+    /** @type {import("svelte/elements").FocusEventHandler<HTMLInputElement> | undefined | null} */
+    onfocus = undefined,
+
+    ...rest
+  } = $props();
+
+  import { getContext, onMount, tick, untrack } from "svelte";
   import { writable } from "svelte/store";
   import Decorator from "../AILabel/Decorator.svelte";
   import {
@@ -131,189 +165,209 @@
   import { preserveFocusSelection } from "../utils/preserve-focus-selection.js";
   import { FIELD_SIZE_ALIASES, normalizeSize } from "../utils/size-aliases.js";
   import { titleWhenTruncated } from "../utils/title-when-truncated.js";
-  import { uniqueId } from "../utils/unique-id.js";
 
   // A disabled `<fieldset>` around the component disables it too.
-  let inDisabledFieldset = false;
-  $: effectiveDisabled = disabled || inDisabledFieldset;
+  let inDisabledFieldset = $state(false);
+  const effectiveDisabled = $derived(disabled || inDisabledFieldset);
 
   const ctx = getContext(FORM_CONTEXT_KEY);
   /** @type {undefined | import("svelte/store").Readable<undefined | "xs" | "sm" | "md" | "xl">} */
   const formSize = getContext(FORM_SIZE_CONTEXT_KEY);
-  $: effectiveSize = normalizeSize(size ?? $formSize, FIELD_SIZE_ALIASES);
+  const effectiveSize = $derived(
+    normalizeSize(size ?? $formSize, FIELD_SIZE_ALIASES),
+  );
 
   /**
-   * Starts active for a filled slot, so the server renders the AI surface.
-   * `Decorator` clears it when no `AILabel` claims the slot.
+   * Starts active when a decorator is passed, so the server renders the AI
+   * surface. `Decorator` clears it when no `AILabel` claims it.
    * @type {import("svelte/store").Writable<undefined | "active" | "revert">}
    */
-  const aiLabelState = writable($$slots.decorator ? "active" : undefined);
-  const dispatch = createEventDispatcher();
+  const aiLabelState = writable(
+    untrack(() => decorator) ? "active" : undefined,
+  );
 
+  /** @param {string} raw */
   function parse(raw) {
-    if ($$restProps.type !== "number") return raw;
+    if (type !== "number") return raw;
     return raw === "" ? null : Number(raw);
   }
 
-  // A form reset restores the field without an input event. Svelte 5 syncs
-  // `bind:value` back on its own; Svelte 3 and 4 do not, so read the field.
+  // A form reset restores the field without an input event; read it back.
   function handleFormReset() {
     if (ref) value = parse(ref.value);
   }
 
-  /** @type {(e: Event) => void} */
+  /** @param {Event & { currentTarget: EventTarget & HTMLInputElement }} event */
   function handleInput(event) {
-    value = parse(/** @type {HTMLInputElement} */ (event.target).value);
-    dispatch("input", value);
+    value = parse(event.currentTarget.value);
+    onvaluechange?.({ value });
+    oninput?.(event);
   }
 
-  /** @type {(e: Event) => void} */
+  /** @param {Event & { currentTarget: EventTarget & HTMLInputElement }} event */
   function handleChange(event) {
-    dispatch(
-      "change",
-      parse(/** @type {HTMLInputElement} */ (event.target).value),
-    );
+    onvaluecommit?.({ value: parse(event.currentTarget.value) });
+    onchange?.(event);
   }
 
-  function handleFocus() {
+  /** @param {FocusEvent & { currentTarget: EventTarget & HTMLInputElement }} event */
+  function handleFocus(event) {
+    onfocus?.(event);
     if (selectTextOnFocus && !effectiveDisabled) {
       tick().then(() => ref?.select());
     }
   }
 
-  $: ({ showInvalid, showWarn } = resolveValidationVisibility({
-    invalid,
-    warn,
-    disabled: effectiveDisabled,
-    readonly,
-  }));
-  $: isFluid = !inline && (fluid || !!ctx?.isFluid);
-  $: ({ helperId, errorId, warnId } = buildFieldIds(id));
-  $: counterId = `counter-${id}`;
-  $: count = graphemeCount((value ?? "").toString());
-  $: resolvedCounterText = counterText ?? ((c, m) => `${c} of ${m} characters`);
-  $: resolvedLimitReachedText = limitReachedText ?? "Character limit reached";
+  const { showInvalid, showWarn } = $derived(
+    resolveValidationVisibility({
+      invalid,
+      warn,
+      disabled: effectiveDisabled,
+      readonly,
+    }),
+  );
+  const isFluid = $derived(!inline && (fluid || !!ctx?.isFluid));
+  const { helperId, errorId, warnId } = $derived(buildFieldIds(id));
+  const counterId = $derived(`counter-${id}`);
+  const count = $derived(graphemeCount((value ?? "").toString()));
+  const resolvedCounterText = $derived(
+    counterText ??
+      ((/** @type {number} */ c, /** @type {number} */ m) =>
+        `${c} of ${m} characters`),
+  );
+  const resolvedLimitReachedText = $derived(
+    limitReachedText ?? "Character limit reached",
+  );
+  // A snippet label is laid out by the consumer; the fluid label then keeps
+  // its natural height instead of truncating.
+  const slottedLabel = $derived(typeof labelText === "function");
 
   const limitAnnouncement = createLimitAnnouncement(
-    graphemeCount((value ?? "").toString()),
+    untrack(() => graphemeCount((value ?? "").toString())),
   );
 
   onMount(() => limitAnnouncement.cancel);
 
-  $: limitAnnouncement.track(count, maxCount, resolvedLimitReachedText);
+  $effect.pre(() => {
+    limitAnnouncement.track(count, maxCount, resolvedLimitReachedText);
+  });
 
   // NVDA ignores `readonly` on a number input and announces it as editable,
   // so a read-only number field renders as a text input.
-  $: typeOverride =
-    readonly && $$restProps.type === "number" ? { type: "text" } : {};
+  const effectiveType = $derived(readonly && type === "number" ? "text" : type);
 </script>
 
-<!-- svelte-ignore a11y-mouse-events-have-key-events -->
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<!-- svelte-ignore a11y-no-static-element-interactions -->
+{#snippet content(/** @type {string | import("svelte").Snippet} */ source)}
+  {#if typeof source === "function"}{@render source()}{:else}{source}{/if}
+{/snippet}
+
+{#snippet counter()}
+  {#if maxCount != null}
+    <div
+      class={[
+        "bx--label",
+        effectiveDisabled && "bx--label--disabled",
+        "bx--text-input__label-counter",
+      ]}
+      aria-hidden="true"
+    >
+      {count}/{maxCount}
+    </div>
+  {/if}
+{/snippet}
+
 <div
   use:fieldsetDisabled={(value) => (inDisabledFieldset = value)}
-  class:bx--form-item={true}
-  class:bx--text-input-wrapper={true}
-  class:bx--text-input-wrapper--inline={inline}
-  class:bx--text-input-wrapper--readonly={readonly}
-  class:bx--text-input--fluid={isFluid}
-  on:click
-  on:mouseover
-  on:mouseenter
-  on:mouseleave
+  class={[
+    "bx--form-item",
+    "bx--text-input-wrapper",
+    inline && "bx--text-input-wrapper--inline",
+    readonly && "bx--text-input-wrapper--readonly",
+    isFluid && "bx--text-input--fluid",
+  ]}
 >
   {#if inline}
     <div
-      class:bx--text-input__label-helper-wrapper={true}
-      class:bx--visually-hidden={hideLabel && maxCount == null && !helperText}
+      class={[
+        "bx--text-input__label-helper-wrapper",
+        hideLabel && maxCount == null && !helperText && "bx--visually-hidden",
+      ]}
     >
-      {#if labelText || $$slots.labelChildren}
-        <div class:bx--text-input__label-wrapper={true}>
+      {#if labelText}
+        <div class="bx--text-input__label-wrapper">
           <label
             for={id}
-            class:bx--label={true}
-            class:bx--visually-hidden={hideLabel}
-            class:bx--label--disabled={effectiveDisabled}
-            class:bx--label--inline={inline}
-            class:bx--label--inline--xs={effectiveSize === "xs"}
-            class:bx--label--inline--sm={effectiveSize === "sm"}
-            class:bx--label--inline--xl={effectiveSize === "xl"}
-            class:bx--label--slotted={isFluid && $$slots.labelChildren}
+            class={[
+              "bx--label",
+              hideLabel && "bx--visually-hidden",
+              effectiveDisabled && "bx--label--disabled",
+              "bx--label--inline",
+              effectiveSize === "xs" && "bx--label--inline--xs",
+              effectiveSize === "sm" && "bx--label--inline--sm",
+              effectiveSize === "xl" && "bx--label--inline--xl",
+            ]}
           >
-            <slot name="labelChildren">{labelText}</slot>
+            {@render content(labelText)}
           </label>
-          {#if maxCount != null}
-            <div
-              class:bx--label={true}
-              class:bx--label--disabled={effectiveDisabled}
-              class:bx--text-input__label-counter={true}
-              aria-hidden="true"
-            >
-              {count}/{maxCount}
-            </div>
-          {/if}
+          {@render counter()}
         </div>
       {/if}
       {#if !isFluid && helperText}
         <div
           id={helperId}
-          class:bx--form__helper-text={true}
-          class:bx--form__helper-text--disabled={effectiveDisabled}
-          class:bx--form__helper-text--inline={inline}
+          class={[
+            "bx--form__helper-text",
+            effectiveDisabled && "bx--form__helper-text--disabled",
+            "bx--form__helper-text--inline",
+          ]}
         >
           {helperText}
         </div>
       {/if}
     </div>
   {/if}
-  {#if !inline && (labelText || $$slots.labelChildren)}
-    <div class:bx--text-input__label-wrapper={true}>
+  {#if !inline && labelText}
+    <div class="bx--text-input__label-wrapper">
       <label
         for={id}
-        class:bx--label={true}
-        class:bx--visually-hidden={hideLabel}
-        class:bx--label--disabled={effectiveDisabled}
-        class:bx--label--inline={inline}
-        class:bx--label--slotted={isFluid && $$slots.labelChildren}
-        use:titleWhenTruncated={{ enabled: isFluid && !$$slots.labelChildren }}
+        class={[
+          "bx--label",
+          hideLabel && "bx--visually-hidden",
+          effectiveDisabled && "bx--label--disabled",
+          isFluid && slottedLabel && "bx--label--slotted",
+        ]}
+        use:titleWhenTruncated={{ enabled: isFluid && !slottedLabel }}
       >
-        <slot name="labelChildren">{labelText}</slot>
+        {@render content(labelText)}
       </label>
-      {#if maxCount != null}
-        <div
-          class:bx--label={true}
-          class:bx--label--disabled={effectiveDisabled}
-          class:bx--text-input__label-counter={true}
-          aria-hidden="true"
-        >
-          {count}/{maxCount}
-        </div>
-      {/if}
+      {@render counter()}
     </div>
   {/if}
   {#if maxCount != null}
-    <span id={counterId} class:bx--visually-hidden={true}>
+    <span id={counterId} class="bx--visually-hidden">
       {resolvedCounterText(count, maxCount)}
     </span>
     <!-- Polite, not assertive like Carbon's, so it never cuts off the
       screen reader's echo of what was just typed. -->
-    <div class:bx--visually-hidden={true} aria-live="polite" aria-atomic="true">
+    <div class="bx--visually-hidden" aria-live="polite" aria-atomic="true">
       {$limitAnnouncement}
     </div>
   {/if}
   <div
-    class:bx--text-input__field-outer-wrapper={true}
-    class:bx--text-input__field-outer-wrapper--inline={inline}
+    class={[
+      "bx--text-input__field-outer-wrapper",
+      inline && "bx--text-input__field-outer-wrapper--inline",
+    ]}
   >
     <div
       data-invalid={showInvalid || undefined}
       data-warn={showWarn || undefined}
-      class:bx--text-input__field-wrapper={true}
-      class:bx--text-input__field-wrapper--warning={showWarn}
-      class:bx--text-input__field-wrapper--decorator={$$slots.decorator &&
-        !isFluid}
-      class:bx--text-input__field-wrapper--ai-label={$aiLabelState === "active"}
+      class={[
+        "bx--text-input__field-wrapper",
+        showWarn && "bx--text-input__field-wrapper--warning",
+        decorator && !isFluid && "bx--text-input__field-wrapper--decorator",
+        $aiLabelState === "active" && "bx--text-input__field-wrapper--ai-label",
+      ]}
     >
       {#if readonly}
         <EditOff class="bx--text-input__readonly-icon" />
@@ -338,20 +392,20 @@
         aria-errormessage={showInvalid && invalidText ? errorId : undefined}
         disabled={effectiveDisabled}
         {id}
-        {name}
-        {placeholder}
-        bind:value
-        {required}
+        value={value ?? ""}
         {readonly}
-        class:bx--text-input={true}
-        class:bx--text-input--invalid={showInvalid}
-        class:bx--text-input--warning={showWarn}
-        class:bx--text-input--xs={effectiveSize === "xs"}
-        class:bx--text-input--sm={effectiveSize === "sm"}
-        class:bx--text-input--xl={effectiveSize === "xl"}
         maxlength={maxCount ?? undefined}
-        {...$$restProps}
-        {...typeOverride}
+        {...rest}
+        type={effectiveType}
+        class={[
+          "bx--text-input",
+          showInvalid && "bx--text-input--invalid",
+          showWarn && "bx--text-input--warning",
+          effectiveSize === "xs" && "bx--text-input--xs",
+          effectiveSize === "sm" && "bx--text-input--sm",
+          effectiveSize === "xl" && "bx--text-input--xl",
+          className,
+        ]}
         aria-describedby={joinDescribedBy(
           resolveStatusDescribedBy({
             showInvalid,
@@ -360,61 +414,57 @@
             warnText,
             helperText,
             isFluid,
-            errorId,
-            warnId,
+            errorId: errorId ?? "",
+            warnId: warnId ?? "",
             helperId,
             includeErrorId: false,
           }),
           maxCount == null ? null : counterId,
-          $$restProps["aria-describedby"],
+          ariaDescribedBy,
         )}
-        on:change={handleChange}
-        on:input={handleInput}
-        on:keydown
-        on:keyup
-        on:focus
-        on:focus={handleFocus}
-        on:blur
-        on:paste
+        oninput={handleInput}
+        onchange={handleChange}
+        onfocus={handleFocus}
       />
-      {#if $$slots.decorator}
+      {#if decorator}
         <Decorator
           class="bx--field-decorator bx--text-input__field-inner-wrapper--decorator"
           size={effectiveSize}
           state={aiLabelState}
         >
-          <slot name="decorator" />
+          {@render decorator()}
         </Decorator>
       {/if}
       {#if isFluid}
-        <hr class:bx--text-input__divider={true} />
+        <hr class="bx--text-input__divider" />
       {/if}
       {#if isFluid && showInvalid && invalidText}
-        <div class:bx--form-requirement={true} id={errorId} role="alert">
+        <div class="bx--form-requirement" id={errorId} role="alert">
           {invalidText}
         </div>
       {/if}
       {#if isFluid && showWarn && warnText}
-        <div class:bx--form-requirement={true} id={warnId}>{warnText}</div>
+        <div class="bx--form-requirement" id={warnId}>{warnText}</div>
       {/if}
     </div>
     {#if !showInvalid && !showWarn && !isFluid && !inline && helperText}
       <div
         id={helperId}
-        class:bx--form__helper-text={true}
-        class:bx--form__helper-text--disabled={effectiveDisabled}
-        class:bx--form__helper-text--inline={inline}
+        class={[
+          "bx--form__helper-text",
+          effectiveDisabled && "bx--form__helper-text--disabled",
+        ]}
       >
         {helperText}
       </div>
     {/if}
     {#if !isFluid && showInvalid && invalidText}
-      <div class:bx--form-requirement={true} id={errorId} role="alert">
+      <div class="bx--form-requirement" id={errorId} role="alert">
         {invalidText}
       </div>
     {/if}
     {#if !isFluid && showWarn && warnText}
-      <div class:bx--form-requirement={true} id={warnId}>{warnText}</div>
+      <div class="bx--form-requirement" id={warnId}>{warnText}</div>
     {/if}
   </div>
 </div>

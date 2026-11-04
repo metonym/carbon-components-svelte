@@ -11,5 +11,5 @@
   {image}
   {name}
   imageDescription="User photo"
-  on:image:error={onImageError}
+  onimageerror={onImageError}
 />

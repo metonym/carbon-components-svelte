@@ -89,8 +89,8 @@
   {:else if verified}
     <InlineNotification
       kind="success"
-      title="Code verified"
-      subtitle="Your invite code was accepted."
+      titleText="Code verified"
+      subtitleText="Your invite code was accepted."
       hideCloseButton
       lowContrast
     />
@@ -100,7 +100,7 @@
     <Button
       kind="tertiary"
       disabled={!verified && !invalid}
-      on:click={resetVerification}
+      onclick={resetVerification}
     >
       Reset
     </Button>

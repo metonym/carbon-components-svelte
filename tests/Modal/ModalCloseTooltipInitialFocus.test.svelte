@@ -13,8 +13,8 @@
 <button type="button" on:click={() => (open = true)}>Open</button>
 
 {#if composed}
-  <ComposedModal bind:open on:close={() => onclose?.()}>
-    <ModalHeader title="Release notes" />
+  <ComposedModal bind:open onopenchange={() => onclose?.()}>
+    <ModalHeader titleText="Release notes" />
     <ModalBody>
       Version 2.4 adds audit logs.
       <a href="#changelog">Read the changelog</a>
@@ -25,7 +25,7 @@
     bind:open
     passiveModal
     modalHeading="Release notes"
-    on:close={() => onclose?.()}
+    onopenchange={() => onclose?.()}
   >
     Version 2.4 adds audit logs.
     <a href="#changelog">Read the changelog</a>

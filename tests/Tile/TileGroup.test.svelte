@@ -25,7 +25,7 @@
   {legendText}
   {hideLegend}
   class={customClass}
-  on:select={(e) => onSelect(e.detail)}
+  onselectedchange={(e) => onSelect(e.selected)}
 >
   <RadioTile value="option1">Option 1</RadioTile>
   <RadioTile value="option2">Option 2</RadioTile>

@@ -32,15 +32,15 @@
     sticky
     stickyOffset="3rem"
     grid
-    title="db-prod-01"
+    titleText="db-prod-01"
     subtitle="PostgreSQL 16 · us-south"
   >
-    <svelte:fragment slot="tabs">
+    {#snippet tabs()}
       <Tabs>
         <Tab label="Activity" />
         <Tab label="Settings" />
       </Tabs>
-    </svelte:fragment>
+    {/snippet}
     <TabContent>
       <Row>
         <Column>

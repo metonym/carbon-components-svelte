@@ -42,13 +42,13 @@
   <Button
     kind="ghost"
     disabled={state === "dormant" || state === "finished"}
-    on:click={() => (state = "inactive")}
+    onclick={() => (state = "inactive")}
   >
     Cancel
   </Button>
   {#if state !== "dormant"}
     <InlineLoading status={state} description={descriptionMap[state]} />
   {:else}
-    <Button on:click={() => (state = "active")}>Submit</Button>
+    <Button onclick={() => (state = "active")}>Submit</Button>
   {/if}
 </ButtonSet>

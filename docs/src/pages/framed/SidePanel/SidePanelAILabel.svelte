@@ -12,7 +12,7 @@
 
 <Header companyName="IBM" platformName="Cloud" />
 <Content>
-  <Button on:click={() => (open = true)}>Explain incident</Button>
+  <Button onclick={() => (open = true)}>Explain incident</Button>
 </Content>
 
 <SidePanel
@@ -28,7 +28,7 @@
     build opens a database connection per request.
   </p>
   <svelte:fragment slot="actions">
-    <Button kind="secondary" on:click={() => (open = false)}>Dismiss</Button>
+    <Button kind="secondary" onclick={() => (open = false)}>Dismiss</Button>
     <Button>Roll back</Button>
   </svelte:fragment>
 </SidePanel>

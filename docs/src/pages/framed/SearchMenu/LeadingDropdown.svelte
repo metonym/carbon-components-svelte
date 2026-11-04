@@ -54,7 +54,7 @@
         labelText="Scope"
         bind:selectedId={scopeId}
         items={scopeItems}
-        on:select={() => (value = "")}
+        onselectedchange={() => (value = "")}
       />
     </Box>
     <Box aria-hidden="true" width={1} fill="layer-03" />

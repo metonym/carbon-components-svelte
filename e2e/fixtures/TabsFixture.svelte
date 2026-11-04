@@ -5,12 +5,12 @@
   let selected = 0;
 </script>
 
-<Tabs data-testid="tabs" bind:selected>
+<Tabs data-testid="tabs" bind:selectedIndex={selected}>
   <Tab label="Tab 1" icon={Calendar} />
   <Tab label="Tab 2" />
   <Tab label="Tab 3" />
 
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>
       <p data-testid="tab-content-1">Content for tab 1</p>
     </TabContent>
@@ -20,5 +20,5 @@
     <TabContent>
       <p data-testid="tab-content-3">Content for tab 3</p>
     </TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>

@@ -1,11 +1,9 @@
 import { fireEvent, render, screen } from "@testing-library/svelte";
 import { tick } from "svelte";
-import { absorbUnhandledRejection } from "../utils/absorb-unhandled-rejection";
 import { user } from "../utils/user";
 import ComposedModalTest from "./ComposedModal.test.svelte";
 import ComposedModalFocusReturnTest from "./ComposedModalFocusReturn.test.svelte";
 import ComposedModalFocusTrapTest from "./ComposedModalFocusTrap.test.svelte";
-import ComposedModalUnmountOnCloseTest from "./ComposedModalUnmountOnClose.test.svelte";
 
 async function flushProgrammaticClose() {
   await tick();
@@ -35,7 +33,9 @@ describe("ComposedModal", () => {
     });
 
     expect(screen.getByRole("dialog")).toHaveAttribute("aria-label", "");
-    expect(screen.getByTestId("modal-root")).not.toHaveAttribute("aria-label");
+    expect(document.querySelector(".bx--modal")).not.toHaveAttribute(
+      "aria-label",
+    );
   });
 
   it("names the dialog from the title without labelling the root", () => {
@@ -51,7 +51,9 @@ describe("ComposedModal", () => {
       "aria-label",
       "Title only",
     );
-    expect(screen.getByTestId("modal-root")).not.toHaveAttribute("aria-label");
+    expect(document.querySelector(".bx--modal")).not.toHaveAttribute(
+      "aria-label",
+    );
     // The heading id reference is dropped once the header has registered.
     expect(screen.getByRole("dialog")).not.toHaveAttribute("aria-labelledby");
   });
@@ -95,19 +97,17 @@ describe("ComposedModal", () => {
       "custom-heading",
     );
     expect(screen.getByRole("dialog")).not.toHaveAttribute("aria-label");
-    expect(screen.getByTestId("modal-root")).not.toHaveAttribute(
+    expect(document.querySelector(".bx--modal")).not.toHaveAttribute(
       "aria-labelledby",
     );
   });
 
-  it("should handle open state", async () => {
-    const openHandler = vi.fn();
+  it("opens and closes from outside without calling onopenchange", async () => {
     const closeHandler = vi.fn();
     const { rerender } = render(ComposedModalTest, {
       props: {
         open: false,
         headerTitle: "Test Modal",
-        onopen: openHandler,
         onclose: closeHandler,
       },
     });
@@ -115,27 +115,24 @@ describe("ComposedModal", () => {
     await rerender({ open: true });
     await tick();
     expect(screen.getByRole("dialog")).toBeInTheDocument();
-    expect(openHandler).toHaveBeenCalledTimes(1);
 
     await rerender({ open: false });
     await flushProgrammaticClose();
-    expect(closeHandler).toHaveBeenCalledTimes(1);
+    expect(document.querySelector(".bx--modal")).not.toHaveClass("is-visible");
+    expect(closeHandler).not.toHaveBeenCalled();
   });
 
-  it("does not dispatch open or close when mounted closed", async () => {
-    const openHandler = vi.fn();
+  it("does not call onopenchange when mounted closed", async () => {
     const closeHandler = vi.fn();
     render(ComposedModalTest, {
       props: {
         open: false,
         headerTitle: "Test Modal",
-        onopen: openHandler,
         onclose: closeHandler,
       },
     });
 
     await tick();
-    expect(openHandler).not.toHaveBeenCalled();
     expect(closeHandler).not.toHaveBeenCalled();
   });
 
@@ -295,15 +292,13 @@ describe("ComposedModal", () => {
     expect(primaryButton).toHaveFocus();
   });
 
-  it("moves focus into the modal on a post-mount open, without duplicating on:open", async () => {
-    const openHandler = vi.fn();
+  it("moves focus into the modal on a post-mount open", async () => {
     const { rerender } = render(ComposedModalTest, {
       props: {
         open: false,
         headerTitle: "Post-mount Focus Test",
         footerPrimaryButtonText: "Save",
         includeInput: false,
-        onopen: openHandler,
       },
     });
 
@@ -312,7 +307,6 @@ describe("ComposedModal", () => {
     await tick();
 
     expect(screen.getByRole("button", { name: "Save" })).toHaveFocus();
-    expect(openHandler).toHaveBeenCalledTimes(1);
 
     await rerender({
       open: true,
@@ -320,8 +314,6 @@ describe("ComposedModal", () => {
     });
     await tick();
     await tick();
-
-    expect(openHandler).toHaveBeenCalledTimes(1);
   });
 
   it("restores focus only when the modal's own transform transition ends", async () => {
@@ -600,7 +592,8 @@ describe("ComposedModal", () => {
       await user.keyboard("{Escape}");
 
       expect(onclose).toHaveBeenCalledTimes(1);
-      expect(onclose.mock.calls[0][0].detail).toEqual({
+      expect(onclose.mock.calls[0][0]).toMatchObject({
+        open: false,
         trigger: "escape-key",
       });
     });
@@ -636,7 +629,7 @@ describe("ComposedModal", () => {
       await tick();
 
       expect(ontransitionend).toHaveBeenCalledTimes(1);
-      expect(ontransitionend.mock.calls[0][0].detail).toEqual({ open });
+      expect(ontransitionend.mock.calls[0][0]).toEqual({ open });
     },
   );
 
@@ -680,7 +673,8 @@ describe("ComposedModal", () => {
     await tick();
 
     expect(closeHandler).toHaveBeenCalledTimes(1);
-    expect(closeHandler.mock.calls[0][0].detail).toEqual({
+    expect(closeHandler.mock.calls[0][0]).toMatchObject({
+      open: false,
       trigger: "outside-click",
     });
   });
@@ -700,7 +694,8 @@ describe("ComposedModal", () => {
     await tick();
 
     expect(closeHandler).toHaveBeenCalledTimes(1);
-    expect(closeHandler.mock.calls[0][0].detail).toEqual({
+    expect(closeHandler.mock.calls[0][0]).toMatchObject({
+      open: false,
       trigger: "close-button",
     });
   });
@@ -731,91 +726,27 @@ describe("ComposedModal", () => {
     expect(screen.getByRole("dialog")).toBeInTheDocument();
   });
 
-  it("dispatches close with programmatic trigger when closed via bind:open", async () => {
+  it.each([
+    ["bind:open", false],
+    ["a submit handler", true],
+  ])("calls no onopenchange when closed via %s", async (_, viaSubmit) => {
     const closeHandler = vi.fn();
     const { rerender } = render(ComposedModalTest, {
       props: {
         open: true,
         headerTitle: "Programmatic Close Test",
-        onclose: closeHandler,
-      },
-    });
-
-    await rerender({ open: false });
-    await flushProgrammaticClose();
-
-    expect(closeHandler).toHaveBeenCalledTimes(1);
-    expect(closeHandler.mock.calls[0][0].detail).toEqual({
-      trigger: "programmatic",
-    });
-  });
-
-  it("dispatches close with programmatic trigger when closed via submit handler", async () => {
-    const closeHandler = vi.fn();
-    render(ComposedModalTest, {
-      props: {
-        open: true,
-        headerTitle: "Submit Close Test",
         footerPrimaryButtonText: "Save",
-        closeOnSubmit: true,
+        closeOnSubmit: viaSubmit,
         onclose: closeHandler,
       },
     });
 
-    await user.click(screen.getByRole("button", { name: "Save" }));
-    await tick();
-
-    expect(closeHandler).toHaveBeenCalledTimes(1);
-    expect(closeHandler.mock.calls[0][0].detail).toEqual({
-      trigger: "programmatic",
-    });
-  });
-
-  it("does not leave the modal open when a programmatic on:close handler throws", async () => {
-    const error = new Error("consumer error");
-    const trap = absorbUnhandledRejection((reason) => reason === error);
-
-    const { rerender } = render(ComposedModalTest, {
-      props: {
-        open: true,
-        headerTitle: "Throwing Close Test",
-        onclose: () => {
-          throw error;
-        },
-      },
-    });
-
-    expect(screen.getByRole("dialog")).toBeInTheDocument();
-
-    await rerender({ open: false });
-    await flushProgrammaticClose();
-    await trap.wait;
-    trap.dispose();
-
-    const modalWrapper = document.querySelector(".bx--modal");
-    expect(modalWrapper).not.toHaveClass("is-visible");
-    expect(modalWrapper).toHaveAttribute("inert");
-  });
-
-  // When the same boolean both gates an {#if} and binds `open`, flipping it
-  // false closes *and* unmounts the modal in one flush. Svelte does not run the
-  // component's reactive close block while it is being torn down, so the
-  // programmatic `close` is never delivered — in every supported Svelte version,
-  // and whether the dispatch is synchronous or deferred via `tick()`. This
-  // documents that deferring the dispatch did not regress teardown behavior (it
-  // is a pre-existing Svelte limitation, not introduced by the defer).
-  it("does not dispatch programmatic close when the same flip unmounts the modal", async () => {
-    const closeHandler = vi.fn();
-    const { rerender } = render(ComposedModalUnmountOnCloseTest, {
-      props: { open: true, onclose: closeHandler },
-    });
-
-    expect(screen.getByRole("dialog")).toBeInTheDocument();
-
-    await rerender({ open: false });
+    if (viaSubmit)
+      await user.click(screen.getByRole("button", { name: "Save" }));
+    else await rerender({ open: false });
     await flushProgrammaticClose();
 
-    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(document.querySelector(".bx--modal")).not.toHaveClass("is-visible");
     expect(closeHandler).not.toHaveBeenCalled();
   });
 

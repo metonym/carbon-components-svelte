@@ -17,11 +17,11 @@
 
 <Stack gap={5}>
   <Stack orientation="horizontal" gap={5} align="center">
-    <Button on:click={() => simulateSave(150)}>Fast save (150 ms)</Button>
-    <Button kind="secondary" on:click={() => simulateSave(400)}>
+    <Button onclick={() => simulateSave(150)}>Fast save (150 ms)</Button>
+    <Button kind="secondary" onclick={() => simulateSave(400)}>
       Save (400 ms)
     </Button>
-    <Button kind="tertiary" on:click={() => simulateSave(2000)}>
+    <Button kind="tertiary" onclick={() => simulateSave(2000)}>
       Slow save (2 s)
     </Button>
     {#if status}

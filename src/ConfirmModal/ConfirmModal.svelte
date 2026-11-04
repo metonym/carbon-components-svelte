@@ -1,171 +1,199 @@
 <script>
   /**
    * @restProps {div}
-   * @slot {{}}
-   * @slot {{}} titleChildren
-   * @event confirm
-   * @event {{ error: unknown }} confirm:error
    */
 
-  /**
-   * @event cancel
-   * @type {object}
-   * @property {"escape-key" | "outside-click" | "close-button" | "cancel-button"} trigger
-   */
+  const fallbackId = $props.id();
 
-  /**
-   * @event close
-   * @type {object}
-   * @property {"escape-key" | "outside-click" | "close-button" | "programmatic"} trigger
-   */
+  let {
+    /**
+     * Set to `true` to open the modal.
+     */
+    open = $bindable(false),
 
-  /**
-   * Set to `true` to open the modal.
-   * @bindable writable
-   */
-  export let open = false;
+    /**
+     * Set the kind of confirmation.
+     * `"danger"` uses Modal's danger variant and `"warning"` adds a warning
+     * icon next to the heading; both are announced as an alert dialog.
+     * `"info"` is a plain dialog.
+     * @type {"danger" | "warning" | "info"}
+     */
+    kind = "danger",
 
-  /**
-   * Set the kind of confirmation.
-   * `"danger"` uses Modal's danger variant and `"warning"` adds a warning
-   * icon next to the heading; both are announced as an alert dialog.
-   * `"info"` is a plain dialog.
-   * @type {"danger" | "warning" | "info"}
-   */
-  export let kind = "danger";
+    /**
+     * Specify the modal heading, or a snippet.
+     * @type {string | import("svelte").Snippet}
+     */
+    titleText,
 
-  /**
-   * Specify the modal heading.
-   * @type {string}
-   */
-  export let title;
+    /**
+     * Specify the modal label, or a snippet.
+     * @type {string | import("svelte").Snippet | undefined}
+     */
+    labelText = undefined,
 
-  /**
-   * Specify the modal label.
-   * @type {string | undefined}
-   */
-  export let label = undefined;
+    /** Specify the confirm button text */
+    confirmText = "Confirm",
 
-  /** Specify the confirm button text */
-  export let confirmText = "Confirm";
+    /** Specify the cancel button text */
+    cancelText = "Cancel",
 
-  /** Specify the cancel button text */
-  export let cancelText = "Cancel";
+    /**
+     * When set, the user must type this exact phrase before the confirm
+     * button becomes enabled.
+     * @type {string | undefined}
+     */
+    confirmationPhrase = undefined,
 
-  /**
-   * When set, the user must type this exact phrase before the confirm
-   * button becomes enabled.
-   * @type {string | undefined}
-   */
-  export let confirmationPhrase = undefined;
+    /**
+     * Specify the label for the type-to-confirm input.
+     * @type {(phrase: string) => string}
+     */
+    confirmationLabel = (phrase) => `Type ${phrase} to confirm`,
 
-  /**
-   * Specify the label for the type-to-confirm input.
-   * @type {(phrase: string) => string}
-   */
-  export let confirmationLabel = (phrase) => `Type ${phrase} to confirm`;
+    /**
+     * Specify the work to run on confirm. When it returns a promise, the
+     * modal shows its loading state until the promise settles: it closes on
+     * success, and on failure stays open and calls `onconfirmerror`.
+     * Without it, or when it returns nothing, the modal closes on confirm.
+     * @type {undefined | (() => void | Promise<unknown>)}
+     */
+    confirm = undefined,
 
-  /**
-   * Specify the work to run on confirm. When it returns a promise, the
-   * modal shows its loading state until the promise settles: it closes on
-   * success, and on failure stays open and dispatches `confirm:error`.
-   * Without it, or when it returns nothing, the modal closes on confirm.
-   * @type {undefined | (() => void | Promise<unknown>)}
-   */
-  export let confirm = undefined;
+    /**
+     * Set to `true` to show a loading state on the confirm button and block
+     * closing, for work the app tracks itself. `confirm` sets this state on
+     * its own.
+     */
+    loading = false,
 
-  /**
-   * Set to `true` to show a loading state on the confirm button and block
-   * closing, for work the app tracks itself. `confirm` sets this state on
-   * its own.
-   */
-  export let loading = false;
+    /** Specify the description for the confirm button loading state */
+    loadingDescription = "Working",
 
-  /** Specify the description for the confirm button loading state */
-  export let loadingDescription = "Working";
+    /**
+     * Set the size of the modal.
+     * Also accepts Carbon v11's `"md"`, the width of a `Modal` with no size.
+     * @type {"xs" | "sm" | "md" | "lg"}
+     */
+    size = "xs",
 
-  /**
-   * Set the size of the modal.
-   * Also accepts Carbon v11's `"md"`, the width of a `Modal` with no size.
-   * @type {"xs" | "sm" | "md" | "lg"}
-   */
-  export let size = "xs";
+    /** Set to `false` to allow closing the modal when clicking outside */
+    preventCloseOnClickOutside = true,
 
-  /** Set to `false` to allow closing the modal when clicking outside */
-  export let preventCloseOnClickOutside = true;
+    /**
+     * Set an id for the top-level element
+     * @type {string}
+     */
+    id = fallbackId,
 
-  /** Set an id for the top-level element */
-  export let id = uniqueId();
+    /**
+     * Obtain a reference to the top-level HTML element.
+     * @type {null | HTMLDivElement}
+     */
+    ref = $bindable(null),
 
-  /**
-   * Obtain a reference to the top-level HTML element.
-   * @type {null | HTMLDivElement}
-   * @bindable readonly
-   */
-  export let ref = null;
+    /**
+     * Called when the user confirms, before `confirm` runs.
+     * @type {(() => void) | undefined}
+     */
+    onconfirm = undefined,
 
-  import { afterUpdate, createEventDispatcher, tick } from "svelte";
+    /**
+     * Called when `confirm` throws or rejects. The modal stays open.
+     * @type {((detail: { error: unknown }) => void) | undefined}
+     */
+    onconfirmerror = undefined,
+
+    /**
+     * Called when the user cancels: the cancel button, the close button,
+     * Escape, or an outside click. Call `preventDefault()` to keep the modal
+     * open. Never called while the confirm is loading, which blocks closing,
+     * or when `open` changes from outside.
+     * @type {((detail: import("../utils/cancelable.js").Cancelable<{ open: boolean; trigger: "escape-key" | "outside-click" | "close-button" | "cancel-button" }>) => void) | undefined}
+     */
+    onopenchange = undefined,
+
+    /**
+     * The modal body.
+     * @type {import("svelte").Snippet | undefined}
+     */
+    children = undefined,
+
+    ...rest
+  } = $props();
+
+  import { tick, untrack } from "svelte";
   import Modal from "../Modal/Modal.svelte";
   import TextInput from "../TextInput/TextInput.svelte";
   import WarningAltFilled from "../icons/WarningAltFilled.svelte";
-  import { uniqueId } from "../utils/unique-id.js";
+  import { cancelable } from "../utils/cancelable.js";
 
-  const dispatch = createEventDispatcher();
-
-  let phraseValue = "";
-  let prevOpen = false;
-  let phraseInputRef = null;
+  let phraseValue = $state("");
+  /** @type {null | HTMLInputElement} */
+  let phraseInputRef = $state(null);
   /** Whether a `confirm` promise is in flight. */
-  let pending = false;
+  let pending = $state(false);
   /** Counts opens, so work from an earlier opening can't close a later one. */
   let session = 0;
 
-  $: busy = loading || pending;
+  const busy = $derived(loading || pending);
 
   // A pasted phrase often brings a trailing space, and the same accented
   // text can arrive in a different Unicode form.
   /** @param {string} text */
   const canonical = (text) => text.trim().normalize("NFC");
-  $: phraseMatches =
+  const phraseMatches = $derived(
     confirmationPhrase == null ||
-    canonical(phraseValue) === canonical(confirmationPhrase);
+      canonical(phraseValue) === canonical(confirmationPhrase),
+  );
 
-  $: phraseLabel =
-    confirmationPhrase == null ? "" : confirmationLabel(confirmationPhrase);
+  const phraseLabel = $derived(
+    confirmationPhrase == null ? "" : confirmationLabel(confirmationPhrase),
+  );
   // Page translators would translate the phrase too, so the user would type
   // a word that never matches; the phrase is marked not to translate.
-  $: phraseAt =
-    confirmationPhrase == null ? -1 : phraseLabel.indexOf(confirmationPhrase);
+  const phraseAt = $derived(
+    confirmationPhrase == null ? -1 : phraseLabel.indexOf(confirmationPhrase),
+  );
 
-  $: {
-    if (!prevOpen && open) {
-      phraseValue = "";
-      session += 1;
-      // The earlier opening's confirm is now ignored, so it can't clear this.
-      pending = false;
+  let prevOpen = false;
+  $effect.pre(() => {
+    if (open && !prevOpen) {
+      untrack(() => {
+        phraseValue = "";
+        session += 1;
+        // The earlier opening's confirm is now ignored, so it can't clear this.
+        pending = false;
+      });
     }
     prevOpen = open;
-  }
+  });
 
   // Destructive confirms focus the cancel button first so a stray Enter or
   // Space doesn't confirm accidentally; the confirm button is not reachable
   // via Modal's default `[data-modal-primary-focus]` selector, so the
   // secondary button is targeted directly by class.
-  $: selectorPrimaryFocus =
+  const selectorPrimaryFocus = $derived(
     confirmationPhrase == null
       ? ".bx--modal-footer .bx--btn--secondary"
-      : `#${id}-confirm-modal-phrase`;
+      : `#${id}-confirm-modal-phrase`,
+  );
 
-  async function handleSubmit() {
+  // A snippet heading can't name the dialog as text.
+  const ariaName = $derived(
+    typeof titleText === "string" ? titleText : undefined,
+  );
+
+  async function handleConfirm() {
     // A second Enter or click while the first is still running is ignored.
     if (!phraseMatches || busy) return;
-    dispatch("confirm");
+    onconfirm?.();
     const current = session;
     let result;
     try {
       result = confirm?.();
     } catch (error) {
-      dispatch("confirm:error", { error });
+      onconfirmerror?.({ error });
       return;
     }
     if (
@@ -181,37 +209,39 @@
       await result;
       if (current === session) open = false;
     } catch (error) {
-      if (current === session) dispatch("confirm:error", { error });
+      if (current === session) onconfirmerror?.({ error });
     } finally {
       if (current === session) pending = false;
     }
   }
 
-  function handleClose(event) {
-    const { trigger } = event.detail;
-    // `open` was set to false, by this component after a confirm or cancel
-    // or by the app after its work succeeded: report it, but it's no cancel.
-    if (trigger === "programmatic") {
-      dispatch("close", event.detail);
+  /**
+   * @param {import("../utils/cancelable.js").Cancelable<{ open: boolean; trigger: "escape-key" | "outside-click" | "close-button" }>} detail
+   */
+  function handleModalClose(detail) {
+    if (busy) {
+      detail.preventDefault();
       return;
     }
-    if (busy || !dispatch("close", event.detail, { cancelable: true })) {
-      event.preventDefault();
-      return;
-    }
-    dispatch("cancel", { trigger });
+    const payload = cancelable({ open: false, trigger: detail.trigger });
+    onopenchange?.(payload);
+    if (payload.defaultPrevented) detail.preventDefault();
   }
 
-  function handleClickSecondary() {
-    dispatch("cancel", { trigger: "cancel-button" });
-    open = false;
+  function handleCancelButton() {
+    const payload = cancelable({
+      open: false,
+      trigger: /** @type {const} */ ("cancel-button"),
+    });
+    onopenchange?.(payload);
+    if (!payload.defaultPrevented) open = false;
   }
 
   // The confirm button is disabled while loading, which drops the focus it
   // had. If the work fails and the modal stays open, put focus back on it,
   // a tick later so Modal has re-enabled the button first.
-  let prevBusy = busy;
-  afterUpdate(() => {
+  let prevBusy = false;
+  $effect(() => {
     if (prevBusy && !busy && open) {
       tick().then(() => {
         if (!open || ref?.contains(document.activeElement)) return;
@@ -224,6 +254,10 @@
   });
 </script>
 
+{#snippet content(/** @type {string | import("svelte").Snippet} */ source)}
+  {#if typeof source === "function"}{@render source()}{:else}{source}{/if}
+{/snippet}
+
 <Modal
   bind:open
   bind:ref
@@ -231,8 +265,8 @@
   danger={kind === "danger"}
   alert={kind !== "info"}
   {size}
-  modalHeading={title}
-  modalLabel={label}
+  modalLabel={labelText}
+  modalAriaLabel={ariaName}
   primaryButtonText={confirmText}
   primaryButtonDisabled={!phraseMatches || busy}
   primaryButtonLoading={busy}
@@ -240,14 +274,12 @@
   secondaryButtons={[{ text: cancelText, disabled: busy }]}
   preventCloseOnClickOutside={preventCloseOnClickOutside || busy}
   {selectorPrimaryFocus}
-  {...$$restProps}
-  on:open
-  on:close={handleClose}
-  on:transitionend
-  on:submit={handleSubmit}
-  on:click:button--secondary={handleClickSecondary}
+  {...rest}
+  onopenchange={handleModalClose}
+  onprimaryaction={handleConfirm}
+  onsecondaryaction={handleCancelButton}
 >
-  <svelte:fragment slot="heading">
+  {#snippet modalHeading()}
     {#if kind === "warning"}
       <WarningAltFilled
         size={20}
@@ -255,11 +287,11 @@
         aria-hidden="true"
       />
     {/if}
-    <slot name="titleChildren">{title}</slot>
-  </svelte:fragment>
-  <slot />
+    {@render content(titleText)}
+  {/snippet}
+  {@render children?.()}
   {#if confirmationPhrase != null}
-    <div class:bx--confirm-modal__phrase={true}>
+    <div class="bx--confirm-modal__phrase">
       <TextInput
         bind:ref={phraseInputRef}
         id="{id}-confirm-modal-phrase"
@@ -273,16 +305,16 @@
         data-bwignore
         data-form-type="other"
       >
-        <svelte:fragment slot="labelChildren">
+        {#snippet labelText()}
           {#if phraseAt === -1}
             {phraseLabel}
           {:else}
             {phraseLabel.slice(0, phraseAt)}<span
               class="bx--confirm-modal__phrase-text notranslate"
               translate="no">{confirmationPhrase}</span
-            >{phraseLabel.slice(phraseAt + confirmationPhrase.length)}
+            >{phraseLabel.slice(phraseAt + (confirmationPhrase ?? "").length)}
           {/if}
-        </svelte:fragment>
+        {/snippet}
       </TextInput>
     </div>
   {/if}

@@ -34,12 +34,12 @@
 
 <PageHeader
   grid
-  title="Databases"
+  titleText="Databases"
   subtitle="{filteredRowIds.length} of {rows.length} instances"
 >
-  <svelte:fragment slot="actions">
+  {#snippet actions()}
     <Button icon={Add}>Create database</Button>
-  </svelte:fragment>
+  {/snippet}
   <Row padding>
     <Column>
       <DataTable

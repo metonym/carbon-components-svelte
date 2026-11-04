@@ -57,7 +57,7 @@
         <div>
           <Button
             kind="tertiary"
-            on:click={() => {
+            onclick={() => {
               currentIndex = 0;
               submitted = false;
             }}
@@ -91,7 +91,7 @@
             lowContrast
             hideCloseButton
             kind="error"
-            title={error}
+            titleText={error}
           />
         {/if}
       </Stack>

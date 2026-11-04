@@ -7,8 +7,10 @@
 </script>
 
 <MultiSelect labelText="Regions" {items} {selectedIds} open>
-  <svelte:fragment slot="group" let:group let:items={groupItems}>
-    {@const checkedCount = groupItems.filter((item) => item.checked).length}
+  {#snippet group({ group, items: groupItems })}
+    {@const checkedCount = groupItems.filter(
+      (item: { checked: boolean }) => item.checked,
+    ).length}
     {`${group}: ${checkedCount} of ${groupItems.length}`}
-  </svelte:fragment>
+  {/snippet}
 </MultiSelect>

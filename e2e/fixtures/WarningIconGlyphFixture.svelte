@@ -55,8 +55,8 @@
       <InlineNotification
         {kind}
         hideCloseButton
-        title="Usage"
-        subtitle="Build minutes are close to the limit."
+        titleText="Usage"
+        subtitleText="Build minutes are close to the limit."
       />
     </div>
     <div data-testid="inline-{kind}-low-contrast">
@@ -64,16 +64,16 @@
         {kind}
         lowContrast
         hideCloseButton
-        title="Usage"
-        subtitle="Build minutes are close to the limit."
+        titleText="Usage"
+        subtitleText="Build minutes are close to the limit."
       />
     </div>
     <div data-testid="toast-{kind}">
       <ToastNotification
         {kind}
         hideCloseButton
-        title="Usage"
-        subtitle="Build minutes are close to the limit."
+        titleText="Usage"
+        subtitleText="Build minutes are close to the limit."
       />
     </div>
     <div data-testid="toast-{kind}-low-contrast">
@@ -81,8 +81,8 @@
         {kind}
         lowContrast
         hideCloseButton
-        title="Usage"
-        subtitle="Build minutes are close to the limit."
+        titleText="Usage"
+        subtitleText="Build minutes are close to the limit."
       />
     </div>
   {/each}

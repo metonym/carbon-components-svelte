@@ -15,7 +15,7 @@
   ]}
 />
 <br />
-<Button on:click={() => (selectedId = undefined)}>
+<Button onclick={() => (selectedId = undefined)}>
   Set to undefined (unselected)
 </Button>
-<Button on:click={() => (selectedId = "2")}>Set to 2 (Webhook)</Button>
+<Button onclick={() => (selectedId = "2")}>Set to 2 (Webhook)</Button>

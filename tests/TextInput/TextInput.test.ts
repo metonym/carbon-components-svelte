@@ -454,22 +454,22 @@ describe("TextInput", () => {
     expect(input).not.toHaveAttribute("aria-invalid");
   });
 
-  it("should dispatch change event with parsed value", async () => {
+  it("calls onvaluecommit with parsed value", async () => {
     const mockHandler = vi.fn();
-    render(TextInput, { props: { onchange: mockHandler } });
+    render(TextInput, { props: { onvaluecommit: mockHandler } });
 
     const input = screen.getByRole("textbox");
     await user.type(input, "test");
     await user.tab();
 
     expect(mockHandler).toHaveBeenCalled();
-    expect(mockHandler.mock.calls[0][0].detail).toBe("test");
+    expect(mockHandler.mock.calls[0][0].value).toBe("test");
   });
 
-  it("should dispatch change event with number value for number type", async () => {
+  it("calls onvaluecommit with number value for number type", async () => {
     const mockHandler = vi.fn();
     render(TextInput, {
-      props: { type: "number", onchange: mockHandler },
+      props: { type: "number", onvaluecommit: mockHandler },
     });
 
     const input = screen.getByRole("spinbutton");
@@ -477,13 +477,13 @@ describe("TextInput", () => {
     await user.tab();
 
     expect(mockHandler).toHaveBeenCalled();
-    expect(mockHandler.mock.calls[0][0].detail).toBe(123);
+    expect(mockHandler.mock.calls[0][0].value).toBe(123);
   });
 
-  it("should dispatch change event with null for empty number input", async () => {
+  it("calls onvaluecommit with null for empty number input", async () => {
     const mockHandler = vi.fn();
     render(TextInput, {
-      props: { type: "number", value: 123, onchange: mockHandler },
+      props: { type: "number", value: 123, onvaluecommit: mockHandler },
     });
 
     const input = screen.getByRole("spinbutton");
@@ -491,30 +491,42 @@ describe("TextInput", () => {
     await user.tab();
 
     expect(mockHandler).toHaveBeenCalled();
-    expect(mockHandler.mock.calls[0][0].detail).toBe(null);
+    expect(mockHandler.mock.calls[0][0].value).toBe(null);
   });
 
-  it("should dispatch input event with parsed value", async () => {
+  it("calls onvaluechange with parsed value", async () => {
     const mockHandler = vi.fn();
-    render(TextInput, { props: { oninput: mockHandler } });
+    render(TextInput, { props: { onvaluechange: mockHandler } });
 
     const input = screen.getByRole("textbox");
     await user.type(input, "a");
 
     expect(mockHandler).toHaveBeenCalled();
-    expect(mockHandler.mock.calls[0][0].detail).toBe("a");
+    expect(mockHandler.mock.calls[0][0].value).toBe("a");
   });
 
-  it("should dispatch input event with number value for number type", async () => {
+  it("calls onvaluechange with number value for number type", async () => {
     const mockHandler = vi.fn();
     render(TextInput, {
-      props: { type: "number", oninput: mockHandler },
+      props: { type: "number", onvaluechange: mockHandler },
     });
 
     const input = screen.getByRole("spinbutton");
     await user.type(input, "5");
 
     expect(mockHandler).toHaveBeenCalled();
-    expect(mockHandler.mock.calls[0][0].detail).toBe(5);
+    expect(mockHandler.mock.calls[0][0].value).toBe(5);
+  });
+  it("still calls the native oninput and onchange with the DOM event", async () => {
+    const oninput = vi.fn();
+    const onchange = vi.fn();
+    render(TextInput, { props: { oninput, onchange } });
+
+    const input = screen.getByRole("textbox");
+    await user.type(input, "a");
+    await user.tab();
+
+    expect(oninput.mock.calls[0][0]).toBeInstanceOf(Event);
+    expect(onchange.mock.calls[0][0]).toBeInstanceOf(Event);
   });
 });

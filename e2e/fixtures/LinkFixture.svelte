@@ -65,7 +65,7 @@
     data-testid="link-wrap"
     inline
     href="#"
-    on:click={(event) => event.preventDefault()}
+    onclick={(event) => event.preventDefault()}
   >
     the observability workspace for the production cluster in us-east-1
   </Link>
@@ -75,7 +75,7 @@
 <Link
   data-testid="link-press"
   href="#"
-  on:click={(event) => event.preventDefault()}
+  onclick={(event) => event.preventDefault()}
 >
   Pressable
 </Link>
@@ -94,7 +94,7 @@
   data-testid="link-visited"
   visited
   href="#"
-  on:click={(event) => event.preventDefault()}
+  onclick={(event) => event.preventDefault()}
 >
   Visited
 </Link>
@@ -109,7 +109,7 @@
     <Link
       data-testid="link-toggletip"
       href="#"
-      on:click={(event) => event.preventDefault()}
+      onclick={(event) => event.preventDefault()}
     >
       View invoices
     </Link>
@@ -122,7 +122,7 @@
     <Link
       data-testid="link-ai-label"
       href="#"
-      on:click={(event) => event.preventDefault()}
+      onclick={(event) => event.preventDefault()}
     >
       View details
     </Link>

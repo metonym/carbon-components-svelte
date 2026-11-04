@@ -4,7 +4,7 @@
 
   export let value: ComponentProps<TextInput>["value"] = "";
   export let type: "text" | "number" = "text";
-  export let onInput: (event: CustomEvent) => void = () => {};
+  export let onInput: (value: string | number | null) => void = () => {};
 </script>
 
 <form data-testid="form">
@@ -13,7 +13,7 @@
     {type}
     name="user"
     labelText="User"
-    on:input={onInput}
+    onvaluechange={(e) => onInput(e.value)}
   />
 </form>
 <p data-testid="bound">{String(value)}</p>

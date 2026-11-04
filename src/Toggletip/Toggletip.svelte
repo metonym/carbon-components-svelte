@@ -90,7 +90,7 @@
   import { MODAL_CONTEXT_KEY } from "../constants/context-keys.js";
   import Information from "../icons/Information.svelte";
   import { splitAriaNaming } from "../utils/aria-naming.js";
-  import { dismiss } from "../utils/dismiss.js";
+  import { dismiss } from "../utils/dismiss.svelte.js";
   import { createOpenCloseDispatcher } from "../utils/dispatch-open-close.js";
   import { joinDescribedBy } from "../utils/field-status.js";
   import { isImeComposition } from "../utils/ime-composition.js";
@@ -226,10 +226,10 @@ whitespace gap; the label's end margin is then the only spacing. -->
     {id}
     class:bx--toggletip={true}
     class:bx--toggletip--open={open}
-    use:dismiss={{
+    {@attach dismiss(() => ({
       enabled: listenersEnabled,
       listeners: [{ type: "click", handler: handleOutsideClick }],
-    }}
+    }))}
     on:keydown={handleKeydown}
     on:focusout={handleFocusout}
     {...wrapperProps}

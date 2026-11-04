@@ -5,7 +5,7 @@
   let selectedAction = "";
 </script>
 
-<Button data-testid="open-externally" on:click={() => (open = true)}>
+<Button data-testid="open-externally" onclick={() => (open = true)}>
   Open externally
 </Button>
 

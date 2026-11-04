@@ -41,7 +41,7 @@ import type ThemeZone from "carbon-components-svelte/src/ThemeZone/ThemeZone.sve
 import type { ThemeZoneProps } from "carbon-components-svelte/src/ThemeZone/ThemeZone.svelte";
 import type TimePickerSkeleton from "carbon-components-svelte/src/TimePicker/TimePickerSkeleton.svelte";
 import type { HeaderSearchResult } from "carbon-components-svelte/src/UIShell/HeaderSearch.svelte";
-import type { DismissParams } from "carbon-components-svelte/src/utils/dismiss.js";
+import type { DismissParams } from "carbon-components-svelte/src/utils/dismiss.svelte.js";
 import type {
   FloatingPositionOptions,
   FloatingPositionResult,
@@ -107,7 +107,7 @@ type _ThemeZone = ThemeZone;
 type _ThemeZoneProps = ThemeZoneProps<"aside">["theme"];
 type _TimePickerSkeleton = TimePickerSkeleton;
 type _Dismiss = ReturnType<typeof dismiss>;
-type _DismissParams = Parameters<typeof dismiss>[1];
+type _DismissParams = ReturnType<Parameters<typeof dismiss>[0]>;
 type _DismissParamsType = DismissParams;
 type _FloatingPosition = ReturnType<typeof floatingPosition>;
 type _FloatingPositionOptions = FloatingPositionOptions;

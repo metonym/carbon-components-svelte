@@ -6,16 +6,20 @@
    * through its live region or `aria-busy`, and a listbox exposes only
    * options and groups.
    */
+  let {
+    /** @type {import("svelte").Snippet | undefined} */
+    children = undefined,
+  } = $props();
 </script>
 
 <div
   role="presentation"
   aria-hidden="true"
-  class:bx--list-box__menu-status={true}
-  on:mousedown={(event) => {
+  class="bx--list-box__menu-status"
+  onmousedown={(event) => {
     // Keep focus on the field, as options do.
     event.preventDefault();
   }}
 >
-  <slot />
+  {@render children?.()}
 </div>

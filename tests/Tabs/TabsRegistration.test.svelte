@@ -22,14 +22,14 @@
 <svelte:component
   this={Component}
   {...vertical ? {} : { type: "container", dismissible: true }}
-  on:dismiss={({ detail }) => onDismiss(detail)}
+  ondismiss={(detail) => onDismiss(detail)}
 >
   <Tab {label} secondaryLabel={count} />
   <Tab label="Analyze" {disabled} />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Engage content</TabContent>
     <TabContent>Analyze content</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </svelte:component>
 
 <button type="button" on:click={() => (count = "(3/4)")}>Load count</button>

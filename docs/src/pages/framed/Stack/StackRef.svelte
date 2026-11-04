@@ -6,7 +6,7 @@
 </script>
 
 <Stack gap={6}>
-  <Button kind="secondary" on:click={() => (height = ref?.offsetHeight)}>
+  <Button kind="secondary" onclick={() => (height = ref?.offsetHeight)}>
     Measure stack
   </Button>
   <Stack bind:ref gap={3}>

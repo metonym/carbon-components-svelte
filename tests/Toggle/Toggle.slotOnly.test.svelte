@@ -3,5 +3,5 @@
 </script>
 
 <Toggle>
-  <span slot="labelChildren">Slot only label</span>
+  {#snippet labelText()}<span>Slot only label</span>{/snippet}
 </Toggle>

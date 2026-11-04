@@ -25,9 +25,11 @@
   {legendText}
   {hideLegend}
   class={customClass}
-  on:select={(e) => onSelect(e.detail)}
-  on:deselect={(e) => onDeselect(e.detail)}
-  on:change={(e) => onChange(e.detail)}
+  onselectedchange={(e) => {
+    for (const value of e.added) onSelect(value);
+    for (const value of e.removed) onDeselect(value);
+    onChange(e.selected);
+  }}
 >
   <SelectableTile value="option1">Option 1</SelectableTile>
   <SelectableTile value="option2">Option 2</SelectableTile>

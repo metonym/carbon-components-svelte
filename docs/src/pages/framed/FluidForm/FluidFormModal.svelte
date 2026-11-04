@@ -12,7 +12,7 @@
   let open = false;
 </script>
 
-<Button on:click={() => (open = true)}>Register application</Button>
+<Button onclick={() => (open = true)}>Register application</Button>
 
 <Modal
   fullWidth
@@ -21,7 +21,7 @@
   modalHeading="Register application"
   primaryButtonText="Add"
   secondaryButtonText="Cancel"
-  on:click:button--secondary={() => (open = false)}
+  onsecondaryaction={() => (open = false)}
 >
   <FluidForm>
     <TextInput

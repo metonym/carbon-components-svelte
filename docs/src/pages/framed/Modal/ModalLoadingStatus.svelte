@@ -24,7 +24,7 @@
   }
 </script>
 
-<Button on:click={() => (open = true)}>Save changes</Button>
+<Button onclick={() => (open = true)}>Save changes</Button>
 
 <Modal
   bind:open
@@ -34,9 +34,9 @@
   {loadingStatus}
   primaryButtonLoadingDescription={loadingDescription}
   preventCloseOnClickOutside={loadingStatus !== "inactive"}
-  on:submit={save}
-  on:click:button--secondary={() => (open = false)}
-  on:loading:success={() => {
+  onprimaryaction={save}
+  onsecondaryaction={() => (open = false)}
+  onloadingsuccess={() => {
     open = false;
     loadingStatus = "inactive";
   }}

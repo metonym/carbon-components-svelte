@@ -4,7 +4,7 @@
   let open = false;
 </script>
 
-<Button on:click={() => (open = true)}>Preview session timeout</Button>
+<Button onclick={() => (open = true)}>Preview session timeout</Button>
 
 <Dialog
   bind:open

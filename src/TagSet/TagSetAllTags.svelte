@@ -2,56 +2,52 @@
   /**
    * Internal: the "View all" modal of `TagSet`, listing every tag with a
    * search field. Not exported from the package.
-   *
-   * @event {import("./TagSet.svelte").TagSetItem} close - A dismissible tag in the list was closed.
    */
+  let {
+    /** Whether the modal is open. */
+    open = $bindable(false),
 
-  /**
-   * Whether the modal is open.
-   * @bindable writable
-   */
-  export let open = false;
+    /** The search text. */
+    query = $bindable(""),
 
-  /**
-   * The search text.
-   * @bindable writable
-   */
-  export let query = "";
+    /**
+     * Obtain a reference to the tag list.
+     * @type {null | HTMLUListElement}
+     */
+    listRef = $bindable(null),
 
-  /**
-   * Obtain a reference to the tag list.
-   * @bindable readonly
-   * @type {null | HTMLUListElement}
-   */
-  export let listRef = null;
+    /** @type {import("./tag-set-context.js").TagSetItem[]} */
+    tags = [],
 
-  /** @type {import("./TagSet.svelte").TagSetItem[]} */
-  export let tags = [];
+    /** Set to `true` to keep dismissible tags closable. */
+    closable = false,
 
-  /** Set to `true` to keep dismissible tags closable. */
-  export let closable = false;
+    /** @type {string} */
+    title,
 
-  /** @type {string} */
-  export let title;
+    /** @type {string} */
+    searchLabel,
 
-  /** @type {string} */
-  export let searchLabel;
+    /** @type {(count: number) => string} */
+    resultsLabel,
 
-  /** @type {(count: number) => string} */
-  export let resultsLabel;
+    /** @type {"xs" | "sm" | "default" | "lg" | "md" | undefined} */
+    size = undefined,
 
-  /** @type {"xs" | "sm" | "default" | "lg" | "md" | undefined} */
-  export let size = undefined;
+    /**
+     * A dismissible tag in the list was closed.
+     * @type {((tag: import("./tag-set-context.js").TagSetItem) => void) | undefined}
+     */
+    ontagdismiss = undefined,
+  } = $props();
 
-  import { createEventDispatcher, setContext } from "svelte";
   import Modal from "../Modal/Modal.svelte";
   import Search from "../Search/Search.svelte";
   import Tag from "../Tag/Tag.svelte";
+  import { setTagSet } from "./tag-set-context.js";
 
   // These tags list the set's tags; they must not register with it.
-  setContext("carbon:TagSet", undefined);
-
-  const dispatch = createEventDispatcher();
+  setTagSet(undefined);
 </script>
 
 <Modal bind:open passiveModal size="sm" modalHeading={title}>
@@ -61,20 +57,16 @@
     placeholder={searchLabel}
     data-modal-primary-focus
   />
-  <ul
-    bind:this={listRef}
-    class:bx--tag-set-modal__list={true}
-    aria-label={title}
-  >
+  <ul bind:this={listRef} class="bx--tag-set-modal__list" aria-label={title}>
     {#each tags as tag (tag.id)}
       <li>
         <Tag
-          type={tag.type}
+          type={/** @type {any} */ (tag.type)}
           filter={closable && tag.filter}
           disabled={tag.disabled}
           value={tag.value}
           {size}
-          on:close={() => dispatch("close", tag)}
+          ondismiss={() => ontagdismiss?.(tag)}
         >
           {tag.label}
         </Tag>
@@ -82,8 +74,10 @@
     {/each}
   </ul>
   <p
-    class:bx--tag-set-modal__results={true}
-    class:bx--visually-hidden={tags.length > 0}
+    class={[
+      "bx--tag-set-modal__results",
+      tags.length > 0 && "bx--visually-hidden",
+    ]}
     role="status"
   >
     {resultsLabel(tags.length)}

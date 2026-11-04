@@ -40,10 +40,16 @@
 
 <Stack gap={5}>
   <ButtonSet>
-    <Button on:click={showSuccess}>Show success</Button>
-    <Button kind="ghost" on:click={showWarning}>Show warning</Button>
-    <Button kind="danger-ghost" on:click={showError}>Show error</Button>
+    <Button onclick={showSuccess}>Show success</Button>
+    <Button kind="ghost" onclick={showWarning}>Show warning</Button>
+    <Button kind="danger-ghost" onclick={showError}>Show error</Button>
   </ButtonSet>
 
-  <ToastNotification bind:open {kind} {title} {subtitle} {caption} />
+  <ToastNotification
+    bind:open
+    {kind}
+    titleText={title}
+    subtitleText={subtitle}
+    captionText={caption}
+  />
 </Stack>

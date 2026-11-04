@@ -29,7 +29,7 @@
     selectionDisplay="tags"
     {...config}
     bind:selectedIds
-    on:select={(e) => onSelect(e.detail)}
+    onselectedchange={(e) => onSelect(e)}
   />
 </form>
 

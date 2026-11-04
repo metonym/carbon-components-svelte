@@ -99,10 +99,11 @@ describe("CheckboxGroup", () => {
       props: { customClass: "custom-group" },
     });
 
-    const fieldset = screen.getByRole("group");
-    const formItem = fieldset.closest(".bx--form-item");
-    assert(formItem);
-    expect(formItem).toHaveClass("custom-group");
+    // Rest props, `class` included, go to the fieldset.
+    expect(screen.getByRole("group")).toHaveClass(
+      "bx--checkbox-group",
+      "custom-group",
+    );
   });
 
   it("should propagate external selected updates to child checkboxes", async () => {
@@ -308,7 +309,8 @@ describe("CheckboxGroup", () => {
       expect(onChange).not.toHaveBeenCalledWith(["1", "2"]);
     });
 
-    it("should not propagate external selected updates to children when readonly", async () => {
+    // Read-only stops the user, not the app, as on a native read-only input.
+    it("reflects external selected updates when readonly", async () => {
       const { component } = render(CheckboxGroupReadonly, {
         selected: ["1"],
         readonly: true,
@@ -319,10 +321,10 @@ describe("CheckboxGroup", () => {
       component.selected = ["2"];
       await tick();
 
-      expect(screen.getByRole("checkbox", { name: "Option 1" })).toBeChecked();
       expect(
-        screen.getByRole("checkbox", { name: "Option 2" }),
+        screen.getByRole("checkbox", { name: "Option 1" }),
       ).not.toBeChecked();
+      expect(screen.getByRole("checkbox", { name: "Option 2" })).toBeChecked();
     });
 
     it("should set aria-readonly on children when the group is readonly", () => {

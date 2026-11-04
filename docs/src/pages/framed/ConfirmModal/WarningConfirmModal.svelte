@@ -4,12 +4,12 @@
   let open = false;
 </script>
 
-<Button on:click={() => (open = true)}>Leave page</Button>
+<Button onclick={() => (open = true)}>Leave page</Button>
 
 <ConfirmModal
   bind:open
   kind="warning"
-  title="You have unsaved changes"
+  titleText="You have unsaved changes"
   confirmText="Leave"
   cancelText="Stay"
 >

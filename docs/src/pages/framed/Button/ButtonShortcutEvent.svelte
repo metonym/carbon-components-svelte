@@ -8,7 +8,7 @@
   <Button
     kind="tertiary"
     shortcut="mod+e"
-    on:shortcut={(e) => {
+    onshortcut={(e) => {
       e.preventDefault();
       exports++;
     }}

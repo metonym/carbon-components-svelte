@@ -20,11 +20,11 @@
   bind:ref
   {selectedIndex}
   class={customClass}
-  on:change={(e) => onChange(e.detail)}
-  on:click={onClick}
-  on:mouseover={onMouseover}
-  on:mouseenter={onMouseenter}
-  on:mouseleave={onMouseleave}
+  onselectedchange={(e) => onChange(e.index)}
+  onclick={onClick}
+  onmouseover={onMouseover}
+  onmouseenter={onMouseenter}
+  onmouseleave={onMouseleave}
 >
   <Switch text="Option 1" />
   <Switch text="Option 2" bind:ref={switchRef} />

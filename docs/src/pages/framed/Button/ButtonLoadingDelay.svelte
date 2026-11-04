@@ -26,11 +26,11 @@
     kind="secondary"
     loading={savingDraft}
     loadingDelay={300}
-    on:click={saveDraft}
+    onclick={saveDraft}
   >
     Save draft (150 ms)
   </Button>
-  <Button loading={publishing} loadingDelay={300} on:click={publish}>
+  <Button loading={publishing} loadingDelay={300} onclick={publish}>
     Publish (2 s)
   </Button>
 </Stack>

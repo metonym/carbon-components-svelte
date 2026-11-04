@@ -95,9 +95,9 @@ describe("Callout", () => {
   });
 
   it("generates a title id by default", () => {
-    render(CalloutComponent, { props: { title: "Scheduled downtime" } });
+    render(CalloutComponent, { props: { titleText: "Scheduled downtime" } });
 
-    expect(document.querySelector(`.${root}__title`)?.id).toMatch(/^ccs-/);
+    expect(document.querySelector(`.${root}__title`)?.id).toMatch(/\S/);
   });
 
   it("renders no title or subtitle element when both are empty", () => {

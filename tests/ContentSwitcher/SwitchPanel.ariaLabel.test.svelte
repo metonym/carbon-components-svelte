@@ -6,7 +6,7 @@
 
 <ContentSwitcher>
   <Switch id="one-switch" text="One" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <SwitchPanel id="one-panel" {...$$restProps}>Content 1</SwitchPanel>
-  </svelte:fragment>
+  {/snippet}
 </ContentSwitcher>

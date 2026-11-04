@@ -1,3 +1,4 @@
+import { tileByTestId } from "./helpers/field";
 import { expect, test } from "./helpers/host";
 
 test.describe("SelectableTile", () => {
@@ -10,10 +11,10 @@ test.describe("SelectableTile", () => {
     await expect(
       page.getByRole("group", { name: "Choose one or more" }),
     ).toBeVisible();
-    await expect(page.getByTestId("selectable-tile-x")).toContainText(
+    await expect(tileByTestId(page, "selectable-tile-x")).toContainText(
       "Option X",
     );
-    await expect(page.getByTestId("selectable-tile-y")).toContainText(
+    await expect(tileByTestId(page, "selectable-tile-y")).toContainText(
       "Option Y",
     );
   });
@@ -21,20 +22,19 @@ test.describe("SelectableTile", () => {
   test("selects and deselects tiles when clicked", async ({ page }) => {
     await expect(page.getByTestId("selected-values")).toHaveText("none");
 
-    await page.getByTestId("selectable-tile-x").click();
+    await tileByTestId(page, "selectable-tile-x").click();
     await expect(page.getByTestId("selected-values")).toHaveText("x");
 
-    await page.getByTestId("selectable-tile-y").click();
+    await tileByTestId(page, "selectable-tile-y").click();
     await expect(page.getByTestId("selected-values")).toHaveText("x,y");
 
-    await page.getByTestId("selectable-tile-x").click();
+    await tileByTestId(page, "selectable-tile-x").click();
     await expect(page.getByTestId("selected-values")).toHaveText("y");
   });
 
   test("shows the checkbox in every state", async ({ page }) => {
     const checkbox = (testId: string) =>
-      page
-        .getByTestId(testId)
+      tileByTestId(page, testId)
         .locator(".bx--tile__checkmark")
         .evaluate((el) => ({
           opacity: getComputedStyle(el).opacity,
@@ -45,7 +45,7 @@ test.describe("SelectableTile", () => {
     const unselected = await checkbox("selectable-tile-x");
     expect(unselected).toMatchObject({ opacity: "1", checked: false });
 
-    await page.getByTestId("selectable-tile-x").click();
+    await tileByTestId(page, "selectable-tile-x").click();
     await expect(page.getByTestId("selected-values")).toHaveText("x");
     const selected = await checkbox("selectable-tile-x");
     expect(selected).toMatchObject({ opacity: "1", checked: true });

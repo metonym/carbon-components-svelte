@@ -9,7 +9,7 @@
 
 <Header companyName="IBM" platformName="Cloud" />
 <Content>
-  <Button on:click={() => (open = true)}>View environment</Button>
+  <Button onclick={() => (open = true)}>View environment</Button>
 </Content>
 
 <SidePanel

@@ -4,7 +4,7 @@
   let open = false;
 </script>
 
-<Button on:click={() => (open = true)}>Open modal</Button>
+<Button onclick={() => (open = true)}>Open modal</Button>
 
 <Portal>
   <Modal
@@ -13,7 +13,7 @@
     modalHeading="UserAvatar in modal"
     primaryButtonText="Done"
     secondaryButtonText="Cancel"
-    on:click:button--secondary={() => (open = false)}
+    onsecondaryaction={() => (open = false)}
   >
     <UserAvatar
       name="Richard Hendricks"

@@ -21,7 +21,7 @@
 </script>
 
 <Box bind:ref={trigger} display="inline-flex">
-  <Button kind="tertiary" on:click={() => (open = !open)}>
+  <Button kind="tertiary" onclick={() => (open = !open)}>
     Open notifications
   </Button>
 </Box>
@@ -30,13 +30,13 @@
   <Box marginTop={3} maxWidth="20rem">
     <div
       bind:this={panel}
-      use:dismiss={{
+      {@attach dismiss(() => ({
         enabled: open,
         listeners: [
           { type: "keydown", handler: handleKeydown },
           { type: "click", handler: handleClick },
         ],
-      }}
+      }))}
     >
       <Tile>
         <p>Build 4821 passed on main.</p>

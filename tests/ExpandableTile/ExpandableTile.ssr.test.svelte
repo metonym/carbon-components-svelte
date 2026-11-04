@@ -5,6 +5,6 @@
 </script>
 
 <ExpandableTile id="plan" {hasInteractiveContent}>
-  <div slot="above"><a href="/plans">Compare plans</a></div>
-  <div slot="below">Billed monthly</div>
+  {#snippet above()}<div><a href="/plans">Compare plans</a></div>{/snippet}
+  {#snippet below()}<div>Billed monthly</div>{/snippet}
 </ExpandableTile>

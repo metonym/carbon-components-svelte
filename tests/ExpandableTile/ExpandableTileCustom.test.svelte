@@ -10,9 +10,8 @@
   export let tabindex: ComponentProps<ExpandableTile>["tabindex"] = "0";
   export let onFocus: (e: FocusEvent) => void = () => {};
   export let onBlur: (e: FocusEvent) => void = () => {};
-  export let onToggle: (
-    e: CustomEvent<{ expanded: boolean }>,
-  ) => void = () => {};
+  export let onToggle: ComponentProps<ExpandableTile>["onexpandedchange"] =
+    () => {};
 </script>
 
 <ExpandableTile
@@ -20,31 +19,31 @@
   {tabindex}
   tileExpandedLabel="View less"
   tileCollapsedLabel="View more"
-  on:focus={onFocus}
-  on:blur={onBlur}
-  on:toggle={onToggle}
+  onfocus={onFocus}
+  onblur={onBlur}
+  onexpandedchange={onToggle}
 >
-  <div slot="above">
-    <a
-      href="/"
-      data-testid="test-link"
-      on:click|preventDefault={(e) => {
-        if (stopClicks) e.stopPropagation();
-        linkClicked = true;
-      }}
-    >
-      Test link
-    </a>
-    <br /><br />
-    <Button
-      data-testid="test-button"
-      on:click={(e) => {
-        if (stopClicks) e.stopPropagation();
-        buttonClicked = true;
-      }}
-    >
-      Test button
-    </Button>
-  </div>
-  <div slot="below">Below the fold content here</div>
+  {#snippet above()}<div>
+      <a
+        href="/"
+        data-testid="test-link"
+        on:click|preventDefault={(e) => {
+          if (stopClicks) e.stopPropagation();
+          linkClicked = true;
+        }}
+      >
+        Test link
+      </a>
+      <br /><br />
+      <Button
+        data-testid="test-button"
+        onclick={(e) => {
+          if (stopClicks) e.stopPropagation();
+          buttonClicked = true;
+        }}
+      >
+        Test button
+      </Button>
+    </div>{/snippet}
+  {#snippet below()}<div>Below the fold content here</div>{/snippet}
 </ExpandableTile>

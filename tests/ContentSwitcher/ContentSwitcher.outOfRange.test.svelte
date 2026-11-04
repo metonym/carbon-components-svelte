@@ -7,7 +7,7 @@
   export let showLast = true;
 </script>
 
-<ContentSwitcher bind:selectedIndex on:change={(e) => onChange(e.detail)}>
+<ContentSwitcher bind:selectedIndex onselectedchange={(e) => onChange(e.index)}>
   <Switch text="First" />
   <Switch text="Middle" />
   {#if showLast}

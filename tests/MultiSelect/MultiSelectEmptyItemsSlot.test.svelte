@@ -3,5 +3,5 @@
 </script>
 
 <MultiSelect labelText="Contact" items={[]} open emptyText="No contact methods">
-  <svelte:fragment slot="empty">Nothing to pick yet</svelte:fragment>
+  {#snippet empty()}Nothing to pick yet{/snippet}
 </MultiSelect>

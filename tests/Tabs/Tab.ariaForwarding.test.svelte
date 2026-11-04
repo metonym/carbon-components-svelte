@@ -12,8 +12,8 @@
 <Tabs {iconOnly}>
   <Tab label="Calendar" icon={Calendar} data-testid="tab-item" {...tabProps} />
   <Tab label="Settings" icon={Calendar} />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Calendar content</TabContent>
     <TabContent>Settings content</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>

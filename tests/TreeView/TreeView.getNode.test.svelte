@@ -24,24 +24,24 @@
   {node.text}
 </TreeView>
 
-<Button data-testid="get-node" on:click={() => onGetNode(treeview.getNode(3))}>
+<Button data-testid="get-node" onclick={() => onGetNode(treeview.getNode(3))}>
   Get node
 </Button>
 <Button
   data-testid="get-missing-node"
-  on:click={() => onGetNode(treeview.getNode(999))}
+  onclick={() => onGetNode(treeview.getNode(999))}
 >
   Get missing node
 </Button>
 <Button
   data-testid="get-late-node"
-  on:click={() => onGetNode(treeview.getNode("late"))}
+  onclick={() => onGetNode(treeview.getNode("late"))}
 >
   Get late node
 </Button>
 <Button
   data-testid="get-nodes"
-  on:click={() => onGetNodes(treeview.getNodes([3, 999, 0]))}
+  onclick={() => onGetNodes(treeview.getNodes([3, 999, 0]))}
 >
   Get nodes
 </Button>

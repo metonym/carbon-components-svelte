@@ -4,7 +4,7 @@
   let open = false;
 </script>
 
-<Button on:click={() => (open = true)}>View database instances</Button>
+<Button onclick={() => (open = true)}>View database instances</Button>
 
 <Modal
   fullWidth
@@ -14,7 +14,7 @@
   primaryButtonText="Add instance"
   secondaryButtonText="Cancel"
   hasScrollingContent
-  on:click:button--secondary={() => (open = false)}
+  onsecondaryaction={() => (open = false)}
 >
   <DataTable
     headers={[

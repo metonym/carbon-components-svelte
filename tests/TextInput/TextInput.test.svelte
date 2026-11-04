@@ -26,8 +26,12 @@
   export let fluid = false;
   export let selectTextOnFocus = false;
   export let type: ComponentProps<TextInput>["type"] = "text";
-  export let onchange: ((event: CustomEvent) => void) | undefined = undefined;
-  export let oninput: ((event: CustomEvent) => void) | undefined = undefined;
+  export let onvaluecommit: ComponentProps<TextInput>["onvaluecommit"] =
+    undefined;
+  export let onvaluechange: ComponentProps<TextInput>["onvaluechange"] =
+    undefined;
+  export let onchange: ((event: Event) => void) | undefined = undefined;
+  export let oninput: ((event: Event) => void) | undefined = undefined;
   export let onkeydown: ((event: KeyboardEvent) => void) | undefined =
     undefined;
   export let onkeyup: ((event: KeyboardEvent) => void) | undefined = undefined;
@@ -60,13 +64,15 @@
   {fluid}
   {selectTextOnFocus}
   {type}
-  on:change={(e) => onchange?.(e)}
-  on:input={(e) => oninput?.(e)}
-  on:keydown={(e) => onkeydown?.(e)}
-  on:keyup={(e) => onkeyup?.(e)}
-  on:focus={(e) => onfocus?.(e)}
-  on:blur={(e) => onblur?.(e)}
-  on:paste={(e) => onpaste?.(e)}
+  onvaluecommit={(e) => onvaluecommit?.(e)}
+  onvaluechange={(e) => onvaluechange?.(e)}
+  onchange={(e) => onchange?.(e)}
+  oninput={(e) => oninput?.(e)}
+  onkeydown={(e) => onkeydown?.(e)}
+  onkeyup={(e) => onkeyup?.(e)}
+  onfocus={(e) => onfocus?.(e)}
+  onblur={(e) => onblur?.(e)}
+  onpaste={(e) => onpaste?.(e)}
 />
 
 <div data-testid="bound">{String(value)}</div>

@@ -1,119 +1,129 @@
 <script>
   /**
    * @restProps {div}
-   * @slot {{}} - Extra content under the subtitle.
-   * @slot {{}} titleChildren
-   * @slot {{}} subtitleChildren
-   * @slot {{}} actions - An action, such as a `NotificationActionButton`.
    */
 
-  /**
-   * Specify the kind of callout.
-   * @type {"error" | "info" | "info-square" | "success" | "warning" | "warning-alt"}
-   */
-  export let kind = "info";
+  const fallbackId = $props.id();
 
-  /** Set to `true` to use the low contrast variant */
-  export let lowContrast = false;
+  let {
+    /**
+     * Specify the kind of callout.
+     * @type {"error" | "info" | "info-square" | "success" | "warning" | "warning-alt"}
+     */
+    kind = "info",
 
-  /**
-   * Specify the title text.
-   * Alternatively, use the named slot "titleChildren".
-   */
-  export let title = "";
+    /** Set to `true` to use the low contrast variant */
+    lowContrast = false,
 
-  /**
-   * Specify the subtitle text.
-   * Alternatively, use the named slot "subtitleChildren", such as for a link.
-   */
-  export let subtitle = "";
+    /**
+     * Specify the title text, or a snippet.
+     * @type {string | import("svelte").Snippet}
+     */
+    titleText = "",
 
-  /**
-   * Specify the id of the title element. A `NotificationActionButton` in
-   * the callout is described by it. Point the `aria-describedby` of other
-   * interactive content, such as a link, at the same id.
-   */
-  export let titleId = uniqueId();
+    /**
+     * Specify the subtitle text, or a snippet, such as for a link.
+     * @type {string | import("svelte").Snippet}
+     */
+    subtitleText = "",
 
-  /**
-   * Specify the label of the status icon for screen readers.
-   * Defaults to the kind, such as "Warning".
-   * @type {string | undefined}
-   */
-  export let statusIconDescription = undefined;
+    /**
+     * Specify the id of the title element. A `NotificationActionButton` in
+     * the callout is described by it. Point the `aria-describedby` of other
+     * interactive content, such as a link, at the same id.
+     * @type {string}
+     */
+    titleId = fallbackId,
 
-  /**
-   * Set to `true` for the callout to fill its parent's width, without the
-   * default width limits, as when it sits inside a tile or a form.
-   */
-  export let fullWidth = false;
+    /**
+     * Specify the label of the status icon for screen readers.
+     * Defaults to the kind, such as "Warning".
+     * @type {string | undefined}
+     */
+    statusIconDescription = undefined,
 
-  import { setContext } from "svelte";
-  import { writable } from "svelte/store";
-  import { uniqueId } from "../utils/unique-id.js";
+    /**
+     * Set to `true` for the callout to fill its parent's width, without the
+     * default width limits, as when it sits inside a tile or a form.
+     */
+    fullWidth = false,
+
+    /**
+     * Extra content under the subtitle.
+     * @type {import("svelte").Snippet | undefined}
+     */
+    children = undefined,
+
+    /**
+     * An action, such as a `NotificationActionButton`.
+     * @type {import("svelte").Snippet | undefined}
+     */
+    actions = undefined,
+
+    /** @type {import("svelte/elements").ClassValue | undefined} */
+    class: className = undefined,
+
+    ...rest
+  } = $props();
+
   import NotificationIcon from "./NotificationIcon.svelte";
+  import { setNotificationAction } from "./notification-context.js";
+  import { kindClasses } from "./notification-kind-classes.js";
   import { statusIconLabel } from "./status-icon-label.js";
 
-  /** @type {import("svelte/store").Writable<string | undefined>} */
-  const describedBy = writable(undefined);
+  // `kind` with its declared type, which the type checker reads from the
+  // default value alone.
+  const notificationKind = $derived(
+    /** @type {import("./notification-kind-classes.js").NotificationKind} */ (
+      kind
+    ),
+  );
 
-  setContext("carbon:NotificationAction", { describedBy, toast: false });
-
-  $: titled = Boolean(title || $$slots.titleChildren);
-  $: describedBy.set(titled ? titleId : undefined);
+  setNotificationAction({
+    get describedBy() {
+      return titleText ? titleId : undefined;
+    },
+    toast: false,
+  });
 </script>
 
+{#snippet content(/** @type {string | import("svelte").Snippet} */ source)}
+  {#if typeof source === "function"}{@render source()}{:else}{source}{/if}
+{/snippet}
+
 <div
-  class:bx--inline-notification={true}
-  class:bx--inline-notification--callout={true}
-  class:bx--inline-notification--hide-close-button={true}
-  class:bx--inline-notification--low-contrast={lowContrast}
-  class:bx--inline-notification--high-contrast={!lowContrast}
-  class:bx--inline-notification--full-width={fullWidth}
-  class:bx--inline-notification--error={kind === "error"}
-  class:bx--inline-notification--low-contrast-error={lowContrast &&
-    kind === "error"}
-  class:bx--inline-notification--info={kind === "info"}
-  class:bx--inline-notification--low-contrast-info={lowContrast &&
-    kind === "info"}
-  class:bx--inline-notification--info-square={kind === "info-square"}
-  class:bx--inline-notification--low-contrast-info-square={lowContrast &&
-    kind === "info-square"}
-  class:bx--inline-notification--success={kind === "success"}
-  class:bx--inline-notification--low-contrast-success={lowContrast &&
-    kind === "success"}
-  class:bx--inline-notification--warning={kind === "warning"}
-  class:bx--inline-notification--low-contrast-warning={lowContrast &&
-    kind === "warning"}
-  class:bx--inline-notification--warning-alt={kind === "warning-alt"}
-  class:bx--inline-notification--low-contrast-warning-alt={lowContrast &&
-    kind === "warning-alt"}
-  {...$$restProps}
-  on:click
-  on:mouseover
-  on:mouseenter
-  on:mouseleave
+  {...rest}
+  class={[
+    "bx--inline-notification bx--inline-notification--callout bx--inline-notification--hide-close-button",
+    lowContrast
+      ? "bx--inline-notification--low-contrast"
+      : "bx--inline-notification--high-contrast",
+    fullWidth && "bx--inline-notification--full-width",
+    ...kindClasses("inline", notificationKind, lowContrast),
+    className,
+  ]}
 >
-  <div class:bx--inline-notification__details={true}>
+  <div class="bx--inline-notification__details">
     <NotificationIcon
       notificationType="inline"
-      {kind}
+      kind={notificationKind}
       {lowContrast}
-      iconDescription={statusIconDescription || statusIconLabel(kind)}
+      iconDescription={statusIconDescription ||
+        statusIconLabel(notificationKind)}
     />
-    <div class:bx--inline-notification__text-wrapper={true}>
-      {#if titled}
-        <p id={titleId} class:bx--inline-notification__title={true}>
-          <strong><slot name="titleChildren">{title}</slot></strong>
+    <div class="bx--inline-notification__text-wrapper">
+      {#if titleText}
+        <p id={titleId} class="bx--inline-notification__title">
+          <strong>{@render content(titleText)}</strong>
         </p>
       {/if}
-      {#if subtitle || $$slots.subtitleChildren}
-        <div class:bx--inline-notification__subtitle={true}>
-          <slot name="subtitleChildren">{subtitle}</slot>
+      {#if subtitleText}
+        <div class="bx--inline-notification__subtitle">
+          {@render content(subtitleText)}
         </div>
       {/if}
-      <slot />
+      {@render children?.()}
     </div>
   </div>
-  <slot name="actions" />
+  {@render actions?.()}
 </div>

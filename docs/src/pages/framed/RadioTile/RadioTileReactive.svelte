@@ -21,7 +21,7 @@
   <Button
     size="small"
     disabled={selected === values[1]}
-    on:click={() => (selected = values[1])}
+    onclick={() => (selected = values[1])}
   >
     Set to "{values[1]}"
   </Button>

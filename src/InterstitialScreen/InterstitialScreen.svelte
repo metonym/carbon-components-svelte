@@ -33,7 +33,7 @@
   import { createEventDispatcher, setContext } from "svelte";
   import { writable } from "svelte/store";
   import ComposedModal from "../ComposedModal/ComposedModal.svelte";
-  import { dismiss } from "../utils/dismiss.js";
+  import { dismiss } from "../utils/dismiss.svelte.js";
   import { returnFocus } from "../utils/focus.js";
   import { isImeComposition } from "../utils/ime-composition.js";
   import { sortByDomOrder } from "../utils/sort-by-dom-order.js";
@@ -156,10 +156,10 @@
   {#if isFullScreen}
     <div
       bind:this={ref}
-      use:dismiss={{
+      {@attach dismiss(() => ({
         enabled: true,
         listeners: [{ type: "keydown", handler: handleWindowKeydown }],
-      }}
+      }))}
       role="main"
       aria-label={ariaLabel}
       class:bx--interstitial-screen={true}
@@ -177,10 +177,10 @@
       bind:open
       size="lg"
       preventCloseOnClickOutside
-      containerClass="bx--interstitial-screen"
+      class="bx--interstitial-screen"
       aria-label={ariaLabel}
       {...$$restProps}
-      on:close={(event) => {
+      onopenchange={(event) => {
         event.preventDefault();
         handleClose("close");
       }}

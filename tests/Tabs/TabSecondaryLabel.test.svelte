@@ -10,12 +10,12 @@
 <Tabs {type}>
   <Tab label="Engage" secondaryLabel="(21/25)" />
   <Tab label="Analyze">
-    <svelte:fragment slot="secondaryChildren">(12/16)</svelte:fragment>
+    {#snippet secondaryLabel()}(12/16){/snippet}
   </Tab>
   <Tab label="Plain" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Engage content</TabContent>
     <TabContent>Analyze content</TabContent>
     <TabContent>Plain content</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>

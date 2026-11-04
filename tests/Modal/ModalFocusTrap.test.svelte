@@ -12,8 +12,6 @@
   primaryButtonText="OK"
   secondaryButtonText="Cancel"
   hasScrollingContent={true}
-  on:open
-  on:close
 >
   <Dropdown
     labelText="Select source"

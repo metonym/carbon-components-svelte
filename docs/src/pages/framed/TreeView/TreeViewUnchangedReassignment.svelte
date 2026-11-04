@@ -38,10 +38,10 @@
 
 <Stack gap={5}>
   <ButtonSet>
-    <Button kind="secondary" on:click={reassignUnchanged}>
+    <Button kind="secondary" onclick={reassignUnchanged}>
       Reassign nodes (no change)
     </Button>
-    <Button kind="secondary" on:click={mutateThenReassign}>
+    <Button kind="secondary" onclick={mutateThenReassign}>
       Mutate a node, then reassign
     </Button>
   </ButtonSet>

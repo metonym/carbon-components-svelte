@@ -10,16 +10,10 @@
   let open = false;
 </script>
 
-<Button kind="danger" on:click={() => (open = true)}>Delete all</Button>
+<Button kind="danger" onclick={() => (open = true)}>Delete all</Button>
 
-<ComposedModal
-  danger
-  bind:open
-  on:open
-  on:close
-  on:submit={() => (open = false)}
->
-  <ModalHeader title="Delete all instances" />
+<ComposedModal danger bind:open onprimaryaction={() => (open = false)}>
+  <ModalHeader titleText="Delete all instances" />
   <ModalBody>
     <p>This is a permanent action and cannot be undone.</p>
   </ModalBody>

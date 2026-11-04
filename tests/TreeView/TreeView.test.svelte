@@ -43,13 +43,11 @@
   {node.text}
 </TreeView>
 
-<Button on:click={() => treeview.expandNodes()}>
-  Expand nodes (no filter)
-</Button>
-<Button on:click={treeview.expandAll}>Expand all</Button>
-<Button on:click={treeview.collapseAll}>Collapse all</Button>
+<Button onclick={() => treeview.expandNodes()}>Expand nodes (no filter)</Button>
+<Button onclick={() => treeview.expandAll()}>Expand all</Button>
+<Button onclick={() => treeview.collapseAll()}>Collapse all</Button>
 <Button
-  on:click={() => {
+  onclick={() => {
     treeview.expandNodes((node) => {
       return /^IBM/.test(node.text);
     });
@@ -58,7 +56,7 @@
   Expand some nodes
 </Button>
 <Button
-  on:click={() => {
+  onclick={() => {
     treeview.collapseNodes((node) => {
       return /^IBM/.test(node.text);
     });

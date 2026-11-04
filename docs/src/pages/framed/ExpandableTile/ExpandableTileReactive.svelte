@@ -12,18 +12,18 @@
 
 <Stack gap={5}>
   <ButtonSet>
-    <Button size="small" on:click={() => (expanded = !expanded)}>
+    <Button size="small" onclick={() => (expanded = !expanded)}>
       {expanded ? "Collapse" : "Expand"}
       tile
     </Button>
-    <Button size="small" kind="secondary" on:click={() => (grow = !grow)}>
+    <Button size="small" kind="secondary" onclick={() => (grow = !grow)}>
       {grow ? "Shrink" : "Grow"}
       content
     </Button>
   </ButtonSet>
   <div>Expanded: <strong>{expanded}</strong></div>
   <ExpandableTile bind:expanded>
-    <svelte:fragment slot="above">
+    {#snippet above()}
       <div>Payments API — Operational</div>
       {#if grow}
         <div>Elevated error rate detected on the /charges endpoint.</div>
@@ -32,9 +32,9 @@
           stream in.
         </div>
       {/if}
-    </svelte:fragment>
-    <svelte:fragment slot="below">
+    {/snippet}
+    {#snippet below()}
       No open incidents. On-call engineer: Priya Natarajan.
-    </svelte:fragment>
+    {/snippet}
   </ExpandableTile>
 </Stack>

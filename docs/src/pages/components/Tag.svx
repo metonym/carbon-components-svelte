@@ -58,7 +58,7 @@ Choose from a variety of color types to match your design system.
 
 ## Spacing
 
-Tags have no outer margin, as in Carbon v11. Space them with their container: a horizontal `Stack` with `gap={3}` gives the 8px Carbon recommends between tags, and `TagSet` spaces its tags for you. The `inline` prop is deprecated and has no effect.
+Tags have no outer margin, as in Carbon v11. Space them with their container: a horizontal `Stack` with `gap={3}` gives the 8px Carbon recommends between tags, and `TagSet` spaces its tags for you.
 
 <Stack orientation="horizontal" gap={3}>
   <Tag>IBM Cloud</Tag>
@@ -67,42 +67,42 @@ Tags have no outer margin, as in Carbon v11. Space them with their container: a 
 
 ## Filterable
 
-Create a filterable tag with a close button that dispatches `close` when clicked.
+Create a filterable tag with a close button that calls `ondismiss` when clicked.
 
-<Tag filter on:close>carbon-components</Tag>
+<Tag filter>carbon-components</Tag>
 
 ### Disabled
 
 Disable a filterable tag to prevent interaction.
 
-<Tag filter disabled on:close>carbon-components</Tag>
+<Tag filter disabled>carbon-components</Tag>
 
 ### Extra small
 
 Combine the filterable variant with the extra small size.
 
-<Tag size="xs" filter on:close>carbon-components</Tag>
+<Tag size="xs" filter>carbon-components</Tag>
 
 ### Small
 
 Combine the filterable variant with the small size.
 
-<Tag size="sm" filter on:close>carbon-components</Tag>
+<Tag size="sm" filter>carbon-components</Tag>
 
 ### Large
 
 Combine the filterable variant with the large size.
 
-<Tag size="lg" filter on:close>carbon-components</Tag>
+<Tag size="lg" filter>carbon-components</Tag>
 
 ### Click and close
 
-Filterable tags forward `on:click` from the tag body and `on:close` from the close button. Click the tag body to select; click the close icon to remove.
+Filterable tags take `onclick` for the tag body and `ondismiss` for the close button. Click the tag body to select; click the close icon to remove.
 
 <Tag
 filter
-on:click={() => console.log("click")}
-on:close={() => console.log("close")}
+onclick={() => console.log("click")}
+ondismiss={() => console.log("close")}
 >
 carbon-components
 </Tag>
@@ -118,32 +118,32 @@ A filter tag shows the full text in the label's `title`, as in Carbon v11. The c
 <Stack gap={5}>
   <div>
     <div>Default (208px)</div>
-    <Tag filter on:close>
+    <Tag filter>
       status:active AND region:us-south AND service:cloud-object-storage
     </Tag>
   </div>
   <div>
     <div>maxWidth="8rem"</div>
-    <Tag filter maxWidth="8rem" on:close>
+    <Tag filter maxWidth="8rem">
       status:active AND region:us-south AND service:cloud-object-storage
     </Tag>
   </div>
   <div>
     <div>maxWidth="140px"</div>
-    <Tag filter maxWidth="140px" on:close>
+    <Tag filter maxWidth="140px">
       status:active AND region:us-south AND service:cloud-object-storage
     </Tag>
   </div>
   <div>
     <div>maxWidth="20ch"</div>
-    <Tag filter maxWidth="20ch" on:close>
+    <Tag filter maxWidth="20ch">
       status:active AND region:us-south AND service:cloud-object-storage
     </Tag>
   </div>
   <div>
     <div>maxWidth="60%" (relative to the containing block)</div>
     <Box width={200}>
-      <Tag filter maxWidth="60%" on:close>
+      <Tag filter maxWidth="60%">
         status:active AND region:us-south AND service:cloud-object-storage
       </Tag>
     </Box>
@@ -154,7 +154,7 @@ A filter tag shows the full text in the label's `title`, as in Carbon v11. The c
 
 Set `title` to customize the close button's tooltip, shown on hover and focus, and the leading words of its accessible name. Defaults to `"Clear filter"`. The tag text is appended to the name, so each button reads as "Clear filter carbon-components". The prop labels the close button only, so the tag element gets no `title` attribute from it.
 
-<Tag filter title="Remove filter" on:close>carbon-components</Tag>
+<Tag filter title="Remove filter">carbon-components</Tag>
 
 ## Custom icon
 
@@ -193,11 +193,11 @@ Set `href` to render the tag as an anchor. Link tags reuse interactive styles. D
 
 ## AI label
 
-Put an `AILabel` in the `decorator` slot to mark the tag as AI-generated. The label renders as inline text in the tag's color. Static and filterable tags have the slot.
+Put an `AILabel` in the `decorator` snippet to mark the tag as AI-generated. The label renders as inline text in the tag's color. Static and filterable tags take the snippet.
 
 <Stack orientation="horizontal" gap={3} wrap="wrap">
-  <Tag type="blue">Forecast<AILabel slot="decorator"><p>Generated from the last 90 days of usage.</p></AILabel></Tag>
-  <Tag type="green" filter>us-east-1<AILabel slot="decorator"><p>Suggested because most of the alerts came from this region.</p></AILabel></Tag>
+  <Tag type="blue">Forecast{#snippet decorator()}<AILabel><p>Generated from the last 90 days of usage.</p></AILabel>{/snippet}</Tag>
+  <Tag type="green" filter>us-east-1{#snippet decorator()}<AILabel><p>Suggested because most of the alerts came from this region.</p></AILabel>{/snippet}</Tag>
 </Stack>
 
 ## Disabled

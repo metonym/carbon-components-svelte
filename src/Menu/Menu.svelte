@@ -115,7 +115,7 @@
   import { FLOATING_PORTAL_Z_INDEX } from "../constants/layout.js";
   import { batchStoreUpdates } from "../utils/batch-store-updates.js";
   import { toCssLength } from "../utils/css-length.js";
-  import { dismiss } from "../utils/dismiss.js";
+  import { dismiss } from "../utils/dismiss.svelte.js";
   import { focusQuietly, returnFocus } from "../utils/focus.js";
   import { createFrameJob } from "../utils/frame-batch.js";
   import { hasModifierKey } from "../utils/has-modifier-key.js";
@@ -401,13 +401,13 @@
         if (item) focusMenuItem(item);
       },
     }}
-    use:dismiss={{
+    {@attach dismiss(() => ({
       enabled: open,
       listeners: [
         { type: "click", handler: handleOutsideClick },
         { type: "keydown", handler: handleEscape },
       ],
-    }}
+    }))}
     role="menu"
     tabindex="-1"
     data-floating-menu-direction={portalDirection}

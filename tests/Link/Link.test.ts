@@ -49,17 +49,6 @@ describe("Link", () => {
     expect(iconWrapper.tagName).toBe("SPAN");
   });
 
-  it("supports icon slot", () => {
-    render(Link);
-    const link = within(screen.getByTestId("link-with-icon-slot")).getByRole(
-      "link",
-    );
-
-    const iconWrapper = link.querySelector(".bx--link__icon");
-    assert(iconWrapper);
-    expect(iconWrapper.querySelector("svg")).toBeInTheDocument();
-  });
-
   it.each([
     ["inline", "link-inline", "bx--link--inline"],
     ["muted", "link-muted", "bx--link--muted"],
@@ -182,7 +171,7 @@ describe("Link", () => {
   it("does not render an icon on an inline link", () => {
     render(Link);
 
-    for (const testId of ["link-inline-icon", "link-inline-icon-slot"]) {
+    for (const testId of ["link-inline-icon"]) {
       const link = within(screen.getByTestId(testId)).getByRole("link");
       expect(link).toHaveClass("bx--link--inline");
       expect(link.querySelector(".bx--link__icon")).not.toBeInTheDocument();

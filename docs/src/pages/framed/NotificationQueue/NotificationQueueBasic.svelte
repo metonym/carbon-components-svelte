@@ -12,11 +12,11 @@
 
 <ButtonSet>
   <Button
-    on:click={() => {
+    onclick={() => {
       queue.add({
         kind: "success",
-        title: "Deployment succeeded",
-        subtitle: "Build #482 deployed to production.",
+        titleText: "Deployment succeeded",
+        subtitleText: "Build #482 deployed to production.",
         timeout: 3000,
       });
     }}
@@ -25,11 +25,11 @@
   </Button>
   <Button
     kind="tertiary"
-    on:click={() => {
+    onclick={() => {
       queue.add({
         kind: "error",
-        title: "API rate limit exceeded",
-        subtitle: "Requests are being throttled. Try again in 60 seconds.",
+        titleText: "API rate limit exceeded",
+        subtitleText: "Requests are being throttled. Try again in 60 seconds.",
         timeout: 3000,
       });
     }}
@@ -38,11 +38,11 @@
   </Button>
   <Button
     kind="tertiary"
-    on:click={() => {
+    onclick={() => {
       queue.add({
         kind: "info",
-        title: "Scheduled maintenance",
-        subtitle: "Maintenance window begins tonight at 10:00 PM UTC.",
+        titleText: "Scheduled maintenance",
+        subtitleText: "Maintenance window begins tonight at 10:00 PM UTC.",
         timeout: 3000,
       });
     }}
@@ -51,11 +51,11 @@
   </Button>
   <Button
     kind="tertiary"
-    on:click={() => {
+    onclick={() => {
       queue.add({
         kind: "warning",
-        title: "Certificate expiring soon",
-        subtitle: "TLS certificate for api.example.com expires in 7 days.",
+        titleText: "Certificate expiring soon",
+        subtitleText: "TLS certificate for api.example.com expires in 7 days.",
         timeout: 3000,
       });
     }}

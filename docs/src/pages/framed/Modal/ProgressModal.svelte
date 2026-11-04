@@ -36,7 +36,7 @@
 </script>
 
 <Button
-  on:click={() => {
+  onclick={() => {
     open = true;
     step = 0;
     name = "";
@@ -47,7 +47,7 @@
 </Button>
 
 <ComposedModal bind:open>
-  <ModalHeader title="Create workspace" />
+  <ModalHeader titleText="Create workspace" />
   <ModalBody hasForm>
     <form id="workspace-form" on:submit|preventDefault={handleSubmit}>
       <Stack gap={6}>
@@ -89,8 +89,8 @@
     </form>
   </ModalBody>
   <ModalFooter>
-    <Button kind="ghost" on:click={() => (open = false)}>Cancel</Button>
-    <Button kind="secondary" disabled={step === 0} on:click={() => step--}>
+    <Button kind="ghost" onclick={() => (open = false)}>Cancel</Button>
+    <Button kind="secondary" disabled={step === 0} onclick={() => step--}>
       Previous
     </Button>
     <Button type="submit" form="workspace-form">

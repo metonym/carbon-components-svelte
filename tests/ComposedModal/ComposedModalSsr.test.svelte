@@ -18,7 +18,7 @@
   aria-labelledby={ariaLabelledby}
 >
   {#if showHeader}
-    <ModalHeader {label} {title} />
+    <ModalHeader labelText={label} titleText={title} />
   {/if}
   <ModalBody>
     <p>Body</p>

@@ -24,7 +24,7 @@
   <Stack orientation="horizontal" gap={9} wrap="wrap" align="start">
     <div>
       <div bind:this={anchorStart}>
-        <Button on:click={() => (openStart = !openStart)}>Start</Button>
+        <Button onclick={() => (openStart = !openStart)}>Start</Button>
       </div>
       <FloatingPortal
         anchor={anchorStart}
@@ -38,7 +38,7 @@
 
     <div>
       <div bind:this={anchorCenter}>
-        <Button on:click={() => (openCenter = !openCenter)}>Center</Button>
+        <Button onclick={() => (openCenter = !openCenter)}>Center</Button>
       </div>
       <FloatingPortal
         anchor={anchorCenter}
@@ -52,7 +52,7 @@
 
     <div>
       <div bind:this={anchorEnd}>
-        <Button on:click={() => (openEnd = !openEnd)}>End</Button>
+        <Button onclick={() => (openEnd = !openEnd)}>End</Button>
       </div>
       <FloatingPortal
         anchor={anchorEnd}

@@ -18,12 +18,12 @@
     <Tab
       label={route.label}
       href={route.href}
-      on:click={(e) => interceptNavigation(e, route.href)}
+      onclick={(e) => interceptNavigation(e, route.href)}
     />
   {/each}
-  <svelte:fragment slot="content">
+  {#snippet content()}
     {#each routes as route}
       <TabContent>{route.label} content</TabContent>
     {/each}
-  </svelte:fragment>
+  {/snippet}
 </Tabs>

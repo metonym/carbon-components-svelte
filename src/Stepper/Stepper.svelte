@@ -189,18 +189,15 @@
 <div class:bx--stepper={true} {...$$restProps}>
   <!-- A completed step can be clicked to go back to it; steps ahead can't,
        so validation can't be skipped. -->
+  <!-- Once submitted, no step is current. -->
   <ProgressIndicator
-    {currentIndex}
+    currentIndex={submitted ? -1 : currentIndex}
     {spaceEqually}
     preventChangeOnClick={submitted || busy}
-    on:change={(event) => go(event.detail)}
+    oncurrentchange={(event) => go(event.index)}
   >
     {#each steps as label, index (index)}
-      <ProgressStep
-        {label}
-        complete={submitted || index < currentIndex}
-        current={!submitted && index === currentIndex}
-      />
+      <ProgressStep {label} complete={submitted || index < currentIndex} />
     {/each}
   </ProgressIndicator>
   <div
@@ -219,7 +216,7 @@
           kind="ghost"
           icon={ArrowLeft}
           disabled={busy}
-          on:click={() => go(currentIndex - 1)}
+          onclick={() => go(currentIndex - 1)}
         >
           {backText}
         </Button>
@@ -232,7 +229,7 @@
         loadingDescription={checking
           ? validatingDescription
           : submittingDescription}
-        on:click={next}
+        onclick={next}
       >
         {last ? submitText : nextText}
       </Button>

@@ -49,57 +49,54 @@
   on:toggle:change={({ detail }) => onToggleChange(detail)}
 />
 
-<Button data-testid="expand-all" on:click={() => treeview.expandAll()}>
+<Button data-testid="expand-all" onclick={() => treeview.expandAll()}>
   Expand all
 </Button>
-<Button data-testid="collapse-all" on:click={() => treeview.collapseAll()}>
+<Button data-testid="collapse-all" onclick={() => treeview.collapseAll()}>
   Collapse all
 </Button>
 <Button
   data-testid="expand-nodes"
-  on:click={() => treeview.expandNodes((node) => node.id === 1)}
+  onclick={() => treeview.expandNodes((node) => node.id === 1)}
 >
   Expand Analytics
 </Button>
 <Button
   data-testid="collapse-nodes"
-  on:click={() => treeview.collapseNodes((node) => node.id === 1)}
+  onclick={() => treeview.collapseNodes((node) => node.id === 1)}
 >
   Collapse Analytics
 </Button>
 <Button
   data-testid="show-node"
-  on:click={() => treeview.showNode(3, { focus: false })}
+  onclick={() => treeview.showNode(3, { focus: false })}
 >
   Show Apache Spark
 </Button>
 <Button
   data-testid="show-node-select"
-  on:click={() => treeview.showNode(8, { select: true })}
+  onclick={() => treeview.showNode(8, { select: true })}
 >
   Show node select
 </Button>
-<Button data-testid="set-prop" on:click={() => (expandedIds = [1])}>
+<Button data-testid="set-prop" onclick={() => (expandedIds = [1])}>
   Set expanded via prop
 </Button>
 <Button
   data-testid="noop-set"
-  on:click={() => (expandedIds = (expandedIds ?? []).slice())}
+  onclick={() => (expandedIds = (expandedIds ?? []).slice())}
 >
   No-op set
 </Button>
-<Button data-testid="select-only" on:click={() => (activeId = 0)}>
+<Button data-testid="select-only" onclick={() => (activeId = 0)}>
   Select only
 </Button>
-<Button data-testid="auto-collapse" on:click={() => (activeId = 2)}>
+<Button data-testid="auto-collapse" onclick={() => (activeId = 2)}>
   Activate nested node
 </Button>
-<Button data-testid="set-selected" on:click={() => (selectedIds = [0, 7])}>
+<Button data-testid="set-selected" onclick={() => (selectedIds = [0, 7])}>
   Set selected
 </Button>
-<Button
-  data-testid="set-same"
-  on:click={() => (selectedIds = [...selectedIds])}
->
+<Button data-testid="set-same" onclick={() => (selectedIds = [...selectedIds])}>
   Set same
 </Button>

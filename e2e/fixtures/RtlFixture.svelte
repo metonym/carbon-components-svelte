@@ -320,7 +320,7 @@ export async function rollback(region, id) {
   </div>
   <Button
     size="small"
-    on:click={() => (regionDir = regionDir === "ltr" ? "rtl" : "ltr")}
+    onclick={() => (regionDir = regionDir === "ltr" ? "rtl" : "ltr")}
     >Flip region</Button
   >
   <LayoutDirection dir={regionDir} data-testid="region">

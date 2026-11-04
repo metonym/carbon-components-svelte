@@ -29,8 +29,8 @@
   {warn}
   {warnText}
   {warnId}
-  on:keydown={(e) => onkeydown?.(e)}
-  on:click={(e) => onclick?.(e)}
+  onkeydown={(e) => onkeydown?.(e)}
+  onclick={(e) => onclick?.(e)}
   {...$$restProps}
 >
   {#if slotContent}

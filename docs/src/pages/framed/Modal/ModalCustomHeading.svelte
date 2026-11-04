@@ -4,17 +4,17 @@
   let open = false;
 </script>
 
-<Button on:click={() => (open = true)}>Create database</Button>
+<Button onclick={() => (open = true)}>Create database</Button>
 
 <Modal
   bind:open
   primaryButtonText="Confirm"
   secondaryButtonText="Cancel"
-  on:click:button--secondary={() => (open = false)}
+  onsecondaryaction={() => (open = false)}
 >
-  <svelte:fragment slot="labelChildren">
+  {#snippet modalLabel()}
     Cloudant <Tag type="green" size="sm">Beta</Tag>
-  </svelte:fragment>
-  <svelte:fragment slot="heading">Create database</svelte:fragment>
+  {/snippet}
+  {#snippet modalHeading()}Create database{/snippet}
   <p>Create a new Cloudant database in the US South region.</p>
 </Modal>

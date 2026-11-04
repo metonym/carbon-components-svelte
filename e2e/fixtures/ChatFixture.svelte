@@ -29,13 +29,13 @@
 </ul>
 <Button
   data-testid="add"
-  on:click={() => (messages = [...messages, `Message ${messages.length + 1}`])}
+  onclick={() => (messages = [...messages, `Message ${messages.length + 1}`])}
 >
   Add
 </Button>
 <Button
   data-testid="send"
-  on:click={() => {
+  onclick={() => {
     // Even messages come from "me"; skip ahead so the new one is mine.
     if (messages.length % 2 === 0)
       messages = [...messages, `Message ${messages.length + 1}`];

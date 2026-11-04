@@ -22,7 +22,7 @@
 <Tabs
   bind:selectedId
   dismissible
-  on:dismiss={({ detail }) => {
+  ondismiss={(detail) => {
     onDismiss(detail);
     if (removeOnDismiss) tabs = tabs.filter((tab) => tab.id !== detail.id);
   }}
@@ -30,9 +30,9 @@
   {#each tabs as tab (tab.id)}
     <Tab id={tab.id} label={tab.label} icon={withIcon ? Calendar : undefined} />
   {/each}
-  <svelte:fragment slot="content">
+  {#snippet content()}
     {#each tabs as tab (tab.id)}
       <TabContent>{tab.label} content</TabContent>
     {/each}
-  </svelte:fragment>
+  {/snippet}
 </Tabs>

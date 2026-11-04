@@ -9,7 +9,7 @@
 </script>
 
 <TagSet
-  on:close:tag={({ detail }) => {
+  ontagdismiss={(detail) => {
     labels = labels.filter((_, index) => index !== detail.index);
     if (moveFocusOnClose) elsewhere.focus();
   }}

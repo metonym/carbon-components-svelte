@@ -54,7 +54,7 @@
   import { slide } from "svelte/transition";
   import UserAvatar from "../UserAvatar/UserAvatar.svelte";
   import { PROFILE_MENU_CONTEXT_KEY } from "../constants/context-keys.js";
-  import { dismiss } from "../utils/dismiss.js";
+  import { dismiss } from "../utils/dismiss.svelte.js";
   import { createDomNodeRegistry } from "../utils/dom-node-registry.js";
   import { returnFocusOnClose } from "../utils/focus.js";
   import { isImeComposition } from "../utils/ime-composition.js";
@@ -141,13 +141,13 @@
 
 <button
   bind:this={ref}
-  use:dismiss={{
+  {@attach dismiss(() => ({
     enabled: isOpen,
     listeners: [
       { type: "click", handler: handleOutsideClick },
       { type: "keydown", handler: handleKeydown },
     ],
-  }}
+  }))}
   type="button"
   aria-expanded={isOpen ? "true" : "false"}
   aria-controls={isOpen ? menuId : undefined}

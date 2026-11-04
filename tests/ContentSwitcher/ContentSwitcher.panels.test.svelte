@@ -13,12 +13,12 @@
   <Switch id="one-switch" text="One" />
   <Switch id="two-switch" text="Two" />
   <Switch id="three-switch" text="Three" aria-controls="custom-panel" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     {#if showFirstPanel}
       <SwitchPanel id="one-panel" {lazy} {unmountOnHide}>Content 1</SwitchPanel>
     {/if}
     <SwitchPanel id="two-panel" {lazy} {unmountOnHide}>Content 2</SwitchPanel>
     <SwitchPanel id="three-panel" {lazy} {unmountOnHide}>Content 3</SwitchPanel>
-  </svelte:fragment>
+  {/snippet}
 </ContentSwitcher>
 <div data-testid="selected-index">{selectedIndex}</div>

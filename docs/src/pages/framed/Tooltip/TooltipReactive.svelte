@@ -9,7 +9,7 @@
     <p>Resources are provisioned based on your account's organization.</p>
   </Tooltip>
   <div>
-    <Button kind="tertiary" size="small" on:click={() => (open = !open)}>
+    <Button kind="tertiary" size="small" onclick={() => (open = !open)}>
       {open ? "Close tooltip" : "Open tooltip"}
     </Button>
   </div>

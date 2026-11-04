@@ -19,9 +19,9 @@
   />
 
   <ButtonSet>
-    <Button on:click={() => (value = null)}>Set to null</Button>
-    <Button on:click={() => (value = 0)}>Set to 0</Button>
-    <Button on:click={() => (value = 1.23)}>Set to 1.23</Button>
+    <Button onclick={() => (value = null)}>Set to null</Button>
+    <Button onclick={() => (value = 0)}>Set to 0</Button>
+    <Button onclick={() => (value = 1.23)}>Set to 1.23</Button>
   </ButtonSet>
 
   <div>

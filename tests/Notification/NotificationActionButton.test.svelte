@@ -4,6 +4,6 @@
   export let onclick: ((event: MouseEvent) => void) | undefined = undefined;
 </script>
 
-<NotificationActionButton on:click={(e) => onclick?.(e)} {...$$restProps}>
+<NotificationActionButton onclick={(e) => onclick?.(e)} {...$$restProps}>
   Undo
 </NotificationActionButton>

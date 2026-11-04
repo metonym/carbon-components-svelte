@@ -66,8 +66,8 @@
 
   <InlineNotification
     kind="info"
-    title="Sync complete:"
-    subtitle="Your workspace data is up to date."
+    titleText="Sync complete:"
+    subtitleText="Your workspace data is up to date."
     hideCloseButton
     lowContrast
   />

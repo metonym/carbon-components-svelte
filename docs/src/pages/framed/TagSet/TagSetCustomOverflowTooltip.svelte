@@ -16,10 +16,10 @@
     {#each certifications as certification}
       <Tag type={certification.type}>{certification.label}</Tag>
     {/each}
-    <svelte:fragment slot="overflowTooltip" let:tags let:count>
+    {#snippet overflowTooltip({ tags, count })}
       <strong>{count} more:</strong>&nbsp;{tags
         .map((tag) => tag.label)
         .join(", ")}
-    </svelte:fragment>
+    {/snippet}
   </TagSet>
 </Box>

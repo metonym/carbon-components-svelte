@@ -13,8 +13,8 @@
   data-testid="save"
   shortcut="ctrl+s"
   {disabled}
-  on:click={() => clicks++}
-  on:shortcut={(e) => {
+  onclick={() => clicks++}
+  onshortcut={(e) => {
     shortcuts++;
     if (preventShortcut) e.preventDefault();
   }}

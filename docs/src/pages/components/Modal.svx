@@ -8,7 +8,7 @@ The modal is an all-in-one component configured through props, making it ideal f
 
 ## Basic
 
-Display a modal dialog with a header, content area, and footer. Use primary and secondary actions for confirmations or input. Neither button closes the modal automatically. Wire up `on:submit` and `on:click:button--secondary` to set `open` to `false` yourself; see [Events](#events).
+Display a modal dialog with a header, content area, and footer. Use primary and secondary actions for confirmations or input. Neither button closes the modal automatically. Set `open` to `false` yourself in `onprimaryaction` and `onsecondaryaction`; see [Callbacks](#callbacks).
 
 <FileSource src="/framed/Modal/Modal" />
 
@@ -31,7 +31,7 @@ The close button shows `iconDescription` in a tooltip on hover and focus. When t
 
 ### Custom focus
 
-Use `selectorPrimaryFocus` to override the default and target a specific element when the automatic first-input focus is not desired. Set `selectorPrimaryFocus` to `null` to skip initial focus when you move focus yourself, for example in `on:transitionend`.
+Use `selectorPrimaryFocus` to override the default and target a specific element when the automatic first-input focus is not desired. Set `selectorPrimaryFocus` to `null` to skip initial focus when you move focus yourself, for example in `onopenchangecomplete`.
 
 <FileSource src="/framed/Modal/ModalCustomFocus" />
 
@@ -83,7 +83,7 @@ Set `lazy` to build the body and footer the first time the modal opens, then kee
 
 ### Custom heading and label
 
-Override the plain-text `modalHeading` and `modalLabel` with the `heading` and `labelChildren` slots when you need richer markup, such as a status tag next to the title.
+Pass snippets to `modalHeading` and `modalLabel` when you need richer markup, such as a status tag next to the title. A snippet heading doesn't name the dialog as text; set `modalAriaLabel` then.
 
 <FileSource src="/framed/Modal/ModalCustomHeading" />
 
@@ -113,7 +113,7 @@ Set `fullWidth` to remove the modal body padding so content spans edge to edge. 
 
 ## AI label
 
-Put an `AILabel` in the `decorator` slot to mark the modal's content as AI-generated. The label sits beside the close button, and the modal shows the AI surface.
+Put an `AILabel` in the `decorator` snippet to mark the modal's content as AI-generated. The label sits beside the close button, and the modal shows the AI surface.
 
 <FileSource src="/framed/Modal/ModalAILabel" />
 
@@ -139,13 +139,13 @@ Enhance modal buttons with icons for better visual context and clarity.
 
 ### Primary button loading
 
-Set `primaryButtonLoading` while an async submit is in progress. The primary button shows an [InlineLoading](/components/InlineLoading) spinner, becomes non-interactive, and suppresses `submit` until loading finishes. The modal stays open.
+Set `primaryButtonLoading` while an async submit is in progress. The primary button shows an [InlineLoading](/components/InlineLoading) spinner, becomes non-interactive, and suppresses `onprimaryaction` until loading finishes. The modal stays open.
 
 <FileSource src="/framed/Modal/ModalPrimaryButtonLoading" />
 
 ### Loading status
 
-Set `loadingStatus` to show the progress of the primary action in its button: `"active"` while the work runs, then `"finished"` or `"error"`. Any status other than `"inactive"` disables the footer buttons and suppresses `submit`. After `"finished"`, the modal dispatches `loading:success` when the [InlineLoading](/components/InlineLoading) success delay ends. Close the modal there.
+Set `loadingStatus` to show the progress of the primary action in its button: `"active"` while the work runs, then `"finished"` or `"error"`. Any status other than `"inactive"` disables the footer buttons and suppresses `onprimaryaction`. After `"finished"`, the modal calls `onloadingsuccess` when the [InlineLoading](/components/InlineLoading) success delay ends. Close the modal there.
 
 `primaryButtonLoading` is the same as `"active"`, except that the secondary buttons stay enabled.
 
@@ -221,7 +221,7 @@ Control how the modal can be dismissed.
 
 ### Prevent default
 
-The modal dispatches a cancelable `close` event. Call `e.preventDefault()` to keep the modal open. The event includes a `trigger` property indicating what triggered the close attempt: `"escape-key"` (<DocKbd label="Escape" />), `"outside-click"`, `"close-button"`, or `"programmatic"` (the `open` prop was set to `false` from outside the component, for example through `bind:open`, rather than through one of the modal's own dismiss controls).
+When the user closes the modal, it calls `onopenchange` with `{ open: false, trigger }`. Call `preventDefault()` on it to keep the modal open. `trigger` is `"escape-key"` (<DocKbd label="Escape" />), `"outside-click"` or `"close-button"`. Setting `open` yourself, for example through `bind:open`, calls nothing.
 
 <FileSource src="/framed/Modal/ModalPreventClose" />
 
@@ -235,45 +235,37 @@ Set `preventCloseOnClickOutside` to `true` to keep a passive modal open, for exa
 
 ### Hide close button
 
-Set `hideCloseButton` to `true` to remove the header close button. Use this for forced-choice dialogs such as auth walls or terms acceptance. Always provide an alternative dismiss path, typically footer actions. A modal with actions already stays open on an outside click. <DocKbd label="Escape" /> still closes the modal unless you cancel the `close` event.
+Set `hideCloseButton` to `true` to remove the header close button. Use this for forced-choice dialogs such as auth walls or terms acceptance. Always provide an alternative dismiss path, typically footer actions. A modal with actions already stays open on an outside click. <DocKbd label="Escape" /> still closes the modal unless `onopenchange` calls `preventDefault()`.
 
 <FileSource src="/framed/Modal/ModalHideCloseButton" />
 
-## Events
+## Callbacks
 
-Modal dispatches events for its lifecycle and button interactions. Only the close button, <DocKbd label="Escape" />, and an outside click on a passive modal close the modal automatically. See [Closing](#closing) above. Every other action leaves `open` untouched; handle the event and set `open` to `false` yourself when the action should dismiss the dialog.
+Only the close button, <DocKbd label="Escape" />, and an outside click on a passive modal close the modal automatically. See [Closing](#closing) above. Every other action leaves `open` untouched; set `open` to `false` yourself when the action should dismiss the dialog.
 
-### Open
+### Primary and secondary actions
 
-Listen for `on:open` to know when `open` becomes `true`. It fires before the modal is visible and before focus moves into it. To run code after focus has moved, listen for `on:transitionend` and check `event.detail.open`.
-
-```svelte
-<Modal bind:open on:open={() => console.log("opened")}>
-```
-
-### Submit and button clicks
-
-The primary button dispatches both `submit` and `click:button--primary` when clicked. Secondary buttons dispatch `click:button--secondary` with the button's `text`.
+The primary button calls `onprimaryaction` with `{ trigger: "button" }`. Secondary buttons call `onsecondaryaction` with the button's `text`.
 
 ```svelte
 <Modal
   bind:open
   primaryButtonText="Confirm"
   secondaryButtonText="Cancel"
-  on:click:button--secondary={() => (open = false)}
-  on:submit={() => (open = false)}
+  onsecondaryaction={() => (open = false)}
+  onprimaryaction={() => (open = false)}
 >
 ```
 
-When `shouldSubmitOnEnter` is `true` (the default), pressing <DocKbd label="Enter" /> also dispatches `submit` and `click:button--primary`, unless focus is on a button, link, textarea, select, or contenteditable element. Set `shouldSubmitOnEnter` to `false` to disable this.
+When `shouldSubmitOnEnter` is `true` (the default), pressing <DocKbd label="Enter" /> also calls `onprimaryaction`, with `{ trigger: "enter-key" }`, unless focus is on a button, link, textarea, select, or contenteditable element. Set `shouldSubmitOnEnter` to `false` to disable this.
 
-### Transition end
+### Open or close finished
 
-Listen for `on:transitionend` to know when the modal's open or close animation finishes. `event.detail.open` reflects the modal's state at the end of the transition.
+`onopenchangecomplete` is called when the modal's open or close animation finishes, with `{ open }`. Use it to run code after focus has moved into an opened modal. To react to `open` itself, read it where you set it, or in an `$effect`.
 
 ```svelte
 <Modal
   bind:open
-  on:transitionend={(e) => console.log("open:", e.detail.open)}
+  onopenchangecomplete={({ open }) => console.log("open:", open)}
 >
 ```

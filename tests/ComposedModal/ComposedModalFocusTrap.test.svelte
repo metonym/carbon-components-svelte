@@ -9,8 +9,8 @@
   export let open = false;
 </script>
 
-<ComposedModal bind:open on:open on:close>
-  <ModalHeader title="A11y issue" />
+<ComposedModal bind:open>
+  <ModalHeader titleText="A11y issue" />
   <ModalBody hasScrollingContent>
     <Dropdown
       labelText="Select source"

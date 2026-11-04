@@ -7,8 +7,8 @@
 <InlineNotification
   data-testid="inline-notification"
   kind="info"
-  title="Notification title"
-  subtitle="Notification subtitle"
+  titleText="Notification title"
+  subtitleText="Notification subtitle"
   bind:open
 />
 
@@ -18,7 +18,7 @@
     hideCloseButton
     role="status"
     kind="warning"
-    title="Usage"
-    subtitle="Build minutes are close to the Team limit."
+    titleText="Usage"
+    subtitleText="Build minutes are close to the Team limit."
   />
 </div>

@@ -31,14 +31,14 @@
   ];
 </script>
 
-<PageHeader grid fill="layer-01" title="Usage" subtitle="All services">
-  <svelte:fragment slot="tabs">
+<PageHeader grid fill="layer-01" titleText="Usage" subtitle="All services">
+  {#snippet tabs()}
     <Tabs>
       <Tab label="Overview" />
       <Tab label="By service" />
     </Tabs>
-  </svelte:fragment>
-  <svelte:fragment slot="tabsEnd">
+  {/snippet}
+  {#snippet tabsEnd()}
     <MenuButton kind="ghost" intrinsicAlign="end" labelText={timeRangeLabel}>
       <MenuItemRadioGroup labelText="Time range" bind:selectedId={timeRange}>
         {#each timeRanges as range (range.id)}
@@ -46,7 +46,7 @@
         {/each}
       </MenuItemRadioGroup>
     </MenuButton>
-  </svelte:fragment>
+  {/snippet}
   <TabContent>
     <Row padding>
       {#each metrics as metric (metric.label)}

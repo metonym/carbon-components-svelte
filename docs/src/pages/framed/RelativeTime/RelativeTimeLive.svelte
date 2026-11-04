@@ -9,6 +9,6 @@
 </script>
 
 <Stack gap={5}>
-  <Button on:click={handleSave}>Save</Button>
+  <Button onclick={handleSave}>Save</Button>
   <RelativeTime date={savedAt} let:formatted>Saved {formatted}</RelativeTime>
 </Stack>

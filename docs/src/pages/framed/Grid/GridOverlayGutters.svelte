@@ -14,7 +14,7 @@
 <Grid padding>
   <Row>
     <Column>
-      <Button on:click={() => (open = !open)}>
+      <Button onclick={() => (open = !open)}>
         {open ? "Hide" : "Show"}
         grid overlay with gutters
       </Button>

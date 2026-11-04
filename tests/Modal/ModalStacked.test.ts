@@ -2,6 +2,10 @@ import { render, screen } from "@testing-library/svelte";
 import { user } from "../utils/user";
 import ModalStacked from "./ModalStacked.test.svelte";
 
+/** The overlay root of the modal whose dialog carries `testId`. */
+const overlay = (testId: string) =>
+  screen.getByTestId(testId).closest(".bx--modal");
+
 describe("Stacked modals", () => {
   it("closes only the topmost modal when Escape is pressed", async () => {
     render(ModalStacked);
@@ -10,14 +14,14 @@ describe("Stacked modals", () => {
     await user.click(screen.getByTestId("launch-child-modal"));
 
     expect(screen.getByTestId("modal")).toBeInTheDocument();
-    expect(screen.getByTestId("sibling-modal")).toHaveClass("is-visible");
-    expect(screen.getByTestId("child-modal")).toHaveClass("is-visible");
+    expect(overlay("sibling-modal")).toHaveClass("is-visible");
+    expect(overlay("child-modal")).toHaveClass("is-visible");
 
     await user.keyboard("{Escape}");
 
-    expect(screen.getByTestId("modal")).toHaveClass("is-visible");
-    expect(screen.getByTestId("sibling-modal")).toHaveClass("is-visible");
-    expect(screen.getByTestId("child-modal")).not.toHaveClass("is-visible");
+    expect(overlay("modal")).toHaveClass("is-visible");
+    expect(overlay("sibling-modal")).toHaveClass("is-visible");
+    expect(overlay("child-modal")).not.toHaveClass("is-visible");
   });
 
   it("keeps Tab inside a DOM-nested child modal", async () => {

@@ -53,7 +53,7 @@
   secondaryButtonText="Cancel"
   primaryButtonLoadingDescription="Saving"
   {loadingStatus}
-  on:loading:success={() => (successCount += 1)}
+  onloadingsuccess={() => (successCount += 1)}
 >
   <p>Save your changes to the Cloudant database configuration.</p>
   <p data-testid="success-count">{successCount}</p>
@@ -73,7 +73,7 @@
   bind:open={composedOpen}
   selectorPrimaryFocus="#workspace-name"
 >
-  <ModalHeader label="Account settings" title="Rename workspace" />
+  <ModalHeader labelText="Account settings" titleText="Rename workspace" />
   <ModalBody>
     <label for="workspace-name">Workspace name</label>
     <input id="workspace-name" value="Cloudant team" />

@@ -4,85 +4,101 @@
    */
 
   /**
-   * Specify the size of the link.
-   * @type {"sm" | "md" | "lg"}
+   * @restProps {a}
    */
-  export let size = "md";
+  let {
+    /**
+     * Specify the size of the link.
+     * @type {"sm" | "md" | "lg"}
+     */
+    size = "md",
 
-  /**
-   * Specify the href value.
-   * @type {string | undefined}
-   */
-  export let href = undefined;
+    /**
+     * Specify the href value.
+     * @type {string | undefined}
+     */
+    href = undefined,
 
-  /** Set to `true` to use the inline variant */
-  export let inline = false;
+    /** Set to `true` to use the inline variant */
+    inline = false,
 
-  /**
-   * Specify the icon to render.
-   * `inline` must be `false`.
-   * @type {Icon | undefined}
-   */
-  export let icon = /** @type {Icon | undefined} */ (undefined);
+    /**
+     * Specify the icon to render.
+     * `inline` must be `false`.
+     * @type {Icon | undefined}
+     */
+    icon: Icon = undefined,
 
-  /** Set to `true` to disable the link */
-  export let disabled = false;
+    /** Set to `true` to disable the link */
+    disabled = false,
 
-  /** Set to `true` to allow visited styles */
-  export let visited = false;
+    /** Set to `true` to allow visited styles */
+    visited = false,
 
-  /**
-   * Set to `true` to inherit the surrounding text color instead of the
-   * link color. Use for inline links within body text.
-   */
-  export let muted = false;
+    /**
+     * Set to `true` to inherit the surrounding text color instead of the
+     * link color. Use for inline links within body text.
+     */
+    muted = false,
 
-  /**
-   * Obtain a reference to the top-level HTML element.
-   * @bindable readonly
-   * @type {null | HTMLAnchorElement}
-   */
-  export let ref = null;
+    /**
+     * Obtain a reference to the top-level HTML element.
+     * @type {null | HTMLAnchorElement}
+     */
+    ref = $bindable(null),
+
+    /** @type {import("svelte").Snippet | undefined} */
+    children = undefined,
+
+    /** @type {import("svelte/elements").ClassValue | undefined} */
+    class: className = undefined,
+
+    /** @type {string | undefined | null} */
+    target = undefined,
+
+    /** @type {string | undefined | null} */
+    rel = undefined,
+
+    /** @type {import("svelte/elements").MouseEventHandler<HTMLAnchorElement> | undefined | null} */
+    onclick = undefined,
+
+    ...rest
+  } = $props();
 
   import { resolveLinkRel } from "../utils/link-rel.js";
+
+  /** @param {MouseEvent & { currentTarget: EventTarget & HTMLAnchorElement }} event */
+  function handleClick(event) {
+    // A disabled link never reaches the consumer's handler or an ancestor.
+    if (disabled) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+    onclick?.(event);
+  }
 </script>
 
-<!-- No whitespace after the slot: an inline link would underline it. -->
+<!-- No whitespace after the children: an inline link would underline it. -->
 <!-- Whitespace between these nodes renders as text -->
 <!-- prettier-ignore -->
 <a
   bind:this={ref}
   role={disabled ? "link" : undefined}
   aria-disabled={disabled ? "true" : undefined}
-  class:bx--link={true}
-  class:bx--link--disabled={disabled}
-  class:bx--link--inline={inline}
-  class:bx--link--visited={visited}
-  class:bx--link--muted={muted}
-  class:bx--link--sm={!disabled && size === "sm"}
-  class:bx--link--lg={!disabled && size === "lg"}
-  rel={disabled ? undefined : resolveLinkRel($$restProps.target)}
+  {...rest}
+  class={[
+    "bx--link",
+    disabled && "bx--link--disabled",
+    inline && "bx--link--inline",
+    visited && "bx--link--visited",
+    muted && "bx--link--muted",
+    !disabled && size === "sm" && "bx--link--sm",
+    !disabled && size === "lg" && "bx--link--lg",
+    className,
+  ]}
+  {target}
+  rel={rel ?? (disabled ? undefined : resolveLinkRel(target))}
   href={disabled ? undefined : href}
-  {...$$restProps}
-  on:click={(event) => {
-    if (!disabled) return;
-    // Runs before the forwarded `click`, so a disabled link never reaches
-    // a consumer's handler.
-    event.preventDefault();
-    event.stopImmediatePropagation();
-  }}
-  on:click
-  on:mouseover
-  on:mouseenter
-  on:mouseleave
-  on:focus
-  on:blur
-  on:keydown
-  on:keyup
->
-  <slot />{#if !inline && ($$slots.icon || icon)}
-    <span class:bx--link__icon={true}>
-      <slot name="icon"> <svelte:component this={icon} /> </slot>
-    </span>
-  {/if}
-</a>
+  onclick={handleClick}
+>{@render children?.()}{#if !inline && Icon}<span class="bx--link__icon"><Icon /></span>{/if}</a>

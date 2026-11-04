@@ -171,10 +171,15 @@
       </ul>
     </Prose>
     <h2>Carbon components inside</h2>
-    <InlineNotification lowContrast hideCloseButton kind="info" title="Note">
-      <svelte:fragment slot="subtitleChildren">
+    <InlineNotification
+      lowContrast
+      hideCloseButton
+      kind="info"
+      titleText="Note"
+    >
+      {#snippet subtitleText()}
         Read the <a href="#setup">setup guide</a> <strong>first</strong>.
-      </svelte:fragment>
+      {/snippet}
     </InlineNotification>
     <Text>Text keeps body-01.</Text>
     <p>
@@ -338,10 +343,15 @@
     </table>
   </Prose>
   <div data-testid="outside">
-    <InlineNotification lowContrast hideCloseButton kind="info" title="Note">
-      <svelte:fragment slot="subtitleChildren">
+    <InlineNotification
+      lowContrast
+      hideCloseButton
+      kind="info"
+      titleText="Note"
+    >
+      {#snippet subtitleText()}
         Read the <a href="#setup">setup guide</a> <strong>first</strong>.
-      </svelte:fragment>
+      {/snippet}
     </InlineNotification>
     <Text>Text keeps body-01.</Text>
     <p><CodeSnippet type="inline" code="npm i carbon-components-svelte" /></p>

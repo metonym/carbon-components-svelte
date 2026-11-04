@@ -8,13 +8,13 @@
   export let unmountOnHide = false;
 </script>
 
-<Tabs {selected}>
+<Tabs selectedIndex={selected}>
   <Tab label="Tab 1" />
   <Tab label="Tab 2" />
   <Tab label="Tab 3" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent {lazy} {unmountOnHide}>Content 1</TabContent>
     <TabContent {lazy} {unmountOnHide}>Content 2</TabContent>
     <TabContent {lazy} {unmountOnHide}>Content 3</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>

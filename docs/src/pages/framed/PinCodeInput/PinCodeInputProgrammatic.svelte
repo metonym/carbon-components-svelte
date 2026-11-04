@@ -22,35 +22,35 @@
       <Button
         kind="tertiary"
         size="small"
-        on:click={() => pinCodeInput?.focusFirstInput()}
+        onclick={() => pinCodeInput?.focusFirstInput()}
       >
         Focus first
       </Button>
       <Button
         kind="tertiary"
         size="small"
-        on:click={() => pinCodeInput?.focusLastInput()}
+        onclick={() => pinCodeInput?.focusLastInput()}
       >
         Focus last
       </Button>
       <Button
         kind="tertiary"
         size="small"
-        on:click={() => pinCodeInput?.focusNextEmptyInput()}
+        onclick={() => pinCodeInput?.focusNextEmptyInput()}
       >
         Focus next empty
       </Button>
       <Button
         kind="tertiary"
         size="small"
-        on:click={() => pinCodeInput?.focusNext()}
+        onclick={() => pinCodeInput?.focusNext()}
       >
         Focus next
       </Button>
       <Button
         kind="tertiary"
         size="small"
-        on:click={() =>
+        onclick={() =>
           pinCodeInput?.focusFirstInput({ selectTextOnFocus: true })}
       >
         Focus first (select)
@@ -60,14 +60,14 @@
       <Button
         kind="tertiary"
         size="small"
-        on:click={() => pinCodeInput?.clear()}
+        onclick={() => pinCodeInput?.clear()}
       >
         Clear
       </Button>
       <Button
         kind="tertiary"
         size="small"
-        on:click={() => pinCodeInput?.clear({ focus: true })}
+        onclick={() => pinCodeInput?.clear({ focus: true })}
       >
         Clear (focus)
       </Button>

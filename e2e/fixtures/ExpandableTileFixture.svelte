@@ -3,8 +3,10 @@
 </script>
 
 <ExpandableTile data-testid="expandable-tile">
-  <span slot="above" data-testid="above-fold">Above the fold</span>
-  <span slot="below" data-testid="below-fold">Below the fold</span>
+  {#snippet above()}<span data-testid="above-fold">Above the fold</span
+    >{/snippet}
+  {#snippet below()}<span data-testid="below-fold">Below the fold</span
+    >{/snippet}
 </ExpandableTile>
 
 <ExpandableTile
@@ -13,8 +15,8 @@
   tileCollapsedLabel="View more"
   tileExpandedLabel="View less"
 >
-  <a slot="above" href="#details">View details</a>
-  <span slot="below">Below the fold</span>
+  {#snippet above()}<a href="#details">View details</a>{/snippet}
+  {#snippet below()}<span>Below the fold</span>{/snippet}
 </ExpandableTile>
 
 <!-- No `hasInteractiveContent`: the tile finds the link itself. -->
@@ -23,6 +25,6 @@
   tileCollapsedLabel="Show billing"
   tileExpandedLabel="Hide billing"
 >
-  <span slot="above">Team plan</span>
-  <a slot="below" href="#billing">Billing history</a>
+  {#snippet above()}<span>Team plan</span>{/snippet}
+  {#snippet below()}<a href="#billing">Billing history</a>{/snippet}
 </ExpandableTile>

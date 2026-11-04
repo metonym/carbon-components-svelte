@@ -1,132 +1,124 @@
 <script>
-  /** @extendProps {"./AccordionSkeleton.svelte"} AccordionSkeletonProps */
-
   /**
-   * Specify alignment of accordion item chevron icon.
-   * @type {"start" | "end"}
+   * @restProps {ul}
+   * @extendProps {"./AccordionSkeleton.svelte"} AccordionSkeletonProps
    */
-  export let align = "end";
+  let {
+    /**
+     * Specify alignment of accordion item chevron icon.
+     * @type {"start" | "end"}
+     */
+    align = "end",
 
-  /**
-   * Specify the size of the accordion.
-   * Also accepts Carbon v11's `"md"` (the 40px default) and `"lg"` (`"xl"`).
-   * @type {"sm" | "md" | "lg" | "xl" | undefined}
-   */
-  export let size = undefined;
+    /**
+     * Specify the size of the accordion.
+     * Also accepts Carbon v11's `"md"` (the 40px default) and `"lg"` (`"xl"`).
+     * @type {"sm" | "md" | "lg" | "xl" | undefined}
+     */
+    size = undefined,
 
-  /**
-   * Set to `true` to remove the gutter around the accordion, aligning it flush with its container.
-   * Has no effect when `align` is `"start"`.
-   */
-  export let flush = false;
+    /**
+     * Set to `true` to remove the gutter around the accordion, aligning it flush with its container.
+     * Has no effect when `align` is `"start"`.
+     */
+    flush = false,
 
-  /** Set to `true` to disable the accordion */
-  export let disabled = false;
+    /** Set to `true` to disable the accordion */
+    disabled = false,
 
-  /** Set to `true` to display the skeleton state */
-  export let skeleton = false;
+    /** Set to `true` to display the skeleton state */
+    skeleton = false,
 
-  /**
-   * Specify the expansion behavior of the accordion.
-   * Set to `"single"` so that opening an item closes all other items.
-   * @type {"single" | "multiple"}
-   */
-  export let type = "multiple";
+    /**
+     * Specify the expansion behavior of the accordion.
+     * Set to `"single"` so that opening an item closes all other items.
+     * @type {"single" | "multiple"}
+     */
+    type = "multiple",
 
-  import { onMount, setContext } from "svelte";
-  import { get, writable } from "svelte/store";
+    /**
+     * The `AccordionItem`s.
+     * @type {import("svelte").Snippet | undefined}
+     */
+    children = undefined,
+
+    /** @type {import("svelte/elements").ClassValue | undefined} */
+    class: className = undefined,
+
+    ...rest
+  } = $props();
+
+  import { onMount, untrack } from "svelte";
   import { FIELD_SIZE_ALIASES, normalizeSize } from "../utils/size-aliases.js";
   import AccordionSkeleton from "./AccordionSkeleton.svelte";
+  import { setAccordion } from "./accordion-context.js";
 
-  $: effectiveSize = normalizeSize(size, FIELD_SIZE_ALIASES);
-
-  /**
-   * @type {import("svelte/store").Writable<boolean>}
-   */
-  const disableItems = writable(disabled);
-
-  $: disableItems.set(disabled);
+  const effectiveSize = $derived(normalizeSize(size, FIELD_SIZE_ALIASES));
 
   /**
-   * Tracks the identity of the currently open item when `type` is `"single"`.
-   * @type {import("svelte/store").Writable<object | null>}
+   * The item that owns the open slot when `type` is `"single"`.
+   * @type {object | null}
    */
-  const openId = writable(null);
+  let openKey = $state.raw(null);
+  let mounted = $state(false);
 
-  /** @type {import("svelte/store").Writable<"single" | "multiple">} */
-  const typeStore = writable(type);
-
-  $: if (type === "single") {
-    openId.set(null);
-  }
-  $: typeStore.set(type);
-
-  /** @param {object} id */
-  function notifyOpen(id) {
-    if (type === "single") {
-      openId.set(id);
+  // Switching to `"single"` frees the slot; the first open item claims it
+  // and the others close.
+  let prevType = untrack(() => type);
+  $effect.pre(() => {
+    if (type === "single" && prevType !== "single") {
+      untrack(() => (openKey = null));
     }
-  }
-
-  /**
-   * @param {object} id
-   * @returns {boolean}
-   */
-  function claimSingle(id) {
-    const currentId = get(openId);
-    if (currentId === null) {
-      openId.set(id);
-      return true;
-    }
-    return currentId === id;
-  }
-
-  let mounted = false;
+    prevType = type;
+  });
 
   onMount(() => {
     mounted = true;
   });
 
-  /** @returns {boolean} */
-  function isMounted() {
-    return mounted;
-  }
-
-  setContext("carbon:Accordion", {
-    disableItems,
-    openId,
-    typeStore,
-    notifyOpen,
-    claimSingle,
-    isMounted,
+  setAccordion({
+    get disabled() {
+      return disabled;
+    },
+    get type() {
+      return type;
+    },
+    get openKey() {
+      return openKey;
+    },
+    get mounted() {
+      return mounted;
+    },
+    setOpenKey(key) {
+      openKey = key;
+    },
+    release(key) {
+      if (openKey === key) openKey = null;
+    },
   });
 </script>
 
 {#if skeleton}
   <AccordionSkeleton
-    {...$$restProps}
+    {...rest}
+    class={className}
     {align}
     size={effectiveSize}
     {flush}
-    on:click
-    on:mouseover
-    on:mouseenter
-    on:mouseleave
   />
 {:else}
   <ul
-    class:bx--accordion={true}
-    class:bx--accordion--start={align === "start"}
-    class:bx--accordion--end={align === "end"}
-    class:bx--accordion--sm={effectiveSize === "sm"}
-    class:bx--accordion--xl={effectiveSize === "xl"}
-    class:bx--accordion--flush={flush && align !== "start"}
-    {...$$restProps}
-    on:click
-    on:mouseover
-    on:mouseenter
-    on:mouseleave
+    {...rest}
+    class={[
+      "bx--accordion",
+      align === "start" && "bx--accordion--start",
+      align === "end" && "bx--accordion--end",
+      effectiveSize === "sm" && "bx--accordion--sm",
+      effectiveSize === "xl" && "bx--accordion--xl",
+      flush && align !== "start" && "bx--accordion--flush",
+      className,
+    ]}
   >
-    <slot />
+    {@render children?.()}
   </ul>
 {/if}

@@ -5,7 +5,7 @@ description: ConfirmModal is a preset over Modal for are-you-sure decisions, wit
 
 ## Basic
 
-Ask the user to confirm or cancel an action. `title` sets the modal's heading, and `confirmText`/`cancelText` label the two footer buttons. Listen for `on:confirm` and `on:cancel` to react to the choice; the modal closes itself in both cases. For anything beyond a yes/no decision, use [Modal](/components/Modal) directly.
+Ask the user to confirm or cancel an action. `titleText` sets the modal's heading, and `confirmText`/`cancelText` label the two footer buttons. Pass `onconfirm` and `onopenchange` to react to the choice; the modal closes itself in both cases. For anything beyond a yes/no decision, use [Modal](/components/Modal) directly.
 
 <FileSource src="/framed/ConfirmModal/ConfirmModal" />
 
@@ -49,36 +49,32 @@ For work you track yourself, set `loading` instead, and close the modal when it'
 
 ### Focus after closing
 
-When the modal closes, focus returns to the button that opened it. If confirming removes that button, such as a delete button in a table row, move focus in `on:close` to what comes next, such as the next row or the table's heading.
+When the modal closes, focus returns to the button that opened it. If confirming removes that button, such as a delete button in a table row, move focus to what comes next where you handle the confirm, such as the next row or the table's heading.
 
 ## Custom body
 
-Use the default slot to add richer content below the confirmation prompt, such as a list of the items an action will affect.
+Pass children to add richer content below the confirmation prompt, such as a list of the items an action will affect.
 
 <FileSource src="/framed/ConfirmModal/ConfirmModalCustomBody" />
 
-## Events
+## Callbacks
 
 ### Confirm
 
-`on:confirm` fires when the confirm button is clicked (or activated via <DocKbd label="Enter" />) and, when `confirmationPhrase` is set, the typed phrase matches. It carries no detail.
+`onconfirm` is called when the confirm button is clicked (or activated via <DocKbd label="Enter" />) and, when `confirmationPhrase` is set, the typed phrase matches. When `confirm` throws or rejects, `onconfirmerror` is called with `{ error }` and the modal stays open.
 
 ```svelte
-<ConfirmModal bind:open title="Delete this item?" on:confirm={handleDelete}>
+<ConfirmModal bind:open titleText="Delete this item?" onconfirm={handleDelete}>
 ```
 
 ### Cancel
 
-`on:cancel` fires when the user backs out. `event.detail.trigger` is `"cancel-button"`, `"close-button"`, `"escape-key"` or `"outside-click"`. Closing the modal yourself, such as after async work succeeds, isn't a cancel.
+`onopenchange` is called when the user backs out, with `{ open: false, trigger }`. `trigger` is `"cancel-button"`, `"close-button"`, `"escape-key"` or `"outside-click"`. Call `preventDefault()` on it to keep the modal open. Closing the modal yourself, such as after async work succeeds, calls nothing, and a close attempt while `loading` is blocked.
 
 ```svelte
 <ConfirmModal
   bind:open
-  title="Delete this item?"
-  on:cancel={(e) => console.log(e.detail.trigger)}
+  titleText="Delete this item?"
+  onopenchange={({ trigger }) => console.log(trigger)}
 >
 ```
-
-### Open, close, and transition end
-
-`on:open` and `on:transitionend` forward the underlying [Modal](/components/Modal#events) events. `on:close` fires when the modal closes, with the same `trigger` values as Modal's; `"programmatic"` means `open` was set to `false`, after a confirm or by you. A close attempt while `loading` is blocked and not reported, and calling `event.preventDefault()` keeps the modal open.

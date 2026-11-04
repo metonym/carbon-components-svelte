@@ -9,12 +9,12 @@
     { id: "export", label: "CSV export", type: "teal" },
   ];
 
-  function handleTagClose({ detail }) {
+  function handleTagClose(detail) {
     tags = tags.filter((tag) => tag.id !== detail.tag.value);
   }
 </script>
 
-<TagSet navigation="roving" multiline on:close:tag={handleTagClose}>
+<TagSet navigation="roving" multiline ontagdismiss={handleTagClose}>
   {#each tags as tag (tag.id)}
     <Tag type={tag.type} value={tag.id} filter>{tag.label}</Tag>
   {/each}

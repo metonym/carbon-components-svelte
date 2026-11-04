@@ -7,7 +7,7 @@
 <ToastNotification
   data-testid="toast-notification"
   kind="success"
-  title="Toast title"
-  subtitle="Toast subtitle"
+  titleText="Toast title"
+  subtitleText="Toast subtitle"
   bind:open
 />

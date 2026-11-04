@@ -7,7 +7,7 @@ import {
 } from "@testing-library/svelte";
 import type DropdownComponent from "carbon-components-svelte/Dropdown/Dropdown.svelte";
 import type { DropdownItem } from "carbon-components-svelte/Dropdown/Dropdown.svelte";
-import type { ComponentEvents, ComponentProps } from "svelte";
+import type { ComponentProps } from "svelte";
 import { tick } from "svelte";
 import { rect } from "../utils/rect";
 import { user } from "../utils/user";
@@ -89,7 +89,7 @@ describe("Dropdown", () => {
     expect(screen.getByRole("listbox")).toHaveAttribute("aria-label", "");
   });
 
-  it("names the combobox with aria-label instead of the wrapper", () => {
+  it("puts aria-label and other rest props on the combobox", () => {
     const { container } = render(Dropdown, {
       props: {
         items: [{ id: "1", text: "Email" }],
@@ -98,13 +98,11 @@ describe("Dropdown", () => {
       },
     });
 
-    expect(
-      screen.getByRole("combobox", { name: "Contact method" }),
-    ).toBeInTheDocument();
+    const combobox = screen.getByRole("combobox", { name: "Contact method" });
+    expect(combobox).toHaveAttribute("data-testid", "contact-dropdown");
     const wrapper = container.querySelector(".bx--dropdown__wrapper");
     expect(wrapper).not.toHaveAttribute("aria-label");
-    // Other rest props still land on the wrapper.
-    expect(wrapper).toHaveAttribute("data-testid", "contact-dropdown");
+    expect(wrapper).not.toHaveAttribute("data-testid");
   });
 
   it("keeps the combobox labelled when the label is hidden", () => {
@@ -339,7 +337,7 @@ describe("Dropdown", () => {
     await user.click(clearButton);
 
     expect(onclear).toHaveBeenCalledOnce();
-    expect(onclear.mock.calls[0][0].type).toEqual(expect.any(String));
+    expect(onclear).toHaveBeenCalledWith({ trigger: "click" });
     expect(
       screen.queryByRole("button", { name: "Clear selected item" }),
     ).not.toBeInTheDocument();
@@ -416,7 +414,7 @@ describe("Dropdown", () => {
     });
 
     it.each(["Delete", "Backspace"])(
-      "%s dispatches clear with the keyboard event",
+      "%s calls onclear with the keydown trigger",
       async (key) => {
         const onclear = vi.fn();
         render(Dropdown, {
@@ -433,7 +431,7 @@ describe("Dropdown", () => {
         await user.keyboard(`{${key}}`);
 
         expect(onclear).toHaveBeenCalledOnce();
-        expect(onclear.mock.calls[0][0].detail).toBeInstanceOf(KeyboardEvent);
+        expect(onclear).toHaveBeenCalledWith({ trigger: "keydown" });
       },
     );
 
@@ -691,11 +689,10 @@ describe("Dropdown", () => {
     await user.click(menuItem);
 
     expect(selectHandler).toHaveBeenCalledTimes(1);
-    expect(selectHandler).toHaveBeenCalledWith(
-      expect.objectContaining({
-        detail: { selectedId: "1", selectedItem: items[1] },
-      }),
-    );
+    expect(selectHandler).toHaveBeenCalledWith({
+      selectedId: "1",
+      selectedItem: items[1],
+    });
   });
 
   it("should handle keyboard navigation", async () => {
@@ -1288,7 +1285,7 @@ describe("Dropdown", () => {
     expect(button).toHaveTextContent("Email");
     expect(button).toHaveAttribute("aria-expanded", "false");
     expect(onselect).toHaveBeenCalledTimes(1);
-    expect(onselect.mock.calls[0][0].detail).toEqual({
+    expect(onselect.mock.calls[0][0]).toEqual({
       selectedId: "1",
       selectedItem: items[1],
     });
@@ -1402,7 +1399,7 @@ describe("Dropdown", () => {
       });
     });
 
-    it("should support generic types with ComponentProps and ComponentEvents", () => {
+    it("should support generic types in props and callbacks", () => {
       type Product = {
         id: string;
         text: string;
@@ -1413,7 +1410,6 @@ describe("Dropdown", () => {
 
       type ComponentType = DropdownComponent<Product>;
       type Props = ComponentProps<ComponentType>;
-      type Events = ComponentEvents<ComponentType>;
 
       expectTypeOf<NonNullable<Props["items"]>>().toEqualTypeOf<
         readonly Product[]
@@ -1423,28 +1419,21 @@ describe("Dropdown", () => {
       expectTypeOf(itemToString).parameter(0).toEqualTypeOf<Product>();
       expectTypeOf(itemToString).returns.toEqualTypeOf<string>();
 
-      type SelectEvent = Events["select"];
-      type SelectEventDetail =
-        SelectEvent extends CustomEvent<infer T> ? T : never;
-      expectTypeOf<
-        SelectEventDetail["selectedItem"]
-      >().toEqualTypeOf<Product>();
+      type SelectDetail = Parameters<NonNullable<Props["onselectedchange"]>>[0];
+      expectTypeOf<SelectDetail["selectedItem"]>().toEqualTypeOf<Product>();
     });
 
     it("should default to DropdownItem when generic is not specified", () => {
       type ComponentType = DropdownComponent;
       type Props = ComponentProps<ComponentType>;
-      type Events = ComponentEvents<ComponentType>;
 
       expectTypeOf<NonNullable<Props["items"]>>().toEqualTypeOf<
         readonly DropdownItem[]
       >();
 
-      type SelectEvent = Events["select"];
-      type SelectEventDetail =
-        SelectEvent extends CustomEvent<infer T> ? T : never;
+      type SelectDetail = Parameters<NonNullable<Props["onselectedchange"]>>[0];
       expectTypeOf<
-        SelectEventDetail["selectedItem"]
+        SelectDetail["selectedItem"]
       >().toEqualTypeOf<DropdownItem>();
     });
 
@@ -1489,16 +1478,15 @@ describe("Dropdown", () => {
       it("should default Id to any when not specified", () => {
         type ComponentType = DropdownComponent;
         type Props = ComponentProps<ComponentType>;
-        type Events = ComponentEvents<ComponentType>;
 
         // biome-ignore lint/suspicious/noExplicitAny: Testing default any type
         expectTypeOf<Props["selectedId"]>().toEqualTypeOf<any | undefined>();
 
-        type SelectEvent = Events["select"];
-        type SelectEventDetail =
-          SelectEvent extends CustomEvent<infer T> ? T : never;
+        type SelectDetail = Parameters<
+          NonNullable<Props["onselectedchange"]>
+        >[0];
         // biome-ignore lint/suspicious/noExplicitAny: Testing default any type
-        expectTypeOf<SelectEventDetail["selectedId"]>().toEqualTypeOf<any>();
+        expectTypeOf<SelectDetail["selectedId"]>().toEqualTypeOf<any>();
       });
 
       it("should support different ID types (string, number, union)", () => {
@@ -1517,9 +1505,9 @@ describe("Dropdown", () => {
         type UnionId = "a" | "b" | "c";
         type UnionItem = { id: UnionId; text: string };
         type UnionComponent = DropdownComponent<UnionItem>;
-        type UnionEvents = ComponentEvents<UnionComponent>;
-        type UnionSelectDetail =
-          UnionEvents["select"] extends CustomEvent<infer T> ? T : never;
+        type UnionSelectDetail = Parameters<
+          NonNullable<ComponentProps<UnionComponent>["onselectedchange"]>
+        >[0];
         expectTypeOf<
           UnionSelectDetail["selectedId"]
         >().toEqualTypeOf<UnionId>();
@@ -1546,14 +1534,12 @@ describe("Dropdown", () => {
           InferredId | undefined
         >();
 
-        type SelectEvent = ComponentEvents<ComponentType>["select"];
-        type SelectEventDetail =
-          SelectEvent extends CustomEvent<infer T> ? T : never;
+        type SelectDetail = Parameters<
+          NonNullable<Props["onselectedchange"]>
+        >[0];
+        expectTypeOf<SelectDetail["selectedId"]>().toEqualTypeOf<InferredId>();
         expectTypeOf<
-          SelectEventDetail["selectedId"]
-        >().toEqualTypeOf<InferredId>();
-        expectTypeOf<
-          SelectEventDetail["selectedItem"]
+          SelectDetail["selectedItem"]
         >().toEqualTypeOf<InferredItem>();
       });
     });
@@ -1810,9 +1796,7 @@ describe("Dropdown", () => {
       expect(button).toHaveTextContent("Banana");
       expect(selectHandler).toHaveBeenCalledTimes(1);
       expect(selectHandler).toHaveBeenCalledWith(
-        expect.objectContaining({
-          detail: expect.objectContaining({ selectedId: "1" }),
-        }),
+        expect.objectContaining({ selectedId: "1" }),
       );
     });
 
@@ -2113,11 +2097,10 @@ describe("Dropdown", () => {
       assert(menuItem);
       await user.click(menuItem);
 
-      expect(selectHandler).toHaveBeenCalledWith(
-        expect.objectContaining({
-          detail: { selectedId: "1", selectedItem: items[1] },
-        }),
-      );
+      expect(selectHandler).toHaveBeenCalledWith({
+        selectedId: "1",
+        selectedItem: items[1],
+      });
       expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
     });
 
@@ -2435,7 +2418,7 @@ describe("Dropdown", () => {
       }
     });
 
-    it("should render iconRight instead of the checkmark", () => {
+    it("should render the iconEnd snippet with the icon snippet", () => {
       render(DropdownIconSlots);
 
       expect(screen.getByTestId("right-0")).toHaveAttribute(
@@ -2470,15 +2453,6 @@ describe("Dropdown", () => {
       expect(
         document.querySelector(".bx--list-box__menu-item__selected-icon"),
       ).toBeNull();
-    });
-
-    it("should prefer iconEnd over iconRight", () => {
-      render(DropdownIconEnd, { props: { withIconRight: true } });
-
-      expect(screen.getByTestId("end-0")).toBeInTheDocument();
-      expect(screen.getByTestId("end-1")).toBeInTheDocument();
-      expect(screen.queryByTestId("right-0")).toBeNull();
-      expect(screen.queryByTestId("right-1")).toBeNull();
     });
   });
 

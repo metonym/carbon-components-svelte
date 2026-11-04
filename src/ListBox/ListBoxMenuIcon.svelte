@@ -1,24 +1,33 @@
 <script>
   /**
+   * @restProps {div}
    * @typedef {"close" | "open"} ListBoxMenuIconTranslationId
    */
+  let {
+    /** Set to `true` to open the list box menu icon */
+    open = false,
 
-  /** Set to `true` to open the list box menu icon */
-  export let open = false;
+    /**
+     * Override the default translation ids.
+     * @type {(id: ListBoxMenuIconTranslationId) => string}
+     */
+    translateWithId = (/** @type {ListBoxMenuIconTranslationId} */ id) =>
+      defaultTranslations[id],
+
+    /** @type {import("svelte/elements").ClassValue | undefined} */
+    class: className = undefined,
+
+    /** @type {import("svelte/elements").MouseEventHandler<HTMLDivElement> | undefined | null} */
+    onclick = undefined,
+
+    ...rest
+  } = $props();
 
   /** Default translation ids */
   export const translationIds = /** @type {const} */ ({
     close: "close",
     open: "open",
   });
-
-  /**
-   * Override the default translation ids.
-   * @type {(id: ListBoxMenuIconTranslationId) => string}
-   */
-  export let translateWithId = function translateWithId(id) {
-    return defaultTranslations[id];
-  };
 
   import ChevronDown from "../icons/ChevronDown.svelte";
 
@@ -27,16 +36,25 @@
     [translationIds.open]: "Open menu",
   };
 
-  $: translationId = open ? translationIds.close : translationIds.open;
-  $: description =
-    translateWithId?.(translationId) ?? defaultTranslations[translationId];
+  const translationId = $derived(
+    open ? translationIds.close : translationIds.open,
+  );
+  const description = $derived(
+    translateWithId?.(translationId) ?? defaultTranslations[translationId],
+  );
 </script>
 
 <div
-  class:bx--list-box__menu-icon={true}
-  class:bx--list-box__menu-icon--open={open}
-  {...$$restProps}
-  on:click|preventDefault
+  {...rest}
+  class={[
+    "bx--list-box__menu-icon",
+    open && "bx--list-box__menu-icon--open",
+    className,
+  ]}
+  onclick={(event) => {
+    event.preventDefault();
+    onclick?.(event);
+  }}
 >
   <ChevronDown aria-label={description} title={description} />
 </div>

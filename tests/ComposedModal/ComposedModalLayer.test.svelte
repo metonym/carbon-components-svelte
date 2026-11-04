@@ -8,7 +8,7 @@
 
 <Layer>
   <ComposedModal open data-testid="modal">
-    <ModalHeader title="Workspace settings">
+    <ModalHeader titleText="Workspace settings">
       <Layer data-testid="header-layer" />
     </ModalHeader>
     <ModalBody data-testid="body">

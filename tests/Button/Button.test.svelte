@@ -50,7 +50,9 @@
 
 <Button href="https://example.com" target="_blank">External link</Button>
 
-<Button as let:props><p {...props}>Custom element</p></Button>
+<Button
+  >{#snippet child({ props })}<p {...props}>Custom element</p>{/snippet}</Button
+>
 
 <Button disabled>Disabled button</Button>
 
@@ -62,7 +64,7 @@
 
 <Button icon={Add}>With icon</Button>
 
-<Button data-testid="btn" on:click={onClick}>Test button</Button>
+<Button data-testid="btn" onclick={onClick}>Test button</Button>
 
 <Button data-testid="btn-skeleton" skeleton style="width: 200px" />
 <Button skeleton size="field" />
@@ -93,12 +95,12 @@
 
 <div data-testid="badge-dot">
   <Button kind="ghost" icon={Add} iconDescription="Notifications">
-    <BadgeIndicator slot="badge" count={0} />
+    {#snippet badge()}<BadgeIndicator count={0} />{/snippet}
   </Button>
 </div>
 
 <div data-testid="badge-size-override">
   <Button kind="ghost" size="small" icon={Add} iconDescription="Notifications">
-    <BadgeIndicator slot="badge" count={4} />
+    {#snippet badge()}<BadgeIndicator count={4} />{/snippet}
   </Button>
 </div>

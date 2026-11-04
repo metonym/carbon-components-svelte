@@ -88,13 +88,22 @@ describe.each(caseRows)("%s scrollend", (_, c) => {
     expect(onScrollend).toHaveBeenCalledTimes(2);
   });
 
-  it("still forwards the raw DOM scroll event", async () => {
-    const { onScroll } = setup(40);
+  // A runes list box's rest props go to its field, so the menu's own
+  // `scroll` doesn't reach the consumer; `onmenuscrollend` replaces it.
+  it.skipIf(c.callbacks)(
+    "still forwards the raw DOM scroll event",
+    async () => {
+      const { onScroll } = setup(40);
 
-    await scrollMenu({ scrollTop: 100, scrollHeight: 1000, clientHeight: 200 });
+      await scrollMenu({
+        scrollTop: 100,
+        scrollHeight: 1000,
+        clientHeight: 200,
+      });
 
-    expect(onScroll).toHaveBeenCalled();
-  });
+      expect(onScroll).toHaveBeenCalled();
+    },
+  );
 
   it("works when opened via user interaction", async () => {
     const { onScrollend } = setup(40, false);

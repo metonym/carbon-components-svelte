@@ -4,7 +4,9 @@ import ModalLayerTest from "./ModalLayer.test.svelte";
 describe("Modal Layer", () => {
   it("starts a Layer at level 0 and puts the body on level 1", () => {
     render(ModalLayerTest);
-    const modal = screen.getByTestId("modal");
+    // The test id lands on the dialog; the layer class sits on the root.
+    const modal = screen.getByTestId("modal").closest(".bx--modal");
+    assert(modal);
     const body = modal.querySelector(".bx--modal-content");
 
     expect(modal).toHaveClass("bx--modal", "bx--layer-one");

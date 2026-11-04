@@ -37,7 +37,7 @@
       placeholder="Filter fruits"
       {items}
     >
-      <AILabel slot="decorator" />
+      {#snippet decorator()}<AILabel />{/snippet}
     </MultiSelect>
   </div>
   <div data-testid="combo">

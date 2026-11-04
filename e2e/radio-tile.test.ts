@@ -1,3 +1,4 @@
+import { tileByTestId } from "./helpers/field";
 import { expect, test } from "./helpers/host";
 
 test.describe("RadioTile", () => {
@@ -8,24 +9,24 @@ test.describe("RadioTile", () => {
   test("renders radio tiles", async ({ page }) => {
     await expect(page.getByTestId("radio-tile-group")).toBeVisible();
     await expect(page.getByRole("group", { name: "Choose one" })).toBeVisible();
-    await expect(page.getByTestId("radio-tile-a")).toContainText("Option A");
-    await expect(page.getByTestId("radio-tile-b")).toContainText("Option B");
+    await expect(tileByTestId(page, "radio-tile-a")).toContainText("Option A");
+    await expect(tileByTestId(page, "radio-tile-b")).toContainText("Option B");
   });
 
   test("selects tile when clicked", async ({ page }) => {
     await expect(page.getByTestId("selected-value")).toHaveText("none");
 
-    await page.getByTestId("radio-tile-a").click();
+    await tileByTestId(page, "radio-tile-a").click();
     await expect(page.getByTestId("selected-value")).toHaveText("a");
 
-    await page.getByTestId("radio-tile-b").click();
+    await tileByTestId(page, "radio-tile-b").click();
     await expect(page.getByTestId("selected-value")).toHaveText("b");
   });
 
   test("moves the selection with arrow keys in a group without a name", async ({
     page,
   }) => {
-    await page.getByTestId("radio-tile-a").click();
+    await tileByTestId(page, "radio-tile-a").click();
     await expect(page.getByTestId("selected-value")).toHaveText("a");
 
     await page.keyboard.press("ArrowDown");
@@ -34,7 +35,7 @@ test.describe("RadioTile", () => {
   });
 
   test("compacts a small tile and pulls in its checkmark", async ({ page }) => {
-    const tile = page.getByTestId("radio-tile-sm");
+    const tile = tileByTestId(page, "radio-tile-sm");
     const metrics = await tile.evaluate((node) => {
       const style = getComputedStyle(node);
       const box = node.getBoundingClientRect();

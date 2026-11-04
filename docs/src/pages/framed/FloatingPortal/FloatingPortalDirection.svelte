@@ -124,7 +124,7 @@
         title="Drag to move, click to toggle"
       >
         <Tile>
-          <Button on:click={() => (openBottom = !openBottom)}>
+          <Button onclick={() => (openBottom = !openBottom)}>
             Direction: bottom (default)
           </Button>
         </Tile>
@@ -157,7 +157,7 @@
         title="Drag to move, click to toggle"
       >
         <Tile>
-          <Button on:click={() => (openTop = !openTop)}>Direction: top</Button>
+          <Button onclick={() => (openTop = !openTop)}>Direction: top</Button>
         </Tile>
       </div>
     </Box>

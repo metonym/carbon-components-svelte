@@ -78,6 +78,9 @@ describe("boolean ARIA states", () => {
     let spreadElements = 0;
     let spreadStates = 0;
     for (const [path, source] of Object.entries(sources)) {
+      // Svelte 5 writes `true` as `"true"`, so runes components (Svelte 5
+      // only) are exempt. Remove this test once every component has moved.
+      if (source.includes("$props()")) continue;
       for (const [, name, value] of source.matchAll(
         /"aria-([a-z]+)":\s*([^,\n}]+)/g,
       )) {
@@ -103,9 +106,11 @@ describe("boolean ARIA states", () => {
         }
       }
     }
+    // Floors that prove the scan still finds legacy markup. They shrink as
+    // families move to runes, which the scan skips.
     expect(objectStates).toBeGreaterThan(100);
-    expect(spreadElements).toBeGreaterThan(300);
-    expect(spreadStates).toBeGreaterThan(50);
+    expect(spreadElements).toBeGreaterThan(250);
+    expect(spreadStates).toBeGreaterThan(30);
     expect(found).toEqual([]);
   });
 });

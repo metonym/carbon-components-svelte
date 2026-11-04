@@ -29,7 +29,7 @@
   <Checkbox labelText={word} />
   <RadioButton labelText={url} value="a" />
   <Toggle labelText={word} />
-  <Accordion><AccordionItem title={word}>Body</AccordionItem></Accordion>
+  <Accordion><AccordionItem titleText={word}>Body</AccordionItem></Accordion>
   <Tile>{url}</Tile>
   <p><Link href="/">{url}</Link></p>
   <Button>{word}</Button>
@@ -37,12 +37,17 @@
 
 <!-- Notifications keep an 18rem minimum width. -->
 <div data-testid="wide" style="width: 20rem">
-  <InlineNotification kind="info" title={word} subtitle={url} hideCloseButton />
+  <InlineNotification
+    kind="info"
+    titleText={word}
+    subtitleText={url}
+    hideCloseButton
+  />
   <ToastNotification
     kind="info"
-    title={word}
-    subtitle={url}
-    caption={url}
+    titleText={word}
+    subtitleText={url}
+    captionText={url}
     hideCloseButton
     timeout={0}
   />

@@ -18,13 +18,13 @@
     "ch-zur",
   ];
 
-  function handleTagClose({ detail }) {
+  function handleTagClose(detail) {
     regions = regions.filter((region) => region !== detail.tag.value);
   }
 </script>
 
 <Box maxWidth="16rem">
-  <TagSet overflowMode="popover" on:close:tag={handleTagClose}>
+  <TagSet overflowMode="popover" ontagdismiss={handleTagClose}>
     {#each regions as region (region)}
       <Tag type="teal" value={region} filter>{region}</Tag>
     {/each}

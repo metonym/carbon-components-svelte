@@ -23,7 +23,7 @@
     tag: unknown;
     index: number;
   }) => void = () => {};
-  export let onOverflowClick: (event: CustomEvent) => void = () => {};
+  export let onOverflowClick: (detail: { count: number }) => void = () => {};
   export let onOverflowChange: (detail: { count: number }) => void = () => {};
 </script>
 
@@ -37,9 +37,9 @@
     {align}
     {measurementOffset}
     containingElement={measureOuter ? outer : undefined}
-    on:close:tag={({ detail }) => onTagClose(detail)}
-    on:click:overflow={onOverflowClick}
-    on:overflow:change={({ detail }) => onOverflowChange(detail)}
+    ontagdismiss={(detail) => onTagClose(detail)}
+    onoverflowclick={onOverflowClick}
+    onoverflowchange={(detail) => onOverflowChange(detail)}
   >
     {#each labels as label, i (label)}
       <Tag filter={dismissible} value={values?.[i]}>{label}</Tag>

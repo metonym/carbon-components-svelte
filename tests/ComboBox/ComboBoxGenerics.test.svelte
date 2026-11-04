@@ -14,14 +14,13 @@
   {items}
   labelText="Products"
   placeholder="Select a product"
-  on:select={(e) => onSelect(e.detail)}
-  let:item
+  onselectedchange={(e) => onSelect(e)}
 >
-  {@const { id, text, price, category } = item}
-  <div>
-    <strong>{text}</strong>
-    - ${price}
-    - {id}
-    <span>({category})</span>
-  </div>
+  {#snippet children({ item })}{@const { id, text, price, category } = item}
+    <div>
+      <strong>{text}</strong>
+      - ${price}
+      - {id}
+      <span>({category})</span>
+    </div>{/snippet}
 </ComboBox>

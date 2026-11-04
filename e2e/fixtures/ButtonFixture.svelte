@@ -4,7 +4,7 @@
   let clickCount = 0;
 </script>
 
-<Button data-testid="button-primary" on:click={() => (clickCount += 1)}>
+<Button data-testid="button-primary" onclick={() => (clickCount += 1)}>
   Primary
 </Button>
 

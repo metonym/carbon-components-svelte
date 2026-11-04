@@ -22,6 +22,11 @@ import ListBoxHost from "./ListBoxHost.test.svelte";
 export type ListBoxCase = {
   name: string;
   component: ComponentType;
+  /**
+   * Migrated to runes: reports with `onopenchange` and `onmenuscrollend`,
+   * only for user actions, instead of dispatching events.
+   */
+  callbacks?: boolean;
   /** Props every render of this case starts from. */
   props: Record<string, unknown>;
   /** Keys that open a closed menu, with trigger `keydown`. */
@@ -61,6 +66,7 @@ export const cases: ListBoxCase[] = [
   {
     name: "Dropdown",
     component: Dropdown,
+    callbacks: true,
     props: { labelText: "Contact" },
     openKeys: ["{ArrowDown}", "{Enter}"],
     opensOnInput: false,
@@ -78,6 +84,7 @@ export const cases: ListBoxCase[] = [
   },
   {
     name: "ComboBox",
+    callbacks: true,
     component: ComboBox,
     props: { labelText: "Contact", placeholder: "Select…" },
     openKeys: ["{ArrowDown}", "{Enter}"],
@@ -105,6 +112,7 @@ export const cases: ListBoxCase[] = [
     preselect: preselectInPlace,
     homeEndMove: true,
     navigatesFromSelection: false,
+    callbacks: true,
     form: MultiSelectForm,
     skeleton: {
       component: MultiSelectSkeleton,
@@ -128,6 +136,7 @@ export const cases: ListBoxCase[] = [
     preselect: preselectInPlace,
     homeEndMove: false,
     navigatesFromSelection: false,
+    callbacks: true,
     form: MultiSelectForm,
     formProps: { filterable: true },
   },

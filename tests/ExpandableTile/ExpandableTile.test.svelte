@@ -16,9 +16,8 @@
   export let tabindex: ComponentProps<ExpandableTile>["tabindex"] = "0";
   export let id: ComponentProps<ExpandableTile>["id"] = "ccs-test";
   export let ref: ComponentProps<ExpandableTile>["ref"] = null;
-  export let onToggle: (
-    e: CustomEvent<{ expanded: boolean }>,
-  ) => void = () => {};
+  export let onToggle: ComponentProps<ExpandableTile>["onexpandedchange"] =
+    () => {};
   export let onClick: (e: MouseEvent) => void = () => {};
   export let onKeydown: (e: KeyboardEvent) => void = () => {};
   export let onMouseover: (e: MouseEvent) => void = () => {};
@@ -37,18 +36,17 @@
   {tabindex}
   {id}
   bind:ref
-  on:toggle={onToggle}
-  on:keydown={onKeydown}
-  on:click={onClick}
-  on:keypress
-  on:mouseover={onMouseover}
-  on:mouseenter={onMouseenter}
-  on:mouseleave={onMouseleave}
+  onexpandedchange={onToggle}
+  onkeydown={onKeydown}
+  onclick={onClick}
+  onmouseover={onMouseover}
+  onmouseenter={onMouseenter}
+  onmouseleave={onMouseleave}
 >
-  <div slot="above" data-testid="above-content">
-    Above the fold content here
-  </div>
-  <div slot="below" data-testid="below-content">
-    Below the fold content here
-  </div>
+  {#snippet above()}<div data-testid="above-content">
+      Above the fold content here
+    </div>{/snippet}
+  {#snippet below()}<div data-testid="below-content">
+      Below the fold content here
+    </div>{/snippet}
 </ExpandableTile>

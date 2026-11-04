@@ -5,7 +5,7 @@
   let openConfirm = false;
 </script>
 
-<Button kind="danger-tertiary" on:click={() => (open = true)}>
+<Button kind="danger-tertiary" onclick={() => (open = true)}>
   Delete database
 </Button>
 
@@ -15,8 +15,8 @@
   modalHeading="Delete database"
   primaryButtonText="Delete"
   secondaryButtonText="Cancel"
-  on:click:button--secondary={() => (open = false)}
-  on:submit={() => (openConfirm = true)}
+  onsecondaryaction={() => (open = false)}
+  onprimaryaction={() => (openConfirm = true)}
 >
   <p>This will permanently delete the database and all of its data.</p>
 
@@ -28,8 +28,8 @@
       modalHeading="Are you absolutely sure?"
       primaryButtonText="Delete forever"
       secondaryButtonText="Cancel"
-      on:click:button--secondary={() => (openConfirm = false)}
-      on:submit={() => {
+      onsecondaryaction={() => (openConfirm = false)}
+      onprimaryaction={() => {
         openConfirm = false;
         open = false;
       }}

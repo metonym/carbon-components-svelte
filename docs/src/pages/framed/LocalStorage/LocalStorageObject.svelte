@@ -43,7 +43,7 @@
 
   <Button
     size="small"
-    on:click={() => {
+    onclick={() => {
       settings.sessionCount += 1; // in-place mutation
       settings = settings; // signal the change to Svelte
     }}

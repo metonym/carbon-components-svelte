@@ -11,7 +11,7 @@
 
 <Stack gap={5}>
   <div>
-    <Button kind="tertiary" size="small" on:click={() => (open = true)}>
+    <Button kind="tertiary" size="small" onclick={() => (open = true)}>
       Open calendar
     </Button>
   </div>

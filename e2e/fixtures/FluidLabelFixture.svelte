@@ -55,12 +55,12 @@
   </div>
   <div data-testid="slotted-label">
     <TextInput fluid>
-      <svelte:fragment slot="labelChildren">
+      {#snippet labelText()}
         {label}
         <Toggletip iconDescription="About billing contacts">
           The person who receives overdue notices.
         </Toggletip>
-      </svelte:fragment>
+      {/snippet}
     </TextInput>
   </div>
 </div>

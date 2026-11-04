@@ -25,10 +25,10 @@
 <Button
   kind="tertiary"
   disabled={!files.length}
-  on:click={fileUploader.clearFiles}
+  onclick={() => fileUploader.clearFiles()}
 >
   Clear (programmatic)
 </Button>
-<Button kind="tertiary" disabled={!files.length} on:click={() => (files = [])}>
+<Button kind="tertiary" disabled={!files.length} onclick={() => (files = [])}>
   Clear (two-way binding)
 </Button>

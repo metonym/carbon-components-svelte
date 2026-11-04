@@ -2,10 +2,10 @@ import type { Page } from "@playwright/test";
 import { expect, test } from "./helpers/host";
 
 async function openMenu(page: Page, key: string) {
-  await page.getByTestId(key).getByRole("combobox").click();
+  await page.getByTestId(key).click();
   const menu = page.getByRole("listbox");
   await expect(menu).toBeVisible();
-  const field = await page.getByTestId(key).getByRole("combobox").boundingBox();
+  const field = await page.getByTestId(key).boundingBox();
   const box = await menu.boundingBox();
   if (!field || !box) throw new Error("missing box");
   await page.keyboard.press("Escape");

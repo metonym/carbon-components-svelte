@@ -20,7 +20,7 @@
   ];
 </script>
 
-<Button on:click={() => (open = true)}>Open modal</Button>
+<Button onclick={() => (open = true)}>Open modal</Button>
 
 <Portal>
   <Modal
@@ -29,7 +29,7 @@
     modalHeading="Add a contact"
     primaryButtonText="Add"
     secondaryButtonText="Cancel"
-    on:click:button--secondary={() => (open = false)}
+    onsecondaryaction={() => (open = false)}
   >
     <Stack gap={4}>
       <ComboBox

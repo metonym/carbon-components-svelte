@@ -25,10 +25,9 @@
 
 <ComposedModal
   bind:open
-  on:close={(e) =>
-    (closeEvents = [...closeEvents, e.detail?.trigger ?? "null"])}
+  onopenchange={(e) => (closeEvents = [...closeEvents, e?.trigger ?? "null"])}
 >
-  <ModalHeader title="Modal title" />
+  <ModalHeader titleText="Modal title" />
   <ModalBody>
     <p data-testid="modal-body">Modal content</p>
     <input
@@ -46,7 +45,7 @@
     <ModalFooter>
       <!-- The footer "Close" closes via app code (sets `open = false`), not a
            built-in close affordance — exercises the "programmatic" trigger. -->
-      <Button data-testid="close-modal" on:click={() => (open = false)}>
+      <Button data-testid="close-modal" onclick={() => (open = false)}>
         Close
       </Button>
     </ModalFooter>

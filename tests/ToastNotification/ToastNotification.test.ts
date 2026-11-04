@@ -26,7 +26,7 @@ describe("ToastNotification", () => {
   });
 
   it("defaults to role status, which screen readers announce politely", () => {
-    render(ToastNotification, { props: { title: "Saved" } });
+    render(ToastNotification, { props: { titleText: "Saved" } });
 
     expect(screen.getByRole("status")).toHaveClass("bx--toast-notification");
     expect(screen.queryByRole("alert")).not.toBeInTheDocument();
@@ -171,7 +171,10 @@ describe("ToastNotification", () => {
     vi.advanceTimersByTime(1000);
     await tick();
     expect(onclose).toHaveBeenCalledTimes(1);
-    expect(onclose.mock.calls[0][0].detail).toEqual({ timeout: true });
+    expect(onclose.mock.calls[0][0]).toMatchObject({
+      open: false,
+      trigger: "timeout",
+    });
   });
 
   it("renders no actions wrapper without the actions slot", () => {

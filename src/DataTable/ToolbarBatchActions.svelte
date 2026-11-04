@@ -126,7 +126,7 @@
         size="default"
         class="bx--batch-summary__cancel"
         tabindex={showActions ? "0" : "-1"}
-        on:click={cancel}
+        onclick={cancel}
       >
         <slot name="cancel">Cancel</slot>
       </Button>

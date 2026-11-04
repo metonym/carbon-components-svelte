@@ -29,29 +29,33 @@
 </script>
 
 <div data-testid="tile">
-  <Tile>Forecast<AILabelOrIcon slot="decorator" {ai} /></Tile>
+  <Tile>Forecast{#snippet decorator()}<AILabelOrIcon {ai} />{/snippet}</Tile>
 </div>
 <div data-testid="clickable-tile">
   <ClickableTile href="#"
-    >Open<AILabelOrIcon slot="decorator" {ai} /></ClickableTile
+    >Open{#snippet decorator()}<AILabelOrIcon {ai} />{/snippet}</ClickableTile
   >
 </div>
 <div data-testid="selectable-tile">
-  <SelectableTile>Plan<AILabelOrIcon slot="decorator" {ai} /></SelectableTile>
+  <SelectableTile
+    >Plan{#snippet decorator()}<AILabelOrIcon {ai} />{/snippet}</SelectableTile
+  >
 </div>
 <div data-testid="radio-tile">
-  <RadioTile value="a">Plan<AILabelOrIcon slot="decorator" {ai} /></RadioTile>
+  <RadioTile value="a"
+    >Plan{#snippet decorator()}<AILabelOrIcon {ai} />{/snippet}</RadioTile
+  >
 </div>
 <div data-testid="expandable-tile">
   <ExpandableTile>
-    <div slot="above">Details</div>
-    <div slot="below">More</div>
-    <AILabelOrIcon slot="decorator" {ai} />
+    {#snippet above()}<div>Details</div>{/snippet}
+    {#snippet below()}<div>More</div>{/snippet}
+    {#snippet decorator()}<AILabelOrIcon {ai} />{/snippet}
   </ExpandableTile>
 </div>
 <div data-testid="text-input">
   <TextInput labelText="Summary"
-    ><AILabelOrIcon slot="decorator" {ai} /></TextInput
+    >{#snippet decorator()}<AILabelOrIcon {ai} />{/snippet}</TextInput
   >
 </div>
 <div data-testid="text-area">
@@ -83,17 +87,17 @@
 </div>
 <div data-testid="dropdown">
   <Dropdown labelText="Region" {items}
-    ><AILabelOrIcon slot="decorator" {ai} /></Dropdown
+    >{#snippet decorator()}<AILabelOrIcon {ai} />{/snippet}</Dropdown
   >
 </div>
 <div data-testid="combo-box">
   <ComboBox labelText="Region search" {items}>
-    <AILabelOrIcon slot="decorator" {ai} />
+    {#snippet decorator()}<AILabelOrIcon {ai} />{/snippet}
   </ComboBox>
 </div>
 <div data-testid="multi-select">
   <MultiSelect labelText="Regions" {items}
-    ><AILabelOrIcon slot="decorator" {ai} /></MultiSelect
+    >{#snippet decorator()}<AILabelOrIcon {ai} />{/snippet}</MultiSelect
   >
 </div>
 <div data-testid="table-header">
@@ -120,14 +124,14 @@
 </div>
 <div data-testid="modal">
   <Modal open modalHeading="Forecast" passiveModal>
-    <AILabelOrIcon slot="decorator" {ai} />
+    {#snippet decorator()}<AILabelOrIcon {ai} />{/snippet}
     Body
   </Modal>
 </div>
 <div data-testid="composed-modal">
   <ComposedModal open>
     <ModalBody>Body</ModalBody>
-    <AILabelOrIcon slot="decorator" {ai} />
+    {#snippet decorator()}<AILabelOrIcon {ai} />{/snippet}
   </ComposedModal>
 </div>
 <div data-testid="plain">

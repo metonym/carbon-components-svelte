@@ -15,8 +15,8 @@
 >
   <Tab label="One" {...under === "tab" ? $$restProps : {}} />
   <Tab label="Two" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent {...under === "content" ? $$restProps : {}}>One</TabContent>
     <TabContent>Two</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </svelte:component>

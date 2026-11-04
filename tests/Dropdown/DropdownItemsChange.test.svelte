@@ -5,7 +5,7 @@
   export let items: ComponentProps<Dropdown>["items"] = [];
   export let open: ComponentProps<Dropdown>["open"] = false;
   export let selectedId: ComponentProps<Dropdown>["selectedId"] = undefined;
-  export let onSelect: (e: CustomEvent) => void = () => {};
+  export let onSelect: (detail: { selectedId: unknown }) => void = () => {};
 </script>
 
 <Dropdown
@@ -14,5 +14,5 @@
   bind:selectedId
   labelText="Contact"
   portalMenu={false}
-  on:select={onSelect}
+  onselectedchange={onSelect}
 />

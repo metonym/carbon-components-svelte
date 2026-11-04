@@ -43,7 +43,7 @@
       <ToolbarBatchActions>
         <Button
           icon={TrashCan}
-          on:click={() => {
+          onclick={() => {
             rows = rows.filter((row) => !selectedRowIds.includes(row.id));
           }}
         >

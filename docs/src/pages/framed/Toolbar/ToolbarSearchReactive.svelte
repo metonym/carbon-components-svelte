@@ -24,7 +24,7 @@
         <Button
           size="small"
           disabled={value === "products"}
-          on:click={() => (value = "products")}
+          onclick={() => (value = "products")}
         >
           Set value
         </Button>
@@ -32,7 +32,7 @@
           kind="ghost"
           size="small"
           disabled={value.length === 0}
-          on:click={() => (value = "")}
+          onclick={() => (value = "")}
         >
           Clear value
         </Button>

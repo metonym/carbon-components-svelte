@@ -51,7 +51,7 @@
   export let condensed: ComponentProps<ComboBox>["condensed"] = false;
   export let id: ComponentProps<ComboBox>["id"] = undefined;
   export let onSelect: (detail: unknown) => void = () => {};
-  export let onClear: (event: Event) => void = () => {};
+  export let onClear: (detail: { trigger: string }) => void = () => {};
 </script>
 
 <ComboBox
@@ -86,8 +86,8 @@
   {filterMode}
   {portalMenu}
   {wrapOptions}
-  on:select={(e) => onSelect(e.detail)}
-  on:clear={(e) => {
+  onselectedchange={(e) => onSelect(e)}
+  onclear={(e) => {
     onClear(e);
     value = "";
     selectedId = undefined;

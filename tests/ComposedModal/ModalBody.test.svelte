@@ -14,7 +14,7 @@
 </script>
 
 <ComposedModal bind:open {alert}>
-  <ModalHeader title="Test Modal" label={headerLabel} />
+  <ModalHeader titleText="Test Modal" labelText={headerLabel} />
   <ModalBody {hasForm} {hasScrollingContent} {...$$restProps}>
     {#if slotContent}
       {slotContent}

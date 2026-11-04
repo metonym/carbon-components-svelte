@@ -4,14 +4,14 @@
   let open = false;
 </script>
 
-<Button on:click={() => (open = true)}>Open modal</Button>
+<Button onclick={() => (open = true)}>Open modal</Button>
 
 <Modal
   bind:open
   modalHeading="Install instructions"
   primaryButtonText="Done"
   secondaryButtonText="Cancel"
-  on:click:button--secondary={() => (open = false)}
+  onsecondaryaction={() => (open = false)}
 >
   <CodeSnippet code="npm i carbon-components-svelte" />
 </Modal>

@@ -48,14 +48,14 @@
 </div>
 <div data-testid="modal">
   <Modal open modalHeading="Forecast" passiveModal>
-    <AILabel slot="decorator" />
+    {#snippet decorator()}<AILabel />{/snippet}
     Body
   </Modal>
 </div>
 <div data-testid="composed-modal">
   <ComposedModal open>
-    <ModalHeader title="Composed" />
+    <ModalHeader titleText="Composed" />
     <ModalBody>Body</ModalBody>
-    <AILabel slot="decorator" />
+    {#snippet decorator()}<AILabel />{/snippet}
   </ComposedModal>
 </div>

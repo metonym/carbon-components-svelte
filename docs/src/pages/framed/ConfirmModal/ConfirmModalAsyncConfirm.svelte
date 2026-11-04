@@ -18,17 +18,17 @@
   }
 </script>
 
-<Button kind="danger" on:click={() => (open = true)}>Delete account</Button>
+<Button kind="danger" onclick={() => (open = true)}>Delete account</Button>
 
 <ConfirmModal
   bind:open
-  title="Delete your account?"
+  titleText="Delete your account?"
   confirmText="Delete"
   loadingDescription="Deleting"
   confirm={deleteAccount}
-  on:confirm:error={(e) => {
+  onconfirmerror={(e) => {
     // The rejection can be any value; show its message when it's an Error.
-    const reason = e.detail.error;
+    const reason = e.error;
     error = reason instanceof Error ? reason.message : String(reason);
   }}
 >
@@ -36,8 +36,8 @@
   {#if error}
     <InlineNotification
       kind="error"
-      title="Couldn't delete the account."
-      subtitle={error}
+      titleText="Couldn't delete the account."
+      subtitleText={error}
       hideCloseButton
       lowContrast
     />

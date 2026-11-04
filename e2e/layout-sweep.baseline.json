@@ -5,7 +5,7 @@
     "check": "borders",
     "kind": "nested edge",
     "path": "div.bx--modal-container > div.bx--modal-header:nth-of-type(1) > div.bx--modal-close-button > button.bx--btn.bx--btn--ghost",
-    "message": "div.bx--modal-container > div.bx--modal-header:nth-of-type(1) > div.bx--modal-close-button > button.bx--btn.bx--btn--ghost: 1px inset box-shadow ring inside bordered box div#app > div.bx--modal.bx--layer-one > div.bx--modal-container, both on rgb(244, 244, 244)"
+    "message": "div.bx--modal-container > div.bx--modal-header:nth-of-type(1) > div.bx--modal-close-button > button.bx--btn.bx--btn--ghost: 1px inset box-shadow ring inside bordered box div#app > div.bx--layer-one.bx--modal > div.bx--modal-container, both on rgb(244, 244, 244)"
   },
   {
     "fixture": "accessible-names-dialog.html",
@@ -13,7 +13,7 @@
     "check": "borders",
     "kind": "nested edge",
     "path": "div.bx--modal-container > div.bx--modal-header:nth-of-type(1) > div.bx--modal-close-button > button.bx--btn.bx--btn--ghost",
-    "message": "div.bx--modal-container > div.bx--modal-header:nth-of-type(1) > div.bx--modal-close-button > button.bx--btn.bx--btn--ghost: 1px inset box-shadow ring inside bordered box div#app > div.bx--modal.bx--layer-one > div.bx--modal-container, both on rgb(244, 244, 244)"
+    "message": "div.bx--modal-container > div.bx--modal-header:nth-of-type(1) > div.bx--modal-close-button > button.bx--btn.bx--btn--ghost: 1px inset box-shadow ring inside bordered box div#app > div.bx--layer-one.bx--modal > div.bx--modal-container, both on rgb(244, 244, 244)"
   },
   {
     "fixture": "accessible-names-dialog.html",
@@ -21,15 +21,15 @@
     "check": "borders",
     "kind": "nested edge",
     "path": "div.bx--modal-container > div.bx--modal-header:nth-of-type(1) > div.bx--modal-close-button > button.bx--btn.bx--btn--ghost",
-    "message": "div.bx--modal-container > div.bx--modal-header:nth-of-type(1) > div.bx--modal-close-button > button.bx--btn.bx--btn--ghost: 1px inset box-shadow ring inside bordered box div#app > div.bx--modal.bx--layer-one > div.bx--modal-container, both on rgb(244, 244, 244)"
+    "message": "div.bx--modal-container > div.bx--modal-header:nth-of-type(1) > div.bx--modal-close-button > button.bx--btn.bx--btn--ghost: 1px inset box-shadow ring inside bordered box div#app > div.bx--layer-one.bx--modal > div.bx--modal-container, both on rgb(244, 244, 244)"
   },
   {
     "fixture": "accessible-names.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div#app > ul.bx--overflow-menu-options.bx--overflow-menu-options--open:nth-of-type(3) > li.bx--overflow-menu-options__option > button.bx--overflow-menu-options__btn",
-    "message": "div#app > ul.bx--overflow-menu-options.bx--overflow-menu-options--open:nth-of-type(3) > li.bx--overflow-menu-options__option > button.bx--overflow-menu-options__btn: 2px outline inside 1px outline div#app > ul.bx--overflow-menu-options.bx--overflow-menu-options--open:nth-of-type(3), both on rgb(255, 255, 255)"
+    "path": "div#app > ul.bx--overflow-menu-options.bx--overflow-menu-options--below-left:nth-of-type(3) > li.bx--overflow-menu-options__option > button.bx--overflow-menu-options__btn",
+    "message": "div#app > ul.bx--overflow-menu-options.bx--overflow-menu-options--below-left:nth-of-type(3) > li.bx--overflow-menu-options__option > button.bx--overflow-menu-options__btn: 2px outline inside 1px outline div#app > ul.bx--overflow-menu-options.bx--overflow-menu-options--below-left:nth-of-type(3), both on rgb(255, 255, 255)"
   },
   {
     "fixture": "accordion-container.html",
@@ -221,7 +221,7 @@
     "check": "overflow",
     "kind": "scrolls sideways",
     "path": "page",
-    "message": "page scrolls sideways: scrollWidth 476px, clientWidth 320px"
+    "message": "page scrolls sideways: scrollWidth 478px, clientWidth 320px"
   },
   {
     "fixture": "combo-button.html",
@@ -229,7 +229,7 @@
     "check": "overflow",
     "kind": "widens page",
     "path": "div[data-testid=\"center-room\"]",
-    "message": "div[data-testid=\"center-room\"]: spans 320px to 442.33px"
+    "message": "div[data-testid=\"center-room\"]: spans 320px to 442.73px"
   },
   {
     "fixture": "combo-button.html",
@@ -237,7 +237,7 @@
     "check": "overflow",
     "kind": "widens page",
     "path": "div[data-testid=\"end-room\"]",
-    "message": "div[data-testid=\"end-room\"]: spans 320px to 442.33px"
+    "message": "div[data-testid=\"end-room\"]: spans 320px to 442.73px"
   },
   {
     "fixture": "combo-button.html",
@@ -245,7 +245,7 @@
     "check": "overflow",
     "kind": "widens page",
     "path": "div[data-testid=\"start-room\"]",
-    "message": "div[data-testid=\"start-room\"]: spans 320px to 442.33px"
+    "message": "div[data-testid=\"start-room\"]: spans 320px to 442.73px"
   },
   {
     "fixture": "combo-button.html",
@@ -253,7 +253,7 @@
     "check": "overflow",
     "kind": "widens page",
     "path": "div#app > div:nth-of-type(1) > div.bx--combo-button",
-    "message": "div#app > div:nth-of-type(1) > div.bx--combo-button: spans 320px to 442.3px"
+    "message": "div#app > div:nth-of-type(1) > div.bx--combo-button: spans 320px to 443.16px"
   },
   {
     "fixture": "data-table-batch-actions-overflow.html",
@@ -292,40 +292,40 @@
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--form-item.bx--text-input-wrapper > div.bx--text-input__field-outer-wrapper > div.bx--text-input__field-wrapper > button.bx--text-input--password__visibility__toggle.bx--btn",
-    "message": "div.bx--form-item.bx--text-input-wrapper > div.bx--text-input__field-outer-wrapper > div.bx--text-input__field-wrapper > button.bx--text-input--password__visibility__toggle.bx--btn: 2px outline inside 1px outline div[data-testid=\"PasswordInput\"] > div.bx--data-table-container > div > div.bx--data-table-content, both on rgb(255, 255, 255)"
+    "path": "div.bx--form-item.bx--password-input-wrapper > div.bx--text-input__field-outer-wrapper > div.bx--text-input__field-wrapper > button.bx--btn.bx--btn--icon-only",
+    "message": "div.bx--form-item.bx--password-input-wrapper > div.bx--text-input__field-outer-wrapper > div.bx--text-input__field-wrapper > button.bx--btn.bx--btn--icon-only: 2px outline inside 1px outline div[data-testid=\"PasswordInput\"] > div.bx--data-table-container > div > div.bx--data-table-content, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "data-table-cell-overlays.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--form-item.bx--text-input-wrapper > div.bx--text-input__field-outer-wrapper > div.bx--text-input__field-wrapper > input.bx--text-input.bx--password-input",
-    "message": "div.bx--form-item.bx--text-input-wrapper > div.bx--text-input__field-outer-wrapper > div.bx--text-input__field-wrapper > input.bx--text-input.bx--password-input: 2px outline inside 1px outline div[data-testid=\"PasswordInput\"] > div.bx--data-table-container > div > div.bx--data-table-content, both on rgb(255, 255, 255)"
+    "path": "div.bx--form-item.bx--password-input-wrapper > div.bx--text-input__field-outer-wrapper > div.bx--text-input__field-wrapper > input.bx--password-input.bx--text-input",
+    "message": "div.bx--form-item.bx--password-input-wrapper > div.bx--text-input__field-outer-wrapper > div.bx--text-input__field-wrapper > input.bx--password-input.bx--text-input: 2px outline inside 1px outline div[data-testid=\"PasswordInput\"] > div.bx--data-table-container > div > div.bx--data-table-content, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "data-table-cell-overlays.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--form-item.bx--text-input-wrapper > div.bx--text-input__field-outer-wrapper > div.bx--text-input__field-wrapper.bx--copy-input__field-wrapper > button.bx--copy-btn.bx--copy",
-    "message": "div.bx--form-item.bx--text-input-wrapper > div.bx--text-input__field-outer-wrapper > div.bx--text-input__field-wrapper.bx--copy-input__field-wrapper > button.bx--copy-btn.bx--copy: 2px outline inside 1px outline div[data-testid=\"CopyInput\"] > div.bx--data-table-container > div > div.bx--data-table-content, both on rgb(255, 255, 255)"
+    "path": "div.bx--form-item.bx--text-input-wrapper > div.bx--text-input__field-outer-wrapper > div.bx--copy-input__field-wrapper.bx--text-input__field-wrapper > button.bx--copy.bx--copy-btn",
+    "message": "div.bx--form-item.bx--text-input-wrapper > div.bx--text-input__field-outer-wrapper > div.bx--copy-input__field-wrapper.bx--text-input__field-wrapper > button.bx--copy.bx--copy-btn: 2px outline inside 1px outline div[data-testid=\"CopyInput\"] > div.bx--data-table-container > div > div.bx--data-table-content, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "data-table-cell-overlays.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--form-item.bx--text-input-wrapper > div.bx--text-input__field-outer-wrapper > div.bx--text-input__field-wrapper.bx--copy-input__field-wrapper > input.bx--text-input",
-    "message": "div.bx--form-item.bx--text-input-wrapper > div.bx--text-input__field-outer-wrapper > div.bx--text-input__field-wrapper.bx--copy-input__field-wrapper > input.bx--text-input: 2px outline inside 1px outline div[data-testid=\"CopyInput\"] > div.bx--data-table-container > div > div.bx--data-table-content, both on rgb(255, 255, 255)"
+    "path": "div.bx--form-item.bx--text-input-wrapper > div.bx--text-input__field-outer-wrapper > div.bx--copy-input__field-wrapper.bx--text-input__field-wrapper > input.bx--text-input",
+    "message": "div.bx--form-item.bx--text-input-wrapper > div.bx--text-input__field-outer-wrapper > div.bx--copy-input__field-wrapper.bx--text-input__field-wrapper > input.bx--text-input: 2px outline inside 1px outline div[data-testid=\"CopyInput\"] > div.bx--data-table-container > div > div.bx--data-table-content, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "data-table-cell-overlays.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--multi-select__wrapper.bx--list-box__wrapper > div.bx--multi-select.bx--list-box > div.bx--list-box__field--wrapper > button.bx--list-box__field",
-    "message": "div.bx--multi-select__wrapper.bx--list-box__wrapper > div.bx--multi-select.bx--list-box > div.bx--list-box__field--wrapper > button.bx--list-box__field: 2px outline inside 1px outline div[data-testid=\"MultiSelect\"] > div.bx--data-table-container > div > div.bx--data-table-content, both on rgb(255, 255, 255)"
+    "path": "div.bx--list-box__wrapper.bx--multi-select__wrapper > div.bx--list-box.bx--multi-select > div.bx--list-box__field--wrapper > button.bx--list-box__field",
+    "message": "div.bx--list-box__wrapper.bx--multi-select__wrapper > div.bx--list-box.bx--multi-select > div.bx--list-box__field--wrapper > button.bx--list-box__field: 2px outline inside 1px outline div[data-testid=\"MultiSelect\"] > div.bx--data-table-container > div > div.bx--data-table-content, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "data-table-cell-overlays.html",
@@ -340,8 +340,8 @@
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "tr > td.bx--table-cell:nth-of-type(2) > span.bx--operational-tag > button.bx--tag.bx--tag--interactive",
-    "message": "tr > td.bx--table-cell:nth-of-type(2) > span.bx--operational-tag > button.bx--tag.bx--tag--interactive: 1px outline inside 1px outline div[data-testid=\"OperationalTag\"] > div.bx--data-table-container > div > div.bx--data-table-content, both on rgb(255, 255, 255)"
+    "path": "tr > td.bx--table-cell:nth-of-type(2) > span.bx--operational-tag > button.bx--tag.bx--tag--gray",
+    "message": "tr > td.bx--table-cell:nth-of-type(2) > span.bx--operational-tag > button.bx--tag.bx--tag--gray: 1px outline inside 1px outline div[data-testid=\"OperationalTag\"] > div.bx--data-table-container > div > div.bx--data-table-content, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "data-table-cell-overlays.html",
@@ -412,16 +412,16 @@
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "tbody > tr:nth-of-type(1) > td.bx--table-cell:nth-of-type(2) > div.bx--tag.bx--tag--sm",
-    "message": "tbody > tr:nth-of-type(1) > td.bx--table-cell:nth-of-type(2) > div.bx--tag.bx--tag--sm: 1px outline inside 1px outline div[data-testid=\"compact\"] > div.bx--data-table-container > div > div.bx--data-table-content, both on rgb(255, 255, 255)"
+    "path": "tbody > tr:nth-of-type(1) > td.bx--table-cell:nth-of-type(2) > div.bx--tag.bx--tag--green",
+    "message": "tbody > tr:nth-of-type(1) > td.bx--table-cell:nth-of-type(2) > div.bx--tag.bx--tag--green: 1px outline inside 1px outline div[data-testid=\"compact\"] > div.bx--data-table-container > div > div.bx--data-table-content, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "data-table-tag.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "tbody > tr:nth-of-type(2) > td.bx--table-cell:nth-of-type(2) > div.bx--tag.bx--tag--sm",
-    "message": "tbody > tr:nth-of-type(2) > td.bx--table-cell:nth-of-type(2) > div.bx--tag.bx--tag--sm: 1px outline inside 1px outline div[data-testid=\"compact\"] > div.bx--data-table-container > div > div.bx--data-table-content, both on rgb(255, 255, 255)"
+    "path": "tbody > tr:nth-of-type(2) > td.bx--table-cell:nth-of-type(2) > div.bx--tag.bx--tag--green",
+    "message": "tbody > tr:nth-of-type(2) > td.bx--table-cell:nth-of-type(2) > div.bx--tag.bx--tag--green: 1px outline inside 1px outline div[data-testid=\"compact\"] > div.bx--data-table-container > div > div.bx--data-table-content, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "data-table-variants.html",
@@ -476,48 +476,48 @@
     "variant": "1280",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--form-item.bx--date-picker--fluid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker-container.bx--date-picker--fluid--invalid:nth-of-type(1)",
-    "message": "div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--form-item.bx--date-picker--fluid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker-container.bx--date-picker--fluid--invalid:nth-of-type(1): 2px outline inside 2px outline div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--form-item.bx--date-picker--fluid, both on rgb(244, 244, 244)"
+    "path": "div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker--fluid--invalid.bx--date-picker-container:nth-of-type(1)",
+    "message": "div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker--fluid--invalid.bx--date-picker-container:nth-of-type(1): 2px outline inside 2px outline div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid, both on rgb(244, 244, 244)"
   },
   {
     "fixture": "date-picker.html",
     "variant": "1280",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--form-item.bx--date-picker--fluid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker-container.bx--date-picker--fluid--invalid:nth-of-type(2)",
-    "message": "div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--form-item.bx--date-picker--fluid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker-container.bx--date-picker--fluid--invalid:nth-of-type(2): 2px outline inside 2px outline div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--form-item.bx--date-picker--fluid, both on rgb(244, 244, 244)"
+    "path": "div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker--fluid--invalid.bx--date-picker-container:nth-of-type(2)",
+    "message": "div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker--fluid--invalid.bx--date-picker-container:nth-of-type(2): 2px outline inside 2px outline div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid, both on rgb(244, 244, 244)"
   },
   {
     "fixture": "date-picker.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--form-item.bx--date-picker--fluid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker-container.bx--date-picker--fluid--invalid:nth-of-type(1)",
-    "message": "div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--form-item.bx--date-picker--fluid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker-container.bx--date-picker--fluid--invalid:nth-of-type(1): 2px outline inside 2px outline div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--form-item.bx--date-picker--fluid, both on rgb(255, 255, 255)"
+    "path": "div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker--fluid--invalid.bx--date-picker-container:nth-of-type(1)",
+    "message": "div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker--fluid--invalid.bx--date-picker-container:nth-of-type(1): 2px outline inside 2px outline div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "date-picker.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--form-item.bx--date-picker--fluid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker-container.bx--date-picker--fluid--invalid:nth-of-type(2)",
-    "message": "div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--form-item.bx--date-picker--fluid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker-container.bx--date-picker--fluid--invalid:nth-of-type(2): 2px outline inside 2px outline div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--form-item.bx--date-picker--fluid, both on rgb(255, 255, 255)"
+    "path": "div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker--fluid--invalid.bx--date-picker-container:nth-of-type(2)",
+    "message": "div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker--fluid--invalid.bx--date-picker-container:nth-of-type(2): 2px outline inside 2px outline div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "date-picker.html",
     "variant": "320",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--form-item.bx--date-picker--fluid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker-container.bx--date-picker--fluid--invalid:nth-of-type(1)",
-    "message": "div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--form-item.bx--date-picker--fluid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker-container.bx--date-picker--fluid--invalid:nth-of-type(1): 2px outline inside 2px outline div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--form-item.bx--date-picker--fluid, both on rgb(244, 244, 244)"
+    "path": "div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker--fluid--invalid.bx--date-picker-container:nth-of-type(1)",
+    "message": "div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker--fluid--invalid.bx--date-picker-container:nth-of-type(1): 2px outline inside 2px outline div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid, both on rgb(244, 244, 244)"
   },
   {
     "fixture": "date-picker.html",
     "variant": "320",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--form-item.bx--date-picker--fluid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker-container.bx--date-picker--fluid--invalid:nth-of-type(2)",
-    "message": "div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--form-item.bx--date-picker--fluid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker-container.bx--date-picker--fluid--invalid:nth-of-type(2): 2px outline inside 2px outline div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--form-item.bx--date-picker--fluid, both on rgb(244, 244, 244)"
+    "path": "div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker--fluid--invalid.bx--date-picker-container:nth-of-type(2)",
+    "message": "div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker--fluid--invalid.bx--date-picker-container:nth-of-type(2): 2px outline inside 2px outline div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid, both on rgb(244, 244, 244)"
   },
   {
     "fixture": "date-picker.html",
@@ -540,72 +540,72 @@
     "variant": "672",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--form-item.bx--date-picker--fluid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker-container.bx--date-picker--fluid--invalid:nth-of-type(1)",
-    "message": "div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--form-item.bx--date-picker--fluid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker-container.bx--date-picker--fluid--invalid:nth-of-type(1): 2px outline inside 2px outline div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--form-item.bx--date-picker--fluid, both on rgb(244, 244, 244)"
+    "path": "div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker--fluid--invalid.bx--date-picker-container:nth-of-type(1)",
+    "message": "div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker--fluid--invalid.bx--date-picker-container:nth-of-type(1): 2px outline inside 2px outline div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid, both on rgb(244, 244, 244)"
   },
   {
     "fixture": "date-picker.html",
     "variant": "672",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--form-item.bx--date-picker--fluid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker-container.bx--date-picker--fluid--invalid:nth-of-type(2)",
-    "message": "div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--form-item.bx--date-picker--fluid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker-container.bx--date-picker--fluid--invalid:nth-of-type(2): 2px outline inside 2px outline div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--form-item.bx--date-picker--fluid, both on rgb(244, 244, 244)"
+    "path": "div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker--fluid--invalid.bx--date-picker-container:nth-of-type(2)",
+    "message": "div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker--fluid--invalid.bx--date-picker-container:nth-of-type(2): 2px outline inside 2px outline div[data-testid=\"date-picker-fluid-invalid-range\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid, both on rgb(244, 244, 244)"
   },
   {
     "fixture": "fluid-date-picker.html",
     "variant": "1280",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div[data-testid=\"fluid-date-picker-range-invalid\"] > div.bx--form-item.bx--date-picker--fluid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker-container.bx--date-picker--fluid--invalid:nth-of-type(1)",
-    "message": "div[data-testid=\"fluid-date-picker-range-invalid\"] > div.bx--form-item.bx--date-picker--fluid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker-container.bx--date-picker--fluid--invalid:nth-of-type(1): 2px outline inside 2px outline div[data-testid=\"fluid-date-picker-range-invalid\"] > div.bx--form-item.bx--date-picker--fluid, both on rgb(244, 244, 244)"
+    "path": "div[data-testid=\"fluid-date-picker-range-invalid\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker--fluid--invalid.bx--date-picker-container:nth-of-type(1)",
+    "message": "div[data-testid=\"fluid-date-picker-range-invalid\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker--fluid--invalid.bx--date-picker-container:nth-of-type(1): 2px outline inside 2px outline div[data-testid=\"fluid-date-picker-range-invalid\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid, both on rgb(244, 244, 244)"
   },
   {
     "fixture": "fluid-date-picker.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--date-picker.bx--date-picker--range > div.bx--date-picker-container.bx--date-picker--fluid--neutral:nth-of-type(2) > div.bx--date-picker-input__wrapper > input.bx--date-picker__input.bx--date-picker__input--with-icon",
-    "message": "div.bx--date-picker.bx--date-picker--range > div.bx--date-picker-container.bx--date-picker--fluid--neutral:nth-of-type(2) > div.bx--date-picker-input__wrapper > input.bx--date-picker__input.bx--date-picker__input--with-icon: 2px outline inside 2px outline div[data-testid=\"fluid-date-picker-range-invalid\"] > div.bx--form-item.bx--date-picker--fluid, both on rgb(255, 255, 255)"
+    "path": "div.bx--date-picker.bx--date-picker--range > div.bx--date-picker--fluid--neutral.bx--date-picker-container:nth-of-type(2) > div.bx--date-picker-input__wrapper > input.bx--date-picker__input.bx--date-picker__input--with-icon",
+    "message": "div.bx--date-picker.bx--date-picker--range > div.bx--date-picker--fluid--neutral.bx--date-picker-container:nth-of-type(2) > div.bx--date-picker-input__wrapper > input.bx--date-picker__input.bx--date-picker__input--with-icon: 2px outline inside 2px outline div[data-testid=\"fluid-date-picker-range-invalid\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "fluid-date-picker.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div[data-testid=\"fluid-date-picker-range-invalid\"] > div.bx--form-item.bx--date-picker--fluid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker-container.bx--date-picker--fluid--invalid:nth-of-type(1)",
-    "message": "div[data-testid=\"fluid-date-picker-range-invalid\"] > div.bx--form-item.bx--date-picker--fluid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker-container.bx--date-picker--fluid--invalid:nth-of-type(1): 2px outline inside 2px outline div[data-testid=\"fluid-date-picker-range-invalid\"] > div.bx--form-item.bx--date-picker--fluid, both on rgb(255, 255, 255)"
+    "path": "div[data-testid=\"fluid-date-picker-range-invalid\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker--fluid--invalid.bx--date-picker-container:nth-of-type(1)",
+    "message": "div[data-testid=\"fluid-date-picker-range-invalid\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker--fluid--invalid.bx--date-picker-container:nth-of-type(1): 2px outline inside 2px outline div[data-testid=\"fluid-date-picker-range-invalid\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "fluid-date-picker.html",
     "variant": "320",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div[data-testid=\"fluid-date-picker-range-invalid\"] > div.bx--form-item.bx--date-picker--fluid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker-container.bx--date-picker--fluid--invalid:nth-of-type(1)",
-    "message": "div[data-testid=\"fluid-date-picker-range-invalid\"] > div.bx--form-item.bx--date-picker--fluid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker-container.bx--date-picker--fluid--invalid:nth-of-type(1): 2px outline inside 2px outline div[data-testid=\"fluid-date-picker-range-invalid\"] > div.bx--form-item.bx--date-picker--fluid, both on rgb(244, 244, 244)"
+    "path": "div[data-testid=\"fluid-date-picker-range-invalid\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker--fluid--invalid.bx--date-picker-container:nth-of-type(1)",
+    "message": "div[data-testid=\"fluid-date-picker-range-invalid\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker--fluid--invalid.bx--date-picker-container:nth-of-type(1): 2px outline inside 2px outline div[data-testid=\"fluid-date-picker-range-invalid\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid, both on rgb(244, 244, 244)"
   },
   {
     "fixture": "fluid-date-picker.html",
     "variant": "672",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div[data-testid=\"fluid-date-picker-range-invalid\"] > div.bx--form-item.bx--date-picker--fluid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker-container.bx--date-picker--fluid--invalid:nth-of-type(1)",
-    "message": "div[data-testid=\"fluid-date-picker-range-invalid\"] > div.bx--form-item.bx--date-picker--fluid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker-container.bx--date-picker--fluid--invalid:nth-of-type(1): 2px outline inside 2px outline div[data-testid=\"fluid-date-picker-range-invalid\"] > div.bx--form-item.bx--date-picker--fluid, both on rgb(244, 244, 244)"
+    "path": "div[data-testid=\"fluid-date-picker-range-invalid\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker--fluid--invalid.bx--date-picker-container:nth-of-type(1)",
+    "message": "div[data-testid=\"fluid-date-picker-range-invalid\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker--fluid--invalid.bx--date-picker-container:nth-of-type(1): 2px outline inside 2px outline div[data-testid=\"fluid-date-picker-range-invalid\"] > div.bx--date-picker--fluid.bx--date-picker--fluid--invalid, both on rgb(244, 244, 244)"
   },
   {
     "fixture": "fluid-label.html",
     "variant": "1280",
     "check": "fits",
     "kind": "no full text",
-    "path": "div[data-testid=\"slotted-label\"] > div.bx--form-item.bx--text-input-wrapper > div.bx--text-input__label-wrapper:nth-of-type(1) > label.bx--label.bx--label--slotted",
-    "message": "div[data-testid=\"slotted-label\"] > div.bx--form-item.bx--text-input-wrapper > div.bx--text-input__label-wrapper:nth-of-type(1) > label.bx--label.bx--label--slotted: truncated \"Billing contact for overdue invoices The person who receives overdue notices.\" (227px in 132px) with no title, aria-label or tooltip holding it, at rest or on hover"
+    "path": "div[data-testid=\"slotted-label\"] > div.bx--form-item.bx--text-input--fluid > div.bx--text-input__label-wrapper:nth-of-type(1) > label.bx--label.bx--label--slotted",
+    "message": "div[data-testid=\"slotted-label\"] > div.bx--form-item.bx--text-input--fluid > div.bx--text-input__label-wrapper:nth-of-type(1) > label.bx--label.bx--label--slotted: truncated \"Billing contact for overdue invoices The person who receives overdue notices.\" (238px in 132px) with no title, aria-label or tooltip holding it, at rest or on hover"
   },
   {
     "fixture": "fluid-label.html",
     "variant": "320",
     "check": "fits",
     "kind": "no full text",
-    "path": "div[data-testid=\"slotted-label\"] > div.bx--form-item.bx--text-input-wrapper > div.bx--text-input__label-wrapper:nth-of-type(1) > label.bx--label.bx--label--slotted",
-    "message": "div[data-testid=\"slotted-label\"] > div.bx--form-item.bx--text-input-wrapper > div.bx--text-input__label-wrapper:nth-of-type(1) > label.bx--label.bx--label--slotted: truncated \"Billing contact for overdue invoices The person who receives overdue notices.\" (227px in 132px) with no title, aria-label or tooltip holding it, at rest or on hover"
+    "path": "div[data-testid=\"slotted-label\"] > div.bx--form-item.bx--text-input--fluid > div.bx--text-input__label-wrapper:nth-of-type(1) > label.bx--label.bx--label--slotted",
+    "message": "div[data-testid=\"slotted-label\"] > div.bx--form-item.bx--text-input--fluid > div.bx--text-input__label-wrapper:nth-of-type(1) > label.bx--label.bx--label--slotted: truncated \"Billing contact for overdue invoices The person who receives overdue notices.\" (238px in 132px) with no title, aria-label or tooltip holding it, at rest or on hover"
   },
   {
     "fixture": "fluid-label.html",
@@ -628,8 +628,8 @@
     "variant": "672",
     "check": "fits",
     "kind": "no full text",
-    "path": "div[data-testid=\"slotted-label\"] > div.bx--form-item.bx--text-input-wrapper > div.bx--text-input__label-wrapper:nth-of-type(1) > label.bx--label.bx--label--slotted",
-    "message": "div[data-testid=\"slotted-label\"] > div.bx--form-item.bx--text-input-wrapper > div.bx--text-input__label-wrapper:nth-of-type(1) > label.bx--label.bx--label--slotted: truncated \"Billing contact for overdue invoices The person who receives overdue notices.\" (227px in 132px) with no title, aria-label or tooltip holding it, at rest or on hover"
+    "path": "div[data-testid=\"slotted-label\"] > div.bx--form-item.bx--text-input--fluid > div.bx--text-input__label-wrapper:nth-of-type(1) > label.bx--label.bx--label--slotted",
+    "message": "div[data-testid=\"slotted-label\"] > div.bx--form-item.bx--text-input--fluid > div.bx--text-input__label-wrapper:nth-of-type(1) > label.bx--label.bx--label--slotted: truncated \"Billing contact for overdue invoices The person who receives overdue notices.\" (238px in 132px) with no title, aria-label or tooltip holding it, at rest or on hover"
   },
   {
     "fixture": "fluid-number-input.html",
@@ -653,7 +653,7 @@
     "check": "borders",
     "kind": "nested edge",
     "path": "div[data-testid=\"fluid-text-area-in-modal\"] > div.bx--form-item.bx--text-area--fluid > div.bx--text-area__wrapper:nth-of-type(2)",
-    "message": "div[data-testid=\"fluid-text-area-in-modal\"] > div.bx--form-item.bx--text-area--fluid > div.bx--text-area__wrapper:nth-of-type(2): bordered box inside bordered box div#app > div.bx--modal.bx--layer-one:nth-of-type(4) > div.bx--modal-container, both on rgb(255, 255, 255)"
+    "message": "div[data-testid=\"fluid-text-area-in-modal\"] > div.bx--form-item.bx--text-area--fluid > div.bx--text-area__wrapper:nth-of-type(2): bordered box inside bordered box div#app > div.bx--layer-one.bx--modal:nth-of-type(4) > div.bx--modal-container, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "focus-ring.html",
@@ -700,16 +700,16 @@
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div#app > main > div.bx--toast-notification.bx--toast-notification--high-contrast:nth-of-type(31) > button.bx--toast-notification__close-button",
-    "message": "div#app > main > div.bx--toast-notification.bx--toast-notification--high-contrast:nth-of-type(31) > button.bx--toast-notification__close-button: 2px outline inside 1px outline div#app > main > div.bx--toast-notification.bx--toast-notification--high-contrast:nth-of-type(31), both on rgb(255, 255, 255)"
+    "path": "div#app > main > div.bx--toast-notification.bx--toast-notification--error:nth-of-type(31) > button.bx--toast-notification__close-button",
+    "message": "div#app > main > div.bx--toast-notification.bx--toast-notification--error:nth-of-type(31) > button.bx--toast-notification__close-button: 2px outline inside 1px outline div#app > main > div.bx--toast-notification.bx--toast-notification--error:nth-of-type(31), both on rgb(255, 255, 255)"
   },
   {
     "fixture": "forced-colors.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "main > ul.bx--overflow-menu-options.bx--overflow-menu-options--open:nth-of-type(2) > li.bx--overflow-menu-options__option > button.bx--overflow-menu-options__btn",
-    "message": "main > ul.bx--overflow-menu-options.bx--overflow-menu-options--open:nth-of-type(2) > li.bx--overflow-menu-options__option > button.bx--overflow-menu-options__btn: 2px outline inside 1px outline div#app > main > ul.bx--overflow-menu-options.bx--overflow-menu-options--open:nth-of-type(2), both on rgb(255, 255, 255)"
+    "path": "main > ul.bx--overflow-menu-options.bx--overflow-menu-options--below-left:nth-of-type(2) > li.bx--overflow-menu-options__option > button.bx--overflow-menu-options__btn",
+    "message": "main > ul.bx--overflow-menu-options.bx--overflow-menu-options--below-left:nth-of-type(2) > li.bx--overflow-menu-options__option > button.bx--overflow-menu-options__btn: 2px outline inside 1px outline div#app > main > ul.bx--overflow-menu-options.bx--overflow-menu-options--below-left:nth-of-type(2), both on rgb(255, 255, 255)"
   },
   {
     "fixture": "forced-colors.html",
@@ -933,7 +933,7 @@
     "check": "borders",
     "kind": "nested edge",
     "path": "ul.bx--progress.bx--progress--space-equal > li.bx--progress-step.bx--progress-step--current:nth-of-type(1) > button.bx--progress-step-button.bx--progress-step-button--unclickable > span.bx--progress-line",
-    "message": "ul.bx--progress.bx--progress--space-equal > li.bx--progress-step.bx--progress-step--current:nth-of-type(1) > button.bx--progress-step-button.bx--progress-step-button--unclickable > span.bx--progress-line: bordered box inside bordered box div[data-testid=\"screen\"] > div.bx--interstitial-screen.bx--modal-container, both on rgb(255, 255, 255)"
+    "message": "ul.bx--progress.bx--progress--space-equal > li.bx--progress-step.bx--progress-step--current:nth-of-type(1) > button.bx--progress-step-button.bx--progress-step-button--unclickable > span.bx--progress-line: bordered box inside bordered box div[data-testid=\"screen\"], both on rgb(255, 255, 255)"
   },
   {
     "fixture": "interstitial-screen.html",
@@ -941,7 +941,7 @@
     "check": "borders",
     "kind": "nested edge",
     "path": "ul.bx--progress.bx--progress--space-equal > li.bx--progress-step.bx--progress-step--incomplete:nth-of-type(2) > button.bx--progress-step-button.bx--progress-step-button--unclickable > span.bx--progress-line",
-    "message": "ul.bx--progress.bx--progress--space-equal > li.bx--progress-step.bx--progress-step--incomplete:nth-of-type(2) > button.bx--progress-step-button.bx--progress-step-button--unclickable > span.bx--progress-line: bordered box inside bordered box div[data-testid=\"screen\"] > div.bx--interstitial-screen.bx--modal-container, both on rgb(255, 255, 255)"
+    "message": "ul.bx--progress.bx--progress--space-equal > li.bx--progress-step.bx--progress-step--incomplete:nth-of-type(2) > button.bx--progress-step-button.bx--progress-step-button--unclickable > span.bx--progress-line: bordered box inside bordered box div[data-testid=\"screen\"], both on rgb(255, 255, 255)"
   },
   {
     "fixture": "interstitial-screen.html",
@@ -949,55 +949,55 @@
     "check": "borders",
     "kind": "nested edge",
     "path": "ul.bx--progress.bx--progress--space-equal > li.bx--progress-step.bx--progress-step--incomplete:nth-of-type(3) > button.bx--progress-step-button.bx--progress-step-button--unclickable > span.bx--progress-line",
-    "message": "ul.bx--progress.bx--progress--space-equal > li.bx--progress-step.bx--progress-step--incomplete:nth-of-type(3) > button.bx--progress-step-button.bx--progress-step-button--unclickable > span.bx--progress-line: bordered box inside bordered box div[data-testid=\"screen\"] > div.bx--interstitial-screen.bx--modal-container, both on rgb(255, 255, 255)"
+    "message": "ul.bx--progress.bx--progress--space-equal > li.bx--progress-step.bx--progress-step--incomplete:nth-of-type(3) > button.bx--progress-step-button.bx--progress-step-button--unclickable > span.bx--progress-line: bordered box inside bordered box div[data-testid=\"screen\"], both on rgb(255, 255, 255)"
   },
   {
     "fixture": "items-resync.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--multi-select.bx--multi-select--selected > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1)",
-    "message": "div.bx--multi-select.bx--multi-select--selected > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1): 1px outline inside 2px outline div.bx--multi-select__wrapper.bx--list-box__wrapper > div.bx--multi-select.bx--multi-select--selected > div.bx--list-box__field--wrapper > button.bx--list-box__field, both on rgb(255, 255, 255)"
+    "path": "div.bx--list-box.bx--multi-select > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1)",
+    "message": "div.bx--list-box.bx--multi-select > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1): 1px outline inside 2px outline div.bx--list-box__wrapper.bx--multi-select__wrapper > div.bx--list-box.bx--multi-select > div.bx--list-box__field--wrapper > button.bx--list-box__field, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "list-box-icons.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--multi-select.bx--multi-select--selected > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1)",
-    "message": "div.bx--multi-select.bx--multi-select--selected > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1): 1px outline inside 2px outline div.bx--multi-select__wrapper.bx--list-box__wrapper > div.bx--multi-select.bx--multi-select--selected > div.bx--list-box__field--wrapper > button.bx--list-box__field, both on rgb(255, 255, 255)"
+    "path": "div.bx--list-box.bx--multi-select > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1)",
+    "message": "div.bx--list-box.bx--multi-select > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1): 1px outline inside 2px outline div.bx--list-box__wrapper.bx--multi-select__wrapper > div.bx--list-box.bx--multi-select > div.bx--list-box__field--wrapper > button.bx--list-box__field, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "list-box-inline-status.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--multi-select.bx--multi-select--inline:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1)",
-    "message": "div.bx--multi-select.bx--multi-select--inline:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1): 1px outline inside 2px outline div.bx--multi-select__wrapper.bx--list-box__wrapper:nth-of-type(3) > div.bx--multi-select.bx--multi-select--inline:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field, both on rgb(255, 255, 255)"
+    "path": "div.bx--list-box.bx--list-box--warning:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1)",
+    "message": "div.bx--list-box.bx--list-box--warning:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1): 1px outline inside 2px outline div.bx--list-box__wrapper.bx--list-box__wrapper--inline:nth-of-type(3) > div.bx--list-box.bx--list-box--warning:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "list-box-inline-status.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--multi-select.bx--multi-select--invalid:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1)",
-    "message": "div.bx--multi-select.bx--multi-select--invalid:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1): 1px outline inside 2px outline div.bx--multi-select__wrapper.bx--list-box__wrapper:nth-of-type(3) > div.bx--multi-select.bx--multi-select--invalid:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field, both on rgb(255, 255, 255)"
+    "path": "div.bx--list-box.bx--multi-select:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1)",
+    "message": "div.bx--list-box.bx--multi-select:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1): 1px outline inside 2px outline div.bx--list-box__wrapper.bx--list-box__wrapper--inline:nth-of-type(3) > div.bx--list-box.bx--multi-select:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "list-box-invalid-outline.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--multi-select.bx--combo-box:nth-of-type(1) > div > div.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1)",
-    "message": "div.bx--multi-select.bx--combo-box:nth-of-type(1) > div > div.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1): 1px outline inside 2px outline div[data-testid=\"multiselect-filterable-selected\"] > div.bx--multi-select__wrapper.bx--list-box__wrapper > div.bx--multi-select.bx--combo-box:nth-of-type(1), both on rgb(255, 255, 255)"
+    "path": "div.bx--combo-box.bx--list-box:nth-of-type(1) > div > div.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1)",
+    "message": "div.bx--combo-box.bx--list-box:nth-of-type(1) > div > div.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1): 1px outline inside 2px outline div[data-testid=\"multiselect-filterable-selected\"] > div.bx--list-box__wrapper.bx--multi-select__wrapper > div.bx--combo-box.bx--list-box:nth-of-type(1), both on rgb(255, 255, 255)"
   },
   {
     "fixture": "long-words.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--multi-select.bx--multi-select--inline > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1)",
-    "message": "div.bx--multi-select.bx--multi-select--inline > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1): 1px outline inside 2px outline div.bx--multi-select__wrapper.bx--list-box__wrapper:nth-of-type(1) > div.bx--multi-select.bx--multi-select--inline > div.bx--list-box__field--wrapper > button.bx--list-box__field, both on rgb(255, 255, 255)"
+    "path": "div.bx--list-box.bx--multi-select > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1)",
+    "message": "div.bx--list-box.bx--multi-select > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1): 1px outline inside 2px outline div.bx--list-box__wrapper.bx--list-box__wrapper--inline:nth-of-type(1) > div.bx--list-box.bx--multi-select > div.bx--list-box__field--wrapper > button.bx--list-box__field, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "long-words.html",
@@ -1045,7 +1045,7 @@
     "check": "overflow",
     "kind": "scrolls sideways",
     "path": "page",
-    "message": "page scrolls sideways: scrollWidth 368px, clientWidth 320px"
+    "message": "page scrolls sideways: scrollWidth 375px, clientWidth 320px"
   },
   {
     "fixture": "menu-flip.html",
@@ -1053,7 +1053,7 @@
     "check": "overflow",
     "kind": "widens page",
     "path": "div[data-testid=\"bottom\"] > button.bx--overflow-menu",
-    "message": "div[data-testid=\"bottom\"] > button.bx--overflow-menu: spans 352.08px to 368.08px"
+    "message": "div[data-testid=\"bottom\"] > button.bx--overflow-menu: spans 359.17px to 375.17px"
   },
   {
     "fixture": "menu-flip.html",
@@ -1061,7 +1061,7 @@
     "check": "overflow",
     "kind": "widens page",
     "path": "div[data-testid=\"bottom\"] > div:nth-of-type(3)",
-    "message": "div[data-testid=\"bottom\"] > div:nth-of-type(3): spans 224.28px to 336.08px"
+    "message": "div[data-testid=\"bottom\"] > div:nth-of-type(3): spans 227.36px to 343.17px"
   },
   {
     "fixture": "modal-container.html",
@@ -1117,15 +1117,15 @@
     "check": "borders",
     "kind": "nested edge",
     "path": "div.bx--date-picker.bx--date-picker--single > div.bx--date-picker-container > div.bx--date-picker-input__wrapper.bx--date-picker-input__wrapper--readonly > input.bx--date-picker__input.bx--date-picker__input--with-icon",
-    "message": "div.bx--date-picker.bx--date-picker--single > div.bx--date-picker-container > div.bx--date-picker-input__wrapper.bx--date-picker-input__wrapper--readonly > input.bx--date-picker__input.bx--date-picker__input--with-icon: 2px outline inside bordered box div[data-testid=\"modal\"] > div.bx--modal-container, both on rgb(255, 255, 255)"
+    "message": "div.bx--date-picker.bx--date-picker--single > div.bx--date-picker-container > div.bx--date-picker-input__wrapper.bx--date-picker-input__wrapper--readonly > input.bx--date-picker__input.bx--date-picker__input--with-icon: 2px outline inside bordered box div[data-testid=\"modal\"], both on rgb(255, 255, 255)"
   },
   {
     "fixture": "modal-layer.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--form-item:nth-of-type(4) > div.bx--number.bx--number--neutral > div.bx--number__input-wrapper > input",
-    "message": "div.bx--form-item:nth-of-type(4) > div.bx--number.bx--number--neutral > div.bx--number__input-wrapper > input: 2px outline inside bordered box div[data-testid=\"modal\"] > div.bx--modal-container, both on rgb(255, 255, 255)"
+    "path": "div.bx--form-item:nth-of-type(4) > div.bx--number.bx--number--helpertext > div.bx--number__input-wrapper > input",
+    "message": "div.bx--form-item:nth-of-type(4) > div.bx--number.bx--number--helpertext > div.bx--number__input-wrapper > input: 2px outline inside bordered box div[data-testid=\"modal\"], both on rgb(255, 255, 255)"
   },
   {
     "fixture": "modal-layer.html",
@@ -1133,7 +1133,7 @@
     "check": "borders",
     "kind": "nested edge",
     "path": "div.bx--form-item:nth-of-type(7) > div.bx--select > div.bx--select-input__wrapper > select.bx--select-input",
-    "message": "div.bx--form-item:nth-of-type(7) > div.bx--select > div.bx--select-input__wrapper > select.bx--select-input: 2px outline inside bordered box div[data-testid=\"modal\"] > div.bx--modal-container, both on rgb(255, 255, 255)"
+    "message": "div.bx--form-item:nth-of-type(7) > div.bx--select > div.bx--select-input__wrapper > select.bx--select-input: 2px outline inside bordered box div[data-testid=\"modal\"], both on rgb(255, 255, 255)"
   },
   {
     "fixture": "modal-layer.html",
@@ -1141,7 +1141,7 @@
     "check": "borders",
     "kind": "nested edge",
     "path": "div.bx--form-item.bx--text-input-wrapper > div.bx--text-input__field-outer-wrapper:nth-of-type(2) > div.bx--text-input__field-wrapper > input.bx--text-input",
-    "message": "div.bx--form-item.bx--text-input-wrapper > div.bx--text-input__field-outer-wrapper:nth-of-type(2) > div.bx--text-input__field-wrapper > input.bx--text-input: 2px outline inside bordered box div[data-testid=\"modal\"] > div.bx--modal-container, both on rgb(255, 255, 255)"
+    "message": "div.bx--form-item.bx--text-input-wrapper > div.bx--text-input__field-outer-wrapper:nth-of-type(2) > div.bx--text-input__field-wrapper > input.bx--text-input: 2px outline inside bordered box div[data-testid=\"modal\"], both on rgb(255, 255, 255)"
   },
   {
     "fixture": "modal-layer.html",
@@ -1149,71 +1149,55 @@
     "check": "borders",
     "kind": "nested edge",
     "path": "div.bx--form-item.bx--text-input-wrapper:nth-of-type(1) > div.bx--text-input__field-outer-wrapper:nth-of-type(2) > div.bx--text-input__field-wrapper > input.bx--text-input",
-    "message": "div.bx--form-item.bx--text-input-wrapper:nth-of-type(1) > div.bx--text-input__field-outer-wrapper:nth-of-type(2) > div.bx--text-input__field-wrapper > input.bx--text-input: 2px outline inside bordered box div[data-testid=\"modal\"] > div.bx--modal-container, both on rgb(255, 255, 255)"
+    "message": "div.bx--form-item.bx--text-input-wrapper:nth-of-type(1) > div.bx--text-input__field-outer-wrapper:nth-of-type(2) > div.bx--text-input__field-wrapper > input.bx--text-input: 2px outline inside bordered box div[data-testid=\"modal\"], both on rgb(255, 255, 255)"
   },
   {
     "fixture": "modal-layer.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--modal-container > div.bx--modal-content.bx--layer-two:nth-of-type(2) > div.bx--dropdown__wrapper.bx--list-box__wrapper:nth-of-type(5) > div.bx--dropdown.bx--list-box",
-    "message": "div.bx--modal-container > div.bx--modal-content.bx--layer-two:nth-of-type(2) > div.bx--dropdown__wrapper.bx--list-box__wrapper:nth-of-type(5) > div.bx--dropdown.bx--list-box: 2px outline inside bordered box div[data-testid=\"modal\"] > div.bx--modal-container, both on rgb(255, 255, 255)"
+    "path": "div.bx--layer-two.bx--modal-content:nth-of-type(2) > div.bx--data-table-container:nth-of-type(3) > div > div.bx--data-table-content",
+    "message": "div.bx--layer-two.bx--modal-content:nth-of-type(2) > div.bx--data-table-container:nth-of-type(3) > div > div.bx--data-table-content: 1px outline inside bordered box div[data-testid=\"modal\"], both on rgb(255, 255, 255)"
   },
   {
     "fixture": "modal-layer.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--modal-container > div.bx--modal-content.bx--layer-two:nth-of-type(2) > div.bx--search.bx--search--lg:nth-of-type(8) > input.bx--search-input",
-    "message": "div.bx--modal-container > div.bx--modal-content.bx--layer-two:nth-of-type(2) > div.bx--search.bx--search--lg:nth-of-type(8) > input.bx--search-input: 2px outline inside bordered box div[data-testid=\"modal\"] > div.bx--modal-container, both on rgb(255, 255, 255)"
+    "path": "div.bx--layer-two.bx--modal-content:nth-of-type(2) > div.bx--form-item:nth-of-type(9) > div.bx--text-area__wrapper:nth-of-type(2) > textarea.bx--text-area",
+    "message": "div.bx--layer-two.bx--modal-content:nth-of-type(2) > div.bx--form-item:nth-of-type(9) > div.bx--text-area__wrapper:nth-of-type(2) > textarea.bx--text-area: 2px outline inside bordered box div[data-testid=\"modal\"], both on rgb(255, 255, 255)"
   },
   {
     "fixture": "modal-layer.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--modal-content.bx--layer-two:nth-of-type(2) > div.bx--data-table-container:nth-of-type(3) > div > div.bx--data-table-content",
-    "message": "div.bx--modal-content.bx--layer-two:nth-of-type(2) > div.bx--data-table-container:nth-of-type(3) > div > div.bx--data-table-content: 1px outline inside bordered box div[data-testid=\"modal\"] > div.bx--modal-container, both on rgb(255, 255, 255)"
+    "path": "div.bx--list-box__wrapper.bx--multi-select__wrapper:nth-of-type(6) > div.bx--list-box.bx--multi-select > div.bx--list-box__field--wrapper > button.bx--list-box__field",
+    "message": "div.bx--list-box__wrapper.bx--multi-select__wrapper:nth-of-type(6) > div.bx--list-box.bx--multi-select > div.bx--list-box__field--wrapper > button.bx--list-box__field: 2px outline inside bordered box div[data-testid=\"modal\"], both on rgb(255, 255, 255)"
   },
   {
     "fixture": "modal-layer.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--modal-content.bx--layer-two:nth-of-type(2) > div.bx--form-item:nth-of-type(9) > div.bx--text-area__wrapper:nth-of-type(2) > textarea.bx--text-area",
-    "message": "div.bx--modal-content.bx--layer-two:nth-of-type(2) > div.bx--form-item:nth-of-type(9) > div.bx--text-area__wrapper:nth-of-type(2) > textarea.bx--text-area: 2px outline inside bordered box div[data-testid=\"modal\"] > div.bx--modal-container, both on rgb(255, 255, 255)"
+    "path": "div.bx--number.bx--number--helpertext > div.bx--number__input-wrapper > div.bx--number__controls > button.bx--number__control-btn.down-icon:nth-of-type(1)",
+    "message": "div.bx--number.bx--number--helpertext > div.bx--number__input-wrapper > div.bx--number__controls > button.bx--number__control-btn.down-icon:nth-of-type(1): 1px outline inside bordered box div[data-testid=\"modal\"], both on rgb(255, 255, 255)"
   },
   {
     "fixture": "modal-layer.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--multi-select__wrapper.bx--list-box__wrapper:nth-of-type(6) > div.bx--multi-select.bx--list-box > div.bx--list-box__field--wrapper > button.bx--list-box__field",
-    "message": "div.bx--multi-select__wrapper.bx--list-box__wrapper:nth-of-type(6) > div.bx--multi-select.bx--list-box > div.bx--list-box__field--wrapper > button.bx--list-box__field: 2px outline inside bordered box div[data-testid=\"modal\"] > div.bx--modal-container, both on rgb(255, 255, 255)"
+    "path": "div.bx--number.bx--number--helpertext > div.bx--number__input-wrapper > div.bx--number__controls > button.bx--number__control-btn.up-icon:nth-of-type(2)",
+    "message": "div.bx--number.bx--number--helpertext > div.bx--number__input-wrapper > div.bx--number__controls > button.bx--number__control-btn.up-icon:nth-of-type(2): 1px outline inside bordered box div[data-testid=\"modal\"], both on rgb(255, 255, 255)"
   },
   {
     "fixture": "modal-layer.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--number.bx--number--neutral > div.bx--number__input-wrapper > div.bx--number__controls > button.bx--number__control-btn.down-icon:nth-of-type(1)",
-    "message": "div.bx--number.bx--number--neutral > div.bx--number__input-wrapper > div.bx--number__controls > button.bx--number__control-btn.down-icon:nth-of-type(1): 1px outline inside bordered box div[data-testid=\"modal\"] > div.bx--modal-container, both on rgb(255, 255, 255)"
-  },
-  {
-    "fixture": "modal-layer.html",
-    "variant": "1280-forced",
-    "check": "borders",
-    "kind": "nested edge",
-    "path": "div.bx--number.bx--number--neutral > div.bx--number__input-wrapper > div.bx--number__controls > button.bx--number__control-btn.up-icon:nth-of-type(2)",
-    "message": "div.bx--number.bx--number--neutral > div.bx--number__input-wrapper > div.bx--number__controls > button.bx--number__control-btn.up-icon:nth-of-type(2): 1px outline inside bordered box div[data-testid=\"modal\"] > div.bx--modal-container, both on rgb(255, 255, 255)"
-  },
-  {
-    "fixture": "modal-layer.html",
-    "variant": "1280-forced",
-    "check": "borders",
-    "kind": "nested edge",
-    "path": "div.bx--pagination.bx--pagination--md:nth-of-type(11) > div.bx--pagination__right:nth-of-type(2) > div.bx--pagination__control-buttons:nth-of-type(2) > button.bx--btn.bx--btn--ghost:nth-of-type(1)",
-    "message": "div.bx--pagination.bx--pagination--md:nth-of-type(11) > div.bx--pagination__right:nth-of-type(2) > div.bx--pagination__control-buttons:nth-of-type(2) > button.bx--btn.bx--btn--ghost:nth-of-type(1): 1px outline inside bordered box div[data-testid=\"modal\"] > div.bx--modal-container, both on rgb(255, 255, 255)"
+    "path": "div.bx--pagination.bx--pagination--md:nth-of-type(11) > div.bx--pagination__right:nth-of-type(2) > div.bx--pagination__control-buttons:nth-of-type(2) > button.bx--btn.bx--btn--disabled:nth-of-type(1)",
+    "message": "div.bx--pagination.bx--pagination--md:nth-of-type(11) > div.bx--pagination__right:nth-of-type(2) > div.bx--pagination__control-buttons:nth-of-type(2) > button.bx--btn.bx--btn--disabled:nth-of-type(1): 1px outline inside bordered box div[data-testid=\"modal\"], both on rgb(255, 255, 255)"
   },
   {
     "fixture": "modal-layer.html",
@@ -1221,79 +1205,95 @@
     "check": "borders",
     "kind": "nested edge",
     "path": "div.bx--pagination.bx--pagination--md:nth-of-type(11) > div.bx--pagination__right:nth-of-type(2) > div.bx--pagination__control-buttons:nth-of-type(2) > button.bx--btn.bx--btn--ghost:nth-of-type(2)",
-    "message": "div.bx--pagination.bx--pagination--md:nth-of-type(11) > div.bx--pagination__right:nth-of-type(2) > div.bx--pagination__control-buttons:nth-of-type(2) > button.bx--btn.bx--btn--ghost:nth-of-type(2): 1px outline inside bordered box div[data-testid=\"modal\"] > div.bx--modal-container, both on rgb(255, 255, 255)"
+    "message": "div.bx--pagination.bx--pagination--md:nth-of-type(11) > div.bx--pagination__right:nth-of-type(2) > div.bx--pagination__control-buttons:nth-of-type(2) > button.bx--btn.bx--btn--ghost:nth-of-type(2): 1px outline inside bordered box div[data-testid=\"modal\"], both on rgb(255, 255, 255)"
   },
   {
     "fixture": "modal-layer.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--select.bx--select--inline > div.bx--select-input--inline__wrapper > div.bx--select-input__wrapper > select.bx--select__item-count.bx--select-input",
-    "message": "div.bx--select.bx--select--inline > div.bx--select-input--inline__wrapper > div.bx--select-input__wrapper > select.bx--select__item-count.bx--select-input: 2px outline inside bordered box div[data-testid=\"modal\"] > div.bx--modal-container, both on rgb(255, 255, 255)"
+    "path": "div.bx--select.bx--select--inline > div.bx--select-input--inline__wrapper > div.bx--select-input__wrapper > select.bx--select-input.bx--select__item-count",
+    "message": "div.bx--select.bx--select--inline > div.bx--select-input--inline__wrapper > div.bx--select-input__wrapper > select.bx--select-input.bx--select__item-count: 2px outline inside bordered box div[data-testid=\"modal\"], both on rgb(255, 255, 255)"
   },
   {
     "fixture": "modal-layer.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--select.bx--select--inline > div.bx--select-input--inline__wrapper > div.bx--select-input__wrapper > select.bx--select__page-number.bx--select-input",
-    "message": "div.bx--select.bx--select--inline > div.bx--select-input--inline__wrapper > div.bx--select-input__wrapper > select.bx--select__page-number.bx--select-input: 2px outline inside bordered box div[data-testid=\"modal\"] > div.bx--modal-container, both on rgb(255, 255, 255)"
+    "path": "div.bx--select.bx--select--inline > div.bx--select-input--inline__wrapper > div.bx--select-input__wrapper > select.bx--select-input.bx--select__page-number",
+    "message": "div.bx--select.bx--select--inline > div.bx--select-input--inline__wrapper > div.bx--select-input__wrapper > select.bx--select-input.bx--select__page-number: 2px outline inside bordered box div[data-testid=\"modal\"], both on rgb(255, 255, 255)"
   },
   {
     "fixture": "modal-layer.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div[data-testid=\"composed-modal\"] > div.bx--modal-container > div.bx--modal-content.bx--layer-two:nth-of-type(2) > div.bx--tile:nth-of-type(2)",
-    "message": "div[data-testid=\"composed-modal\"] > div.bx--modal-container > div.bx--modal-content.bx--layer-two:nth-of-type(2) > div.bx--tile:nth-of-type(2): 2px outline inside bordered box div[data-testid=\"composed-modal\"] > div.bx--modal-container, both on rgb(255, 255, 255)"
+    "path": "div[data-testid=\"composed-modal\"] > div.bx--layer-two.bx--modal-content:nth-of-type(2) > div.bx--tile:nth-of-type(2)",
+    "message": "div[data-testid=\"composed-modal\"] > div.bx--layer-two.bx--modal-content:nth-of-type(2) > div.bx--tile:nth-of-type(2): 2px outline inside bordered box div[data-testid=\"composed-modal\"], both on rgb(255, 255, 255)"
   },
   {
     "fixture": "modal-layer.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div[data-testid=\"modal\"] > div.bx--modal-container > div.bx--modal-content.bx--layer-two:nth-of-type(2) > div.bx--tile:nth-of-type(2)",
-    "message": "div[data-testid=\"modal\"] > div.bx--modal-container > div.bx--modal-content.bx--layer-two:nth-of-type(2) > div.bx--tile:nth-of-type(2): 2px outline inside bordered box div[data-testid=\"modal\"] > div.bx--modal-container, both on rgb(255, 255, 255)"
+    "path": "div[data-testid=\"modal\"] > div.bx--layer-two.bx--modal-content:nth-of-type(2) > div.bx--dropdown__wrapper.bx--list-box__wrapper:nth-of-type(5) > div.bx--dropdown.bx--list-box",
+    "message": "div[data-testid=\"modal\"] > div.bx--layer-two.bx--modal-content:nth-of-type(2) > div.bx--dropdown__wrapper.bx--list-box__wrapper:nth-of-type(5) > div.bx--dropdown.bx--list-box: 2px outline inside bordered box div[data-testid=\"modal\"], both on rgb(255, 255, 255)"
+  },
+  {
+    "fixture": "modal-layer.html",
+    "variant": "1280-forced",
+    "check": "borders",
+    "kind": "nested edge",
+    "path": "div[data-testid=\"modal\"] > div.bx--layer-two.bx--modal-content:nth-of-type(2) > div.bx--search.bx--search--lg:nth-of-type(8) > input.bx--search-input",
+    "message": "div[data-testid=\"modal\"] > div.bx--layer-two.bx--modal-content:nth-of-type(2) > div.bx--search.bx--search--lg:nth-of-type(8) > input.bx--search-input: 2px outline inside bordered box div[data-testid=\"modal\"], both on rgb(255, 255, 255)"
+  },
+  {
+    "fixture": "modal-layer.html",
+    "variant": "1280-forced",
+    "check": "borders",
+    "kind": "nested edge",
+    "path": "div[data-testid=\"modal\"] > div.bx--layer-two.bx--modal-content:nth-of-type(2) > div.bx--tile:nth-of-type(2)",
+    "message": "div[data-testid=\"modal\"] > div.bx--layer-two.bx--modal-content:nth-of-type(2) > div.bx--tile:nth-of-type(2): 2px outline inside bordered box div[data-testid=\"modal\"], both on rgb(255, 255, 255)"
   },
   {
     "fixture": "notification-fit.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div[data-testid=\"inline-200\"] > div.bx--inline-notification.bx--inline-notification--high-contrast > button.bx--inline-notification__close-button",
-    "message": "div[data-testid=\"inline-200\"] > div.bx--inline-notification.bx--inline-notification--high-contrast > button.bx--inline-notification__close-button: 2px outline inside 1px outline div[data-testid=\"inline-200\"] > div.bx--inline-notification.bx--inline-notification--high-contrast, both on rgb(255, 255, 255)"
+    "path": "div[data-testid=\"inline-200\"] > div.bx--inline-notification.bx--inline-notification--error > button.bx--inline-notification__close-button",
+    "message": "div[data-testid=\"inline-200\"] > div.bx--inline-notification.bx--inline-notification--error > button.bx--inline-notification__close-button: 2px outline inside 1px outline div[data-testid=\"inline-200\"] > div.bx--inline-notification.bx--inline-notification--error, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "notification-fit.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div[data-testid=\"inline-320\"] > div.bx--inline-notification.bx--inline-notification--high-contrast > button.bx--inline-notification__close-button",
-    "message": "div[data-testid=\"inline-320\"] > div.bx--inline-notification.bx--inline-notification--high-contrast > button.bx--inline-notification__close-button: 2px outline inside 1px outline div[data-testid=\"inline-320\"] > div.bx--inline-notification.bx--inline-notification--high-contrast, both on rgb(255, 255, 255)"
+    "path": "div[data-testid=\"inline-320\"] > div.bx--inline-notification.bx--inline-notification--error > button.bx--inline-notification__close-button",
+    "message": "div[data-testid=\"inline-320\"] > div.bx--inline-notification.bx--inline-notification--error > button.bx--inline-notification__close-button: 2px outline inside 1px outline div[data-testid=\"inline-320\"] > div.bx--inline-notification.bx--inline-notification--error, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "notification-fit.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div[data-testid=\"inline-shrink\"] > div.bx--inline-notification.bx--inline-notification--high-contrast > button.bx--inline-notification__close-button",
-    "message": "div[data-testid=\"inline-shrink\"] > div.bx--inline-notification.bx--inline-notification--high-contrast > button.bx--inline-notification__close-button: 2px outline inside 1px outline div[data-testid=\"inline-shrink\"] > div.bx--inline-notification.bx--inline-notification--high-contrast, both on rgb(255, 255, 255)"
+    "path": "div[data-testid=\"inline-shrink\"] > div.bx--inline-notification.bx--inline-notification--error > button.bx--inline-notification__close-button",
+    "message": "div[data-testid=\"inline-shrink\"] > div.bx--inline-notification.bx--inline-notification--error > button.bx--inline-notification__close-button: 2px outline inside 1px outline div[data-testid=\"inline-shrink\"] > div.bx--inline-notification.bx--inline-notification--error, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "notification-fit.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div[data-testid=\"toast-200\"] > div.bx--toast-notification.bx--toast-notification--high-contrast > button.bx--toast-notification__close-button",
-    "message": "div[data-testid=\"toast-200\"] > div.bx--toast-notification.bx--toast-notification--high-contrast > button.bx--toast-notification__close-button: 2px outline inside 1px outline div[data-testid=\"toast-200\"] > div.bx--toast-notification.bx--toast-notification--high-contrast, both on rgb(255, 255, 255)"
+    "path": "div[data-testid=\"toast-200\"] > div.bx--toast-notification.bx--toast-notification--error > button.bx--toast-notification__close-button",
+    "message": "div[data-testid=\"toast-200\"] > div.bx--toast-notification.bx--toast-notification--error > button.bx--toast-notification__close-button: 2px outline inside 1px outline div[data-testid=\"toast-200\"] > div.bx--toast-notification.bx--toast-notification--error, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "notification-fit.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div[data-testid=\"toast-320\"] > div.bx--toast-notification.bx--toast-notification--high-contrast > button.bx--toast-notification__close-button",
-    "message": "div[data-testid=\"toast-320\"] > div.bx--toast-notification.bx--toast-notification--high-contrast > button.bx--toast-notification__close-button: 2px outline inside 1px outline div[data-testid=\"toast-320\"] > div.bx--toast-notification.bx--toast-notification--high-contrast, both on rgb(255, 255, 255)"
+    "path": "div[data-testid=\"toast-320\"] > div.bx--toast-notification.bx--toast-notification--error > button.bx--toast-notification__close-button",
+    "message": "div[data-testid=\"toast-320\"] > div.bx--toast-notification.bx--toast-notification--error > button.bx--toast-notification__close-button: 2px outline inside 1px outline div[data-testid=\"toast-320\"] > div.bx--toast-notification.bx--toast-notification--error, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "notification-fit.html",
@@ -1413,15 +1413,15 @@
     "check": "overflow",
     "kind": "scrolls sideways",
     "path": "page",
-    "message": "page scrolls sideways: scrollWidth 482px, clientWidth 320px"
+    "message": "page scrolls sideways: scrollWidth 496px, clientWidth 320px"
   },
   {
     "fixture": "popover-portal-fit.html",
     "variant": "320",
     "check": "overflow",
     "kind": "widens page",
-    "path": "div#app > div:nth-of-type(1) > div:nth-of-type(2) > button.bx--btn.bx--btn--sm:nth-of-type(3)",
-    "message": "div#app > div:nth-of-type(1) > div:nth-of-type(2) > button.bx--btn.bx--btn--sm:nth-of-type(3): spans 329.48px to 481.78px"
+    "path": "div#app > div:nth-of-type(1) > div:nth-of-type(2) > button.bx--btn.bx--btn--ghost:nth-of-type(3)",
+    "message": "div#app > div:nth-of-type(1) > div:nth-of-type(2) > button.bx--btn.bx--btn--ghost:nth-of-type(3): spans 338.88px to 495.72px"
   },
   {
     "fixture": "portal-when-clipped.html",
@@ -1436,8 +1436,8 @@
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--multi-select__wrapper.bx--list-box__wrapper > div.bx--multi-select.bx--list-box > div.bx--list-box__field--wrapper > button.bx--list-box__field",
-    "message": "div.bx--multi-select__wrapper.bx--list-box__wrapper > div.bx--multi-select.bx--list-box > div.bx--list-box__field--wrapper > button.bx--list-box__field: 2px outline inside bordered box div[data-testid=\"scroll\"], both on rgb(255, 255, 255)"
+    "path": "div.bx--list-box__wrapper.bx--multi-select__wrapper > div.bx--list-box.bx--multi-select > div.bx--list-box__field--wrapper > button.bx--list-box__field",
+    "message": "div.bx--list-box__wrapper.bx--multi-select__wrapper > div.bx--list-box.bx--multi-select > div.bx--list-box__field--wrapper > button.bx--list-box__field: 2px outline inside bordered box div[data-testid=\"scroll\"], both on rgb(255, 255, 255)"
   },
   {
     "fixture": "portal-when-clipped.html",
@@ -1460,8 +1460,8 @@
     "variant": "320",
     "check": "fits",
     "kind": "cut by ancestor",
-    "path": "div[data-testid=\"card\"] > div:nth-of-type(3) > div.bx--multi-select__wrapper.bx--list-box__wrapper > label.bx--label",
-    "message": "div[data-testid=\"card\"] > div:nth-of-type(3) > div.bx--multi-select__wrapper.bx--list-box__wrapper > label.bx--label: text is cut by div[data-testid=\"card\"] by 2.44px"
+    "path": "div[data-testid=\"card\"] > div:nth-of-type(3) > div.bx--list-box__wrapper.bx--multi-select__wrapper > label.bx--label",
+    "message": "div[data-testid=\"card\"] > div:nth-of-type(3) > div.bx--list-box__wrapper.bx--multi-select__wrapper > label.bx--label: text is cut by div[data-testid=\"card\"] by 8.11px"
   },
   {
     "fixture": "progress-bar.html",
@@ -1540,8 +1540,8 @@
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--multi-select.bx--multi-select--readonly > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1)",
-    "message": "div.bx--multi-select.bx--multi-select--readonly > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1): 1px outline inside 2px outline div.bx--multi-select__wrapper.bx--list-box__wrapper > div.bx--multi-select.bx--multi-select--readonly > div.bx--list-box__field--wrapper > button.bx--list-box__field, both on rgb(255, 255, 255)"
+    "path": "div.bx--list-box.bx--multi-select > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1)",
+    "message": "div.bx--list-box.bx--multi-select > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1): 1px outline inside 2px outline div.bx--list-box__wrapper.bx--multi-select__wrapper > div.bx--list-box.bx--multi-select > div.bx--list-box__field--wrapper > button.bx--list-box__field, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "rtl-buttons.html",
@@ -1580,16 +1580,16 @@
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--date-picker__days:nth-of-type(2) > div.bx--date-picker__month-days > div.bx--date-picker__week:nth-of-type(3) > span.bx--date-picker__day.bx--date-picker__day--selected:nth-of-type(3)",
-    "message": "div.bx--date-picker__days:nth-of-type(2) > div.bx--date-picker__month-days > div.bx--date-picker__week:nth-of-type(3) > span.bx--date-picker__day.bx--date-picker__day--selected:nth-of-type(3): 1px outline inside 1px outline div.bx--form-item.bx--form-item--fit > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker-container:nth-of-type(1) > div.bx--date-picker__calendar.bx--date-picker__calendar--range:nth-of-type(2), both on rgb(255, 255, 255)"
+    "path": "div.bx--date-picker__days:nth-of-type(2) > div.bx--date-picker__month-days > div.bx--date-picker__week:nth-of-type(3) > span.bx--date-picker__day.bx--date-picker__day--range-end:nth-of-type(5)",
+    "message": "div.bx--date-picker__days:nth-of-type(2) > div.bx--date-picker__month-days > div.bx--date-picker__week:nth-of-type(3) > span.bx--date-picker__day.bx--date-picker__day--range-end:nth-of-type(5): 1px outline inside 1px outline div.bx--form-item.bx--form-item--fit > div.bx--date-picker.bx--date-picker--inline > div.bx--date-picker-container:nth-of-type(1) > div.bx--date-picker__calendar.bx--date-picker__calendar--inline:nth-of-type(2), both on rgb(255, 255, 255)"
   },
   {
     "fixture": "rtl-date-picker.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--date-picker__days:nth-of-type(2) > div.bx--date-picker__month-days > div.bx--date-picker__week:nth-of-type(3) > span.bx--date-picker__day.bx--date-picker__day--selected:nth-of-type(5)",
-    "message": "div.bx--date-picker__days:nth-of-type(2) > div.bx--date-picker__month-days > div.bx--date-picker__week:nth-of-type(3) > span.bx--date-picker__day.bx--date-picker__day--selected:nth-of-type(5): 1px outline inside 1px outline div.bx--form-item.bx--form-item--fit > div.bx--date-picker.bx--date-picker--range > div.bx--date-picker-container:nth-of-type(1) > div.bx--date-picker__calendar.bx--date-picker__calendar--range:nth-of-type(2), both on rgb(255, 255, 255)"
+    "path": "div.bx--date-picker__days:nth-of-type(2) > div.bx--date-picker__month-days > div.bx--date-picker__week:nth-of-type(3) > span.bx--date-picker__day.bx--date-picker__day--range-start:nth-of-type(3)",
+    "message": "div.bx--date-picker__days:nth-of-type(2) > div.bx--date-picker__month-days > div.bx--date-picker__week:nth-of-type(3) > span.bx--date-picker__day.bx--date-picker__day--range-start:nth-of-type(3): 1px outline inside 1px outline div.bx--form-item.bx--form-item--fit > div.bx--date-picker.bx--date-picker--inline > div.bx--date-picker-container:nth-of-type(1) > div.bx--date-picker__calendar.bx--date-picker__calendar--inline:nth-of-type(2), both on rgb(255, 255, 255)"
   },
   {
     "fixture": "rtl-date-picker.html",
@@ -1597,23 +1597,23 @@
     "check": "borders",
     "kind": "nested edge",
     "path": "div.bx--date-picker__days:nth-of-type(2) > div.bx--date-picker__month-days > div.bx--date-picker__week:nth-of-type(3) > span.bx--date-picker__day.bx--date-picker__day--selected:nth-of-type(6)",
-    "message": "div.bx--date-picker__days:nth-of-type(2) > div.bx--date-picker__month-days > div.bx--date-picker__week:nth-of-type(3) > span.bx--date-picker__day.bx--date-picker__day--selected:nth-of-type(6): 1px outline inside 1px outline div.bx--form-item.bx--form-item--fit > div.bx--date-picker.bx--date-picker--single > div.bx--date-picker-container > div.bx--date-picker__calendar.bx--date-picker__calendar--inline:nth-of-type(2), both on rgb(255, 255, 255)"
+    "message": "div.bx--date-picker__days:nth-of-type(2) > div.bx--date-picker__month-days > div.bx--date-picker__week:nth-of-type(3) > span.bx--date-picker__day.bx--date-picker__day--selected:nth-of-type(6): 1px outline inside 1px outline div.bx--form-item.bx--form-item--fit > div.bx--date-picker.bx--date-picker--inline > div.bx--date-picker-container > div.bx--date-picker__calendar.bx--date-picker__calendar--inline:nth-of-type(2), both on rgb(255, 255, 255)"
   },
   {
     "fixture": "rtl-date-picker.html",
     "variant": "1280-forced",
     "check": "ring",
     "kind": "ring",
-    "path": "div.bx--date-picker__days:nth-of-type(2) > div.bx--date-picker__month-days > div.bx--date-picker__week:nth-of-type(3) > span.bx--date-picker__day.bx--date-picker__day--selected:nth-of-type(3)",
-    "message": "div.bx--date-picker__days:nth-of-type(2) > div.bx--date-picker__month-days > div.bx--date-picker__week:nth-of-type(3) > span.bx--date-picker__day.bx--date-picker__day--selected:nth-of-type(3): outline 1px rgba(5, 0, 73, 0.8)"
+    "path": "div.bx--date-picker__days:nth-of-type(2) > div.bx--date-picker__month-days > div.bx--date-picker__week:nth-of-type(3) > span.bx--date-picker__day.bx--date-picker__day--range-end:nth-of-type(5)",
+    "message": "div.bx--date-picker__days:nth-of-type(2) > div.bx--date-picker__month-days > div.bx--date-picker__week:nth-of-type(3) > span.bx--date-picker__day.bx--date-picker__day--range-end:nth-of-type(5): outline 1px rgba(5, 0, 73, 0.8)"
   },
   {
     "fixture": "rtl-date-picker.html",
     "variant": "1280-forced",
     "check": "ring",
     "kind": "ring",
-    "path": "div.bx--date-picker__days:nth-of-type(2) > div.bx--date-picker__month-days > div.bx--date-picker__week:nth-of-type(3) > span.bx--date-picker__day.bx--date-picker__day--selected:nth-of-type(5)",
-    "message": "div.bx--date-picker__days:nth-of-type(2) > div.bx--date-picker__month-days > div.bx--date-picker__week:nth-of-type(3) > span.bx--date-picker__day.bx--date-picker__day--selected:nth-of-type(5): outline 1px rgba(5, 0, 73, 0.8)"
+    "path": "div.bx--date-picker__days:nth-of-type(2) > div.bx--date-picker__month-days > div.bx--date-picker__week:nth-of-type(3) > span.bx--date-picker__day.bx--date-picker__day--range-start:nth-of-type(3)",
+    "message": "div.bx--date-picker__days:nth-of-type(2) > div.bx--date-picker__month-days > div.bx--date-picker__week:nth-of-type(3) > span.bx--date-picker__day.bx--date-picker__day--range-start:nth-of-type(3): outline 1px rgba(5, 0, 73, 0.8)"
   },
   {
     "fixture": "rtl-date-picker.html",
@@ -1644,8 +1644,8 @@
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--form-item.bx--text-input-wrapper > div.bx--text-input__field-outer-wrapper > div.bx--text-input__field-wrapper > button.bx--text-input--password__visibility__toggle.bx--btn",
-    "message": "div.bx--form-item.bx--text-input-wrapper > div.bx--text-input__field-outer-wrapper > div.bx--text-input__field-wrapper > button.bx--text-input--password__visibility__toggle.bx--btn: 2px outline inside 2px outline div[data-testid=\"fluid-password-invalid\"] > div.bx--form-item.bx--text-input-wrapper > div.bx--text-input__field-outer-wrapper > div.bx--text-input__field-wrapper, both on rgb(255, 255, 255)"
+    "path": "div.bx--form-item.bx--password-input-wrapper > div.bx--text-input__field-outer-wrapper > div.bx--text-input__field-wrapper > button.bx--btn.bx--btn--icon-only",
+    "message": "div.bx--form-item.bx--password-input-wrapper > div.bx--text-input__field-outer-wrapper > div.bx--text-input__field-wrapper > button.bx--btn.bx--btn--icon-only: 2px outline inside 2px outline div[data-testid=\"fluid-password-invalid\"] > div.bx--form-item.bx--password-input-wrapper > div.bx--text-input__field-outer-wrapper > div.bx--text-input__field-wrapper, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "rtl-fields.html",
@@ -1741,15 +1741,15 @@
     "check": "overflow",
     "kind": "widens page",
     "path": "div#tooltip-right",
-    "message": "div#tooltip-right: spans 197.41px to 405.41px"
+    "message": "div#tooltip-right: spans 201.5px to 409.5px"
   },
   {
     "fixture": "rtl.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--multi-select.bx--multi-select--selected > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1)",
-    "message": "div.bx--multi-select.bx--multi-select--selected > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1): 1px outline inside 2px outline div.bx--multi-select__wrapper.bx--list-box__wrapper > div.bx--multi-select.bx--multi-select--selected > div.bx--list-box__field--wrapper > button.bx--list-box__field, both on rgb(255, 255, 255)"
+    "path": "div.bx--list-box.bx--multi-select > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1)",
+    "message": "div.bx--list-box.bx--multi-select > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1): 1px outline inside 2px outline div.bx--list-box__wrapper.bx--multi-select__wrapper > div.bx--list-box.bx--multi-select > div.bx--list-box__field--wrapper > button.bx--list-box__field, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "search-fluid-status.html",
@@ -1805,7 +1805,7 @@
     "check": "overflow",
     "kind": "scrolls sideways",
     "path": "page",
-    "message": "page scrolls sideways: scrollWidth 350px, clientWidth 320px"
+    "message": "page scrolls sideways: scrollWidth 352px, clientWidth 320px"
   },
   {
     "fixture": "side-nav-active-item-scroll.html",
@@ -1813,7 +1813,7 @@
     "check": "overflow",
     "kind": "widens page",
     "path": "main#main-content > button",
-    "message": "main#main-content > button: spans 288px to 349.84px"
+    "message": "main#main-content > button: spans 288px to 351.72px"
   },
   {
     "fixture": "skeleton-swap.html",
@@ -1948,39 +1948,39 @@
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div[data-testid=\"menu\"] > ul.bx--overflow-menu-options.bx--overflow-menu-options--open > li.bx--overflow-menu-options__option:nth-of-type(1) > button.bx--overflow-menu-options__btn",
-    "message": "div[data-testid=\"menu\"] > ul.bx--overflow-menu-options.bx--overflow-menu-options--open > li.bx--overflow-menu-options__option:nth-of-type(1) > button.bx--overflow-menu-options__btn: 2px outline inside 1px outline div[data-testid=\"menu\"] > ul.bx--overflow-menu-options.bx--overflow-menu-options--open, both on rgb(255, 255, 255)"
+    "path": "div[data-testid=\"menu\"] > ul.bx--overflow-menu-options.bx--overflow-menu-options--below-left > li.bx--overflow-menu-options__option:nth-of-type(1) > button.bx--overflow-menu-options__btn",
+    "message": "div[data-testid=\"menu\"] > ul.bx--overflow-menu-options.bx--overflow-menu-options--below-left > li.bx--overflow-menu-options__option:nth-of-type(1) > button.bx--overflow-menu-options__btn: 2px outline inside 1px outline div[data-testid=\"menu\"] > ul.bx--overflow-menu-options.bx--overflow-menu-options--below-left, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "ssr-layout.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div[data-testid=\"menu\"] > ul.bx--overflow-menu-options.bx--overflow-menu-options--open > li.bx--overflow-menu-options__option:nth-of-type(2) > button.bx--overflow-menu-options__btn",
-    "message": "div[data-testid=\"menu\"] > ul.bx--overflow-menu-options.bx--overflow-menu-options--open > li.bx--overflow-menu-options__option:nth-of-type(2) > button.bx--overflow-menu-options__btn: 2px outline inside 1px outline div[data-testid=\"menu\"] > ul.bx--overflow-menu-options.bx--overflow-menu-options--open, both on rgb(255, 255, 255)"
+    "path": "div[data-testid=\"menu\"] > ul.bx--overflow-menu-options.bx--overflow-menu-options--below-left > li.bx--overflow-menu-options__option:nth-of-type(2) > button.bx--overflow-menu-options__btn",
+    "message": "div[data-testid=\"menu\"] > ul.bx--overflow-menu-options.bx--overflow-menu-options--below-left > li.bx--overflow-menu-options__option:nth-of-type(2) > button.bx--overflow-menu-options__btn: 2px outline inside 1px outline div[data-testid=\"menu\"] > ul.bx--overflow-menu-options.bx--overflow-menu-options--below-left, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "ssr-layout.html",
     "variant": "1280-forced",
     "check": "ring",
     "kind": "ring",
-    "path": "div[data-testid=\"menu\"] > ul.bx--overflow-menu-options.bx--overflow-menu-options--open > li.bx--overflow-menu-options__option:nth-of-type(1) > button.bx--overflow-menu-options__btn",
-    "message": "div[data-testid=\"menu\"] > ul.bx--overflow-menu-options.bx--overflow-menu-options--open > li.bx--overflow-menu-options__option:nth-of-type(1) > button.bx--overflow-menu-options__btn: outline 2px rgb(0, 0, 0)"
+    "path": "div[data-testid=\"menu\"] > ul.bx--overflow-menu-options.bx--overflow-menu-options--below-left > li.bx--overflow-menu-options__option:nth-of-type(1) > button.bx--overflow-menu-options__btn",
+    "message": "div[data-testid=\"menu\"] > ul.bx--overflow-menu-options.bx--overflow-menu-options--below-left > li.bx--overflow-menu-options__option:nth-of-type(1) > button.bx--overflow-menu-options__btn: outline 2px rgb(0, 0, 0)"
   },
   {
     "fixture": "ssr-layout.html",
     "variant": "1280-forced",
     "check": "ring",
     "kind": "ring",
-    "path": "div[data-testid=\"menu\"] > ul.bx--overflow-menu-options.bx--overflow-menu-options--open > li.bx--overflow-menu-options__option:nth-of-type(2) > button.bx--overflow-menu-options__btn",
-    "message": "div[data-testid=\"menu\"] > ul.bx--overflow-menu-options.bx--overflow-menu-options--open > li.bx--overflow-menu-options__option:nth-of-type(2) > button.bx--overflow-menu-options__btn: outline 2px rgb(0, 0, 0)"
+    "path": "div[data-testid=\"menu\"] > ul.bx--overflow-menu-options.bx--overflow-menu-options--below-left > li.bx--overflow-menu-options__option:nth-of-type(2) > button.bx--overflow-menu-options__btn",
+    "message": "div[data-testid=\"menu\"] > ul.bx--overflow-menu-options.bx--overflow-menu-options--below-left > li.bx--overflow-menu-options__option:nth-of-type(2) > button.bx--overflow-menu-options__btn: outline 2px rgb(0, 0, 0)"
   },
   {
     "fixture": "ssr-layout.html",
     "variant": "1280-forced",
     "check": "ring",
     "kind": "rings",
-    "path": "div[data-testid=\"menu\"] > ul.bx--overflow-menu-options.bx--overflow-menu-options--open",
+    "path": "div[data-testid=\"menu\"] > ul.bx--overflow-menu-options.bx--overflow-menu-options--below-left",
     "message": "2 rings, at most 1 allowed"
   },
   {
@@ -1988,40 +1988,40 @@
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--form-item.bx--text-input-wrapper > div.bx--text-input__field-outer-wrapper > div.bx--text-input__field-wrapper > button.bx--text-input--password__visibility__toggle.bx--btn",
-    "message": "div.bx--form-item.bx--text-input-wrapper > div.bx--text-input__field-outer-wrapper > div.bx--text-input__field-wrapper > button.bx--text-input--password__visibility__toggle.bx--btn: 2px outline inside 2px outline div:nth-of-type(38) > div.bx--form-item.bx--text-input-wrapper > div.bx--text-input__field-outer-wrapper > div.bx--text-input__field-wrapper, both on rgb(255, 255, 255)"
+    "path": "div.bx--form-item.bx--password-input-wrapper > div.bx--text-input__field-outer-wrapper > div.bx--text-input__field-wrapper > button.bx--btn.bx--btn--icon-only",
+    "message": "div.bx--form-item.bx--password-input-wrapper > div.bx--text-input__field-outer-wrapper > div.bx--text-input__field-wrapper > button.bx--btn.bx--btn--icon-only: 2px outline inside 2px outline div:nth-of-type(38) > div.bx--form-item.bx--password-input-wrapper > div.bx--text-input__field-outer-wrapper > div.bx--text-input__field-wrapper, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "status-icons.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--multi-select.bx--multi-select--invalid:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag--xs.bx--tag:nth-of-type(1)",
-    "message": "div.bx--multi-select.bx--multi-select--invalid:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag--xs.bx--tag:nth-of-type(1): 1px outline inside 2px outline div.bx--multi-select__wrapper.bx--list-box__wrapper > div.bx--multi-select.bx--multi-select--invalid:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field, both on rgb(255, 255, 255)"
+    "path": "div.bx--list-box.bx--list-box--warning:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1)",
+    "message": "div.bx--list-box.bx--list-box--warning:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1): 1px outline inside 2px outline div.bx--list-box__wrapper.bx--multi-select__wrapper > div.bx--list-box.bx--list-box--warning:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "status-icons.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--multi-select.bx--multi-select--invalid:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1)",
-    "message": "div.bx--multi-select.bx--multi-select--invalid:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1): 1px outline inside 2px outline div.bx--multi-select__wrapper.bx--list-box__wrapper > div.bx--multi-select.bx--multi-select--invalid:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field, both on rgb(255, 255, 255)"
+    "path": "div.bx--list-box.bx--list-box--xl:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1)",
+    "message": "div.bx--list-box.bx--list-box--xl:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1): 1px outline inside 2px outline div.bx--list-box__wrapper.bx--multi-select__wrapper > div.bx--list-box.bx--list-box--xl:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "status-icons.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--multi-select.bx--multi-select--selected:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag--xs.bx--tag:nth-of-type(1)",
-    "message": "div.bx--multi-select.bx--multi-select--selected:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag--xs.bx--tag:nth-of-type(1): 1px outline inside 2px outline div.bx--multi-select__wrapper.bx--list-box__wrapper > div.bx--multi-select.bx--multi-select--selected:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field, both on rgb(255, 255, 255)"
+    "path": "div.bx--list-box.bx--list-box--xs:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1)",
+    "message": "div.bx--list-box.bx--list-box--xs:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1): 1px outline inside 2px outline div.bx--list-box__wrapper.bx--multi-select__wrapper > div.bx--list-box.bx--list-box--xs:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "status-icons.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--multi-select.bx--multi-select--selected:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1)",
-    "message": "div.bx--multi-select.bx--multi-select--selected:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1): 1px outline inside 2px outline div.bx--multi-select__wrapper.bx--list-box__wrapper > div.bx--multi-select.bx--multi-select--selected:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field, both on rgb(255, 255, 255)"
+    "path": "div.bx--list-box.bx--multi-select:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1)",
+    "message": "div.bx--list-box.bx--multi-select:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field > div.bx--tag.bx--tag--filter:nth-of-type(1): 1px outline inside 2px outline div.bx--list-box__wrapper.bx--multi-select__wrapper > div.bx--list-box.bx--multi-select:nth-of-type(1) > div.bx--list-box__field--wrapper > button.bx--list-box__field, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "status-icons.html",
@@ -2044,24 +2044,8 @@
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--tag-input.bx--tag-input--invalid:nth-of-type(1) > div.bx--tag-input__tags.bx--tag-set > div.bx--tag-set__space.bx--stack > div.bx--tag.bx--tag--filter",
-    "message": "div.bx--tag-input.bx--tag-input--invalid:nth-of-type(1) > div.bx--tag-input__tags.bx--tag-set > div.bx--tag-set__space.bx--stack > div.bx--tag.bx--tag--filter: 1px outline inside 2px outline div > div:nth-of-type(24) > div.bx--form-item > div.bx--tag-input.bx--tag-input--invalid:nth-of-type(1), both on rgb(255, 255, 255)"
-  },
-  {
-    "fixture": "status-icons.html",
-    "variant": "1280-forced",
-    "check": "borders",
-    "kind": "nested edge",
-    "path": "div.bx--tag-input.bx--tag-input--xl:nth-of-type(1) > div.bx--tag-input__tags.bx--tag-set > div.bx--tag-set__space.bx--stack > div.bx--tag.bx--tag--filter",
-    "message": "div.bx--tag-input.bx--tag-input--xl:nth-of-type(1) > div.bx--tag-input__tags.bx--tag-set > div.bx--tag-set__space.bx--stack > div.bx--tag.bx--tag--filter: 1px outline inside 2px outline div > div:nth-of-type(36) > div.bx--form-item > div.bx--tag-input.bx--tag-input--xl:nth-of-type(1), both on rgb(255, 255, 255)"
-  },
-  {
-    "fixture": "status-icons.html",
-    "variant": "1280-forced",
-    "check": "borders",
-    "kind": "nested edge",
-    "path": "div.bx--tag-input.bx--tag-input--xs:nth-of-type(1) > div.bx--tag-input__tags.bx--tag-set > div.bx--tag-set__space.bx--stack > div.bx--tag.bx--tag--filter",
-    "message": "div.bx--tag-input.bx--tag-input--xs:nth-of-type(1) > div.bx--tag-input__tags.bx--tag-set > div.bx--tag-set__space.bx--stack > div.bx--tag.bx--tag--filter: 1px outline inside 2px outline div > div:nth-of-type(12) > div.bx--form-item > div.bx--tag-input.bx--tag-input--xs:nth-of-type(1), both on rgb(255, 255, 255)"
+    "path": "div.bx--tag-input.bx--tag-input--invalid:nth-of-type(1) > div.bx--tag-input__tags.bx--tag-set > div.bx--stack.bx--stack-align-center > div.bx--tag.bx--tag--filter",
+    "message": "div.bx--tag-input.bx--tag-input--invalid:nth-of-type(1) > div.bx--tag-input__tags.bx--tag-set > div.bx--stack.bx--stack-align-center > div.bx--tag.bx--tag--filter: 1px outline inside 2px outline div > div:nth-of-type(12) > div.bx--form-item > div.bx--tag-input.bx--tag-input--invalid:nth-of-type(1), both on rgb(255, 255, 255)"
   },
   {
     "fixture": "status-icons.html",
@@ -2164,8 +2148,8 @@
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--tag-input.bx--tag-input--invalid:nth-of-type(1) > div.bx--tag-input__tags.bx--tag-set > div.bx--tag-set__space.bx--stack > div.bx--tag.bx--tag--filter",
-    "message": "div.bx--tag-input.bx--tag-input--invalid:nth-of-type(1) > div.bx--tag-input__tags.bx--tag-set > div.bx--tag-set__space.bx--stack > div.bx--tag.bx--tag--filter: 1px outline inside 2px outline div#app > div.bx--form-item:nth-of-type(5) > div.bx--tag-input.bx--tag-input--invalid:nth-of-type(1), both on rgb(255, 255, 255)"
+    "path": "div.bx--tag-input.bx--tag-input--invalid:nth-of-type(1) > div.bx--tag-input__tags.bx--tag-set > div.bx--stack.bx--stack-align-center > div.bx--tag.bx--tag--filter",
+    "message": "div.bx--tag-input.bx--tag-input--invalid:nth-of-type(1) > div.bx--tag-input__tags.bx--tag-set > div.bx--stack.bx--stack-align-center > div.bx--tag.bx--tag--filter: 1px outline inside 2px outline div#app > div.bx--form-item:nth-of-type(5) > div.bx--tag-input.bx--tag-input--invalid:nth-of-type(1), both on rgb(255, 255, 255)"
   },
   {
     "fixture": "tag-v11.html",
@@ -2300,56 +2284,56 @@
     "variant": "1280",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--modal.bx--layer-one > div.bx--modal-container > div.bx--modal-content.bx--layer-two:nth-of-type(2) > div.bx--content-switcher.bx--content-switcher--icon-only:nth-of-type(1)",
-    "message": "div.bx--modal.bx--layer-one > div.bx--modal-container > div.bx--modal-content.bx--layer-two:nth-of-type(2) > div.bx--content-switcher.bx--content-switcher--icon-only:nth-of-type(1): 1px outline inside bordered box div#app > div.bx--modal.bx--layer-one > div.bx--modal-container, both on rgb(244, 244, 244)"
+    "path": "div.bx--layer-one.bx--modal > div.bx--modal-container > div.bx--layer-two.bx--modal-content:nth-of-type(2) > div.bx--content-switcher.bx--content-switcher--icon-only:nth-of-type(1)",
+    "message": "div.bx--layer-one.bx--modal > div.bx--modal-container > div.bx--layer-two.bx--modal-content:nth-of-type(2) > div.bx--content-switcher.bx--content-switcher--icon-only:nth-of-type(1): 1px outline inside bordered box div#app > div.bx--layer-one.bx--modal > div.bx--modal-container, both on rgb(244, 244, 244)"
   },
   {
     "fixture": "tooltip-escape.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--form-item.bx--text-input-wrapper:nth-of-type(4) > div.bx--text-input__field-outer-wrapper > div.bx--text-input__field-wrapper > button.bx--text-input--password__visibility__toggle.bx--btn",
-    "message": "div.bx--form-item.bx--text-input-wrapper:nth-of-type(4) > div.bx--text-input__field-outer-wrapper > div.bx--text-input__field-wrapper > button.bx--text-input--password__visibility__toggle.bx--btn: 2px outline inside bordered box div#app > div.bx--modal.bx--layer-one > div.bx--modal-container, both on rgb(255, 255, 255)"
+    "path": "div.bx--form-item.bx--password-input-wrapper:nth-of-type(4) > div.bx--text-input__field-outer-wrapper > div.bx--text-input__field-wrapper > button.bx--btn.bx--btn--icon-only",
+    "message": "div.bx--form-item.bx--password-input-wrapper:nth-of-type(4) > div.bx--text-input__field-outer-wrapper > div.bx--text-input__field-wrapper > button.bx--btn.bx--btn--icon-only: 2px outline inside bordered box div#app > div.bx--layer-one.bx--modal > div.bx--modal-container, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "tooltip-escape.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--modal-container > div.bx--modal-content.bx--layer-two:nth-of-type(2) > div.bx--toggle-button-group:nth-of-type(3) > button.bx--toggle-button.bx--toggle-button--icon-only:nth-of-type(1)",
-    "message": "div.bx--modal-container > div.bx--modal-content.bx--layer-two:nth-of-type(2) > div.bx--toggle-button-group:nth-of-type(3) > button.bx--toggle-button.bx--toggle-button--icon-only:nth-of-type(1): 2px outline inside bordered box div#app > div.bx--modal.bx--layer-one > div.bx--modal-container, both on rgb(255, 255, 255)"
+    "path": "div.bx--layer-one.bx--modal > div.bx--modal-container > div.bx--layer-two.bx--modal-content:nth-of-type(2) > div.bx--content-switcher.bx--content-switcher--icon-only:nth-of-type(1)",
+    "message": "div.bx--layer-one.bx--modal > div.bx--modal-container > div.bx--layer-two.bx--modal-content:nth-of-type(2) > div.bx--content-switcher.bx--content-switcher--icon-only:nth-of-type(1): 1px outline inside bordered box div#app > div.bx--layer-one.bx--modal > div.bx--modal-container, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "tooltip-escape.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--modal-container > div.bx--modal-content.bx--layer-two:nth-of-type(2) > div.bx--toggle-button-group:nth-of-type(3) > button.bx--toggle-button.bx--toggle-button--icon-only:nth-of-type(2)",
-    "message": "div.bx--modal-container > div.bx--modal-content.bx--layer-two:nth-of-type(2) > div.bx--toggle-button-group:nth-of-type(3) > button.bx--toggle-button.bx--toggle-button--icon-only:nth-of-type(2): 2px outline inside bordered box div#app > div.bx--modal.bx--layer-one > div.bx--modal-container, both on rgb(255, 255, 255)"
+    "path": "div.bx--modal-container > div.bx--layer-two.bx--modal-content:nth-of-type(2) > div.bx--toggle-button-group:nth-of-type(3) > button.bx--toggle-button.bx--toggle-button--icon-only:nth-of-type(1)",
+    "message": "div.bx--modal-container > div.bx--layer-two.bx--modal-content:nth-of-type(2) > div.bx--toggle-button-group:nth-of-type(3) > button.bx--toggle-button.bx--toggle-button--icon-only:nth-of-type(1): 2px outline inside bordered box div#app > div.bx--layer-one.bx--modal > div.bx--modal-container, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "tooltip-escape.html",
     "variant": "1280-forced",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--modal.bx--layer-one > div.bx--modal-container > div.bx--modal-content.bx--layer-two:nth-of-type(2) > div.bx--content-switcher.bx--content-switcher--icon-only:nth-of-type(1)",
-    "message": "div.bx--modal.bx--layer-one > div.bx--modal-container > div.bx--modal-content.bx--layer-two:nth-of-type(2) > div.bx--content-switcher.bx--content-switcher--icon-only:nth-of-type(1): 1px outline inside bordered box div#app > div.bx--modal.bx--layer-one > div.bx--modal-container, both on rgb(255, 255, 255)"
+    "path": "div.bx--modal-container > div.bx--layer-two.bx--modal-content:nth-of-type(2) > div.bx--toggle-button-group:nth-of-type(3) > button.bx--toggle-button.bx--toggle-button--icon-only:nth-of-type(2)",
+    "message": "div.bx--modal-container > div.bx--layer-two.bx--modal-content:nth-of-type(2) > div.bx--toggle-button-group:nth-of-type(3) > button.bx--toggle-button.bx--toggle-button--icon-only:nth-of-type(2): 2px outline inside bordered box div#app > div.bx--layer-one.bx--modal > div.bx--modal-container, both on rgb(255, 255, 255)"
   },
   {
     "fixture": "tooltip-escape.html",
     "variant": "320",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--modal.bx--layer-one > div.bx--modal-container > div.bx--modal-content.bx--layer-two:nth-of-type(2) > div.bx--content-switcher.bx--content-switcher--icon-only:nth-of-type(1)",
-    "message": "div.bx--modal.bx--layer-one > div.bx--modal-container > div.bx--modal-content.bx--layer-two:nth-of-type(2) > div.bx--content-switcher.bx--content-switcher--icon-only:nth-of-type(1): 1px outline inside bordered box div#app > div.bx--modal.bx--layer-one > div.bx--modal-container, both on rgb(244, 244, 244)"
+    "path": "div.bx--layer-one.bx--modal > div.bx--modal-container > div.bx--layer-two.bx--modal-content:nth-of-type(2) > div.bx--content-switcher.bx--content-switcher--icon-only:nth-of-type(1)",
+    "message": "div.bx--layer-one.bx--modal > div.bx--modal-container > div.bx--layer-two.bx--modal-content:nth-of-type(2) > div.bx--content-switcher.bx--content-switcher--icon-only:nth-of-type(1): 1px outline inside bordered box div#app > div.bx--layer-one.bx--modal > div.bx--modal-container, both on rgb(244, 244, 244)"
   },
   {
     "fixture": "tooltip-escape.html",
     "variant": "672",
     "check": "borders",
     "kind": "nested edge",
-    "path": "div.bx--modal.bx--layer-one > div.bx--modal-container > div.bx--modal-content.bx--layer-two:nth-of-type(2) > div.bx--content-switcher.bx--content-switcher--icon-only:nth-of-type(1)",
-    "message": "div.bx--modal.bx--layer-one > div.bx--modal-container > div.bx--modal-content.bx--layer-two:nth-of-type(2) > div.bx--content-switcher.bx--content-switcher--icon-only:nth-of-type(1): 1px outline inside bordered box div#app > div.bx--modal.bx--layer-one > div.bx--modal-container, both on rgb(244, 244, 244)"
+    "path": "div.bx--layer-one.bx--modal > div.bx--modal-container > div.bx--layer-two.bx--modal-content:nth-of-type(2) > div.bx--content-switcher.bx--content-switcher--icon-only:nth-of-type(1)",
+    "message": "div.bx--layer-one.bx--modal > div.bx--modal-container > div.bx--layer-two.bx--modal-content:nth-of-type(2) > div.bx--content-switcher.bx--content-switcher--icon-only:nth-of-type(1): 1px outline inside bordered box div#app > div.bx--layer-one.bx--modal > div.bx--modal-container, both on rgb(244, 244, 244)"
   },
   {
     "fixture": "truncated-titles.html",

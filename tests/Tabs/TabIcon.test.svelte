@@ -10,8 +10,8 @@
 <Tabs>
   <Tab label="Test Tab" {icon} />
   <Tab label="No Icon" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Icon content</TabContent>
     <TabContent>Plain content</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>

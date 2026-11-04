@@ -36,9 +36,7 @@ describe("Toggle form participation", () => {
     await user.click(toggle);
 
     expect(toggle).toBeChecked();
-    expect(onToggle).toHaveBeenLastCalledWith(
-      expect.objectContaining({ detail: { toggled: true } }),
-    );
+    expect(onToggle).toHaveBeenLastCalledWith({ toggled: true });
   });
 
   it("toggles normally when the DOM and state agree", async () => {
@@ -47,14 +45,10 @@ describe("Toggle form participation", () => {
     const toggle = screen.getByRole("switch");
 
     await user.click(toggle);
-    expect(onToggle).toHaveBeenLastCalledWith(
-      expect.objectContaining({ detail: { toggled: true } }),
-    );
+    expect(onToggle).toHaveBeenLastCalledWith({ toggled: true });
 
     await user.click(toggle);
-    expect(onToggle).toHaveBeenLastCalledWith(
-      expect.objectContaining({ detail: { toggled: false } }),
-    );
+    expect(onToggle).toHaveBeenLastCalledWith({ toggled: false });
   });
 
   describe("form reset", () => {

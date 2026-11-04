@@ -38,13 +38,13 @@
 
 <Tag type="outline">outline</Tag>
 
-<Tag filter on:click={() => onFilterClick()} on:close={() => onFilterClose()}>
+<Tag filter onclick={() => onFilterClick()} ondismiss={() => onFilterClose()}>
   Filterable
 </Tag>
 
 <Tag icon={Add}>Custom icon</Tag>
 
-<Tag interactive on:click={() => onInteractiveClick()}>Text</Tag>
+<Tag interactive onclick={() => onInteractiveClick()}>Text</Tag>
 
 <Tag skeleton />
 
@@ -54,7 +54,7 @@
 
 <Tag size="lg">Large tag</Tag>
 
-<Tag size="lg" filter on:close>Large filterable</Tag>
+<Tag size="lg" filter>Large filterable</Tag>
 
 <Tag size="lg" skeleton />
 
@@ -62,22 +62,17 @@
 
 <Tag interactive disabled>Disabled interactive</Tag>
 
-<Tag inline>Inline tag</Tag>
-
 <Tag
-  on:mouseover={() => onMouseover()}
-  on:mouseenter={() => onMouseenter()}
-  on:mouseleave={() => onMouseleave()}
+  onmouseover={() => onMouseover()}
+  onmouseenter={() => onMouseenter()}
+  onmouseleave={() => onMouseleave()}
 >
   Mouse events
 </Tag>
 
-<Tag interactive>
-  <Add slot="icon" />
-  Icon slot
-</Tag>
+<Tag interactive icon={Add}>Icon slot</Tag>
 
-<Tag filter on:click={() => onBodyClick()} on:close={() => onBodyClose()}>
+<Tag filter onclick={() => onBodyClick()} ondismiss={() => onBodyClose()}>
   Filter click and close
 </Tag>
 
@@ -87,4 +82,4 @@
 
 <Tag href="/filtered?tag=ml" disabled>Disabled linked tag</Tag>
 
-<Tag filter href="/should-not-link" on:close>Filter wins over href</Tag>
+<Tag filter href="/should-not-link">Filter wins over href</Tag>

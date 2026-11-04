@@ -21,7 +21,7 @@
   {passiveModal}
   {preventCloseOnClickOutside}
   {hideCloseButton}
-  on:close={() => {
+  onopenchange={() => {
     if (moveFocusOnClose) elsewhere.focus();
   }}
 />

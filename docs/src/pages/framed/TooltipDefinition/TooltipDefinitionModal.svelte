@@ -9,7 +9,7 @@
   let open = false;
 </script>
 
-<Button on:click={() => (open = true)}>Open modal</Button>
+<Button onclick={() => (open = true)}>Open modal</Button>
 
 <Portal>
   <Modal
@@ -18,7 +18,7 @@
     modalHeading="TooltipDefinition in modal"
     primaryButtonText="Done"
     secondaryButtonText="Cancel"
-    on:click:button--secondary={() => (open = false)}
+    onsecondaryaction={() => (open = false)}
   >
     <TooltipDefinition
       direction="top"

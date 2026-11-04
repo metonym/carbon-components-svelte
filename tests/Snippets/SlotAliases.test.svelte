@@ -30,7 +30,7 @@
 </HeaderNav>
 
 <Modal open passiveModal modalHeading="Create database">
-  {#snippet labelChildren()}
+  {#snippet modalLabel()}
     <span data-testid="modal-label-children">Cloudant</span>
   {/snippet}
   Content

@@ -13,10 +13,10 @@
 <div data-testid="default">
   <OutboundLink
     href="https://www.carbondesignsystem.com/"
-    on:focus={() => onFocus()}
-    on:blur={() => onBlur()}
-    on:keydown={() => onKeydown()}
-    on:keyup={() => onKeyup()}
+    onfocus={() => onFocus()}
+    onblur={() => onBlur()}
+    onkeydown={() => onKeydown()}
+    onkeyup={() => onKeyup()}
   >
     Carbon Design System
   </OutboundLink>

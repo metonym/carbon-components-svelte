@@ -34,7 +34,7 @@
 <Button
   size="small"
   data-testid="jump-deep"
-  on:click={() => treeview?.showNode(deepFile)}
+  onclick={() => treeview?.showNode(deepFile)}
 >
   Jump to a deep file
 </Button>

@@ -258,7 +258,7 @@
                             {entry.name}
                           </Link>
                           {#if entry.isNew}
-                            <Tag size="sm" inline>New</Tag>
+                            <Tag size="sm">New</Tag>
                           {/if}
                         </Stack>
                       </StructuredListCell>
@@ -328,7 +328,7 @@
               <Link
                 href="#"
                 size="xl"
-                on:click={(e) => {
+                onclick={(e) => {
                   e.preventDefault();
                   clearFilters();
                 }}

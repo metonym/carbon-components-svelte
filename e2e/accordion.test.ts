@@ -27,8 +27,8 @@ test.describe("Accordion", () => {
   test("can be located by data-testid", async ({ page }) => {
     const accordion = page.getByTestId("accordion");
     await expect(accordion).toBeVisible();
-    const item1 = page.getByTestId("accordion-item-1");
-    await item1.getByRole("button").click();
+    // Rest props, `data-testid` included, go to the item's heading button.
+    await page.getByTestId("accordion-item-1").click();
     await expect(page.getByText("Content for section 1")).toBeVisible();
   });
 });

@@ -5,6 +5,6 @@
 </script>
 
 <ComposedModal open>
-  <ModalHeader title="Terms" />
+  <ModalHeader titleText="Terms" />
   <ModalBody hasScrollingContent {...$$restProps}>Long terms.</ModalBody>
 </ComposedModal>

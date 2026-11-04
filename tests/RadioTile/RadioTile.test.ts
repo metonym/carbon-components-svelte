@@ -216,7 +216,7 @@ describe("RadioTile", () => {
       expect(radioB).toBeChecked();
       expect(onChange).toHaveBeenCalledTimes(1);
       expect(onSelect).toHaveBeenCalledTimes(1);
-      expect(onSelect.mock.calls[0][0].detail).toBe("b");
+      expect(onSelect.mock.calls[0][0]).toBe("b");
       expect(screen.getByTestId("bound")).toHaveTextContent("b");
     });
 
@@ -296,6 +296,25 @@ describe("RadioTile", () => {
       expect(isSelected(radioA)).toBe(false);
       expect(component.checkedB).toBe(true);
       expect(isSelected(radioB)).toBe(true);
+    });
+
+    it("calls oncheckedchange for the tile the user checks, not the one it unchecks", async () => {
+      const onCheckedA = vi.fn();
+      const onCheckedB = vi.fn();
+      const { component } = render(RadioTileStandaloneGroup, {
+        props: { onCheckedA, onCheckedB },
+      });
+
+      await user.click(screen.getByRole("radio", { name: "A" }));
+      expect(onCheckedA).toHaveBeenCalledExactlyOnceWith({ checked: true });
+
+      await user.click(screen.getByRole("radio", { name: "B" }));
+      expect(onCheckedB).toHaveBeenCalledExactlyOnceWith({ checked: true });
+      expect(onCheckedA).toHaveBeenCalledOnce();
+
+      component.checkedA = true;
+      await tick();
+      expect(onCheckedA).toHaveBeenCalledOnce();
     });
 
     it("unchecks a sibling when checked is set", async () => {
@@ -446,14 +465,14 @@ describe("RadioTile", () => {
     });
   });
 
-  it("should forward mouse events", async () => {
+  // Rest props, handlers included, go to the `<input>`.
+  it("should forward mouse events to the input", async () => {
     const onMouseover = vi.fn();
     const onMouseenter = vi.fn();
     const onMouseleave = vi.fn();
     render(RadioTile, { props: { onMouseover, onMouseenter, onMouseleave } });
 
-    const tile = screen.getByText("Test content").closest(".bx--tile");
-    assert(tile);
+    const tile = screen.getByRole("radio");
     await user.hover(tile);
     expect(onMouseover).toHaveBeenCalled();
     expect(onMouseenter).toHaveBeenCalledTimes(1);

@@ -142,7 +142,7 @@
   import OverflowMenuVertical from "../icons/OverflowMenuVertical.svelte";
   import { batchStoreUpdates } from "../utils/batch-store-updates.js";
   import { toCssLength } from "../utils/css-length.js";
-  import { dismiss } from "../utils/dismiss.js";
+  import { dismiss } from "../utils/dismiss.svelte.js";
   import { clippedBy } from "../utils/fit-align.js";
   import { focusQuietly, returnFocus } from "../utils/focus.js";
   import { hasModifierKey } from "../utils/has-modifier-key.js";
@@ -658,13 +658,17 @@
 
 <button
   bind:this={buttonRef}
-  use:dismiss={{ enabled: open, type: "click", handler: handleOutsideClick }}
-  use:dismiss={{
+  {@attach dismiss(() => ({
+    enabled: open,
+    type: "click",
+    handler: handleOutsideClick,
+  }))}
+  {@attach dismiss(() => ({
     enabled: tooltipOpen,
     type: "keydown",
     handler: handleTooltipKeydown,
     options: { capture: true },
-  }}
+  }))}
   type="button"
   {disabled}
   aria-haspopup="menu"

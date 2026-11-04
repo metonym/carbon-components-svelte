@@ -9,10 +9,10 @@
   let open = false;
 </script>
 
-<Button on:click={() => (open = true)}>About Cloudant</Button>
+<Button onclick={() => (open = true)}>About Cloudant</Button>
 
 <ComposedModal bind:open>
-  <ModalHeader title="About Cloudant" />
+  <ModalHeader titleText="About Cloudant" />
   <ModalBody hasScrollingContent>
     <p>
       Cloudant is a fully managed, distributed database optimized for heavy

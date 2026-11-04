@@ -8,8 +8,10 @@
 
 <div data-testid="tile" style="width: 14rem; padding: 1rem;">
   <ExpandableTile>
-    <div slot="above">Storage</div>
-    <div slot="below">2.4 TB of 5 TB used across 12 buckets.</div>
+    {#snippet above()}<div>Storage</div>{/snippet}
+    {#snippet below()}<div>
+        2.4 TB of 5 TB used across 12 buckets.
+      </div>{/snippet}
   </ExpandableTile>
 </div>
 

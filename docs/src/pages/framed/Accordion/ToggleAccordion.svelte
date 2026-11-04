@@ -27,9 +27,9 @@
   <Accordion>
     {#each items as item}
       <AccordionItem
-        title={item.title}
-        on:toggle={(e) => {
-          const { open } = e.detail;
+        titleText={item.title}
+        onopenchange={(e) => {
+          const { open } = e;
           lastToggled = `${item.title} (${open ? "opened" : "closed"})`;
         }}
       >

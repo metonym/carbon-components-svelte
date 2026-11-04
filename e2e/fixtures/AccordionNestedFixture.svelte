@@ -3,9 +3,9 @@
 </script>
 
 <Accordion data-testid="accordion-outer">
-  <AccordionItem title="Outer" data-testid="accordion-item-outer">
+  <AccordionItem titleText="Outer" data-testid="accordion-item-outer">
     <Accordion data-testid="accordion-inner">
-      <AccordionItem title="Inner" data-testid="accordion-item-inner">
+      <AccordionItem titleText="Inner" data-testid="accordion-item-inner">
         <p>Nested content</p>
       </AccordionItem>
     </Accordion>

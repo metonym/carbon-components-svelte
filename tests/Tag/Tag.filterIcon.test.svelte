@@ -5,9 +5,6 @@
 
 <Tag filter icon={Add}>Icon prop</Tag>
 
-<Tag filter>
-  <Add slot="icon" />
-  Icon slot
-</Tag>
+<Tag filter icon={Add}>Second icon</Tag>
 
 <Tag filter>Plain</Tag>

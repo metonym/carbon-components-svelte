@@ -16,10 +16,6 @@
   hasForm
   {formId}
   {shouldSubmitOnEnter}
-  on:open
-  on:close
-  on:submit
-  on:click:button--primary
 >
   <form id="test-form" on:submit|preventDefault={onFormSubmit}>
     <input name="username" type="text" data-testid="username-input" />

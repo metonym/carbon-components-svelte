@@ -158,17 +158,17 @@
                     role="status"
                     lowContrast
                     hideCloseButton
-                    title="Below WCAG AA:"
+                    titleText="Below WCAG AA:"
                   >
-                    <UnorderedList slot="subtitleChildren">
-                      {#each result.warnings as warning (warning.foreground + warning.background)}
-                        <ListItem>
-                          {warning.foreground}
-                          on {warning.background} is
-                          {warning.ratio}:1 and needs {warning.minimum}:1.
-                        </ListItem>
-                      {/each}
-                    </UnorderedList>
+                    {#snippet subtitleText()}<UnorderedList>
+                        {#each result.warnings as warning (warning.foreground + warning.background)}
+                          <ListItem>
+                            {warning.foreground}
+                            on {warning.background} is
+                            {warning.ratio}:1 and needs {warning.minimum}:1.
+                          </ListItem>
+                        {/each}
+                      </UnorderedList>{/snippet}
                   </InlineNotification>
                 {:else}
                   <InlineNotification
@@ -176,8 +176,8 @@
                     role="status"
                     lowContrast
                     hideCloseButton
-                    title="Passes WCAG AA:"
-                    subtitle="Text on the brand, links, and focus all have enough contrast."
+                    titleText="Passes WCAG AA:"
+                    subtitleText="Text on the brand, links, and focus all have enough contrast."
                   />
                 {/if}
               </Stack>
@@ -221,7 +221,7 @@
                     <Tab label="Overview" />
                     <Tab label="Metrics" />
                     <Tab label="Settings" />
-                    <svelte:fragment slot="content">
+                    {#snippet content()}
                       <TabContent>
                         <Text color="primary">api-gateway runs in us-east.</Text
                         >
@@ -232,7 +232,7 @@
                       <TabContent>
                         <Text color="primary">Autoscaling is on.</Text>
                       </TabContent>
-                    </svelte:fragment>
+                    {/snippet}
                   </Tabs>
 
                   <Stack gap={5}>
@@ -247,12 +247,12 @@
                     kind="info"
                     lowContrast
                     hideCloseButton
-                    title="Deploy queued:"
-                    subtitle="api-gateway starts in about two minutes."
+                    titleText="Deploy queued:"
+                    subtitleText="api-gateway starts in about two minutes."
                   >
-                    <NotificationActionButton slot="actions">
-                      View queue
-                    </NotificationActionButton>
+                    {#snippet actions()}<NotificationActionButton>
+                        View queue
+                      </NotificationActionButton>{/snippet}
                   </InlineNotification>
 
                   <Tile>
@@ -274,7 +274,7 @@
                 <Tab label="Theme" />
                 <Tab label="createTheme" />
                 <Tab label="CSS" />
-                <svelte:fragment slot="content">
+                {#snippet content()}
                   <TabContent>
                     <CodeSnippet
                       type="multi"
@@ -290,7 +290,7 @@
                   <TabContent>
                     <CodeSnippet type="multi" code={result.css()} />
                   </TabContent>
-                </svelte:fragment>
+                {/snippet}
               </Tabs>
               <Text type="body-01" color="secondary">
                 Load the CSS after all.css. It applies while the base theme is

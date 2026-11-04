@@ -32,5 +32,5 @@
     <DatePickerInput labelText="Report period start" placeholder="mm/dd/yyyy" />
     <DatePickerInput labelText="Report period end" placeholder="mm/dd/yyyy" />
   </DatePicker>
-  <Button on:click={nextMonth}>Next month</Button>
+  <Button onclick={nextMonth}>Next month</Button>
 </Stack>

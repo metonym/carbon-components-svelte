@@ -48,7 +48,7 @@
       <Button
         icon={TrashCan}
         disabled={selectedRowIds.length === 0}
-        on:click={() => {
+        onclick={() => {
           rows = rows.filter((row) => !selectedRowIds.includes(row.id));
           selectedRowIds = [];
         }}
@@ -57,7 +57,7 @@
       </Button>
     </ToolbarBatchActions>
     <ToolbarContent>
-      <Button on:click={() => (active = true)}>Edit rows</Button>
+      <Button onclick={() => (active = true)}>Edit rows</Button>
     </ToolbarContent>
   </Toolbar>
 </DataTable>

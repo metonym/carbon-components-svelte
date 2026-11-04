@@ -30,13 +30,13 @@
   {tabindex}
   {id}
   bind:ref
-  on:click={(e) => onclick?.(e)}
-  on:mouseover={(e) => onmouseover?.(e)}
-  on:mouseenter={(e) => onmouseenter?.(e)}
-  on:mouseleave={(e) => onmouseleave?.(e)}
-  on:keydown={(e) => onkeydown?.(e)}
-  on:focus={(e) => onfocus?.(e)}
-  on:blur={(e) => onblur?.(e)}
+  onclick={(e) => onclick?.(e)}
+  onmouseover={(e) => onmouseover?.(e)}
+  onmouseenter={(e) => onmouseenter?.(e)}
+  onmouseleave={(e) => onmouseleave?.(e)}
+  onkeydown={(e) => onkeydown?.(e)}
+  onfocus={(e) => onfocus?.(e)}
+  onblur={(e) => onblur?.(e)}
   {...$$restProps}
 >
   {#if slotContent}

@@ -5,9 +5,9 @@
   export let mode: "bind-group" | "checkbox-group" = "bind-group";
   export let group: string[] = [];
   export let required = false;
-  export let onCheck: (event: CustomEvent<boolean>) => void = () => {};
+  export let onCheck: (checked: boolean) => void = () => {};
   export let onChange: (
-    event: CustomEvent<ReadonlyArray<string | number>>,
+    selected: ReadonlyArray<string | number>,
   ) => void = () => {};
 </script>
 
@@ -18,14 +18,14 @@
       name="channel"
       value="a"
       labelText="A"
-      on:check={onCheck}
+      oncheckedchange={(e) => onCheck(e.checked)}
     />
     <Checkbox
       bind:group
       name="channel"
       value="b"
       labelText="B"
-      on:check={onCheck}
+      oncheckedchange={(e) => onCheck(e.checked)}
     />
   {:else}
     <CheckboxGroup
@@ -33,10 +33,18 @@
       {required}
       name="channel"
       legendText="Channel"
-      on:change={onChange}
+      onselectedchange={(e) => onChange(e.selected)}
     >
-      <Checkbox value="a" labelText="A" on:check={onCheck} />
-      <Checkbox value="b" labelText="B" on:check={onCheck} />
+      <Checkbox
+        value="a"
+        labelText="A"
+        oncheckedchange={(e) => onCheck(e.checked)}
+      />
+      <Checkbox
+        value="b"
+        labelText="B"
+        oncheckedchange={(e) => onCheck(e.checked)}
+      />
     </CheckboxGroup>
   {/if}
 </form>

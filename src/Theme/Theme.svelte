@@ -67,12 +67,12 @@
 
   /**
    * Override the default toggle props.
-   * @type {import("../Toggle/Toggle.svelte").ToggleProps & { themes?: [labelA: CarbonTheme, labelB: CarbonTheme]; }}
+   * @type {import("../Toggle/Toggle.svelte").ToggleProps & { themes?: [off: CarbonTheme, on: CarbonTheme]; }}
    */
   export let toggle = {
     themes: ["white", "g100"],
-    labelA: "",
-    labelB: "",
+    offText: "",
+    onText: "",
     labelText: "Dark mode",
     hideLabel: false,
   };
@@ -237,8 +237,8 @@
   <Toggle
     {...toggleProps}
     toggled={theme === toggleThemes[1]}
-    on:toggle={(event) => {
-      theme = event.detail.toggled ? toggleThemes[1] : toggleThemes[0];
+    ontoggledchange={(event) => {
+      theme = event.toggled ? toggleThemes[1] : toggleThemes[0];
     }}
   />
 {:else if render === "select"}
@@ -254,8 +254,8 @@
     {...dropdownProps}
     items={dropdownThemes.map((t) => ({ id: t, text: themes[t] }))}
     selectedId={theme}
-    on:select={(event) => {
-      theme = event.detail.selectedId;
+    onselectedchange={(event) => {
+      theme = event.selectedId;
     }}
   />
 {/if}

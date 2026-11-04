@@ -14,7 +14,7 @@ description: User avatars display a photo, a custom icon, or initials derived fr
 
 ## Content
 
-The avatar renders the first available of custom slotted content, an image, a custom icon, initials, or the default user icon. It is designed for the UI Shell [profile menu](/components/UIShell#profile-menu).
+The avatar renders the first available of custom `children` content, an image, a custom icon, initials, or the default user icon. It is designed for the UI Shell [profile menu](/components/UIShell#profile-menu).
 
 ### Fallback icon
 
@@ -62,7 +62,7 @@ Set `icon` to render a custom icon instead of the default user icon, such as an 
 
 ### Custom content
 
-Use the default slot to render arbitrary content, such as a status badge, instead of the computed image, icon, or initials. Slotted content takes priority over `image`, `icon`, and `initials`.
+Pass `children` to render arbitrary content, such as a status badge, instead of the computed image, icon, or initials. It takes priority over `image`, `icon`, and `initials`.
 
 <UserAvatar backgroundColor="cyan">99+</UserAvatar>
 
@@ -70,7 +70,7 @@ Use the default slot to render arbitrary content, such as a status badge, instea
 
 Set `image` to render a photo. Provide `imageDescription` for the alternative text. The image fills the circle (`object-fit: cover`) and takes priority over the icon and initials.
 
-If the image fails to load, the avatar falls back to the icon or initials and dispatches `image:error`.
+If the image fails to load, the avatar falls back to the icon or initials and calls `onimageerror({ image })`.
 
 <UserAvatar
   size="xl"
@@ -176,10 +176,10 @@ Set `status` to show a presence indicator at the bottom-right of the avatar. Use
 
 ### Custom badge
 
-Use the `badge` slot to replace the status indicator with custom overlay content. The slot sits at the bottom-right with a ring in the surrounding background color.
+Use the `badge` snippet to replace the status indicator with custom overlay content. It sits at the bottom-right with a ring in the surrounding background color.
 
 <UserAvatar name="Jared Dunn" status="online">
-  <CheckmarkFilled slot="badge" size={8} />
+  {#snippet badge()}<CheckmarkFilled size={8} />{/snippet}
 </UserAvatar>
 
 ## Tooltip

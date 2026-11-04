@@ -93,8 +93,8 @@
 <UserAvatar
   data-testid="events"
   name="John Doe"
-  on:click={onClick}
-  on:mouseenter={onMouseenter}
+  onclick={onClick}
+  onmouseenter={onMouseenter}
 />
 
 <UserAvatar data-testid="slot" name="John Doe">
@@ -114,9 +114,9 @@
   data-testid="interactive"
   interactive
   name="John Doe"
-  on:focus={onFocus}
-  on:blur={onBlur}
-  on:keydown={onKeydown}
+  onfocus={onFocus}
+  onblur={onBlur}
+  onkeydown={onKeydown}
 />
 
 <UserAvatar data-testid="href" href="/profile" name="John Doe" />
@@ -158,5 +158,5 @@
 <UserAvatar data-testid="status-offline" name="Jane Roe" status="offline" />
 
 <UserAvatar data-testid="badge-slot" name="Jane Roe" status="online">
-  <span slot="badge" data-testid="custom-badge">99</span>
+  {#snippet badge()}<span data-testid="custom-badge">99</span>{/snippet}
 </UserAvatar>

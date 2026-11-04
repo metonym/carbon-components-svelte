@@ -261,7 +261,7 @@
               <Tab label="SvelteKit" />
               <Tab label="Rollup" />
               <Tab label="Webpack" />
-              <svelte:fragment slot="content">
+              {#snippet content()}
                 <TabContent flush>
                   <DocCodeBox>
                     <CodeBlock language="javascript" code={viteConfig} />
@@ -282,7 +282,7 @@
                     <CodeBlock language="javascript" code={webpackConfig} />
                   </DocCodeBox>
                 </TabContent>
-              </svelte:fragment>
+              {/snippet}
             </Tabs>
           </div>
         </svelte:fragment>

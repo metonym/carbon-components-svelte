@@ -221,8 +221,8 @@ Prose doesn't style Carbon components or anything inside them, so components kee
   <h3>Install</h3>
   <p>Add the package with your package manager:</p>
   <CodeSnippet code="npm i carbon-components-svelte" />
-  <InlineNotification lowContrast hideCloseButton kind="info" title="Styles">
-    <svelte:fragment slot="subtitleChildren">Import the CSS once, as the <a href="#carbon-components-inside">setup guide</a> shows.</svelte:fragment>
+  <InlineNotification lowContrast hideCloseButton kind="info" titleText="Styles">
+    {#snippet subtitleText()}Import the CSS once, as the <a href="#carbon-components-inside">setup guide</a> shows.{/snippet}
   </InlineNotification>
   <Text type="helper-text-01">Text keeps its own type style inside Prose.</Text>
   <p>Read the <Link href="#carbon-components-inside">theming guide</Link> next.</p>

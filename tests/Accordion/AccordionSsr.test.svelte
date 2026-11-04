@@ -7,6 +7,6 @@
 </script>
 
 <Accordion>
-  <AccordionItem id={firstId} title="First" open>One</AccordionItem>
-  <AccordionItem id={secondId} title="Second">Two</AccordionItem>
+  <AccordionItem id={firstId} titleText="First" open>One</AccordionItem>
+  <AccordionItem id={secondId} titleText="Second">Two</AccordionItem>
 </Accordion>

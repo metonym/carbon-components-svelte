@@ -4,7 +4,7 @@
   export let onClick: (e: MouseEvent) => void = () => {};
 </script>
 
-<ClickableTile on:click={onClick}>Acknowledge incident</ClickableTile>
+<ClickableTile onclick={onClick}>Acknowledge incident</ClickableTile>
 
 <ClickableTile disabled data-testid="disabled"
   >Disabled without href</ClickableTile

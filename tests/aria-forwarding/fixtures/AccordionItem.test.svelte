@@ -4,5 +4,5 @@
 </script>
 
 <Accordion>
-  <AccordionItem title="Details" {...$$restProps}>Content</AccordionItem>
+  <AccordionItem titleText="Details" {...$$restProps}>Content</AccordionItem>
 </Accordion>

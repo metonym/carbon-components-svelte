@@ -14,13 +14,13 @@
 
 <Tabs
   autoWidth
-  selected={$packageManagerIndex}
-  on:change={(e) => packageManagerIndex.set(e.detail)}
+  selectedIndex={$packageManagerIndex}
+  onselectedchange={(e) => packageManagerIndex.set(e.index)}
 >
   {#each PACKAGE_MANAGERS as pm (pm)}
     <Tab label={packageManagerTabLabel(pm)} />
   {/each}
-  <svelte:fragment slot="content">
+  {#snippet content()}
     {#each PACKAGE_MANAGERS as pm (pm)}
       <TabContent flush>
         <DocCodeBox>
@@ -28,5 +28,5 @@
         </DocCodeBox>
       </TabContent>
     {/each}
-  </svelte:fragment>
+  {/snippet}
 </Tabs>

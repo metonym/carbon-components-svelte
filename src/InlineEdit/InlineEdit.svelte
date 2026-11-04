@@ -350,7 +350,7 @@
           tooltipPosition="top"
           disabled={!canCancel}
           class="bx--edit-in-place__btn bx--edit-in-place__btn-cancel"
-          on:click={() => handleCancel(false)}
+          onclick={() => handleCancel(false)}
         />
         <Button
           kind="ghost"
@@ -360,7 +360,7 @@
           tooltipPosition="top"
           disabled={!canSave}
           class="bx--edit-in-place__btn bx--edit-in-place__btn-save"
-          on:click={() => handleSave(false)}
+          onclick={() => handleSave(false)}
         />
       {:else}
         <Button
@@ -372,7 +372,7 @@
           class="bx--edit-in-place__btn bx--edit-in-place__btn-edit {editAlwaysVisible
             ? 'bx--edit-in-place__btn-edit--always-visible'
             : ''}"
-          on:click={handleFocus}
+          onclick={handleFocus}
         />
       {/if}
     </div>

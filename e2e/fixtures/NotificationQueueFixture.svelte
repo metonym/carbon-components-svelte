@@ -15,57 +15,57 @@
   <NotificationQueue bind:this={queue} maxNotifications={2} />
   <Button
     data-testid="nq-add"
-    on:click={() => {
-      queue?.add({ title: "Toast A" });
+    onclick={() => {
+      queue?.add({ titleText: "Toast A" });
     }}
   >
     Add toast
   </Button>
   <Button
     data-testid="nq-t1"
-    on:click={() => {
-      queue?.add({ title: "T1" });
+    onclick={() => {
+      queue?.add({ titleText: "T1" });
     }}
   >
     T1
   </Button>
   <Button
     data-testid="nq-t2"
-    on:click={() => {
-      queue?.add({ title: "T2" });
+    onclick={() => {
+      queue?.add({ titleText: "T2" });
     }}
   >
     T2
   </Button>
   <Button
     data-testid="nq-t3"
-    on:click={() => {
-      queue?.add({ title: "T3" });
+    onclick={() => {
+      queue?.add({ titleText: "T3" });
     }}
   >
     T3
   </Button>
   <Button
     data-testid="nq-timed"
-    on:click={() => {
-      queue?.add({ title: "Quick", timeout: 400 });
+    onclick={() => {
+      queue?.add({ titleText: "Quick", timeout: 400 });
     }}
   >
     Add timed
   </Button>
   <Button
     data-testid="nq-slow"
-    on:click={() => {
-      queue?.add({ title: "Slow", timeout: 800 });
+    onclick={() => {
+      queue?.add({ titleText: "Slow", timeout: 800 });
     }}
   >
     Add slow
   </Button>
   <Button
     data-testid="nq-action"
-    on:click={() => {
+    onclick={() => {
       queue?.add({
-        title: "Report deleted",
+        titleText: "Report deleted",
         timeout: 400,
         action: { label: "Undo", onClick: () => (undone = true) },
       });

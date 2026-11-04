@@ -110,7 +110,9 @@ describe("ComboBox open work on long lists", () => {
       expect(itemToString).not.toHaveBeenCalled();
     });
 
-    it("re-renders options per keystroke with a custom shouldFilterItem", async () => {
+    // Options that still match are keyed and keep their rendering: only the
+    // ones filtered out go away.
+    it("does not re-render the options that still match with a custom shouldFilterItem", async () => {
       const itemToString = vi.fn((item: { text: string }) => item.text);
       render(ComboBox, {
         props: {
@@ -128,7 +130,7 @@ describe("ComboBox open work on long lists", () => {
       await user.type(getInput(), "Item 1");
 
       expect(screen.getAllByRole("option")).toHaveLength(11);
-      expect(itemToString).toHaveBeenCalled();
+      expect(itemToString).not.toHaveBeenCalled();
     });
   });
 

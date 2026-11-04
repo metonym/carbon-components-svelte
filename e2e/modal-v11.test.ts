@@ -1,10 +1,16 @@
 import type { Page } from "@playwright/test";
 import { expect, test } from "./helpers/host";
 
+// Rest props, `data-testid` included, go to the dialog container; the
+// visibility class is on the overlay around it.
+function modalRoot(page: Page, testId: string) {
+  return page.locator(".bx--modal", { has: page.getByTestId(testId) });
+}
+
 async function openModal(page: Page) {
   await page.goto("/modal-v11.html");
   await page.getByTestId("open-modal").click();
-  await expect(page.getByTestId("modal")).toHaveClass(/is-visible/);
+  await expect(modalRoot(page, "modal")).toHaveClass(/is-visible/);
 }
 
 test.describe("Modal loadingStatus", () => {
@@ -72,7 +78,7 @@ test.describe("Modal close button tooltip", () => {
     test(`${name}: shows the label to the left on hover`, async ({ page }) => {
       await page.goto("/modal-v11.html");
       await page.getByTestId(trigger).click();
-      const close = page.getByTestId(root).getByRole("button", { name: label });
+      const close = modalRoot(page, root).getByRole("button", { name: label });
       const tooltip = page.locator(".bx--tooltip-portal__content");
 
       await expect(tooltip).toHaveCount(0);
@@ -92,7 +98,7 @@ test.describe("Modal close button tooltip", () => {
     }) => {
       await page.goto("/modal-v11.html");
       await page.getByTestId(trigger).click();
-      const modal = page.getByTestId(root);
+      const modal = modalRoot(page, root);
       await expect(modal).toHaveClass(/is-visible/);
       const close = modal.getByRole("button", { name: label });
       const tooltip = page.locator(".bx--tooltip-portal__content");
@@ -122,7 +128,7 @@ test.describe("Passive modal close button as initial focus", () => {
         await trigger.focus();
         await page.keyboard.press("Enter");
       }
-      const modal = page.getByTestId("passive-modal");
+      const modal = modalRoot(page, "passive-modal");
       const close = modal.getByRole("button", { name: "Close the modal" });
       await expect(close).toBeFocused();
       await expect(page.locator(".bx--tooltip-portal__content")).toHaveCount(0);
@@ -136,7 +142,7 @@ test.describe("Passive modal close button as initial focus", () => {
     await page.goto("/modal-v11.html");
     await page.getByTestId("open-passive-modal").focus();
     await page.keyboard.press("Enter");
-    const modal = page.getByTestId("passive-modal");
+    const modal = modalRoot(page, "passive-modal");
     const close = modal.getByRole("button", { name: "Close the modal" });
     const tooltip = page.locator(".bx--tooltip-portal__content");
     await expect(close).toBeFocused();
@@ -161,17 +167,19 @@ test.describe("Modal heading", () => {
     await openModal(page);
 
     await expect(
-      page
-        .getByTestId("modal")
-        .getByRole("heading", { level: 2, name: "Save changes" }),
+      modalRoot(page, "modal").getByRole("heading", {
+        level: 2,
+        name: "Save changes",
+      }),
     ).toBeVisible();
 
     await page.goto("/modal-v11.html");
     await page.getByTestId("open-composed-modal").click();
     await expect(
-      page
-        .getByTestId("composed-modal")
-        .getByRole("heading", { level: 2, name: "Rename workspace" }),
+      modalRoot(page, "composed-modal").getByRole("heading", {
+        level: 2,
+        name: "Rename workspace",
+      }),
     ).toBeVisible();
   });
 });
@@ -181,11 +189,13 @@ test.describe("Modal styles", () => {
     await openModal(page);
     await page.getByTestId("status-active").click();
     await expect(
-      page.getByTestId("modal").locator(".bx--inline-loading__text"),
+      modalRoot(page, "modal").locator(".bx--inline-loading__text"),
     ).toBeVisible();
 
     const read = await page.evaluate(() => {
-      const root = document.querySelector('[data-testid="modal"]');
+      const root = document
+        .querySelector('[data-testid="modal"]')
+        ?.closest(".bx--modal");
       const find = (selector: string) => {
         const el = root?.querySelector(selector);
         if (!(el instanceof HTMLElement)) throw new Error(`no ${selector}`);

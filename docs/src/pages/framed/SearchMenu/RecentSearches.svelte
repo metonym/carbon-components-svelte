@@ -28,7 +28,7 @@
     <Link
       slot="action"
       href="#"
-      on:click={(e) => {
+      onclick={(e) => {
         e.preventDefault();
         recent = [];
         searchRef?.focus();

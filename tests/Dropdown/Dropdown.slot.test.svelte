@@ -8,6 +8,6 @@
   ];
 </script>
 
-<Dropdown {items} selectedId="0" labelText="Default label">
-  <span slot="labelChildren">Custom label content</span>
+<Dropdown {items} selectedId="0">
+  {#snippet labelText()}<span>Custom label content</span>{/snippet}
 </Dropdown>

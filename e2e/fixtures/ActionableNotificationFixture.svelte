@@ -10,33 +10,33 @@
   let toastOpen = false;
 </script>
 
-<Button on:click={() => (inlineOpen = true)}>Delete file</Button>
-<Button on:click={() => (toastOpen = true)}>Upload</Button>
+<Button onclick={() => (inlineOpen = true)}>Delete file</Button>
+<Button onclick={() => (toastOpen = true)}>Upload</Button>
 
 <InlineNotification
   bind:open={inlineOpen}
   actionable
   kind="success"
-  title="File deleted"
-  subtitle="quarterly-report.pdf moved to the trash."
+  titleText="File deleted"
+  subtitleText="quarterly-report.pdf moved to the trash."
 >
-  <svelte:fragment slot="actions">
-    <NotificationActionButton on:click={() => (inlineOpen = false)}>
+  {#snippet actions()}
+    <NotificationActionButton onclick={() => (inlineOpen = false)}>
       Undo
     </NotificationActionButton>
-  </svelte:fragment>
+  {/snippet}
 </InlineNotification>
 
 <ToastNotification
   bind:open={toastOpen}
   actionable
   lowContrast
-  title="Upload failed"
-  subtitle="The connection timed out."
+  titleText="Upload failed"
+  subtitleText="The connection timed out."
 >
-  <svelte:fragment slot="actions">
-    <NotificationActionButton on:click={() => (toastOpen = false)}>
+  {#snippet actions()}
+    <NotificationActionButton onclick={() => (toastOpen = false)}>
       Retry
     </NotificationActionButton>
-  </svelte:fragment>
+  {/snippet}
 </ToastNotification>

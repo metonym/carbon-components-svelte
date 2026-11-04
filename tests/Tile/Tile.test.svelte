@@ -4,7 +4,7 @@
   export let onClick: (e: MouseEvent) => void = () => {};
 </script>
 
-<Tile data-testid="click-test" on:click={onClick}>Clickable tile</Tile>
+<Tile data-testid="click-test" onclick={onClick}>Clickable tile</Tile>
 
 <Tile data-testid="attr-test" title="Custom title" class="custom-class">
   Custom attributes

@@ -146,9 +146,9 @@ Put an AI label in the `decorator` slot of a field to mark its value as AI-gener
 <Box maxWidth={320}>
   <Stack gap={6}>
     <TextInput labelText="Incident title" value="Database failover in us-east-1">
-      <AILabel slot="decorator">
+      {#snippet decorator()}<AILabel>
         <p>Suggested from the alert that opened this incident.</p>
-      </AILabel>
+      </AILabel>{/snippet}
     </TextInput>
     <TextArea labelText="Summary" value="Primary database failed over after a storage node stopped responding.">
       <AILabel slot="decorator">
@@ -168,14 +168,14 @@ Put an AI label in the `decorator` slot of a field to mark its value as AI-gener
       </AILabel>
     </Select>
     <Dropdown labelText="Owning team" selectedId="db" items={[{ id: "db", text: "Database platform" }, { id: "net", text: "Networking" }]}>
-      <AILabel slot="decorator">
+      {#snippet decorator()}<AILabel>
         <p>Matched to the team that owns the failed service.</p>
-      </AILabel>
+      </AILabel>{/snippet}
     </Dropdown>
     <ComboBox labelText="Region" selectedId="us-east-1" items={[{ id: "us-east-1", text: "US East (N. Virginia)" }, { id: "eu-west-1", text: "EU West (Ireland)" }]}>
-      <AILabel slot="decorator">
+      {#snippet decorator()}<AILabel>
         <p>Detected from the host that sent the first alert.</p>
-      </AILabel>
+      </AILabel>{/snippet}
     </ComboBox>
     <DatePicker datePickerType="single">
       <DatePickerInput labelText="Follow-up date" placeholder="mm/dd/yyyy">
@@ -193,9 +193,9 @@ Checkboxes, radio buttons, and their groups have a `decorator` slot too. The lab
 
 <Stack gap={5}>
   <Checkbox labelText="Enable automatic failover" checked>
-    <AILabel slot="decorator">
+    {#snippet decorator()}<AILabel>
       <p>Recommended because this database had two outages last quarter.</p>
-    </AILabel>
+    </AILabel>{/snippet}
   </Checkbox>
   <RadioButtonGroup legendText="Billing cycle" selected="annual">
     <AILabel slot="decorator">
@@ -211,8 +211,8 @@ Checkboxes, radio buttons, and their groups have a `decorator` slot too. The lab
 In a tag, the label renders as inline text in the tag's color.
 
 <Stack orientation="horizontal" gap={3}>
-  <Tag type="blue">Forecast<AILabel slot="decorator"><p>Generated from the last 90 days of usage.</p></AILabel></Tag>
-  <Tag type="green" filter>us-east-1<AILabel slot="decorator"><p>Suggested because most of the alerts came from this region.</p></AILabel></Tag>
+  <Tag type="blue">Forecast{#snippet decorator()}<AILabel><p>Generated from the last 90 days of usage.</p></AILabel>{/snippet}</Tag>
+  <Tag type="green" filter>us-east-1{#snippet decorator()}<AILabel><p>Suggested because most of the alerts came from this region.</p></AILabel>{/snippet}</Tag>
 </Stack>
 
 ## Tiles
@@ -224,17 +224,17 @@ Tiles, clickable tiles, selectable tiles, radio tiles, and expandable tiles show
     <Tile>
       <h4>Usage forecast</h4>
       <p>Spend is projected to grow 12% next month.</p>
-      <AILabel slot="decorator">
+      {#snippet decorator()}<AILabel>
         <p>Projected from the last six months of spend.</p>
-      </AILabel>
+      </AILabel>{/snippet}
     </Tile>
   </Box>
   <Box width="16rem">
     <SelectableTile>
       Recommended plan: Team
-      <AILabel slot="decorator">
+      {#snippet decorator()}<AILabel>
         <p>Recommended for a workspace with 8 to 20 active members.</p>
-      </AILabel>
+      </AILabel>{/snippet}
     </SelectableTile>
   </Box>
 </Stack>
@@ -249,9 +249,9 @@ While AI generates content, show an AI skeleton in its place. Set `ai` on [Skele
       <h4>Usage forecast</h4>
       <SkeletonText ai paragraph lines={2} noMargin />
     </Stack>
-    <AILabel slot="decorator">
+    {#snippet decorator()}<AILabel>
       <p>Projecting from the last six months of spend.</p>
-    </AILabel>
+    </AILabel>{/snippet}
   </Tile>
 </Box>
 

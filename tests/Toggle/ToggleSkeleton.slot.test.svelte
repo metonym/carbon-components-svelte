@@ -2,6 +2,6 @@
   import ToggleSkeleton from "carbon-components-svelte/Toggle/ToggleSkeleton.svelte";
 </script>
 
-<ToggleSkeleton labelText="Default label">
-  <span slot="labelChildren">Custom label content</span>
+<ToggleSkeleton>
+  {#snippet labelText()}<span>Custom label content</span>{/snippet}
 </ToggleSkeleton>

@@ -160,15 +160,18 @@
 </script>
 
 <Stack gap={6}>
-  <ContentSwitcher {selectedIndex} on:change={handleTreeSwitch}>
+  <ContentSwitcher
+    {selectedIndex}
+    onselectedchange={(e) => handleTreeSwitch(e.index)}
+  >
     <Switch text="Large Tree (1000+ nodes)" />
     <Switch text="Deep Tree (100 levels)" />
   </ContentSwitcher>
 
   <ButtonSet>
-    <Button on:click={handleExpandAll}>Expand All</Button>
-    <Button on:click={handleCollapseAll}>Collapse All</Button>
-    <Button on:click={handleShowNode}>Show Deep Node</Button>
+    <Button onclick={handleExpandAll}>Expand All</Button>
+    <Button onclick={handleCollapseAll}>Collapse All</Button>
+    <Button onclick={handleShowNode}>Show Deep Node</Button>
   </ButtonSet>
 
   {#if hasTiming}

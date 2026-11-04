@@ -7,7 +7,7 @@
 
 <svelte:window on:stop-loading={() => (active = false)} />
 
-<Button on:click={() => (active = true)}>Save changes</Button>
+<Button onclick={() => (active = true)}>Save changes</Button>
 <Button kind="secondary">Cancel</Button>
 
 <Loading {active} description="Saving changes" />

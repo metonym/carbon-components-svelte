@@ -19,8 +19,8 @@
     queuePosition = position;
     queue.add({
       kind: "success",
-      title: "Cluster created",
-      subtitle: "Your Kubernetes cluster is now provisioning.",
+      titleText: "Cluster created",
+      subtitleText: "Your Kubernetes cluster is now provisioning.",
       timeout: 5000,
     });
   };
@@ -43,10 +43,8 @@
             positions.
           </p>
           <ButtonSet>
-            <Button on:click={() => triggerToast("top-right")}>
-              Top right
-            </Button>
-            <Button on:click={() => triggerToast("bottom-right")}>
+            <Button onclick={() => triggerToast("top-right")}>Top right</Button>
+            <Button onclick={() => triggerToast("bottom-right")}>
               Bottom right
             </Button>
           </ButtonSet>

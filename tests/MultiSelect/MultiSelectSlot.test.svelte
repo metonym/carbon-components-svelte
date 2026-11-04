@@ -5,6 +5,8 @@
   export let items: ComponentProps<MultiSelect>["items"] = [];
 </script>
 
-<MultiSelect {items} let:item let:index>
-  <div><strong>{item.id} {item.text} {index}</strong></div>
+<MultiSelect {items}>
+  {#snippet children({ item, index })}<div>
+      <strong>{item.id} {item.text} {index}</strong>
+    </div>{/snippet}
 </MultiSelect>

@@ -11,7 +11,7 @@
   }
 </script>
 
-<Button on:click={() => (open = true)}>Create account</Button>
+<Button onclick={() => (open = true)}>Create account</Button>
 
 <Modal
   bind:open
@@ -20,7 +20,7 @@
   secondaryButtonText="Cancel"
   hasForm
   formId="account-form"
-  on:click:button--secondary={() => (open = false)}
+  onsecondaryaction={() => (open = false)}
 >
   <form id="account-form" on:submit|preventDefault={handleSubmit}>
     <Stack gap={5}>

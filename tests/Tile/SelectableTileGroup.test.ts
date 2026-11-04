@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/svelte";
 import type SelectableTileGroupComponent from "carbon-components-svelte/Tile/SelectableTileGroup.svelte";
-import { type ComponentEvents, type ComponentProps, tick } from "svelte";
+import { type ComponentProps, tick } from "svelte";
 import { flushMacrotask } from "../utils/flush-macrotask";
 import { user } from "../utils/user";
 import SelectableTileGroupSlot from "./SelectableTileGroup.slot.test.svelte";
@@ -8,7 +8,6 @@ import SelectableTileGroup from "./SelectableTileGroup.test.svelte";
 import SelectableTileGroupAnchor from "./SelectableTileGroupAnchor.test.svelte";
 import SelectableTileGroupDuplicate from "./SelectableTileGroupDuplicate.test.svelte";
 import SelectableTileGroupNested from "./SelectableTileGroupNested.test.svelte";
-import SelectableTileGroupNotify from "./SelectableTileGroupNotify.test.svelte";
 import SelectableTileGroupRange from "./SelectableTileGroupRange.test.svelte";
 import SelectableTileGroupReactive from "./SelectableTileGroupReactive.test.svelte";
 import { recordGroupEvents } from "./helpers";
@@ -263,35 +262,6 @@ describe("SelectableTileGroup", () => {
     expect(component.groupSelected).toEqual(["b"]);
   });
 
-  describe("store notifications", () => {
-    it("notifies tiles once per toggle", async () => {
-      const onNotify = vi.fn();
-      render(SelectableTileGroupNotify, { props: { onNotify } });
-      await tick();
-      onNotify.mockClear();
-
-      await user.click(screen.getAllByRole("checkbox")[0]);
-      await tick();
-
-      expect(onNotify).toHaveBeenCalledTimes(1);
-    });
-
-    it("notifies tiles once when selected is set programmatically", async () => {
-      const onNotify = vi.fn();
-      const { component } = render(SelectableTileGroupNotify, {
-        props: { onNotify },
-      });
-      await tick();
-      onNotify.mockClear();
-
-      component.selected = ["b"];
-      await tick();
-
-      expect(onNotify).toHaveBeenCalledTimes(1);
-      expect(screen.getAllByRole("checkbox")[1]).toBeChecked();
-    });
-  });
-
   describe("duplicate values", () => {
     it("warns once when two tiles share a value", async () => {
       const consoleWarn = vi
@@ -484,44 +454,26 @@ describe("SelectableTileGroup", () => {
 
       type ComponentType = SelectableTileGroupComponent<CustomValue>;
       type Props = ComponentProps<ComponentType>;
-      type Events = ComponentEvents<ComponentType>;
+      type Detail = Parameters<NonNullable<Props["onselectedchange"]>>[0];
 
       expectTypeOf<Props["selected"]>().toEqualTypeOf<
         CustomValue[] | undefined
       >();
 
-      type SelectEvent = Events["select"];
-      type SelectEventDetail =
-        SelectEvent extends CustomEvent<infer T> ? T : never;
-      expectTypeOf<SelectEventDetail>().toEqualTypeOf<CustomValue>();
-
-      type DeselectEvent = Events["deselect"];
-      type DeselectEventDetail =
-        DeselectEvent extends CustomEvent<infer T> ? T : never;
-      expectTypeOf<DeselectEventDetail>().toEqualTypeOf<CustomValue>();
-
-      type ChangeEvent = Events["change"];
-      type ChangeEventDetail =
-        ChangeEvent extends CustomEvent<infer T> ? T : never;
-      expectTypeOf<ChangeEventDetail>().toEqualTypeOf<CustomValue[]>();
+      expectTypeOf<Detail["selected"]>().toEqualTypeOf<CustomValue[]>();
+      expectTypeOf<Detail["added"]>().toEqualTypeOf<CustomValue[]>();
+      expectTypeOf<Detail["removed"]>().toEqualTypeOf<CustomValue[]>();
     });
 
     it("should default to string type when generic is not specified", () => {
       type ComponentType = SelectableTileGroupComponent;
       type Props = ComponentProps<ComponentType>;
-      type Events = ComponentEvents<ComponentType>;
+      type Detail = Parameters<NonNullable<Props["onselectedchange"]>>[0];
 
       expectTypeOf<Props["selected"]>().toEqualTypeOf<string[] | undefined>();
 
-      type SelectEvent = Events["select"];
-      type SelectEventDetail =
-        SelectEvent extends CustomEvent<infer T> ? T : never;
-      expectTypeOf<SelectEventDetail>().toEqualTypeOf<string>();
-
-      type DeselectEvent = Events["deselect"];
-      type DeselectEventDetail =
-        DeselectEvent extends CustomEvent<infer T> ? T : never;
-      expectTypeOf<DeselectEventDetail>().toEqualTypeOf<string>();
+      expectTypeOf<Detail["selected"]>().toEqualTypeOf<string[]>();
+      expectTypeOf<Detail["added"]>().toEqualTypeOf<string[]>();
     });
   });
 });

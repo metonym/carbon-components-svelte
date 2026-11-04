@@ -7,10 +7,10 @@
 
 <button type="button">Before</button>
 
-<InlineNotification bind:open title="Saved">
-  <svelte:fragment slot="actions">
-    <NotificationActionButton on:click={() => (open = false)}>
+<InlineNotification bind:open titleText="Saved">
+  {#snippet actions()}
+    <NotificationActionButton onclick={() => (open = false)}>
       Undo
     </NotificationActionButton>
-  </svelte:fragment>
+  {/snippet}
 </InlineNotification>

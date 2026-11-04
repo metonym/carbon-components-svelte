@@ -92,7 +92,7 @@
   import { observeModalClose } from "../Portal/portal-utils.js";
   import { joinTagSet } from "../TagSet/join-tag-set.js";
   import { MODAL_CONTEXT_KEY } from "../constants/context-keys.js";
-  import { dismiss } from "../utils/dismiss.js";
+  import { dismiss } from "../utils/dismiss.svelte.js";
   import { createOpenCloseDispatcher } from "../utils/dispatch-open-close.js";
   import { fieldsetDisabled } from "../utils/fieldset-disabled.js";
   import { isImeComposition } from "../utils/ime-composition.js";
@@ -245,10 +245,10 @@
   bind:this={wrapperRef}
   class:bx--operational-tag={true}
   data-overflow={$groupOverflow ? "true" : undefined}
-  use:dismiss={{
+  {@attach dismiss(() => ({
     enabled: listenersEnabled,
     listeners: [{ type: "click", handler: handleOutsideClick }],
-  }}
+  }))}
   on:keydown={handleKeydown}
   on:focusout={handleFocusout}
 >

@@ -1,131 +1,209 @@
 <script>
   /**
-   * @event close
-   * @property {boolean} timeout
+   * @restProps {div}
    */
 
-  /**
-   * Specify the kind of notification.
-   * @type {"error" | "info" | "info-square" | "success" | "warning" | "warning-alt"}
-   */
-  export let kind = "error";
+  const fallbackId = $props.id();
 
-  /** Set to `true` to use the low contrast variant */
-  export let lowContrast = false;
+  let {
+    /**
+     * Specify the kind of notification.
+     * @type {"error" | "info" | "info-square" | "success" | "warning" | "warning-alt"}
+     */
+    kind = "error",
 
-  /**
-   * Set the timeout duration (ms) to hide the notification after opening it.
-   * Ignored when the notification is `actionable` or has an `actions` slot.
-   */
-  export let timeout = 0;
+    /** Set to `true` to use the low contrast variant */
+    lowContrast = false,
 
-  /** Set to `true` to pause the auto-dismiss timeout while the pointer is over the notification or while focus is inside it. */
-  export let pauseOnHover = false;
+    /**
+     * Set the timeout duration (ms) to hide the notification after opening it.
+     * Ignored when the notification is `actionable` or has `actions`.
+     */
+    timeout = 0,
 
-  /**
-   * Specify the ARIA `role` for the notification container.
-   * `actionable` overrides it with `alertdialog`.
-   * @type {"alert" | "log" | "status"}
-   */
-  export let role = "status";
+    /** Set to `true` to pause the auto-dismiss timeout while the pointer is over the notification or while focus is inside it. */
+    pauseOnHover = false,
 
-  /**
-   * Set to `true` when the notification holds an action that users must
-   * reach, such as an undo or a retry. The notification becomes an
-   * `alertdialog` named by its title, moves focus to its first action
-   * (or the close button) when it opens, keeps Tab inside, and closes
-   * on Escape.
-   */
-  export let actionable = false;
+    /**
+     * Specify the ARIA `role` for the notification container.
+     * `actionable` overrides it with `alertdialog`.
+     * @type {"alert" | "log" | "status"}
+     */
+    role = "status",
 
-  /**
-   * Set to `false` to keep focus where it is when an actionable
-   * notification opens. Has no effect unless `actionable` is `true`.
-   */
-  export let focusOnOpen = true;
+    /**
+     * Set to `true` when the notification holds an action that users must
+     * reach, such as an undo or a retry. The notification becomes an
+     * `alertdialog` named by its title, moves focus to its first action
+     * (or the close button) when it opens, keeps Tab inside, and closes
+     * on Escape.
+     */
+    actionable = false,
 
-  /**
-   * Set to `false` to keep an actionable notification open on Escape.
-   * With `hideCloseButton` also set, Tab can leave the notification.
-   * Has no effect unless `actionable` is `true`.
-   */
-  export let closeOnEscape = true;
+    /**
+     * Set to `false` to keep focus where it is when an actionable
+     * notification opens. Has no effect unless `actionable` is `true`.
+     */
+    focusOnOpen = true,
 
-  /** Specify the title text */
-  export let title = "";
+    /**
+     * Set to `false` to keep an actionable notification open on Escape.
+     * With `hideCloseButton` also set, Tab can leave the notification.
+     * Has no effect unless `actionable` is `true`.
+     */
+    closeOnEscape = true,
 
-  /** Specify the subtitle text */
-  export let subtitle = "";
+    /**
+     * Specify the title text, or a snippet.
+     * @type {string | import("svelte").Snippet}
+     */
+    titleText = "",
 
-  /** Set to `true` to hide the close button */
-  export let hideCloseButton = false;
+    /**
+     * Specify the subtitle text, or a snippet.
+     * @type {string | import("svelte").Snippet}
+     */
+    subtitleText = "",
 
-  /** Specify the ARIA label for the close button */
-  export let closeButtonDescription = "Close notification";
+    /** Set to `true` to hide the close button */
+    hideCloseButton = false,
 
-  /**
-   * Specify the label of the status icon for screen readers.
-   * Defaults to the kind, such as "Warning".
-   * @type {string | undefined}
-   */
-  export let statusIconDescription = undefined;
+    /** Specify the ARIA label for the close button */
+    closeButtonDescription = "Close notification",
 
-  /**
-   * Set to `true` for the notification to fill its parent's width, without
-   * the default width limits and outer margin, as when it sits inside a card,
-   * a form, or another layout that spaces its own content.
-   */
-  export let fullWidth = false;
+    /**
+     * Specify the label of the status icon for screen readers.
+     * Defaults to the kind, such as "Warning".
+     * @type {string | undefined}
+     */
+    statusIconDescription = undefined,
 
-  /**
-   * Set to `true` to show the notification, `false` to hide it.
-   * @bindable writable
-   */
-  export let open = true;
+    /**
+     * Set to `true` for the notification to fill its parent's width, without
+     * the default width limits and outer margin, as when it sits inside a card,
+     * a form, or another layout that spaces its own content.
+     */
+    fullWidth = false,
 
-  /**
-   * Set an id for the top-level element. The title and subtitle ids derive
-   * from it as `{id}-title` and `{id}-subtitle`, so the server and the
-   * browser render the same ids.
-   * @type {string | undefined}
-   */
-  export let id = undefined;
+    /** Set to `true` to show the notification, `false` to hide it. */
+    open = $bindable(true),
 
-  import { createEventDispatcher, onMount, setContext } from "svelte";
-  import { writable } from "svelte/store";
-  import { splitAriaNaming } from "../utils/aria-naming.js";
+    /**
+     * Set an id for the top-level element. The title and subtitle ids derive
+     * from it as `{id}-title` and `{id}-subtitle`, so the server and the
+     * browser render the same ids.
+     * @type {string | undefined}
+     */
+    id = undefined,
+
+    /**
+     * Called when the user closes the notification: the close button
+     * (`"close-button"`), Escape on an actionable notification
+     * (`"escape-key"`), or the auto-dismiss `timeout` (`"timeout"`). Call
+     * `preventDefault()` to keep it open. Not called when `open` is set from
+     * outside.
+     * @type {((detail: import("../utils/cancelable.js").Cancelable<{ open: boolean; trigger: "close-button" | "escape-key" | "timeout" }>) => void) | undefined}
+     */
+    onopenchange = undefined,
+
+    /**
+     * Extra content under the subtitle.
+     * @type {import("svelte").Snippet | undefined}
+     */
+    children = undefined,
+
+    /**
+     * Actions, such as a `NotificationActionButton`. A notification with
+     * actions ignores `timeout`.
+     * @type {import("svelte").Snippet | undefined}
+     */
+    actions = undefined,
+
+    /** @type {import("svelte/elements").ClassValue | undefined} */
+    class: className = undefined,
+
+    /** @type {string | undefined | null} */
+    "aria-label": ariaLabel = undefined,
+
+    /** @type {string | undefined | null} */
+    "aria-labelledby": ariaLabelledBy = undefined,
+
+    /** @type {string | undefined | null} */
+    "aria-describedby": ariaDescribedBy = undefined,
+
+    /** @type {import("svelte/elements").MouseEventHandler<HTMLDivElement> | undefined | null} */
+    onmouseenter = undefined,
+
+    /** @type {import("svelte/elements").MouseEventHandler<HTMLDivElement> | undefined | null} */
+    onmouseleave = undefined,
+
+    /** @type {import("svelte/elements").FocusEventHandler<HTMLDivElement> | undefined | null} */
+    onfocusin = undefined,
+
+    /** @type {import("svelte/elements").FocusEventHandler<HTMLDivElement> | undefined | null} */
+    onfocusout = undefined,
+
+    /** @type {import("svelte/elements").KeyboardEventHandler<HTMLDivElement> | undefined | null} */
+    onkeydown = undefined,
+
+    ...rest
+  } = $props();
+
+  import { onMount, untrack } from "svelte";
+  import { on } from "svelte/events";
+  import { cancelable } from "../utils/cancelable.js";
   import { createDismissibleNotification } from "../utils/dismissible-notification.js";
   import { joinDescribedBy } from "../utils/field-status.js";
-  import { uniqueId } from "../utils/unique-id.js";
   import NotificationButton from "./NotificationButton.svelte";
   import NotificationIcon from "./NotificationIcon.svelte";
+  import { setNotificationAction } from "./notification-context.js";
+  import { kindClasses } from "./notification-kind-classes.js";
   import { statusIconLabel } from "./status-icon-label.js";
 
-  const dispatch = createEventDispatcher();
-  const fallbackId = uniqueId();
-  $: titleId = `${id ?? fallbackId}-title`;
-  $: subtitleId = `${id ?? fallbackId}-subtitle`;
+  // `kind` with its declared type, which the type checker reads from the
+  // default value alone.
+  const notificationKind = $derived(
+    /** @type {import("./notification-kind-classes.js").NotificationKind} */ (
+      kind
+    ),
+  );
+
+  const titleId = $derived(`${id ?? fallbackId}-title`);
+  const subtitleId = $derived(`${id ?? fallbackId}-subtitle`);
 
   /** @type {null | HTMLDivElement} */
-  let notificationRef = null;
+  let notificationRef = $state(null);
 
-  /** @type {import("svelte/store").Writable<string | undefined>} */
-  const describedBy = writable(undefined);
+  const hasTitle = $derived(Boolean(titleText));
+  const hasSubtitle = $derived(Boolean(subtitleText));
+  // As in Carbon React, the title names the dialog, or the subtitle when
+  // there is no title. aria-labelledby beats aria-label, so a consumer
+  // aria-label drops the built-in id.
+  const labelId = $derived(
+    hasTitle ? titleId : hasSubtitle ? subtitleId : undefined,
+  );
+  const builtInLabelledBy = $derived(
+    actionable && !ariaLabel ? labelId : undefined,
+  );
+  const builtInDescribedBy = $derived(
+    actionable && hasTitle && hasSubtitle ? subtitleId : undefined,
+  );
 
-  setContext("carbon:NotificationAction", { describedBy, toast: false });
+  // The title describes an action, as in a Callout. An actionable
+  // notification is a dialog named by its title, so the action skips it.
+  setNotificationAction({
+    get describedBy() {
+      return titleText && !actionable ? titleId : undefined;
+    },
+    toast: false,
+  });
 
-  const {
-    close,
-    sync,
-    syncFocusOnOpen,
-    handleActionableKeydown,
-    handleMouseenter,
-    handleMouseleave,
-    handleFocusIn,
-    handleFocusOut,
-    dispose,
-  } = createDismissibleNotification({
-    dispatch,
+  const notification = createDismissibleNotification({
+    requestClose: (trigger) => {
+      const payload = cancelable({ open: false, trigger });
+      onopenchange?.(payload);
+      return !payload.defaultPrevented;
+    },
     getPauseOnHover: () => pauseOnHover,
     setOpen: (value) => {
       open = value;
@@ -133,30 +211,48 @@
     getRef: () => notificationRef,
   });
 
-  $: sync(open, timeout, actionable || !!$$slots.actions);
-  $: syncFocusOnOpen(open, actionable && focusOnOpen);
+  // Through `$derived`, so a parent that re-spreads the same values, as a
+  // `NotificationQueue` does on `update()`, doesn't restart the timer.
+  const timerTimeout = $derived(timeout);
+  const hasAction = $derived(actionable || actions !== undefined);
+  const focusesOnOpen = $derived(actionable && focusOnOpen);
+  $effect(() => {
+    const args = /** @type {const} */ ([open, timerTimeout, hasAction]);
+    // `sync` reads other props, such as `pauseOnHover`; only these restart it.
+    untrack(() => notification.sync(...args));
+  });
+  $effect(() => {
+    const args = /** @type {const} */ ([open, focusesOnOpen]);
+    untrack(() => notification.syncFocusOnOpen(...args));
+  });
 
-  $: hasTitle = !!(title || $$slots.titleChildren);
-  $: hasSubtitle = !!(subtitle || $$slots.subtitleChildren);
-  $: ({ ariaLabel, ariaLabelledBy, ariaDescribedBy, rest } =
-    splitAriaNaming($$restProps));
-  // As in Carbon React, the title names the dialog, or the subtitle when
-  // there is no title. aria-labelledby beats aria-label, so a consumer
-  // aria-label drops the built-in id.
-  $: labelId = hasTitle ? titleId : hasSubtitle ? subtitleId : undefined;
-  $: builtInLabelledBy = actionable && !ariaLabel ? labelId : undefined;
-  $: builtInDescribedBy =
-    actionable && hasTitle && hasSubtitle ? subtitleId : undefined;
-  // The title describes an action, as in a Callout. An actionable
-  // notification is a dialog named by its title, so the action skips it.
-  $: describedBy.set(hasTitle && !actionable ? titleId : undefined);
+  onMount(() => notification.dispose);
 
-  onMount(() => dispose);
+  /**
+   * A listener on the element, not a delegated `onkeydown`, so Escape can
+   * stop before a surrounding modal's own listener sees it.
+   * @param {HTMLDivElement} node
+   */
+  function keydownListener(node) {
+    return on(node, "keydown", (event) => {
+      onkeydown?.(/** @type {any} */ (event));
+      if (actionable) {
+        notification.handleActionableKeydown(event, {
+          closeOnEscape,
+          hideCloseButton,
+        });
+      }
+    });
+  }
 </script>
+
+{#snippet content(/** @type {string | import("svelte").Snippet} */ source)}
+  {#if typeof source === "function"}{@render source()}{:else}{source}{/if}
+{/snippet}
 
 {#if open}
   <!-- An actionable notification takes focus itself when it holds no button. -->
-  <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+  <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
   <div
     bind:this={notificationRef}
     role={actionable ? "alertdialog" : role}
@@ -164,76 +260,68 @@
     aria-label={ariaLabel}
     aria-labelledby={ariaLabelledBy ?? builtInLabelledBy}
     aria-describedby={joinDescribedBy(builtInDescribedBy, ariaDescribedBy)}
-    class:bx--inline-notification={true}
-    class:bx--inline-notification--low-contrast={lowContrast}
-    class:bx--inline-notification--high-contrast={!lowContrast}
-    class:bx--inline-notification--hide-close-button={hideCloseButton}
-    class:bx--inline-notification--full-width={fullWidth}
-    class:bx--inline-notification--error={kind === "error"}
-    class:bx--inline-notification--low-contrast-error={lowContrast &&
-      kind === "error"}
-    class:bx--inline-notification--info={kind === "info"}
-    class:bx--inline-notification--low-contrast-info={lowContrast &&
-      kind === "info"}
-    class:bx--inline-notification--info-square={kind === "info-square"}
-    class:bx--inline-notification--low-contrast-info-square={lowContrast &&
-      kind === "info-square"}
-    class:bx--inline-notification--success={kind === "success"}
-    class:bx--inline-notification--low-contrast-success={lowContrast &&
-      kind === "success"}
-    class:bx--inline-notification--warning={kind === "warning"}
-    class:bx--inline-notification--low-contrast-warning={lowContrast &&
-      kind === "warning"}
-    class:bx--inline-notification--warning-alt={kind === "warning-alt"}
-    class:bx--inline-notification--low-contrast-warning-alt={lowContrast &&
-      kind === "warning-alt"}
     {id}
     {...rest}
-    on:click
-    on:mouseover
-    on:mouseenter
-    on:mouseenter={handleMouseenter}
-    on:mouseleave
-    on:mouseleave={handleMouseleave}
-    on:focusin={handleFocusIn}
-    on:focusout={handleFocusOut}
-    on:keydown={(event) => {
-      if (actionable) {
-        handleActionableKeydown(event, { closeOnEscape, hideCloseButton });
-      }
+    class={[
+      "bx--inline-notification",
+      lowContrast
+        ? "bx--inline-notification--low-contrast"
+        : "bx--inline-notification--high-contrast",
+      hideCloseButton && "bx--inline-notification--hide-close-button",
+      fullWidth && "bx--inline-notification--full-width",
+      ...kindClasses("inline", notificationKind, lowContrast),
+      className,
+    ]}
+    onmouseenter={(event) => {
+      onmouseenter?.(event);
+      notification.handleMouseenter();
     }}
+    onmouseleave={(event) => {
+      onmouseleave?.(event);
+      notification.handleMouseleave(event);
+    }}
+    onfocusin={(event) => {
+      onfocusin?.(event);
+      notification.handleFocusIn(event);
+    }}
+    onfocusout={(event) => {
+      onfocusout?.(event);
+      notification.handleFocusOut(event);
+    }}
+    {@attach keydownListener}
   >
-    <div class:bx--inline-notification__details={true}>
+    <div class="bx--inline-notification__details">
       <NotificationIcon
         notificationType="inline"
-        {kind}
+        kind={notificationKind}
         {lowContrast}
-        iconDescription={statusIconDescription || statusIconLabel(kind)}
+        iconDescription={statusIconDescription ||
+          statusIconLabel(notificationKind)}
       />
-      <div class:bx--inline-notification__text-wrapper={true}>
+      <div class="bx--inline-notification__text-wrapper">
         {#if hasTitle}
-          <p id={titleId} class:bx--inline-notification__title={true}>
-            <strong><slot name="titleChildren">{title}</slot></strong>
+          <p id={titleId} class="bx--inline-notification__title">
+            <strong>{@render content(titleText)}</strong>
           </p>
         {/if}
         {#if hasSubtitle}
           <div
             id={actionable ? subtitleId : undefined}
-            class:bx--inline-notification__subtitle={true}
+            class="bx--inline-notification__subtitle"
           >
-            <slot name="subtitleChildren">{subtitle}</slot>
+            {@render content(subtitleText)}
           </div>
         {/if}
-        <slot />
+        {@render children?.()}
       </div>
     </div>
-    <slot name="actions" />
+    {@render actions?.()}
     {#if !hideCloseButton}
       <NotificationButton
         iconDescription={closeButtonDescription}
         {lowContrast}
         notificationType="inline"
-        on:click={close}
+        onclick={() => notification.close("close-button")}
       />
     {/if}
   </div>

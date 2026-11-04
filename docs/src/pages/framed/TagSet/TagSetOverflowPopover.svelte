@@ -10,13 +10,13 @@
     { id: "canary", label: "Canary", type: "teal" },
   ];
 
-  function handleTagClose({ detail }) {
+  function handleTagClose(detail) {
     tags = tags.filter((tag) => tag.id !== detail.tag.value);
   }
 </script>
 
 <Box maxWidth="16rem">
-  <TagSet overflowMode="popover" on:close:tag={handleTagClose}>
+  <TagSet overflowMode="popover" ontagdismiss={handleTagClose}>
     {#each tags as tag (tag.id)}
       <Tag type={tag.type} value={tag.id} filter>{tag.label}</Tag>
     {/each}

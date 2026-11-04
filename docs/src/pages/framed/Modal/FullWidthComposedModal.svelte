@@ -11,10 +11,10 @@
   let open = false;
 </script>
 
-<Button on:click={() => (open = true)}>View webhook deliveries</Button>
+<Button onclick={() => (open = true)}>View webhook deliveries</Button>
 
 <ComposedModal fullWidth bind:open>
-  <ModalHeader label="Webhooks" title="Delivery history" />
+  <ModalHeader labelText="Webhooks" titleText="Delivery history" />
   <ModalBody hasScrollingContent>
     <DataTable
       headers={[
@@ -41,6 +41,6 @@
   <ModalFooter
     primaryButtonText="Add endpoint"
     secondaryButtonText="Cancel"
-    on:click:button--secondary={() => (open = false)}
+    onsecondaryaction={() => (open = false)}
   />
 </ComposedModal>

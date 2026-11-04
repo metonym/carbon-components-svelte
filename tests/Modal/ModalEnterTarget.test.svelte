@@ -4,9 +4,10 @@
   export let open = true;
   export let shouldSubmitOnEnter = true;
   export let primaryButtonDisabled = false;
-  export let onsubmit: ((event: CustomEvent) => void) | undefined = undefined;
-  export let onclickbuttonprimary: ((event: CustomEvent) => void) | undefined =
+  export let onsubmit: ((detail: { trigger: string }) => void) | undefined =
     undefined;
+  export let onclickbuttonprimary:
+    ((detail: { trigger: string }) => void) | undefined = undefined;
 </script>
 
 <Modal
@@ -16,8 +17,10 @@
   secondaryButtonText="Cancel"
   {shouldSubmitOnEnter}
   {primaryButtonDisabled}
-  on:submit={(e) => onsubmit?.(e)}
-  on:click:button--primary={(e) => onclickbuttonprimary?.(e)}
+  onprimaryaction={(e) => {
+    ((e) => onsubmit?.(e))(e);
+    ((e) => onclickbuttonprimary?.(e))(e);
+  }}
 >
   <textarea data-testid="modal-textarea"></textarea>
   <a href="#details" data-testid="modal-link">Learn more</a>

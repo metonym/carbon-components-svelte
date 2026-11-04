@@ -28,7 +28,7 @@
   </Modal>
 {:else}
   <ComposedModal open alert aria-describedby="note">
-    <ModalHeader title="Remove member" />
+    <ModalHeader titleText="Remove member" />
     <ModalBody>They lose access today.</ModalBody>
   </ComposedModal>
 {/if}

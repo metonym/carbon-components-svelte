@@ -7,7 +7,7 @@
 
 <Header companyName="IBM" platformName="Cloud" />
 <Content>
-  <Button on:click={() => (open = true)}>View logs</Button>
+  <Button onclick={() => (open = true)}>View logs</Button>
   <p>Width: {width ?? "md"}</p>
 </Content>
 

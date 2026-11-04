@@ -21,7 +21,7 @@
   <ProgressIndicator
     currentIndex={selectedIndex}
     spaceEqually
-    on:change={(e) => (selectedIndex = e.detail)}
+    oncurrentchange={(e) => (selectedIndex = e.index)}
   >
     {#each steps as step, index}
       <ProgressStep label={step} complete={index < selectedIndex} />

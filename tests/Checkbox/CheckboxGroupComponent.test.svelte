@@ -42,23 +42,23 @@
     {readonly}
     {orientation}
     class={customClass}
-    on:change={(e) => onChange(e.detail)}
+    onselectedchange={(e) => onChange(e.selected)}
   >
-    <span slot="legendChildren">Custom Legend</span>
+    {#snippet legendText()}<span>Custom Legend</span>{/snippet}
     <Checkbox
       value="1"
       labelText="Option 1"
-      on:check={(e) => onCheck("1", e.detail)}
+      oncheckedchange={(e) => onCheck("1", e.checked)}
     />
     <Checkbox
       value="2"
       labelText="Option 2"
-      on:check={(e) => onCheck("2", e.detail)}
+      oncheckedchange={(e) => onCheck("2", e.checked)}
     />
     <Checkbox
       value="3"
       labelText="Option 3"
-      on:check={(e) => onCheck("3", e.detail)}
+      oncheckedchange={(e) => onCheck("3", e.checked)}
     />
   </CheckboxGroup>
 {:else}
@@ -77,22 +77,22 @@
     {readonly}
     {orientation}
     class={customClass}
-    on:change={(e) => onChange(e.detail)}
+    onselectedchange={(e) => onChange(e.selected)}
   >
     <Checkbox
       value="1"
       labelText="Option 1"
-      on:check={(e) => onCheck("1", e.detail)}
+      oncheckedchange={(e) => onCheck("1", e.checked)}
     />
     <Checkbox
       value="2"
       labelText="Option 2"
-      on:check={(e) => onCheck("2", e.detail)}
+      oncheckedchange={(e) => onCheck("2", e.checked)}
     />
     <Checkbox
       value="3"
       labelText="Option 3"
-      on:check={(e) => onCheck("3", e.detail)}
+      oncheckedchange={(e) => onCheck("3", e.checked)}
     />
   </CheckboxGroup>
 {/if}

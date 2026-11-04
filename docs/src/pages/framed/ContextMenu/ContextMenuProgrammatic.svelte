@@ -28,7 +28,7 @@
   icon={OverflowMenuVertical}
   iconDescription="Open row actions"
   bind:ref={trigger}
-  on:click={handleClick}
+  onclick={handleClick}
 />
 
 <ContextMenu bind:open bind:x bind:y labelText="Row actions">

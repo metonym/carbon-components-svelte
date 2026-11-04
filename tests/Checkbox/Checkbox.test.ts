@@ -17,6 +17,13 @@ import CheckboxTitleTruncation from "./CheckboxTitleTruncation.test.svelte";
 import MultipleCheckboxes from "./MultipleCheckboxes.test.svelte";
 import MultipleCheckboxesObject from "./MultipleCheckboxesObject.test.svelte";
 
+/** Rest props, `data-testid` included, go to the input; styling hooks sit on its wrapper. */
+const wrapper = (testId: string) => {
+  const element = screen.getByTestId(testId).closest(".bx--checkbox-wrapper");
+  assert(element);
+  return element;
+};
+
 describe("Checkbox", () => {
   it("renders with default props", () => {
     render(Checkbox);
@@ -82,21 +89,18 @@ describe("Checkbox", () => {
     }
   });
 
-  it("emits exactly one check event when checked is changed externally via bind", async () => {
+  it("does not call oncheckedchange when checked is changed externally via bind", async () => {
     const onCheck = vi.fn();
     const { component } = render(CheckboxReactiveBind, { onCheck });
 
-    onCheck.mockClear();
     component.checked = true;
     await tick();
+    expect(screen.getByRole("checkbox")).toBeChecked();
 
-    expect(onCheck).toHaveBeenCalledTimes(1);
-
-    onCheck.mockClear();
     component.checked = false;
     await tick();
-
-    expect(onCheck).toHaveBeenCalledTimes(1);
+    expect(screen.getByRole("checkbox")).not.toBeChecked();
+    expect(onCheck).not.toHaveBeenCalled();
   });
 
   it("drops the label's mixed state once a click settles the checkbox", async () => {
@@ -196,7 +200,7 @@ describe("Checkbox", () => {
     expect(onCheck).toHaveBeenLastCalledWith("2", false);
   });
 
-  it("emits check event when group is updated externally", async () => {
+  it("does not call oncheckedchange when group is updated externally", async () => {
     const onCheck = vi.fn();
     const { component } = render(CheckboxGroupReactive, { onCheck });
 
@@ -207,8 +211,7 @@ describe("Checkbox", () => {
     await tick();
 
     expect(checkbox1).toBeChecked();
-    expect(onCheck).toHaveBeenCalledTimes(1);
-    expect(onCheck).toHaveBeenCalledWith("option-1", true);
+    expect(onCheck).not.toHaveBeenCalled();
     const groupValue = screen.getByTestId("group-value");
     expect(groupValue.textContent).toContain("option-1");
   });
@@ -289,9 +292,7 @@ describe("Checkbox", () => {
   it("marks the read-only wrapper for styling", () => {
     render(CheckboxReadonly, { readonly: true });
 
-    expect(screen.getByTestId("checkbox")).toHaveClass(
-      "bx--checkbox-wrapper--readonly",
-    );
+    expect(wrapper("checkbox")).toHaveClass("bx--checkbox-wrapper--readonly");
   });
 
   it("describes the field as read-only for screen readers that ignore aria-readonly", () => {
@@ -355,9 +356,7 @@ describe("Checkbox", () => {
   it("marks the invalid state for styling", () => {
     render(CheckboxValidation, { invalid: true });
 
-    expect(screen.getByTestId("checkbox")).toHaveClass(
-      "bx--checkbox-wrapper--invalid",
-    );
+    expect(wrapper("checkbox")).toHaveClass("bx--checkbox-wrapper--invalid");
     expect(screen.getByRole("checkbox")).toHaveAttribute(
       "data-invalid",
       "true",
@@ -366,8 +365,8 @@ describe("Checkbox", () => {
 
   it("builds the validation message box only while invalid or warning", async () => {
     const { rerender } = render(CheckboxValidation, {});
-    const wrapper = screen.getByTestId("checkbox");
-    const box = () => wrapper.querySelector(".bx--checkbox__validation-msg");
+    const box = () =>
+      wrapper("checkbox").querySelector(".bx--checkbox__validation-msg");
     expect(box()).toBeNull();
 
     await rerender({ warn: true, warnText: "Check this" });
@@ -377,9 +376,10 @@ describe("Checkbox", () => {
   it("marks the warning state for styling", () => {
     render(CheckboxValidation, { warn: true });
 
-    const wrapper = screen.getByTestId("checkbox");
-    expect(wrapper).toHaveClass("bx--checkbox-wrapper--warning");
-    expect(wrapper).not.toHaveClass("bx--checkbox-wrapper--invalid");
+    expect(wrapper("checkbox")).toHaveClass("bx--checkbox-wrapper--warning");
+    expect(wrapper("checkbox")).not.toHaveClass(
+      "bx--checkbox-wrapper--invalid",
+    );
   });
 
   it.each([{ disabled: true }, { readonly: true }])(
@@ -387,7 +387,7 @@ describe("Checkbox", () => {
     (state) => {
       render(CheckboxValidation, { invalid: true, ...state });
 
-      expect(screen.getByTestId("checkbox")).not.toHaveClass(
+      expect(wrapper("checkbox")).not.toHaveClass(
         "bx--checkbox-wrapper--invalid",
       );
     },
@@ -426,6 +426,7 @@ describe("Checkbox", () => {
     function getLabel() {
       const label = document
         .querySelector('[data-testid="checkbox-title"]')
+        ?.closest(".bx--checkbox-wrapper")
         ?.querySelector("label.bx--checkbox-label");
       assert(label);
       return label;

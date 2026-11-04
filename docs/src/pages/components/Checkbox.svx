@@ -39,12 +39,12 @@ Hide the label visually by setting `hideLabel` to `true`. The label remains avai
 
 ### Custom label
 
-Use the `labelChildren` slot to provide custom label content instead of `labelText`.
+Pass a snippet to `labelText` to render custom label content.
 
-<Checkbox labelText="Fallback label">
-  <svelte:fragment slot="labelChildren">
+<Checkbox>
+  {#snippet labelText()}
     I agree to the <strong>terms and conditions</strong>
-  </svelte:fragment>
+  {/snippet}
 </Checkbox>
 
 ### Label title
@@ -70,18 +70,18 @@ Use `helperText` to provide additional context or instructions below the checkbo
 
 ## AI label
 
-Put an `AILabel` in the `decorator` slot to mark the option as AI-generated. The label renders at the `"mini"` size, or `"md"` for the inline kind. On a `CheckboxGroup`, the label follows the legend.
+Put an `AILabel` in the `decorator` snippet to mark the option as AI-generated. The label renders at the `"mini"` size, or `"md"` for the inline kind. On a `CheckboxGroup`, the label follows the legend.
 
 <Stack gap={5}>
   <Checkbox labelText="Enable automatic failover" checked>
-    <AILabel slot="decorator">
+    {#snippet decorator()}<AILabel>
       <p>Recommended because this database had two outages last quarter.</p>
-    </AILabel>
+    </AILabel>{/snippet}
   </Checkbox>
   <CheckboxGroup legendText="Alert channels">
-    <AILabel slot="decorator">
+    {#snippet decorator()}<AILabel>
       <p>Picked from the channels your team acknowledged alerts in last month.</p>
-    </AILabel>
+    </AILabel>{/snippet}
     <Checkbox labelText="Email" checked />
     <Checkbox labelText="Slack" checked />
     <Checkbox labelText="PagerDuty" />
@@ -146,11 +146,11 @@ When using `bind:group`, the checked state is derived from the group array: use 
 
 ## Events
 
-Use `on:check` to listen for changes to a standalone checkbox. The event dispatches the new checked state as `event.detail`.
+Use `oncheckedchange` to listen for changes the user makes to a standalone checkbox. It receives `{ checked }`.
 
 <Checkbox
   labelText="Enable audit logging"
-  on:check={(e) => console.log(e.detail)} // boolean
+  oncheckedchange={({ checked }) => console.log(checked)}
 />
 
 ## Skeleton
@@ -198,17 +198,17 @@ Hide the legend visually by setting `hideLegend` to `true`. The legend remains a
 
 ### Custom label
 
-Use the `legendChildren` slot to provide custom legend content instead of `legendText`.
+Pass a snippet to `legendText` to render custom legend content.
 
 <CheckboxGroup name="prefs-legend-slot" selected={["email"]}>
-  <Stack slot="legendChildren" orientation="horizontal">
+  {#snippet legendText()}<Stack orientation="horizontal">
     Notification preferences
     <Tooltip>
       <p>
         You can change these settings at any time.
       </p>
     </Tooltip>
-  </Stack>
+  </Stack>{/snippet}
   <Checkbox value="email" labelText="Email" />
   <Checkbox value="sms" labelText="SMS" />
   <Checkbox value="push" labelText="Push notifications" />
@@ -278,13 +278,13 @@ Disabled and read-only checkboxes are exempt from the group's validation styling
 
 ### Events
 
-Use `on:change` to listen for changes to the group's selected values. The event dispatches the updated array as `event.detail`.
+Use `onselectedchange` to listen for changes the user makes to the group's selected values. It receives `{ selected }`.
 
 <CheckboxGroup
   legendText="Notification preferences"
   name="prefs-events"
   selected={["email"]}
-  on:change={(e) => console.log(e.detail)} // Array<string | number>
+  onselectedchange={({ selected }) => console.log(selected)}
 >
 <Checkbox value="email" labelText="Email" />
 <Checkbox value="sms" labelText="SMS" />

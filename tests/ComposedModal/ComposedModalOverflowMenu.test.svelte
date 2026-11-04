@@ -6,12 +6,13 @@
   import OverflowMenuItem from "carbon-components-svelte/OverflowMenu/OverflowMenuItem.svelte";
   import type { ComponentProps } from "svelte";
 
-  export let onclose: ((event: CustomEvent) => void) | undefined = undefined;
+  export let onclose: ((detail: { trigger: string }) => void) | undefined =
+    undefined;
   export let portalMenu: ComponentProps<OverflowMenu>["portalMenu"] = false;
 </script>
 
-<ComposedModal open on:close={(e) => onclose?.(e)}>
-  <ModalHeader title="Modal with overflow menu" />
+<ComposedModal open onopenchange={(e) => onclose?.(e)}>
+  <ModalHeader titleText="Modal with overflow menu" />
   <ModalBody>
     <OverflowMenu iconDescription="More options" {portalMenu}>
       <OverflowMenuItem text="Download" />

@@ -162,8 +162,8 @@
         labelText="Theme"
         items={themeItems}
         selectedId={$theme}
-        on:select={({ detail }) => {
-          theme.set(detail.selectedId);
+        onselectedchange={({ selectedId }) => {
+          theme.set(selectedId);
         }}
       />
       <ComponentDocBarActions
@@ -215,11 +215,11 @@
               {#each api_components as component (component.moduleName)}
                 <Tab label={component.moduleName} />
               {/each}
-              <div slot="content" class="tab-content-spacing">
-                {#each api_components as component (component.moduleName)}
-                  <TabContent><ComponentApi {component} /></TabContent>
-                {/each}
-              </div>
+              {#snippet content()}<div class="tab-content-spacing">
+                  {#each api_components as component (component.moduleName)}
+                    <TabContent><ComponentApi {component} /></TabContent>
+                  {/each}
+                </div>{/snippet}
             </Tabs>
           {:else}
             <ComponentApi component={api_components[0]} />

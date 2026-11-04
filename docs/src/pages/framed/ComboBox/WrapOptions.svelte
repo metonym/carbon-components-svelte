@@ -43,15 +43,16 @@
     bind:value={truncatedValue}
     {shouldFilterItem}
     {items}
-    let:item
   >
-    {#each highlightSegments(item.text, matchIndices(item.text, truncatedValue)) as segment}
-      {#if segment.match}
-        <mark>{segment.text}</mark>
-      {:else}
-        {segment.text}
-      {/if}
-    {/each}
+    {#snippet children({
+      item,
+    })}{#each highlightSegments(item.text, matchIndices(item.text, truncatedValue)) as segment}
+        {#if segment.match}
+          <mark>{segment.text}</mark>
+        {:else}
+          {segment.text}
+        {/if}
+      {/each}{/snippet}
   </ComboBox>
 
   <ComboBox
@@ -61,15 +62,16 @@
     bind:value={wrappedValue}
     {shouldFilterItem}
     {items}
-    let:item
   >
-    {#each highlightSegments(item.text, matchIndices(item.text, wrappedValue)) as segment}
-      {#if segment.match}
-        <mark>{segment.text}</mark>
-      {:else}
-        {segment.text}
-      {/if}
-    {/each}
+    {#snippet children({
+      item,
+    })}{#each highlightSegments(item.text, matchIndices(item.text, wrappedValue)) as segment}
+        {#if segment.match}
+          <mark>{segment.text}</mark>
+        {:else}
+          {segment.text}
+        {/if}
+      {/each}{/snippet}
   </ComboBox>
 
   <ComboBox

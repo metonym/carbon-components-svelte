@@ -11,17 +11,39 @@
    */
   export let size = undefined;
 
+  import { createBubbler } from "svelte/legacy";
   import ButtonSkeleton from "../Button/ButtonSkeleton.svelte";
+
+  // Re-dispatches a runes child's events to this component's `on:` listeners.
+  const bubble = createBubbler();
 </script>
 
 <ButtonSkeleton
   {size}
   {...$$restProps}
   class={["bx--chat-btn", $$restProps.class].filter(Boolean).join(" ")}
-  on:click
-  on:focus
-  on:blur
-  on:mouseover
-  on:mouseenter
-  on:mouseleave
+  onclick={(e) => {
+    $$restProps.onclick?.(e);
+    bubble("click")(e);
+  }}
+  onfocus={(e) => {
+    $$restProps.onfocus?.(e);
+    bubble("focus")(e);
+  }}
+  onblur={(e) => {
+    $$restProps.onblur?.(e);
+    bubble("blur")(e);
+  }}
+  onmouseover={(e) => {
+    $$restProps.onmouseover?.(e);
+    bubble("mouseover")(e);
+  }}
+  onmouseenter={(e) => {
+    $$restProps.onmouseenter?.(e);
+    bubble("mouseenter")(e);
+  }}
+  onmouseleave={(e) => {
+    $$restProps.onmouseleave?.(e);
+    bubble("mouseleave")(e);
+  }}
 />

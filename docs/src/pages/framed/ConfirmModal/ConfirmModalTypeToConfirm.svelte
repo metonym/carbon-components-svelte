@@ -4,11 +4,11 @@
   let open = false;
 </script>
 
-<Button kind="danger" on:click={() => (open = true)}>Delete project</Button>
+<Button kind="danger" onclick={() => (open = true)}>Delete project</Button>
 
 <ConfirmModal
   bind:open
-  title="Delete this project?"
+  titleText="Delete this project?"
   confirmText="Delete"
   confirmationPhrase="delete-project"
 >

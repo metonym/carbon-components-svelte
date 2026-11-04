@@ -16,8 +16,8 @@
     size="sm"
     labelText="Live prices"
     hideLabel
-    labelA="Paused"
-    labelB="Live"
+    offText="Paused"
+    onText="Live"
   />
   <span data-marker>Updated 2 min ago</span>
 </div>

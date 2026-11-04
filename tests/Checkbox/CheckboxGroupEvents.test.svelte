@@ -14,13 +14,9 @@
     "option-3": 0,
   };
 
-  function handleCheck(value: string, event: CustomEvent<boolean>) {
+  function handleCheck(value: string, checked: boolean) {
     checkCounts[value as keyof typeof checkCounts]++;
-    onCheck(
-      value,
-      event.detail,
-      checkCounts[value as keyof typeof checkCounts],
-    );
+    onCheck(value, checked, checkCounts[value as keyof typeof checkCounts]);
   }
 </script>
 
@@ -29,7 +25,7 @@
   value="option-1"
   labelText="Option 1"
   data-testid="checkbox-1"
-  on:check={(e) => handleCheck("option-1", e)}
+  oncheckedchange={(e) => handleCheck("option-1", e.checked)}
 />
 
 <Checkbox
@@ -37,7 +33,7 @@
   value="option-2"
   labelText="Option 2"
   data-testid="checkbox-2"
-  on:check={(e) => handleCheck("option-2", e)}
+  oncheckedchange={(e) => handleCheck("option-2", e.checked)}
 />
 
 <Checkbox
@@ -45,7 +41,7 @@
   value="option-3"
   labelText="Option 3"
   data-testid="checkbox-3"
-  on:check={(e) => handleCheck("option-3", e)}
+  oncheckedchange={(e) => handleCheck("option-3", e.checked)}
 />
 
 <div data-testid="check-counts">{JSON.stringify(checkCounts)}</div>

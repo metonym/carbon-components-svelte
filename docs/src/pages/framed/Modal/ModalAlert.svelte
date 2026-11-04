@@ -4,7 +4,7 @@
   let open = false;
 </script>
 
-<Button kind="danger" on:click={() => (open = true)}>Delete all</Button>
+<Button kind="danger" onclick={() => (open = true)}>Delete all</Button>
 
 <Modal
   alert
@@ -13,7 +13,7 @@
   modalHeading="Delete all instances"
   primaryButtonText="Delete"
   secondaryButtonText="Cancel"
-  on:click:button--secondary={() => (open = false)}
+  onsecondaryaction={() => (open = false)}
 >
   <p>This is a permanent action and cannot be undone.</p>
 </Modal>

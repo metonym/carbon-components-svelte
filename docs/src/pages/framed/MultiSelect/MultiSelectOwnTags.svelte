@@ -12,7 +12,7 @@
 
   $: selectedItems = items.filter((item) => selectedIds.includes(item.id));
 
-  function handleTagClose({ detail }) {
+  function handleTagClose(detail) {
     selectedIds = selectedIds.filter((id) => id !== detail.tag.value);
   }
 </script>
@@ -24,7 +24,7 @@
     label="Select regions..."
     {items}
   />
-  <TagSet navigation="roving" multiline on:close:tag={handleTagClose}>
+  <TagSet navigation="roving" multiline ontagdismiss={handleTagClose}>
     {#each selectedItems as item (item.id)}
       <Tag type="blue" value={item.id} filter>{item.text}</Tag>
     {/each}

@@ -32,14 +32,14 @@
 <Stack gap={6}>
   <ButtonSet>
     <Button
-      on:click={() => {
+      onclick={() => {
         treeview?.showNode(targetNode.id);
       }}
     >
       Default (expand + select + focus)
     </Button>
     <Button
-      on:click={() => {
+      onclick={() => {
         treeview?.showNode(targetNode.id, {
           select: false,
           focus: false,
@@ -49,7 +49,7 @@
       Expand only
     </Button>
     <Button
-      on:click={() => {
+      onclick={() => {
         treeview?.showNode(targetNodeSelect.id, {
           expand: false,
           focus: false,
@@ -58,7 +58,7 @@
     >
       Select only
     </Button>
-    <Button kind="tertiary" on:click={() => key++}>Reset</Button>
+    <Button kind="tertiary" onclick={() => key++}>Reset</Button>
   </ButtonSet>
   <div>
     {#key key}

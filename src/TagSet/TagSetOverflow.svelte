@@ -2,8 +2,8 @@
   /**
    * Internal: the "+N" overflow indicator. Not exported from the package;
    * only `TagSet` ships. Hovering shows a tooltip (a comma-separated list of
-   * the hidden labels by default, or custom content via the forwarded
-   * `overflowTooltip` slot); clicking dispatches `trigger`.
+   * the hidden labels by default, or custom content from `overflowContent`);
+   * clicking calls `ontrigger`.
    *
    * Always mounted (even when `count` is 0) so it stays measurable; visually
    * and functionally inert until there is something to show.
@@ -13,157 +13,190 @@
    * closed.
    *
    * With more hidden tags than `viewAllThreshold`, the popover lists the
-   * first ones and a "View all" button that dispatches `viewall`.
-   *
-   * @event {null} trigger - The indicator was clicked.
-   * @event {null} viewall - The popover's "View all" button was clicked.
-   * @event {import("./TagSet.svelte").TagSetItem} close - A dismissible tag in the popover was closed.
-   * @event {null} empty - The popover held focus and has no tag left to take it.
-   * @slot {{ tags: import("./TagSet.svelte").TagSetItem[]; count: number }} tooltip - Override the tooltip or popover content.
+   * first ones and a "View all" button that calls `onviewall`.
    */
+  let {
+    /** @type {"tooltip" | "popover"} */
+    mode = "tooltip",
 
-  /** @type {"tooltip" | "popover"} */
-  export let mode = "tooltip";
+    /**
+     * How the hidden tags are listed: their labels as text, or as tags.
+     * @type {"default" | "tag"}
+     */
+    type = "default",
 
-  /**
-   * How the hidden tags are listed: their labels as text, or as tags.
-   * @type {"default" | "tag"}
-   */
-  export let type = "default";
+    /** The popover lists at most this many hidden tags, then "View all". */
+    viewAllThreshold = 10,
 
-  /** The popover lists at most this many hidden tags, then "View all". */
-  export let viewAllThreshold = 10;
+    /** Text of the popover's "View all" button. */
+    viewAllText = "View all",
 
-  /** Text of the popover's "View all" button. */
-  export let viewAllText = "View all";
+    /** Set to `true` when the parent's `overflowContent` replaces the default list. */
+    customContent = false,
 
-  /** Set to `true` when the parent passes custom `tooltip` slot content. */
-  export let customContent = false;
+    /** Whether the popover is open, with `mode="popover"`. */
+    open = $bindable(false),
 
-  /**
-   * Whether the popover is open, with `mode="popover"`.
-   * @bindable writable
-   */
-  export let open = false;
+    /**
+     * Obtain a reference to the popover content, with `mode="popover"`.
+     * @type {null | HTMLElement}
+     */
+    contentRef = $bindable(null),
 
-  /**
-   * Obtain a reference to the popover content, with `mode="popover"`.
-   * @bindable readonly
-   * @type {null | HTMLElement}
-   */
-  export let contentRef = null;
+    /**
+     * Obtain a reference to the indicator's HTML element, so the parent can
+     * measure its natural width for the fit calculation. With
+     * `mode="popover"`, it's the popover trigger button instead.
+     * @type {null | HTMLSpanElement}
+     */
+    triggerRef = $bindable(null),
 
-  /**
-   * Obtain a reference to the indicator's HTML element, so the parent can
-   * measure its natural width for the fit calculation.
-   * @bindable readonly
-   * @type {null | HTMLSpanElement}
-   */
-  export let triggerRef = null;
+    /**
+     * Obtain a reference to the indicator's focusable button, for the
+     * parent's roving keyboard navigation.
+     * @type {null | HTMLElement}
+     */
+    buttonRef = $bindable(null),
 
-  /**
-   * Obtain a reference to the indicator's focusable button, for the
-   * parent's roving keyboard navigation.
-   * @bindable readonly
-   * @type {null | HTMLButtonElement}
-   */
-  export let buttonRef = null;
+    /**
+     * Roving `tabindex` from the parent. `undefined` keeps the native order.
+     * @type {"0" | "-1" | undefined}
+     */
+    tabindex = undefined,
 
-  /**
-   * Roving `tabindex` from the parent. `undefined` keeps the native order.
-   * @type {"0" | "-1" | undefined}
-   */
-  export let tabindex = undefined;
+    /** @type {string | undefined} */
+    id = undefined,
 
-  /** @type {string | undefined} */
-  export let id = undefined;
+    /** @type {number} */
+    count = 0,
 
-  /** @type {number} */
-  export let count = 0;
+    /** @type {import("./tag-set-context.js").TagSetItem[]} */
+    tags = [],
 
-  /** @type {import("./TagSet.svelte").TagSetItem[]} */
-  export let tags = [];
+    /** @type {"start" | "center" | "end"} */
+    overflowAlign = "center",
 
-  /** @type {"start" | "center" | "end"} */
-  export let overflowAlign = "center";
+    /** @type {"top" | "bottom"} */
+    overflowDirection = "bottom",
 
-  /** @type {"top" | "bottom"} */
-  export let overflowDirection = "bottom";
+    /** @type {(count: number) => string} */
+    overflowLabel = (/** @type {number} */ count) => `+${count} more tags`,
 
-  /** @type {(count: number) => string} */
-  export let overflowLabel = (count) => `+${count} more tags`;
+    /** @type {"xs" | "sm" | "default" | "lg" | "md" | undefined} */
+    size = undefined,
 
-  /** @type {"xs" | "sm" | "default" | "lg" | "md" | undefined} */
-  export let size = undefined;
+    /**
+     * The indicator was clicked.
+     * @type {(() => void) | undefined}
+     */
+    ontrigger = undefined,
 
-  import { afterUpdate, createEventDispatcher, setContext } from "svelte";
+    /**
+     * The popover's "View all" button was clicked.
+     * @type {(() => void) | undefined}
+     */
+    onviewall = undefined,
+
+    /**
+     * A dismissible tag in the popover was closed.
+     * @type {((tag: import("./tag-set-context.js").TagSetItem) => void) | undefined}
+     */
+    ontagdismiss = undefined,
+
+    /**
+     * The popover held focus and has no tag left to take it.
+     * @type {(() => void) | undefined}
+     */
+    onempty = undefined,
+
+    /**
+     * The tooltip or popover content.
+     * @type {import("svelte").Snippet<[{ tags: import("./tag-set-context.js").TagSetItem[]; count: number }]> | undefined}
+     */
+    overflowContent = undefined,
+  } = $props();
+
+  import { untrack } from "svelte";
   import OperationalTag from "../Tag/OperationalTag.svelte";
   import Tag from "../Tag/Tag.svelte";
   import TooltipDefinition from "../TooltipDefinition/TooltipDefinition.svelte";
+  import { setTagSet } from "./tag-set-context.js";
 
-  // The indicator is presentational, not a registered group item — shadow
-  // the context so it can't be mistaken for one.
-  setContext("carbon:TagSet", undefined);
-
-  const dispatch = createEventDispatcher();
+  // The indicator is presentational, not a registered group item. Shadow
+  // the context so its tags can't be mistaken for one.
+  setTagSet(undefined);
 
   /**
    * A popover tag closed while focus was in the popover: once that tag is
    * gone from `tags`, move focus to the tag now at its position, else the
-   * one before it. Svelte 3 and 4 remove it an update later than Svelte 5,
-   * so wait for it in `afterUpdate` instead of a fixed number of ticks.
+   * one before it.
    * @type {null | { id: string; position: number }}
    */
   let pendingFocus = null;
 
-  /** @param {import("./TagSet.svelte").TagSetItem} tag */
+  /** @param {import("./tag-set-context.js").TagSetItem} tag */
   function handleTagClose(tag) {
     const position = tags.indexOf(tag);
     pendingFocus = contentRef?.contains(document.activeElement)
       ? { id: tag.id, position }
       : null;
-    dispatch("close", tag);
+    ontagdismiss?.(tag);
   }
 
-  afterUpdate(() => {
-    if (!pendingFocus || tags.some((tag) => tag.id === pendingFocus?.id)) {
-      return;
-    }
-    const { position } = pendingFocus;
-    pendingFocus = null;
-    const buttons = Array.from(
-      contentRef?.querySelectorAll(".bx--tag__close-icon:not(:disabled)") ?? [],
-    );
-    const target = buttons[Math.min(position, buttons.length - 1)];
-    if (target instanceof HTMLElement) target.focus();
-    else dispatch("empty");
+  // Runs once `tags` has rendered without the closed tag.
+  $effect(() => {
+    const current = tags;
+    untrack(() => {
+      if (!pendingFocus || current.some((tag) => tag.id === pendingFocus?.id)) {
+        return;
+      }
+      const { position } = pendingFocus;
+      pendingFocus = null;
+      const buttons = Array.from(
+        contentRef?.querySelectorAll(".bx--tag__close-icon:not(:disabled)") ??
+          [],
+      );
+      const target = buttons[Math.min(position, buttons.length - 1)];
+      if (target instanceof HTMLElement) target.focus();
+      else onempty?.();
+    });
   });
 
-  $: hasViewAll = count > viewAllThreshold;
-  // Past the threshold, list the first ones. Filtered in the `{#each}`
-  // over `tags`, not a derived array, so `afterUpdate` sees patched rows.
-  $: listLimit = hasViewAll ? viewAllThreshold : Number.POSITIVE_INFINITY;
+  const hasViewAll = $derived(count > viewAllThreshold);
+  // Past the threshold, list the first ones.
+  const listLimit = $derived(
+    hasViewAll ? viewAllThreshold : Number.POSITIVE_INFINITY,
+  );
 
   // The popover trigger is itself the measured tag.
-  $: if (mode === "popover") triggerRef = buttonRef;
+  $effect.pre(() => {
+    if (mode === "popover") {
+      triggerRef = /** @type {HTMLSpanElement | null} */ (buttonRef);
+    }
+  });
 
   // `TooltipDefinition` keeps its rest props on the outer wrapper, so set
   // the roving `tabindex` on its button directly.
-  $: if (mode === "tooltip" && buttonRef) {
+  $effect(() => {
+    if (mode !== "tooltip" || !buttonRef) return;
     if (tabindex === undefined) buttonRef.removeAttribute("tabindex");
     else buttonRef.setAttribute("tabindex", tabindex);
-  }
+  });
 
   // The popover's content (a Tag with a close button per hidden tag, and
   // "View all") is built the first time it opens, then kept.
-  let openedOnce = open;
-  $: if (open) openedOnce = true;
+  let openedOnce = $state(untrack(() => open));
+  $effect.pre(() => {
+    if (open) untrack(() => (openedOnce = true));
+  });
 </script>
 
 {#if mode === "popover"}
   <span
-    class:bx--tag-set-overflow={true}
-    class:bx--tag-set-overflow--empty={count === 0}
+    class={[
+      "bx--tag-set-overflow",
+      count === 0 && "bx--tag-set-overflow--empty",
+    ]}
   >
     <OperationalTag
       bind:ref={buttonRef}
@@ -175,27 +208,27 @@
       align={overflowAlign}
       direction={overflowDirection}
       class="bx--tag-set-overflow__popover-trigger"
-      on:click={() => dispatch("trigger")}
+      on:click={() => ontrigger?.()}
     >
       <!-- In RTL, bidi moves the sign to the far side of the count ("1+"). -->
       <span aria-hidden="true" dir="ltr">+{count}</span>
-      <span class:bx--visually-hidden={true}>{overflowLabel(count)}</span>
-      <svelte:fragment slot="content">
+      <span class="bx--visually-hidden">{overflowLabel(count)}</span>
+      {#snippet content()}
         {#if openedOnce}
           {#if customContent}
-            <slot name="tooltip" {tags} {count} />
+            {@render overflowContent?.({ tags, count })}
           {:else if type === "tag"}
-            <ul class:bx--tag-set-overflow__list={true}>
+            <ul class="bx--tag-set-overflow__list">
               {#each tags as tag, index (tag.id)}
                 {#if index < listLimit}
                   <li>
                     <Tag
-                      type={tag.type}
+                      type={/** @type {any} */ (tag.type)}
                       filter={tag.filter}
                       disabled={tag.disabled}
                       value={tag.value}
                       {size}
-                      on:close={() => handleTagClose(tag)}
+                      ondismiss={() => handleTagClose(tag)}
                     >
                       {tag.label}
                     </Tag>
@@ -205,8 +238,7 @@
             </ul>
           {:else}
             <ul
-              class:bx--tag-set-overflow__list={true}
-              class:bx--tag-set-overflow__list--text={true}
+              class="bx--tag-set-overflow__list bx--tag-set-overflow__list--text"
             >
               {#each tags as tag, index (tag.id)}
                 {#if index < listLimit}
@@ -218,15 +250,14 @@
           {#if hasViewAll}
             <button
               type="button"
-              class:bx--link={true}
-              class:bx--tag-set-overflow__view-all={true}
-              on:click={() => dispatch("viewall")}
+              class="bx--link bx--tag-set-overflow__view-all"
+              onclick={() => onviewall?.()}
             >
               {viewAllText}
             </button>
           {/if}
         {/if}
-      </svelte:fragment>
+      {/snippet}
     </OperationalTag>
   </span>
 {:else}
@@ -238,31 +269,33 @@
     class="bx--tag-set-overflow{count === 0
       ? ' bx--tag-set-overflow--empty'
       : ''}"
-    on:click={() => dispatch("trigger")}
+    on:click={() => ontrigger?.()}
   >
-    <svelte:fragment slot="tooltip">
+    {#snippet tooltip()}
       {#if type === "tag" && !customContent}
         <!-- A tooltip can't be interacted with, so its tags don't close. -->
-        <ul class:bx--tag-set-overflow__list={true}>
+        <ul class="bx--tag-set-overflow__list">
           {#each tags as tag (tag.id)}
-            <li><Tag type={tag.type} {size}>{tag.label}</Tag></li>
+            <li>
+              <Tag type={/** @type {any} */ (tag.type)} {size}>{tag.label}</Tag>
+            </li>
           {/each}
         </ul>
       {:else}
-        <slot name="tooltip" {tags} {count} />
+        {@render overflowContent?.({ tags, count })}
       {/if}
-    </svelte:fragment>
+    {/snippet}
     <span
       bind:this={triggerRef}
-      class:bx--tag={true}
-      class:bx--tag--interactive={true}
-      class:bx--tag-set-overflow__popover-trigger={true}
-      class:bx--tag--xs={size === "xs"}
-      class:bx--tag--sm={size === "sm"}
-      class:bx--tag--lg={size === "lg"}
+      class={[
+        "bx--tag bx--tag--interactive bx--tag-set-overflow__popover-trigger",
+        size === "xs" && "bx--tag--xs",
+        size === "sm" && "bx--tag--sm",
+        size === "lg" && "bx--tag--lg",
+      ]}
     >
       <span aria-hidden="true" dir="ltr">+{count}</span>
     </span>
-    <span class:bx--visually-hidden={true}>{overflowLabel(count)}</span>
+    <span class="bx--visually-hidden">{overflowLabel(count)}</span>
   </TooltipDefinition>
 {/if}

@@ -29,12 +29,12 @@
 
 <Accordion {type}>
   {#each items.slice(0, count) as item}
-    <AccordionItem title={item.title} {open}>
+    <AccordionItem titleText={item.title} {open}>
       <p>{item.description}</p>
     </AccordionItem>
   {/each}
   {#if showLate}
-    <AccordionItem title="Late" open>
+    <AccordionItem titleText="Late" open>
       <p>Late content</p>
     </AccordionItem>
   {/if}

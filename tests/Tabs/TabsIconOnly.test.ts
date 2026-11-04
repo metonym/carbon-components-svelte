@@ -102,8 +102,8 @@ describe("Tabs (icon-only)", () => {
       expect(openTooltips()[0]).toHaveTextContent("Information");
     });
 
-    it("places the tooltip per `tooltipDirection`", async () => {
-      await renderIconOnly({ tooltipDirection: "top" });
+    it("places the tooltip per `tooltipAlign`", async () => {
+      await renderIconOnly({ tooltipAlign: "top" });
 
       await fireEvent.mouseEnter(screen.getByRole("tab", { name: "Settings" }));
       await vi.advanceTimersByTimeAsync(100);
@@ -124,8 +124,8 @@ describe("Tabs (icon-only)", () => {
     expect(openTooltips()).toHaveLength(0);
   });
 
-  it("aligns the tooltip per `tooltipAlignment`", async () => {
-    await renderIconOnly({ tooltipAlignment: "start" });
+  it("aligns the tooltip per the `tooltipAlign` edge", async () => {
+    await renderIconOnly({ tooltipAlign: "bottom-start" });
 
     const settings = screen.getByRole("tab", { name: "Settings" });
     await fireEvent.focus(settings);

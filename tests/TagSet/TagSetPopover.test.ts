@@ -104,7 +104,7 @@ describe("TagSet overflowMode=popover", () => {
     });
   });
 
-  it("renders the overflowTooltip slot in the popover", async () => {
+  it("renders the overflowTooltip snippet in the popover", async () => {
     const { container } = render(TagSetPopover, { props: { custom: true } });
     await waitFor(() => expect(indicator(3)).toBeInTheDocument());
 

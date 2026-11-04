@@ -39,7 +39,7 @@ Control which step is active, and how clicking a step affects that selection.
 
 ### Selected by id
 
-For dynamic step sets, bind `selectedId` and give each `ProgressStep` a stable `id`. Selection stays on the same logical step when steps before it are added or removed. When set, `selectedId` takes precedence over `currentIndex`.
+For dynamic step sets, bind `currentId` and give each `ProgressStep` a stable `id`. The current step stays the same logical step when steps before it are added or removed. When set, `currentId` takes precedence over `currentIndex`.
 
 <FileSource src="/framed/ProgressIndicator/ProgressIndicatorSelectedId" />
 
@@ -139,35 +139,35 @@ Disable specific steps to prevent user interaction.
 
 Customize what renders inside a step, beyond the default label and icon.
 
-### Icon (slot)
+### Icon
 
-Override the default step icon using the `icon` named slot. The slot exposes complete, current, invalid, and description so the override can mirror the step state.
+Override the default step icon with the `icon` snippet. It receives `{ complete, current, invalid, description }` so the override can mirror the step state.
 
 <ProgressIndicator currentIndex={1}>
   <ProgressStep complete label="Build" description="Build completed successfully">
-    <CheckmarkFilled slot="icon" />
+    {#snippet icon()}<CheckmarkFilled />{/snippet}
   </ProgressStep>
   <ProgressStep label="Test" description="Currently running the test suite">
-    <InProgress slot="icon" />
+    {#snippet icon()}<InProgress />{/snippet}
   </ProgressStep>
   <ProgressStep label="Deploy" description="Waiting to deploy">
-    <Circle slot="icon" />
+    {#snippet icon()}<Circle />{/snippet}
   </ProgressStep>
 </ProgressIndicator>
 
-### Label (slot)
+### Custom label
 
-Override the default label using the default slot instead of `label`. The slot exposes `props`, which includes the `class` needed to keep the label styled correctly.
+Override the default label with `children` instead of `label`. The snippet receives `{ props }`, which includes the `class` needed to keep the label styled correctly.
 
 <ProgressIndicator currentIndex={1}>
-  <ProgressStep complete let:props description="Build completed successfully">
-    <strong class={props.class}>Build</strong>
+  <ProgressStep complete description="Build completed successfully">
+    {#snippet children({ props })}<strong class={props.class}>Build</strong>{/snippet}
   </ProgressStep>
-  <ProgressStep let:props description="Currently running the test suite">
-    <strong class={props.class}>Test</strong>
+  <ProgressStep description="Currently running the test suite">
+    {#snippet children({ props })}<strong class={props.class}>Test</strong>{/snippet}
   </ProgressStep>
-  <ProgressStep let:props description="Waiting to deploy">
-    <strong class={props.class}>Deploy</strong>
+  <ProgressStep description="Waiting to deploy">
+    {#snippet children({ props })}<strong class={props.class}>Deploy</strong>{/snippet}
   </ProgressStep>
 </ProgressIndicator>
 
@@ -236,11 +236,11 @@ Display steps in a vertical layout, for a narrow column or sidebar.
 
 Respond to step selection changes.
 
-Use `on:change` to listen for the step becoming active. `change` dispatches when the user selects a completed step by click, <DocKbd label="Enter" />, or <DocKbd label="Space" />, with the new index as `event.detail`; updating `currentIndex` or `selectedId` from code does not dispatch it.
+Use `oncurrentchange` to listen for the step becoming current. It is called with `{ index, id }` when the user selects a completed step by click, <DocKbd label="Enter" />, or <DocKbd label="Space" />; updating `currentIndex` or `currentId` from code does not call it.
 
 <ProgressIndicator
   currentIndex={0}
-  on:change={(e) => console.log(e.detail)} // number
+  oncurrentchange={(e) => console.log(e.index)} // number
 >
   <ProgressStep complete
     label="Build"

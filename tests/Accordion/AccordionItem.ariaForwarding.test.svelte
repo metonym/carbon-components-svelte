@@ -8,7 +8,7 @@
 <span id="extra-help">Extra help</span>
 <span id="external-name">External name</span>
 <Accordion>
-  <AccordionItem title="Section" data-testid="item" {...itemProps}>
+  <AccordionItem titleText="Section" data-testid="item" {...itemProps}>
     Content
   </AccordionItem>
 </Accordion>

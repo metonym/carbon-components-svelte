@@ -44,7 +44,7 @@
     </OperationalTag>
   </div>
   <div data-testid="edge" style="position: relative">
-    <Button size="sm" on:click={() => (open.edge = !open.edge)}>Edge</Button>
+    <Button size="sm" onclick={() => (open.edge = !open.edge)}>Edge</Button>
     <Popover open={open.edge} caret align="bottom-start"
       ><div style="padding: 1rem; width: 16rem">{text}</div></Popover
     >
@@ -53,7 +53,7 @@
 
 <div style="display: flex; justify-content: flex-end; padding: 0 0.5rem 1rem">
   <div data-testid="side" style="position: relative">
-    <Button size="sm" on:click={() => (open.side = !open.side)}>Side</Button>
+    <Button size="sm" onclick={() => (open.side = !open.side)}>Side</Button>
     <Popover open={open.side} caret align="right-start"
       ><div style="padding: 1rem; width: 16rem">{text}</div></Popover
     >
@@ -68,7 +68,7 @@
 </div>
 
 <div data-testid="plain" style="position: relative; margin: 1rem">
-  <Button size="sm" on:click={() => (open.plain = !open.plain)}>Plain</Button>
+  <Button size="sm" onclick={() => (open.plain = !open.plain)}>Plain</Button>
   <Popover open={open.plain} caret align="bottom-left"
     ><div style="padding: 1rem; width: 16rem">{text}</div></Popover
   >
@@ -79,8 +79,7 @@
   style="overflow: auto; height: 5rem; margin: 6rem 1rem 1rem; border: 1px solid; padding: 0.5rem"
 >
   <div data-testid="scroll" style="position: relative; display: inline-block">
-    <Button size="sm" on:click={() => (open.scroll = !open.scroll)}
-      >Panel</Button
+    <Button size="sm" onclick={() => (open.scroll = !open.scroll)}>Panel</Button
     >
     <Popover open={open.scroll} caret align="bottom-left"
       ><div style="padding: 1rem; width: 16rem">{text}</div></Popover
@@ -93,7 +92,7 @@
   style="overflow: hidden; margin: 1rem; border: 1px solid; padding: 0.5rem"
 >
   <div data-testid="card" style="position: relative; display: inline-block">
-    <Button size="sm" on:click={() => (open.card = !open.card)}>Card</Button>
+    <Button size="sm" onclick={() => (open.card = !open.card)}>Card</Button>
     <Popover open={open.card} caret align="bottom-left"
       ><div style="padding: 1rem; width: 16rem">{text}</div></Popover
     >
@@ -108,7 +107,7 @@
 <!-- Centered, with no room on either side at 320px. -->
 <div style="display: flex; justify-content: center; padding: 1rem 0">
   <div data-testid="narrow" style="position: relative">
-    <Button size="sm" on:click={() => (open.narrow = !open.narrow)}
+    <Button size="sm" onclick={() => (open.narrow = !open.narrow)}
       >Narrow</Button
     >
     <Popover open={open.narrow} caret align="right"
@@ -118,7 +117,7 @@
 </div>
 <div style="display: flex; justify-content: center; padding: 1rem 0">
   <div data-testid="narrow-portal" style="position: relative">
-    <Button size="sm" on:click={() => (open.narrowPortal = !open.narrowPortal)}
+    <Button size="sm" onclick={() => (open.narrowPortal = !open.narrowPortal)}
       >Narrow portal</Button
     >
     <Popover open={open.narrowPortal} caret align="left" portalPopover
@@ -140,8 +139,7 @@
   data-testid="bottom"
   style="position: relative; display: inline-block; margin: 0 1rem 0.5rem"
 >
-  <Button size="sm" on:click={() => (open.bottom = !open.bottom)}>Bottom</Button
-  >
+  <Button size="sm" onclick={() => (open.bottom = !open.bottom)}>Bottom</Button>
   <Popover open={open.bottom} caret align="bottom-left"
     ><div style="padding: 1rem; width: 16rem">{text}</div></Popover
   >

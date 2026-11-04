@@ -20,7 +20,7 @@
 <Stack gap={5} align="start">
   <Button
     kind="ghost"
-    on:click={() => {
+    onclick={() => {
       index = index === 0 ? 1 : 0;
     }}
   >

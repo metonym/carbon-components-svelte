@@ -9,12 +9,12 @@
   <div data-width={rem} style="width: {rem}rem">
     <InlineNotification
       kind="info"
-      title="Deployment finished"
-      subtitle="billing-api is live in 3 regions."
+      titleText="Deployment finished"
+      subtitleText="billing-api is live in 3 regions."
     >
-      <svelte:fragment slot="actions">
+      {#snippet actions()}
         <NotificationActionButton>View logs</NotificationActionButton>
-      </svelte:fragment>
+      {/snippet}
     </InlineNotification>
   </div>
 {/each}

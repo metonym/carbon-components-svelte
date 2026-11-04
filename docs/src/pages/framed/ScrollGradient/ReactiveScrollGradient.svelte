@@ -12,14 +12,14 @@
 
 <Stack gap={5}>
   <Stack gap={3} orientation="horizontal">
-    <Button size="small" kind="tertiary" on:click={() => (itemCount += 1)}>
+    <Button size="small" kind="tertiary" onclick={() => (itemCount += 1)}>
       Add item
     </Button>
     <Button
       size="small"
       kind="tertiary"
       disabled={itemCount === 0}
-      on:click={() => (itemCount = Math.max(0, itemCount - 1))}
+      onclick={() => (itemCount = Math.max(0, itemCount - 1))}
     >
       Remove item
     </Button>

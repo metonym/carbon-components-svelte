@@ -26,7 +26,6 @@ const sources = import.meta.glob<string>("../src/**/*.svelte", {
  * fixture instead, as `tests/Menu/Menu.ssr.test.ts` does.
  */
 const NEEDS_PARENT = new Set([
-  "AccordionItem", // Accordion
   "BreadcrumbItem", // Breadcrumb
   "ContextMenuOption", // ContextMenu
   "DatePickerInput", // DatePicker

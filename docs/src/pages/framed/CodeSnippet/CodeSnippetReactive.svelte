@@ -4,7 +4,7 @@
   let expanded = false;
 </script>
 
-<Button on:click={() => (expanded = !expanded)}>Toggle expansion</Button>
+<Button onclick={() => (expanded = !expanded)}>Toggle expansion</Button>
 
 <CodeSnippet
   type="multi"

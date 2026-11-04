@@ -1300,7 +1300,7 @@ describe("MultiSelect", () => {
 
   describe("clear event from the keyboard", () => {
     it.each(["Delete", "Backspace"])(
-      "%s dispatches clear with the keyboard event",
+      "%s calls onclear with the keydown trigger",
       async (key) => {
         const onClear = vi.fn();
         render(MultiSelect, {
@@ -1311,7 +1311,7 @@ describe("MultiSelect", () => {
         await user.keyboard(`{${key}}`);
 
         expect(onClear).toHaveBeenCalledOnce();
-        expect(onClear.mock.calls[0][0]).toBeInstanceOf(KeyboardEvent);
+        expect(onClear).toHaveBeenCalledWith({ trigger: "keydown" });
       },
     );
 

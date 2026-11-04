@@ -14,10 +14,10 @@
 
 <Accordion>
   <AccordionItem
-    title="Natural Language Classifier"
+    titleText="Natural Language Classifier"
     {lazy}
     {open}
-    on:toggle={(e) => onToggle(e.detail.open)}
+    onopenchange={(e) => onToggle(e.open)}
   >
     <p use:trackMount>Lazy panel content</p>
   </AccordionItem>

@@ -1,4 +1,15 @@
+import type { Page } from "@playwright/test";
 import { expect, test } from "./helpers/host";
+
+// Rest props, `data-testid` included, go to the toggle's `<input>`. This
+// finds the field around it, or an element that carries the test id itself.
+function field(page: Page, testId: string) {
+  return page
+    .locator(
+      `.bx--form-item:has(> input[data-testid="${testId}"]), [data-testid="${testId}"]:not(input)`,
+    )
+    .first();
+}
 
 test.describe("Toggle", () => {
   test.beforeEach(async ({ page }) => {
@@ -17,8 +28,7 @@ test.describe("Toggle", () => {
     const toggle = page.getByRole("switch", { name: "Enable notifications" });
     await expect(toggle).toBeVisible();
     await expect(toggle).not.toBeChecked();
-    await page
-      .getByTestId("toggle-notifications")
+    await field(page, "toggle-notifications")
       .locator("label.bx--toggle-input__label")
       .click();
     await expect(toggle).toBeChecked();
@@ -27,7 +37,7 @@ test.describe("Toggle", () => {
   test("can be located and interacted with by data-testid", async ({
     page,
   }) => {
-    const wrapper = page.getByTestId("toggle-notifications");
+    const wrapper = field(page, "toggle-notifications");
     await expect(wrapper).toBeVisible();
     const toggle = wrapper.getByRole("switch");
     await wrapper.locator("label.bx--toggle-input__label").click();
@@ -68,7 +78,7 @@ test.describe("Toggle", () => {
     // How far the state text and the handle sit from the inline-start edge,
     // and how far the checked handle travels toward the inline end.
     const measure = (testId: string) =>
-      page.getByTestId(testId).evaluate((node) => {
+      field(page, testId).evaluate((node) => {
         const toggle = node.querySelector(".bx--toggle__switch");
         const text = [
           ...node.querySelectorAll(
@@ -88,7 +98,7 @@ test.describe("Toggle", () => {
         };
       });
     const flip = (testId: string) =>
-      page.getByTestId(testId).locator("label.bx--toggle-input__label").click();
+      field(page, testId).locator("label.bx--toggle-input__label").click();
     const toggles = [
       { testId: "toggle-notifications", textStart: 56, travel: 24 },
       { testId: "toggle-row", textStart: 40, travel: 17 },

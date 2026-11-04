@@ -25,7 +25,7 @@
 <br />
 <Button
   disabled={selectedId === undefined}
-  on:click={() => (selectedId = undefined)}
+  onclick={() => (selectedId = undefined)}
 >
   Set to undefined (unselected)
 </Button>

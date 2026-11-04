@@ -39,8 +39,8 @@
   export let virtualize: ComponentProps<Dropdown>["virtualize"] = undefined;
   export let wrapOptions: ComponentProps<Dropdown>["wrapOptions"] = false;
   export let portalMenu: ComponentProps<Dropdown>["portalMenu"] = false;
-  export let onselect: ((event: CustomEvent) => void) | undefined = undefined;
-  export let onclear: ((event: CustomEvent) => void) | undefined = undefined;
+  export let onselect: ComponentProps<Dropdown>["onselectedchange"] = undefined;
+  export let onclear: ComponentProps<Dropdown>["onclear"] = undefined;
 </script>
 
 <Dropdown
@@ -77,7 +77,7 @@
   {virtualize}
   {wrapOptions}
   {portalMenu}
-  on:select={(e) => onselect?.(e)}
-  on:clear={(e) => onclear?.(e)}
+  onselectedchange={(e) => onselect?.(e)}
+  onclear={(e) => onclear?.(e)}
   {...$$restProps}
 />

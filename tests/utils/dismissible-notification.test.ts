@@ -9,68 +9,55 @@ describe("createDismissibleNotification", () => {
     vi.useRealTimers();
   });
 
-  it("close() dispatches a cancelable close and sets open false when not prevented", () => {
+  it("close() asks requestClose and sets open false when it agrees", () => {
     const dispatch = vi.fn(() => true);
     const setOpen = vi.fn();
     const notification = createDismissibleNotification({
-      dispatch,
+      requestClose: dispatch,
       getPauseOnHover: () => false,
       setOpen,
     });
 
-    notification.close();
+    notification.close("close-button");
 
-    expect(dispatch).toHaveBeenCalledWith(
-      "close",
-      { timeout: false },
-      { cancelable: true },
-    );
+    expect(dispatch).toHaveBeenCalledWith("close-button");
     expect(setOpen).toHaveBeenCalledWith(false);
   });
 
-  it("close() does not set open when a listener prevents it", () => {
+  it("close() does not set open when requestClose declines", () => {
     const dispatch = vi.fn(() => false);
     const setOpen = vi.fn();
     const notification = createDismissibleNotification({
-      dispatch,
+      requestClose: dispatch,
       getPauseOnHover: () => false,
       setOpen,
     });
 
-    notification.close();
+    notification.close("close-button");
 
     expect(setOpen).not.toHaveBeenCalled();
   });
 
-  it("close() reports timeout: true only when called with closeFromTimeout === true", () => {
+  it("close() passes its trigger to requestClose", () => {
     const dispatch = vi.fn(() => true);
     const notification = createDismissibleNotification({
-      dispatch,
+      requestClose: dispatch,
       getPauseOnHover: () => false,
       setOpen: vi.fn(),
     });
 
-    notification.close(true);
-    expect(dispatch).toHaveBeenCalledWith(
-      "close",
-      { timeout: true },
-      { cancelable: true },
-    );
+    notification.close("timeout");
+    expect(dispatch).toHaveBeenCalledWith("timeout");
 
-    // A click handler's event argument is not a timeout close.
-    notification.close(new MouseEvent("click"));
-    expect(dispatch).toHaveBeenLastCalledWith(
-      "close",
-      { timeout: false },
-      { cancelable: true },
-    );
+    notification.close("escape-key");
+    expect(dispatch).toHaveBeenLastCalledWith("escape-key");
   });
 
-  it("sync() auto-closes with timeout: true after the given delay", () => {
+  it("sync() auto-closes with the timeout trigger after the given delay", () => {
     const dispatch = vi.fn(() => true);
     const setOpen = vi.fn();
     const notification = createDismissibleNotification({
-      dispatch,
+      requestClose: dispatch,
       getPauseOnHover: () => false,
       setOpen,
     });
@@ -79,18 +66,14 @@ describe("createDismissibleNotification", () => {
     expect(dispatch).not.toHaveBeenCalled();
     vi.advanceTimersByTime(100);
 
-    expect(dispatch).toHaveBeenCalledWith(
-      "close",
-      { timeout: true },
-      { cancelable: true },
-    );
+    expect(dispatch).toHaveBeenCalledWith("timeout");
     expect(setOpen).toHaveBeenCalledWith(false);
   });
 
   it("sync() ignores timeout when the notification has an action", () => {
     const dispatch = vi.fn(() => true);
     const notification = createDismissibleNotification({
-      dispatch,
+      requestClose: dispatch,
       getPauseOnHover: () => false,
       setOpen: vi.fn(),
     });
@@ -101,17 +84,13 @@ describe("createDismissibleNotification", () => {
 
     notification.sync(true, 100, false);
     vi.advanceTimersByTime(100);
-    expect(dispatch).toHaveBeenCalledWith(
-      "close",
-      { timeout: true },
-      { cancelable: true },
-    );
+    expect(dispatch).toHaveBeenCalledWith("timeout");
   });
 
   it("sync() does not schedule a close when open is false", () => {
     const dispatch = vi.fn(() => true);
     const notification = createDismissibleNotification({
-      dispatch,
+      requestClose: dispatch,
       getPauseOnHover: () => false,
       setOpen: vi.fn(),
     });
@@ -124,7 +103,7 @@ describe("createDismissibleNotification", () => {
   it("dispose() cancels a pending sync() timeout", () => {
     const dispatch = vi.fn(() => true);
     const notification = createDismissibleNotification({
-      dispatch,
+      requestClose: dispatch,
       getPauseOnHover: () => false,
       setOpen: vi.fn(),
     });
@@ -138,7 +117,7 @@ describe("createDismissibleNotification", () => {
   it("handleMouseenter pauses and handleMouseleave resumes when pauseOnHover is true", () => {
     const dispatch = vi.fn(() => true);
     const notification = createDismissibleNotification({
-      dispatch,
+      requestClose: dispatch,
       getPauseOnHover: () => true,
       setOpen: vi.fn(),
     });
@@ -159,11 +138,7 @@ describe("createDismissibleNotification", () => {
     notification.handleMouseleave(leaveEvent);
 
     vi.advanceTimersByTime(50);
-    expect(dispatch).toHaveBeenCalledWith(
-      "close",
-      { timeout: true },
-      { cancelable: true },
-    );
+    expect(dispatch).toHaveBeenCalledWith("timeout");
   });
 
   it("close() leaves focus alone when a close listener moved it outside", () => {
@@ -175,7 +150,7 @@ describe("createDismissibleNotification", () => {
     document.body.append(before, root, elsewhere);
 
     const notification = createDismissibleNotification({
-      dispatch: vi.fn(() => {
+      requestClose: vi.fn(() => {
         elsewhere.focus();
         return true;
       }),
@@ -186,7 +161,7 @@ describe("createDismissibleNotification", () => {
     before.focus();
     inside.focus();
 
-    notification.close();
+    notification.close("close-button");
 
     expect(document.activeElement).toBe(elsewhere);
     document.body.innerHTML = "";
@@ -206,7 +181,7 @@ describe("createDismissibleNotification", () => {
       document.body.append(before, root, other);
 
       const notification = createDismissibleNotification({
-        dispatch: vi.fn(() => true),
+        requestClose: vi.fn(() => true),
         getPauseOnHover: () => false,
         setOpen: vi.fn(),
       });
@@ -239,7 +214,7 @@ describe("createDismissibleNotification", () => {
     document.body.append(before, root);
 
     const notification = createDismissibleNotification({
-      dispatch: vi.fn(() => true),
+      requestClose: vi.fn(() => true),
       getPauseOnHover: () => false,
       setOpen: vi.fn(),
     });

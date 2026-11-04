@@ -208,7 +208,7 @@
       kind="tertiary"
       size="small"
       disabled={!ready}
-      on:click={() => treeview?.expandAll()}
+      onclick={() => treeview?.expandAll()}
     >
       Expand all
     </Button>
@@ -216,7 +216,7 @@
       kind="tertiary"
       size="small"
       disabled={!ready}
-      on:click={() => {
+      onclick={() => {
         treeview?.collapseAll();
         expandedIds = [];
       }}
@@ -227,7 +227,7 @@
       kind="tertiary"
       size="small"
       disabled={!ready || searchValue.trim() !== ""}
-      on:click={() => treeview?.showNode(deepFile.id)}
+      onclick={() => treeview?.showNode(deepFile.id)}
     >
       Jump to a deep file
     </Button>
@@ -244,15 +244,15 @@
     <Toggle
       size="sm"
       labelText="Compact size"
-      labelA="Default (32px rows)"
-      labelB="Compact (24px rows)"
+      offText="Default (32px rows)"
+      onText="Compact (24px rows)"
       bind:toggled={compact}
     />
     <Toggle
       size="sm"
       labelText="Container height"
-      labelA="Fixed (480px)"
-      labelB="Dynamic (60vh, resize window)"
+      offText="Fixed (480px)"
+      onText="Dynamic (60vh, resize window)"
       bind:toggled={dynamicHeight}
     />
   </Stack>

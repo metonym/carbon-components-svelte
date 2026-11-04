@@ -24,11 +24,11 @@ Create a basic tab interface with labels and content.
   <Tab label="Dashboard" />
   <Tab label="Monitoring" />
   <Tab label="Activity" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Dashboard content with analytics and overview.</TabContent>
     <TabContent>Monitoring content for uptime and alerts.</TabContent>
     <TabContent>Activity content for recent user actions.</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
 ## Sizes
@@ -41,11 +41,11 @@ Set `size` to change the tab height. Line tabs support `"sm"`, `"md"`, and `"lg"
   <Tab label="Dashboard" />
   <Tab label="Monitoring" />
   <Tab label="Activity" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Dashboard content with analytics and overview.</TabContent>
     <TabContent>Monitoring content for uptime and alerts.</TabContent>
     <TabContent>Activity content for recent user actions.</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
 ### Medium
@@ -54,11 +54,11 @@ Set `size` to change the tab height. Line tabs support `"sm"`, `"md"`, and `"lg"
   <Tab label="Dashboard" />
   <Tab label="Monitoring" />
   <Tab label="Activity" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Dashboard content with analytics and overview.</TabContent>
     <TabContent>Monitoring content for uptime and alerts.</TabContent>
     <TabContent>Activity content for recent user actions.</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
 ### Large
@@ -67,11 +67,11 @@ Set `size` to change the tab height. Line tabs support `"sm"`, `"md"`, and `"lg"
   <Tab label="Dashboard" />
   <Tab label="Monitoring" />
   <Tab label="Activity" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Dashboard content with analytics and overview.</TabContent>
     <TabContent>Monitoring content for uptime and alerts.</TabContent>
     <TabContent>Activity content for recent user actions.</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
 ## Selection
@@ -80,13 +80,13 @@ Control which tab is active by a stable id, by index, or by changing how arrow k
 
 ### Selected by id
 
-Bind `selectedId` and give each `Tab` a stable `id`. Prefer it to `selected`: selection stays on the same logical tab when tabs before it are added, removed or reordered. When set, `selectedId` takes precedence over `selected`.
+Bind `selectedId` and give each `Tab` a stable `id`. Prefer it to `selectedIndex`: selection stays on the same logical tab when tabs before it are added, removed or reordered. When set, `selectedId` takes precedence over `selectedIndex`.
 
 <FileSource src="/framed/Tabs/TabsSelectedId" />
 
 ### Reactive
 
-Use `bind:selected` for a two-way binding with the selected tab index. An index points at a different tab once tabs before it change, so use it only for a fixed set of tabs.
+Use `bind:selectedIndex` for a two-way binding with the selected tab index. An index points at a different tab once tabs before it change, so use it only for a fixed set of tabs.
 
 <FileSource src="/framed/Tabs/TabsReactive" />
 
@@ -115,30 +115,30 @@ Use manual activation when switching panels is expensive.
   <Tab label="Dashboard" />
   <Tab label="Monitoring" />
   <Tab label="Activity" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Dashboard content with analytics and overview.</TabContent>
     <TabContent>Monitoring content for uptime and alerts.</TabContent>
     <TabContent>Activity content for recent user actions.</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
 ## Events
 
 Listen for tab selection changes.
 
-### Change
+### Selection change
 
-Listen for `on:change` to know when the selected tab index changes, whether from a click, keyboard navigation, or a `selected`/`selectedId` update. `event.detail` is the new selected index. The index and the selected tab can change independently when tabs are added, removed, or reordered, so use `bind:selectedId` to track which tab is selected. For the dismiss event, see [Dismissible](#dismissible).
+`onselectedchange` is called with `{ index, id }` when the user selects a tab: by click, Enter or Space, or with the arrow keys in automatic activation. It is not called when `selectedIndex` or `selectedId` is set from outside, or when the selection follows tabs that are added, removed or reordered; bind `selectedIndex` or `selectedId` to follow every change. For dismissing tabs, see [Dismissible](#dismissible).
 
-<Tabs on:change={(e) => console.log(e.detail)}>
+<Tabs onselectedchange={(e) => console.log(e.index)}>
   <Tab label="Dashboard" />
   <Tab label="Monitoring" />
   <Tab label="Activity" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Dashboard content with analytics and overview.</TabContent>
     <TabContent>Monitoring content for uptime and alerts.</TabContent>
     <TabContent>Activity content for recent user actions.</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
 ## Overflow
@@ -181,12 +181,12 @@ tabs.
   <Tab label="Monitoring" disabled />
   <Tab label="Activity" disabled />
   <Tab label="Settings" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Dashboard content with analytics and overview.</TabContent>
     <TabContent>Monitoring content for uptime and alerts.</TabContent>
     <TabContent>Activity content for recent user actions.</TabContent>
     <TabContent>Settings and configuration options.</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
 ## Conditional tabs
@@ -199,7 +199,7 @@ If the current selected tab is removed, the next tab is selected.
 
 ## Lazy content
 
-By default, every `TabContent` panel stays mounted and toggles visibility with the `hidden` attribute. Set `lazy` on a panel to defer mounting its slot until that tab is first selected. Set `unmountOnHide` to remove the slot when the tab is deselected — useful for heavy panels such as a DataTable.
+By default, every `TabContent` panel stays mounted and toggles visibility with the `hidden` attribute. Set `lazy` on a panel to defer mounting its content until that tab is first selected. Set `unmountOnHide` to remove the content when the tab is deselected — useful for heavy panels such as a DataTable.
 
 | Do | Why |
 | --- | --- |
@@ -210,7 +210,7 @@ By default, every `TabContent` panel stays mounted and toggles visibility with t
 <Tabs>
   <Tab label="Overview" />
   <Tab label="Load balancers" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Lightweight overview content.</TabContent>
     <TabContent lazy>
       <DataTable
@@ -245,7 +245,7 @@ By default, every `TabContent` panel stays mounted and toggles visibility with t
         ]}"
       />
     </TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
 ## Flush content
@@ -255,14 +255,14 @@ Set `flush` on `TabContent` to drop the panel's horizontal padding so content, s
 <Tabs>
   <Tab label="npm" />
   <Tab label="pnpm" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent flush>
       <CodeSnippet code="npm i carbon-components-svelte" />
     </TabContent>
     <TabContent flush>
       <CodeSnippet code="pnpm i carbon-components-svelte" />
     </TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
 ## Width
@@ -277,11 +277,11 @@ Set `autoWidth` to `true` for tabs to automatically adjust their width based on 
   <Tab label="Dashboard" />
   <Tab label="Monitoring" />
   <Tab label="Activity" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Dashboard content with analytics and overview.</TabContent>
     <TabContent>Monitoring content for uptime and alerts.</TabContent>
     <TabContent>Activity content for recent user actions.</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
 ### Full width
@@ -292,11 +292,11 @@ Set `fullWidth` to `true` for tabs to evenly span the full width of the containe
   <Tab label="Dashboard" />
   <Tab label="Monitoring" />
   <Tab label="Activity" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Dashboard content with analytics and overview.</TabContent>
     <TabContent>Monitoring content for uptime and alerts.</TabContent>
     <TabContent>Activity content for recent user actions.</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
 ## Navigation
@@ -314,11 +314,11 @@ routing each tab to a separate page.
 
 Set `navigation` to render the tabs as page links. The links keep the browser's
 Tab order and arrow keys leave them alone. Label the navigation with
-`aria-label` and set `selected` or `selectedId` from the current route. Render the
+`aria-label` and set `selectedIndex` or `selectedId` from the current route. Render the
 page content below the tabs without `TabContent`. TabsVertical accepts
 `navigation` too (see [Sidebar navigation](#sidebar-navigation)).
 
-<Tabs navigation aria-label="Components" selected={1}>
+<Tabs navigation aria-label="Components" selectedIndex={1}>
   <Tab label="Accordion" href="/components/Accordion" />
   <Tab label="Breadcrumb" href="/components/Breadcrumb" />
   <Tab label="Button" href="/components/Button" />
@@ -327,17 +327,17 @@ page content below the tabs without `TabContent`. TabsVertical accepts
 ```svelte
 <script>
   // The current route, from your router.
-  export let pathname;
+  let { pathname } = $props();
 
   const links = [
     { label: "Profile", href: "/settings/profile" },
     { label: "Security", href: "/settings/security" },
   ];
 
-  $: selected = links.findIndex((link) => link.href === pathname);
+  const selected = $derived(links.findIndex((link) => link.href === pathname));
 </script>
 
-<Tabs navigation aria-label="Settings" {selected}>
+<Tabs navigation aria-label="Settings" selectedIndex={selected}>
   {#each links as link}
     <Tab label={link.label} href={link.href} />
   {/each}
@@ -354,11 +354,11 @@ so selecting one navigates there.
   <Tab label="Accordion" href="/components/Accordion" />
   <Tab label="Breadcrumb" href="/components/Breadcrumb" />
   <Tab label="Button" href="/components/Button" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Accordion content</TabContent>
     <TabContent>Breadcrumb content</TabContent>
     <TabContent>Button content</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
 ### Intercept default
@@ -383,11 +383,11 @@ the label by default and shifts left when dismissible is enabled.
   <Tab label="Calendar" icon={Calendar} />
   <Tab label="Information" icon={Information} />
   <Tab label="Settings" icon={Settings} disabled />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Calendar content</TabContent>
     <TabContent>Information content</TabContent>
     <TabContent>Settings content</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
 ### Icon-only
@@ -403,12 +403,12 @@ shown on hover and focus. Press <DocKbd label="Escape" /> to hide the tooltip wi
   <Tab label="Activity" icon={Activity} disabled />
   <Tab label="Notifications" icon={Notification} />
   <Tab label="Chat" icon={Chat} />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Tab Panel 1</TabContent>
     <TabContent>Tab Panel 2</TabContent>
     <TabContent>Tab Panel 3</TabContent>
     <TabContent>Tab Panel 4</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
 #### Large
@@ -420,20 +420,19 @@ Set `iconSize` to `"lg"` for large icon-only tabs. The tabs and their icons are 
   <Tab label="Activity" icon={Activity} disabled />
   <Tab label="Notifications" icon={Notification} />
   <Tab label="Chat" icon={Chat} />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Tab Panel 1</TabContent>
     <TabContent>Tab Panel 2</TabContent>
     <TabContent>Tab Panel 3</TabContent>
     <TabContent>Tab Panel 4</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
 #### Tooltip placement
 
 The tooltip renders below the tab by default. Use `tooltipAlign` to control
 placement, with Popover's `align` names: `"top"`, `"bottom-start"` and so on.
-It replaces `tooltipDirection` and `tooltipAlignment`, which still work and are
-deprecated. The tooltip automatically flips to the
+The tooltip automatically flips to the
 opposite side if there is not enough space.
 
 <Tabs iconOnly>
@@ -441,12 +440,12 @@ opposite side if there is not enough space.
   <Tab label="Activity" icon={Activity} tooltipAlign="top" />
   <Tab label="Notifications" icon={Notification} tooltipAlign="top" />
   <Tab label="Chat" icon={Chat} tooltipAlign="top-end" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Tab Panel 1</TabContent>
     <TabContent>Tab Panel 2</TabContent>
     <TabContent>Tab Panel 3</TabContent>
     <TabContent>Tab Panel 4</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
 #### Container
@@ -458,20 +457,20 @@ Icon-only tabs also work with the container type.
   <Tab label="Activity" icon={Activity} disabled />
   <Tab label="Notifications" icon={Notification} />
   <Tab label="Chat" icon={Chat} />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Tab Panel 1</TabContent>
     <TabContent>Tab Panel 2</TabContent>
     <TabContent>Tab Panel 3</TabContent>
     <TabContent>Tab Panel 4</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
 ## Dismissible
 
-Set `dismissible` on Tabs to render a close button on each tab. Handle the
-dismiss event to remove the tab from your data. Bind `selectedId` with a stable
-`id` on each Tab so selection stays coherent without manual index math. The
-event detail includes `{ id, label, disabled, hasSecondaryLabel, index }`.
+Set `dismissible` on Tabs to render a close button on each tab. Remove the tab
+from your data in `ondismiss`. Bind `selectedId` with a stable `id` on each Tab
+so selection stays coherent without manual index math. `ondismiss` receives
+`{ id, label, disabled, index }`.
 Press <DocKbd label="Delete" /> on the focused tab to dismiss it. Focus moves to the
 next tab, or to the previous tab when the last one is dismissed.
 
@@ -494,24 +493,24 @@ Set `type="container"` and `dismissible` to `true` for dismissible container tab
 
 ## Custom label
 
-Use the default slot with `let:selected` to customize the tab label based on
-whether the tab is selected.
+Pass `children` to customize the tab label. The snippet receives
+`{ selected }`. `label` still names the tab for its dismiss button and tooltip.
 
 <Tabs>
-  <Tab label="Dashboard" let:selected>
-    Dashboard {#if selected}(selected){/if}
+  <Tab label="Dashboard">{#snippet children({ selected })}
+    Dashboard {#if selected}(selected){/if}{/snippet}
   </Tab>
-  <Tab label="Monitoring" let:selected>
-    Monitoring {#if selected}(selected){/if}
+  <Tab label="Monitoring">{#snippet children({ selected })}
+    Monitoring {#if selected}(selected){/if}{/snippet}
   </Tab>
-  <Tab label="Activity" let:selected>
-    Activity {#if selected}(selected){/if}
+  <Tab label="Activity">{#snippet children({ selected })}
+    Activity {#if selected}(selected){/if}{/snippet}
   </Tab>
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Dashboard content with analytics and overview.</TabContent>
     <TabContent>Monitoring content for uptime and alerts.</TabContent>
     <TabContent>Activity content for recent user actions.</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
 ## Skeleton
@@ -548,11 +547,11 @@ Use the container type for a more prominent tab interface. By default, container
   <Tab label="Dashboard" />
   <Tab label="Monitoring" />
   <Tab label="Activity" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Dashboard content with analytics and overview.</TabContent>
     <TabContent>Monitoring content for uptime and alerts.</TabContent>
     <TabContent>Activity content for recent user actions.</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
 ### Sizes
@@ -565,11 +564,11 @@ Container tabs support the full size range: `"sm"`, `"md"`, `"lg"`, and `"xl"`. 
   <Tab label="Dashboard" />
   <Tab label="Monitoring" />
   <Tab label="Activity" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Dashboard content with analytics and overview.</TabContent>
     <TabContent>Monitoring content for uptime and alerts.</TabContent>
     <TabContent>Activity content for recent user actions.</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
 #### Medium
@@ -578,11 +577,11 @@ Container tabs support the full size range: `"sm"`, `"md"`, `"lg"`, and `"xl"`. 
   <Tab label="Dashboard" />
   <Tab label="Monitoring" />
   <Tab label="Activity" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Dashboard content with analytics and overview.</TabContent>
     <TabContent>Monitoring content for uptime and alerts.</TabContent>
     <TabContent>Activity content for recent user actions.</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
 #### Large
@@ -591,11 +590,11 @@ Container tabs support the full size range: `"sm"`, `"md"`, `"lg"`, and `"xl"`. 
   <Tab label="Dashboard" />
   <Tab label="Monitoring" />
   <Tab label="Activity" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Dashboard content with analytics and overview.</TabContent>
     <TabContent>Monitoring content for uptime and alerts.</TabContent>
     <TabContent>Activity content for recent user actions.</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
 #### Extra large
@@ -604,11 +603,11 @@ Container tabs support the full size range: `"sm"`, `"md"`, `"lg"`, and `"xl"`. 
   <Tab label="Dashboard" />
   <Tab label="Monitoring" />
   <Tab label="Activity" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Dashboard content with analytics and overview.</TabContent>
     <TabContent>Monitoring content for uptime and alerts.</TabContent>
     <TabContent>Activity content for recent user actions.</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
 ### Full width
@@ -619,11 +618,11 @@ Combine `type="container"` with `fullWidth` for container tabs that evenly span 
   <Tab label="Dashboard" />
   <Tab label="Monitoring" />
   <Tab label="Activity" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Dashboard content with analytics and overview.</TabContent>
     <TabContent>Monitoring content for uptime and alerts.</TabContent>
     <TabContent>Activity content for recent user actions.</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
 ### Disabled
@@ -636,12 +635,12 @@ prevent interaction.
   <Tab label="Monitoring" disabled />
   <Tab label="Activity" disabled />
   <Tab label="Settings" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Dashboard content with analytics and overview.</TabContent>
     <TabContent>Monitoring content for uptime and alerts.</TabContent>
     <TabContent>Activity content for recent user actions.</TabContent>
     <TabContent>Settings and configuration options.</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
 ### Icons
@@ -652,11 +651,11 @@ Container type tabs also support icons via `icon`.
   <Tab label="Calendar" icon={Calendar} />
   <Tab label="Information" icon={Information} />
   <Tab label="Settings" icon={Settings} disabled />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Calendar content</TabContent>
     <TabContent>Information content</TabContent>
     <TabContent>Settings content</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
 ### Secondary label
@@ -670,13 +669,13 @@ the primary label.
   <Tab label="Remediate" secondaryLabel="(0/7)" />
   <Tab label="Assets" secondaryLabel="(4/12)" />
   <Tab label="Monitoring" secondaryLabel="(0/10)" disabled />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Engage content</TabContent>
     <TabContent>Analyze content</TabContent>
     <TabContent>Remediate content</TabContent>
     <TabContent>Assets content</TabContent>
     <TabContent>Monitoring content</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
 ### Partial secondary label
@@ -689,32 +688,32 @@ two-line layout.
   <Tab label="Overview" />
   <Tab label="Details" secondaryLabel="(3)" />
   <Tab label="Settings" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Overview content</TabContent>
     <TabContent>Details content</TabContent>
     <TabContent>Settings content</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
-### Secondary children slot
+### Secondary label snippet
 
-Use the `secondaryChildren` slot to customize the secondary label with custom markup (for example, `<strong>` for emphasis).
+Pass a snippet to `secondaryLabel` to customize the secondary label with custom markup (for example, `<strong>` for emphasis).
 
 <Tabs type="container">
   <Tab label="Engage">
-    <strong slot="secondaryChildren">(21/25)</strong>
+    {#snippet secondaryLabel()}<strong>(21/25)</strong>{/snippet}
   </Tab>
   <Tab label="Analyze">
-    <strong slot="secondaryChildren">(12/16)</strong>
+    {#snippet secondaryLabel()}<strong>(12/16)</strong>{/snippet}
   </Tab>
   <Tab label="Remediate">
-    <strong slot="secondaryChildren">(0/7)</strong>
+    {#snippet secondaryLabel()}<strong>(0/7)</strong>{/snippet}
   </Tab>
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Engage content</TabContent>
     <TabContent>Analyze content</TabContent>
     <TabContent>Remediate content</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
 ### Icons with secondary label
@@ -726,11 +725,11 @@ and optional secondary line (for example, counts or status).
   <Tab label="Calendar" icon={Calendar} secondaryLabel="(12 events)" />
   <Tab label="Information" icon={Information} secondaryLabel="(3 new)" />
   <Tab label="Settings" icon={Settings} secondaryLabel="(2 pending)" disabled />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Calendar content</TabContent>
     <TabContent>Information content</TabContent>
     <TabContent>Settings content</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
 ### Skeleton
@@ -765,19 +764,19 @@ container tabs.
 Use TabsVertical for a tab list beside the panel. Compose it with the same Tab and
 TabContent components. From the medium breakpoint up, tabs stack in a vertical column.
 On narrower screens, the list becomes a horizontal row with overflow scrolling.
-`selected`, `selectedId`, and `activation` all work the same as on Tabs (see [Selection](#selection)).
+`selectedIndex`, `selectedId`, and `activation` all work the same as on Tabs (see [Selection](#selection)).
 
 <TabsVertical>
   <Tab label="Dashboard" />
   <Tab label="Monitoring" />
   <Tab label="Activity" />
   <Tab label="Settings" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Dashboard content with analytics and overview.</TabContent>
     <TabContent>Monitoring content for uptime and alerts.</TabContent>
     <TabContent>Activity content for recent user actions.</TabContent>
     <TabContent>Settings and configuration options.</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </TabsVertical>
 
 ### Orientation
@@ -800,11 +799,11 @@ The breakpoint follows the viewport, not the container. In a 320px side panel on
         <Tab label="Dashboard" />
         <Tab label="Monitoring" />
         <Tab label="Activity" />
-        <svelte:fragment slot="content">
+        {#snippet content()}
           <TabContent>Dashboard content</TabContent>
           <TabContent>Monitoring content</TabContent>
           <TabContent>Activity content</TabContent>
-        </svelte:fragment>
+        {/snippet}
       </TabsVertical>
     </Box>
   </Stack>
@@ -815,11 +814,11 @@ The breakpoint follows the viewport, not the container. In a 320px side panel on
         <Tab label="Dashboard" />
         <Tab label="Monitoring" />
         <Tab label="Activity" />
-        <svelte:fragment slot="content">
+        {#snippet content()}
           <TabContent>Dashboard content</TabContent>
           <TabContent>Monitoring content</TabContent>
           <TabContent>Activity content</TabContent>
-        </svelte:fragment>
+        {/snippet}
       </TabsVertical>
     </Box>
   </Stack>
@@ -830,26 +829,26 @@ The breakpoint follows the viewport, not the container. In a 320px side panel on
 Set `navigation` for a sidebar of page links, such as the sections of a
 settings page. It works as on [Tabs](#page-navigation): the links get
 `aria-current="page"` instead of tab semantics, and `activation` no longer
-applies. Put the current page in the `content` slot, without `TabContent`, so it
-renders beside the list.
+applies. Put the current page in the `content` snippet, without `TabContent`, so
+it renders beside the list.
 
-<TabsVertical navigation aria-label="Components" selected={1}>
+<TabsVertical navigation aria-label="Components" selectedIndex={1}>
   <Tab label="Accordion" href="/components/Accordion" />
   <Tab label="Breadcrumb" href="/components/Breadcrumb" />
   <Tab label="Button" href="/components/Button" />
-  <Box slot="content" padding={5}>
+  {#snippet content()}<Box padding={5}>
     <Text>The Breadcrumb page renders here.</Text>
-  </Box>
+  </Box>{/snippet}
 </TabsVertical>
 
 ```svelte
-<TabsVertical navigation aria-label="Settings" {selected}>
+<TabsVertical navigation aria-label="Settings" selectedIndex={selected}>
   {#each links as link}
     <Tab label={link.label} href={link.href} />
   {/each}
-  <div slot="content">
-    <slot />
-  </div>
+  {#snippet content()}<div>
+    {@render children()}
+  </div>{/snippet}
 </TabsVertical>
 ```
 
@@ -866,11 +865,11 @@ height.
   <Tab label="Dashboard" />
   <Tab label="Monitoring" />
   <Tab label="Activity" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Dashboard content with analytics and overview.</TabContent>
     <TabContent>Monitoring content for uptime and alerts.</TabContent>
     <TabContent>Activity content for recent user actions.</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </TabsVertical>
 
 #### Medium
@@ -879,11 +878,11 @@ height.
   <Tab label="Dashboard" />
   <Tab label="Monitoring" />
   <Tab label="Activity" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Dashboard content with analytics and overview.</TabContent>
     <TabContent>Monitoring content for uptime and alerts.</TabContent>
     <TabContent>Activity content for recent user actions.</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </TabsVertical>
 
 #### Large
@@ -892,27 +891,28 @@ height.
   <Tab label="Dashboard" />
   <Tab label="Monitoring" />
   <Tab label="Activity" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Dashboard content with analytics and overview.</TabContent>
     <TabContent>Monitoring content for uptime and alerts.</TabContent>
     <TabContent>Activity content for recent user actions.</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </TabsVertical>
 
 ### Selected
 
-Set `selected` to control the active tab index on mount. As with `Tabs`, bind
-`selected` or `selectedId` for two-way updates (see [Selection](#selection)).
+Set `selectedIndex` to control the active tab index on mount. As with `Tabs`,
+bind `selectedIndex` or `selectedId` for two-way updates (see
+[Selection](#selection)).
 
-<TabsVertical selected={1}>
+<TabsVertical selectedIndex={1}>
   <Tab label="Dashboard" />
   <Tab label="Monitoring" />
   <Tab label="Activity" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Dashboard content with analytics and overview.</TabContent>
     <TabContent>Monitoring content for uptime and alerts.</TabContent>
     <TabContent>Activity content for recent user actions.</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </TabsVertical>
 
 ### Disabled
@@ -925,12 +925,12 @@ tabs.
   <Tab label="Monitoring" disabled />
   <Tab label="Activity" />
   <Tab label="Settings" disabled />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Dashboard content with analytics and overview.</TabContent>
     <TabContent>Monitoring content for uptime and alerts.</TabContent>
     <TabContent>Activity content for recent user actions.</TabContent>
     <TabContent>Settings and configuration options.</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </TabsVertical>
 
 ### Truncated labels
@@ -941,11 +941,11 @@ Long labels wrap to two lines, then truncate with an ellipsis.
   <Tab label="Dashboard" />
   <Tab label="Extra long label that will go two lines then truncate when it gets too long" />
   <Tab label="Activity" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Dashboard content with analytics and overview.</TabContent>
     <TabContent>Content for the second tab.</TabContent>
     <TabContent>Activity content for recent user actions.</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </TabsVertical>
 
 ### Icons
@@ -958,12 +958,12 @@ the first line when the label wraps or truncates.
   <Tab label="Activity" icon={Activity} />
   <Tab label="Analyze trends across every region and team" icon={Analytics} />
   <Tab label="Settings" icon={Settings} />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Dashboard content with analytics and overview.</TabContent>
     <TabContent>Activity content for recent user actions.</TabContent>
     <TabContent>Regional trend analysis across teams.</TabContent>
     <TabContent>Settings and configuration options.</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </TabsVertical>
 
 ### Skeleton

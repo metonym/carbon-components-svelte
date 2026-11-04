@@ -19,7 +19,7 @@
     </Splitter>
   </Box>
   <Text>Size: {size}% · Last saved: {savedSize}%</Text>
-  <Button size="small" kind="tertiary" on:click={() => (size = 30)}>
+  <Button size="small" kind="tertiary" onclick={() => (size = 30)}>
     Reset layout
   </Button>
 </Stack>

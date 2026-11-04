@@ -15,16 +15,12 @@
   {selectedIds}
   labelText="Custom slot multiselect"
   label="Select items"
-  let:item
-  let:index
-  let:selected
-  let:highlighted
 >
-  <span
-    data-testid="custom-item"
-    data-selected={selected}
-    data-highlighted={highlighted}
-  >
-    Item {index + 1}: {item.text}
-  </span>
+  {#snippet children({ item, index, selected, highlighted })}<span
+      data-testid="custom-item"
+      data-selected={selected}
+      data-highlighted={highlighted}
+    >
+      Item {index + 1}: {item.text}
+    </span>{/snippet}
 </MultiSelect>

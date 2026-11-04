@@ -10,7 +10,7 @@
   let popover = null;
 </script>
 
-<Button type="button" on:click={() => popover?.showPopover()}
+<Button type="button" onclick={() => popover?.showPopover()}
   >Open popover</Button
 >
 
@@ -56,11 +56,7 @@
     <OverflowMenuItem text="Duplicate" />
     <OverflowMenuItem danger text="Delete" />
   </OverflowMenu>
-  <Button
-    kind="secondary"
-    type="button"
-    on:click={() => popover?.hidePopover()}
-  >
+  <Button kind="secondary" type="button" onclick={() => popover?.hidePopover()}>
     Close
   </Button>
 </Box>

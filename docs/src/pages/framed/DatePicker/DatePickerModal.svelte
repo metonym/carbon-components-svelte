@@ -9,7 +9,7 @@
   let open = false;
 </script>
 
-<Button on:click={() => (open = true)}>Select date</Button>
+<Button onclick={() => (open = true)}>Select date</Button>
 
 <Modal
   bind:open
@@ -17,7 +17,7 @@
   modalHeading="Meeting date"
   primaryButtonText="Confirm"
   secondaryButtonText="Cancel"
-  on:click:button--secondary={() => (open = false)}
+  onsecondaryaction={() => (open = false)}
 >
   <DatePicker datePickerType="single">
     <DatePickerInput labelText="Meeting date" placeholder="mm/dd/yyyy" />

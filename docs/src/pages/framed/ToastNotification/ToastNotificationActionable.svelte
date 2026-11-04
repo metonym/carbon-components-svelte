@@ -10,20 +10,20 @@
 </script>
 
 <Stack gap={5} align="start">
-  <Button disabled={open} on:click={() => (open = true)}>Upload report</Button>
+  <Button disabled={open} onclick={() => (open = true)}>Upload report</Button>
 
   <ToastNotification
     bind:open
     actionable
     lowContrast
-    title="Upload failed"
-    subtitle="The connection timed out before quarterly-report.pdf finished."
-    caption={new Date().toLocaleString()}
+    titleText="Upload failed"
+    subtitleText="The connection timed out before quarterly-report.pdf finished."
+    captionText={new Date().toLocaleString()}
   >
-    <svelte:fragment slot="actions">
-      <NotificationActionButton on:click={() => (open = false)}>
+    {#snippet actions()}
+      <NotificationActionButton onclick={() => (open = false)}>
         Retry
       </NotificationActionButton>
-    </svelte:fragment>
+    {/snippet}
   </ToastNotification>
 </Stack>

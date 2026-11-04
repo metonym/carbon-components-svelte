@@ -18,7 +18,7 @@
 </button>
 
 <dialog data-testid="native-dialog" bind:this={dialog}>
-  <Button kind="secondary" on:click={() => dialog?.close()}>Close</Button>
+  <Button kind="secondary" onclick={() => dialog?.close()}>Close</Button>
   <DatePicker portalMenu datePickerType="single">
     <DatePickerInput
       data-testid="dialog-date-picker-portal-input"

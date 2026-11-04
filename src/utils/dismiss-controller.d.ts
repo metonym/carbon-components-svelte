@@ -1,4 +1,4 @@
-/** A single window listener managed by the `dismiss` action. */
+/** A single window listener managed by `dismiss`. */
 export interface DismissListener {
   type: string;
   handler: (event: Event) => void;
@@ -20,8 +20,10 @@ export interface DismissParams {
   options?: boolean | AddEventListenerOptions;
 }
 
+export interface DismissController {
+  update: (options: DismissParams) => void;
+  destroy: () => void;
+}
+
 /** Adds `window` listeners only while `enabled` is true. SSR-safe. */
-export function dismiss(
-  node: unknown,
-  options: DismissParams,
-): { update: (options: DismissParams) => void; destroy: () => void };
+export function createDismiss(options: DismissParams): DismissController;

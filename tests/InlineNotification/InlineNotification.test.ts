@@ -26,7 +26,7 @@ describe("InlineNotification", () => {
   });
 
   it("defaults to role status, which screen readers announce politely", () => {
-    render(InlineNotification, { props: { title: "Saved" } });
+    render(InlineNotification, { props: { titleText: "Saved" } });
 
     expect(screen.getByRole("status")).toHaveClass("bx--inline-notification");
     expect(screen.queryByRole("alert")).not.toBeInTheDocument();
@@ -164,7 +164,10 @@ describe("InlineNotification", () => {
     vi.advanceTimersByTime(1000);
     await tick();
     expect(onclose).toHaveBeenCalledTimes(1);
-    expect(onclose.mock.calls[0][0].detail).toEqual({ timeout: true });
+    expect(onclose.mock.calls[0][0]).toMatchObject({
+      open: false,
+      trigger: "timeout",
+    });
   });
 
   it("should render action button with href", () => {

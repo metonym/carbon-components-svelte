@@ -40,7 +40,7 @@ describe("ProgressIndicator", () => {
       await user.click(screen.getByText("Step 1"));
       expect(onchange).toHaveBeenCalledTimes(1);
       expect(onchange).toHaveBeenLastCalledWith(
-        expect.objectContaining({ detail: 0 }),
+        expect.objectContaining({ index: 0 }),
       );
     });
 
@@ -216,7 +216,7 @@ describe("ProgressIndicator", () => {
       await user.keyboard("{Enter}");
       expect(onchange).toHaveBeenCalledTimes(1);
       expect(onchange).toHaveBeenLastCalledWith(
-        expect.objectContaining({ detail: 0 }),
+        expect.objectContaining({ index: 0 }),
       );
 
       await user.keyboard("{ArrowRight}");
@@ -256,6 +256,22 @@ describe("ProgressIndicator", () => {
       expect(buttons[2]).not.toHaveAttribute("aria-current");
       expect(items[0]).toHaveClass("bx--progress-step--current");
       expect(items[2]).not.toHaveClass("bx--progress-step--current");
+    });
+
+    it("does not call oncurrentchange when currentIndex is set from outside", async () => {
+      const onchange = vi.fn();
+      const { rerender } = render(ProgressIndicator, {
+        currentIndex: 0,
+        steps: makeSteps([true, true, false]),
+        onchange,
+      });
+
+      await rerender({ currentIndex: 2, onchange });
+
+      expect(screen.getAllByRole("listitem")[2]).toHaveClass(
+        "bx--progress-step--current",
+      );
+      expect(onchange).not.toHaveBeenCalled();
     });
 
     it("moves the current step when currentIndex changes", async () => {
@@ -433,7 +449,7 @@ describe("ProgressIndicator", () => {
       // The remaining "Step 3" must now report index 1, not 2.
       await user.click(screen.getByText("Step 3"));
       expect(onchange).toHaveBeenLastCalledWith(
-        expect.objectContaining({ detail: 1 }),
+        expect.objectContaining({ index: 1 }),
       );
     });
 
@@ -467,7 +483,7 @@ describe("ProgressIndicator", () => {
       );
       await user.click(screen.getAllByRole("button")[2]);
       expect(onchange).toHaveBeenLastCalledWith(
-        expect.objectContaining({ detail: 2 }),
+        expect.objectContaining({ index: 2 }),
       );
     });
 

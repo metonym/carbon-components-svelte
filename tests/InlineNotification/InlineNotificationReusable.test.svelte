@@ -4,9 +4,14 @@
 
   export let open = false;
   export let timeout: ComponentProps<InlineNotification>["timeout"] = 0;
-  export let title: ComponentProps<InlineNotification>["title"] = "Error:";
-  export let subtitle: ComponentProps<InlineNotification>["subtitle"] =
+  export let title: ComponentProps<InlineNotification>["titleText"] = "Error:";
+  export let subtitle: ComponentProps<InlineNotification>["subtitleText"] =
     "An internal server error occurred.";
 </script>
 
-<InlineNotification bind:open {timeout} {title} {subtitle} />
+<InlineNotification
+  bind:open
+  {timeout}
+  titleText={title}
+  subtitleText={subtitle}
+/>

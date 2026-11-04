@@ -53,13 +53,16 @@ describe("Dropdown close event", () => {
     expect(button).toHaveTextContent("Slack");
   });
 
-  it("does not dispatch close when clicking the already-selected item", async () => {
+  // Re-picking the selected item is not a selection, but the user did
+  // close the menu.
+  it('reports close with trigger "select" when re-picking the selected item', async () => {
     const onClose = setup();
 
     await user.click(screen.getByRole("combobox"));
     await user.click(screen.getByRole("option", { name: "Slack" }));
 
     expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
-    expect(onClose).not.toHaveBeenCalled();
+    expect(onClose).toHaveBeenCalledTimes(1);
+    expect(onClose.mock.calls[0][0].detail).toEqual({ trigger: "select" });
   });
 });

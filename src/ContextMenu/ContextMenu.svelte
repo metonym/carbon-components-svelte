@@ -58,7 +58,7 @@
     setContext,
   } from "svelte";
   import { writable } from "svelte/store";
-  import { dismiss } from "../utils/dismiss.js";
+  import { dismiss } from "../utils/dismiss.svelte.js";
   import { focusQuietly } from "../utils/focus.js";
   import { hasModifierKey } from "../utils/has-modifier-key.js";
   import { isImeComposition } from "../utils/ime-composition.js";
@@ -300,13 +300,13 @@
       focusIndex = index;
     },
   }}
-  use:dismiss={{
+  {@attach dismiss(() => ({
     enabled: open,
     listeners: [
       { type: "click", handler: handleOutsideClick },
       { type: "keydown", handler: handleEscape },
     ],
-  }}
+  }))}
   role="menu"
   tabindex="-1"
   data-direction={direction}
