@@ -28,10 +28,10 @@ Hide the label visually by setting `hideLabel` to `true`. The label remains avai
 
 ## Custom label
 
-Use the `labelChildren` slot to provide custom label content.
+Pass a snippet to `labelText` to provide custom label content.
 
-<TextInput labelText="" placeholder="Enter workspace name...">
-  <strong slot="labelChildren">Workspace name</strong>
+<TextInput placeholder="Enter workspace name...">
+  {#snippet labelText()}<strong>Workspace name</strong>{/snippet}
 </TextInput>
 
 ## Maximum character count
@@ -48,22 +48,22 @@ Respond to value changes.
 
 ### Value change
 
-Use `on:input` to listen for every keystroke, and `on:change` to listen for
-committed changes on blur. Both events dispatch the current value directly as
-`event.detail`.
+Use `onvaluechange` to listen for every edit, and `onvaluecommit` to listen
+for committed changes on blur or Enter. Both receive `{ value }`. The native
+`oninput` and `onchange` still reach the `<input>` with the DOM event.
 
 <TextInput
   labelText="Workspace name"
   placeholder="Enter workspace name..."
-  on:input={(e) => console.log(e.detail)} // string | null
-  on:change={(e) => console.log(e.detail)} // string | null
+  onvaluechange={({ value }) => console.log(value)}
+  onvaluecommit={({ value }) => console.log(value)}
 />
 
 ### Numeric values
 
 Set the native `type` attribute to `"number"` to parse `value` as a number.
-The bound value—and the event detail dispatched by `on:input` and `on:change`—is
-`null` when the input is empty, otherwise a `number`.
+The bound value, and the `value` that `onvaluechange` and `onvaluecommit`
+receive, is `null` when the input is empty, otherwise a `number`.
 
 <TextInput type="number" labelText="Port number" placeholder="Enter port number..." />
 
@@ -85,12 +85,12 @@ The action takes a boolean, so pass an expression to turn it on and off. Pass `f
 
 ## AI label
 
-Put an `AILabel` in the `decorator` slot to mark the value as AI-generated. The field shows the AI gradient. See [AI label](/components/AILabel#fields) for the revert flow.
+Put an `AILabel` in the `decorator` snippet to mark the value as AI-generated. The field shows the AI gradient. See [AI label](/components/AILabel#fields) for the revert flow.
 
 <TextInput labelText="Workspace name" value="analytics-prod">
-  <AILabel slot="decorator">
+  {#snippet decorator()}<AILabel>
     <p>Suggested from the project you selected.</p>
-  </AILabel>
+  </AILabel>{/snippet}
 </TextInput>
 
 ## On a layer
@@ -121,14 +121,14 @@ embedded label.
 
 ### Custom label
 
-Use the `labelChildren` slot to render custom label content, such as a
+Pass a snippet to `labelText` to render custom label content, such as a
 tooltip icon.
 
-<TextInput fluid labelText="Workspace name" placeholder="Enter workspace name...">
-  <svelte:fragment slot="labelChildren">
+<TextInput fluid placeholder="Enter workspace name...">
+  {#snippet labelText()}
     Workspace name
     <TooltipIcon tooltipText="This name is also used to generate your workspace's URL." icon={Information} />
-  </svelte:fragment>
+  {/snippet}
 </TextInput>
 
 ### Invalid
@@ -168,10 +168,10 @@ Use the inline variant to display the label and input on the same line with `inl
 
 ### Custom label
 
-Use the `labelChildren` slot to provide custom inline label content.
+Pass a snippet to `labelText` to provide custom inline label content.
 
-<TextInput inline labelText="" placeholder="Enter workspace name...">
-  <strong slot="labelChildren">Workspace name</strong>
+<TextInput inline placeholder="Enter workspace name...">
+  {#snippet labelText()}<strong>Workspace name</strong>{/snippet}
 </TextInput>
 
 ## Sizes

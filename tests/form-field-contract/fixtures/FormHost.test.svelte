@@ -14,7 +14,10 @@
     this={component}
     bind:value
     name="field"
+    labelText="Field"
     {...fieldProps}
+    onvaluechange={onInput}
+    onvaluecommit={onChange}
     on:input={onInput}
     on:change={onChange}
     on:clear={onClear}

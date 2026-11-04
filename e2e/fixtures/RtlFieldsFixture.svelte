@@ -57,7 +57,7 @@
   </div>
   <div data-testid="text-decorator">
     <TextInput labelText="Service name" value="billing-api" invalid>
-      <AILabel slot="decorator" />
+      {#snippet decorator()}<AILabel />{/snippet}
     </TextInput>
   </div>
   <div data-testid="text-inline">
@@ -222,7 +222,7 @@
   </div>
   <div data-testid="fluid-text-decorator">
     <TextInput fluid labelText="Service name" value="billing-api">
-      <AILabel slot="decorator" />
+      {#snippet decorator()}<AILabel />{/snippet}
     </TextInput>
   </div>
   <div data-testid="tag-input-invalid">

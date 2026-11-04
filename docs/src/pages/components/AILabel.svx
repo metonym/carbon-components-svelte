@@ -146,9 +146,9 @@ Put an AI label in the `decorator` slot of a field to mark its value as AI-gener
 <Box maxWidth={320}>
   <Stack gap={6}>
     <TextInput labelText="Incident title" value="Database failover in us-east-1">
-      <AILabel slot="decorator">
+      {#snippet decorator()}<AILabel>
         <p>Suggested from the alert that opened this incident.</p>
-      </AILabel>
+      </AILabel>{/snippet}
     </TextInput>
     <TextArea labelText="Summary" value="Primary database failed over after a storage node stopped responding.">
       <AILabel slot="decorator">

@@ -12,8 +12,8 @@
     bind:value
     name="pw"
     labelText="Password"
-    on:input={onInput}
-    on:change={onChange}
+    oninput={onInput}
+    onchange={onChange}
   />
 </form>
 <p data-testid="bound">{value}</p>

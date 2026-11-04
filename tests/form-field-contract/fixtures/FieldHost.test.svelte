@@ -1,22 +1,39 @@
 <script lang="ts">
   import FluidForm from "carbon-components-svelte/FluidForm/FluidForm.svelte";
-  import type { ComponentType } from "svelte";
+  import type { Component } from "svelte";
+  import { RUNES_COMPONENTS } from "../runes-components";
 
-  export let component: ComponentType;
-  export let fieldProps: Record<string, unknown> = {};
-  /** Inherit fluid from a FluidForm instead of the `fluid` prop. */
-  export let inFluidForm = false;
+  let {
+    component,
+    fieldProps = {},
+    inFluidForm = false,
+  }: {
+    component: Component<any>;
+    fieldProps?: Record<string, unknown>;
+    /** Inherit fluid from a FluidForm instead of the `fluid` prop. */
+    inFluidForm?: boolean;
+  } = $props();
+
+  const Field = $derived(component);
+  const runes = $derived(RUNES_COMPONENTS.has(component));
 </script>
 
-<!-- `slot` can't sit inside an `{#if}` in Svelte 5, so each branch renders the field whole. -->
+<!-- The label is always the text "Field": a `labelText` snippet for a runes
+  field, the `labelChildren` slot for a legacy one. -->
+{#snippet field()}
+  {#if runes}
+    <Field {...fieldProps}>
+      {#snippet labelText()}Field{/snippet}
+    </Field>
+  {:else}
+    <Field {...fieldProps}>
+      {#snippet labelChildren()}Field{/snippet}
+    </Field>
+  {/if}
+{/snippet}
+
 {#if inFluidForm}
-  <FluidForm>
-    <svelte:component this={component} labelText="Field" {...fieldProps}>
-      <svelte:fragment slot="labelChildren">Field</svelte:fragment>
-    </svelte:component>
-  </FluidForm>
+  <FluidForm>{@render field()}</FluidForm>
 {:else}
-  <svelte:component this={component} labelText="Field" {...fieldProps}>
-    <svelte:fragment slot="labelChildren">Field</svelte:fragment>
-  </svelte:component>
+  {@render field()}
 {/if}

@@ -19,11 +19,11 @@
 
 <div data-testid="text-input">
   <TextInput labelText="Summary" size="xs">
-    <svelte:fragment slot="decorator">
+    {#snippet decorator()}
       {#if showLabel}
         <AILabel size="xl" bind:revertActive />
       {/if}
-    </svelte:fragment>
+    {/snippet}
   </TextInput>
 </div>
 <div data-testid="text-area">
@@ -62,7 +62,7 @@
 </div>
 <div data-testid="aligned">
   <TextInput labelText="Aligned">
-    <AILabel slot="decorator" align="start" />
+    {#snippet decorator()}<AILabel align="start" />{/snippet}
   </TextInput>
 </div>
 <div data-testid="plain">

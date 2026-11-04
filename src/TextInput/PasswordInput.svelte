@@ -1,127 +1,158 @@
 <script>
   /**
-   * Set the size of the input.
-   * Inherits the parent `Form` size when unset.
-   * Also accepts Carbon v11's `"md"` (the 40px default, which overrides a
-   * `Form` size) and `"lg"` (`"xl"`).
-   * @type {"xs" | "sm" | "md" | "lg" | "xl" | undefined}
+   * @restProps {input}
    */
-  export let size = undefined;
 
-  /**
-   * Specify the input value.
-   * Follows the field when the owning form resets.
-   * @type {number | string}
-   * @bindable writable
-   */
-  export let value = "";
+  const fallbackId = $props.id();
 
-  /**
-   * Set to `"text"` to toggle the password visibility.
-   * @type {"text" | "password"}
-   * @bindable writable
-   */
-  export let type = "password";
+  let {
+    /**
+     * Set the size of the input.
+     * Inherits the parent `Form` size when unset.
+     * Also accepts Carbon v11's `"md"` (the 40px default, which overrides a
+     * `Form` size) and `"lg"` (`"xl"`).
+     * @type {"xs" | "sm" | "md" | "lg" | "xl" | undefined}
+     */
+    size = undefined,
 
-  /** Specify the placeholder text */
-  export let placeholder = "";
+    /**
+     * Specify the input value.
+     * Follows the field when the owning form resets.
+     * @type {number | string}
+     */
+    value = $bindable(""),
 
-  /** Specify the hide password label text */
-  export let hidePasswordLabel = "Hide password";
+    /**
+     * Set to `"text"` to toggle the password visibility.
+     * @type {"text" | "password"}
+     */
+    type = $bindable("password"),
 
-  /** Specify the show password label text */
-  export let showPasswordLabel = "Show password";
+    /** Specify the text of the toggle while the password is visible */
+    hidePasswordText = "Hide password",
 
-  /**
-   * Set the tooltip placement in floating-ui form: the side, then `start`
-   * or `end` along it, as Popover's `align` takes. Above and below,
-   * `start` and `end` name inline sides, so they swap under `dir="rtl"`.
-   * When set, takes precedence over `tooltipPosition` and `tooltipAlignment`.
-   * @type {"top" | "top-start" | "top-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end" | "right" | "right-start" | "right-end" | undefined}
-   */
-  export let tooltipAlign = undefined;
+    /** Specify the text of the toggle while the password is hidden */
+    showPasswordText = "Show password",
 
-  /**
-   * Set the alignment of the tooltip relative to the icon.
-   * @deprecated use `tooltipAlign`
-   * @type {"start" | "center" | "end"}
-   */
-  export let tooltipAlignment = "end";
+    /**
+     * Set the tooltip placement in floating-ui form: the side, then `start`
+     * or `end` along it, as Popover's `align` takes. Above and below,
+     * `start` and `end` name inline sides, so they swap under `dir="rtl"`.
+     * When set, takes precedence over `tooltipPosition` and `tooltipAlignment`.
+     * @type {"top" | "top-start" | "top-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end" | "right" | "right-start" | "right-end" | undefined}
+     */
+    tooltipAlign = undefined,
 
-  /**
-   * Set the position of the tooltip relative to the icon.
-   * @deprecated use `tooltipAlign`
-   * @type {"top" | "right" | "bottom" | "left"}
-   */
-  export let tooltipPosition = "bottom";
+    /**
+     * Set the alignment of the tooltip relative to the icon.
+     * @deprecated use `tooltipAlign`
+     * @type {"start" | "center" | "end"}
+     */
+    tooltipAlignment = "end",
 
-  /** Set to `true` to disable the input */
-  export let disabled = false;
+    /**
+     * Set the position of the tooltip relative to the icon.
+     * @deprecated use `tooltipAlign`
+     * @type {"top" | "right" | "bottom" | "left"}
+     */
+    tooltipPosition = "bottom",
 
-  /** Specify the helper text */
-  export let helperText = "";
+    /** Set to `true` to disable the input */
+    disabled = false,
 
-  /** Specify the label text */
-  export let labelText = "";
+    /** Specify the helper text */
+    helperText = "",
 
-  /** Set to `true` to visually hide the label text */
-  export let hideLabel = false;
+    /**
+     * Specify the label text, or a snippet.
+     * @type {string | import("svelte").Snippet}
+     */
+    labelText = "",
 
-  /** Set to `true` to indicate an invalid state */
-  export let invalid = false;
+    /** Set to `true` to visually hide the label text */
+    hideLabel = false,
 
-  /** Specify the text for the invalid state */
-  export let invalidText = "";
+    /** Set to `true` to indicate an invalid state */
+    invalid = false,
 
-  /** Set to `true` to indicate a warning state */
-  export let warn = false;
+    /** Specify the invalid state text */
+    invalidText = "",
 
-  /** Specify the warning state text */
-  export let warnText = "";
+    /** Set to `true` to indicate a warning state */
+    warn = false,
 
-  /** Set to `true` to use inline version */
-  export let inline = false;
+    /** Specify the warning state text */
+    warnText = "",
 
-  /** Set to `true` to use the read-only variant */
-  export let readonly = false;
+    /** Set to `true` to use the inline variant */
+    inline = false,
 
-  /**
-   * Set to `true` to use the fluid variant.
-   * Inherited from the parent `FluidForm` context,
-   * so it does not need to be set when used inside `FluidForm`.
-   * Cannot be combined with the inline variant.
-   */
-  export let fluid = false;
+    /** Set to `true` to use the read-only variant */
+    readonly = false,
 
-  /** Set an id for the input element */
-  export let id = uniqueId();
+    /**
+     * Set to `true` to use the fluid variant.
+     * Inherited from the parent `FluidForm` context,
+     * so it does not need to be set when used inside `FluidForm`.
+     * Cannot be combined with the inline variant.
+     */
+    fluid = false,
 
-  /**
-   * Specify a name attribute for the input.
-   * @type {string | undefined}
-   */
-  export let name = undefined;
+    /**
+     * Set an id for the input element
+     * @type {string}
+     */
+    id = fallbackId,
 
-  /**
-   * Obtain a reference to the input HTML element.
-   * @bindable readonly
-   * @type {null | HTMLInputElement}
-   */
-  export let ref = null;
+    /**
+     * Obtain a reference to the input HTML element.
+     * @type {null | HTMLInputElement}
+     */
+    ref = $bindable(null),
 
-  /**
-   * Set to `true` to always render the tooltip in a portal, or `false` to
-   * keep it in place. Left unset, the tooltip opens in a portal inside a
-   * `Modal`, or when a box around it (`overflow` other than `visible`, such
-   * as a `DataTable`) would cut it off.
-   * @type {boolean | undefined}
-   */
-  export let portalTooltip = undefined;
+    /**
+     * Set to `true` to always render the tooltip in a portal, or `false` to
+     * keep it in place. Left unset, the tooltip opens in a portal inside a
+     * `Modal`, or when a box around it (`overflow` other than `visible`, such
+     * as a `DataTable`) would cut it off.
+     * @type {boolean | undefined}
+     */
+    portalTooltip = undefined,
 
-  /** Set to `true` to select the input's text when it receives focus */
-  export let selectTextOnFocus = false;
+    /** Set to `true` to select the input's text when it receives focus */
+    selectTextOnFocus = false,
 
-  import { getContext, onMount, tick } from "svelte";
+    /**
+     * Called as the user edits the value.
+     * @type {((detail: { value: string }) => void) | undefined}
+     */
+    onvaluechange = undefined,
+
+    /**
+     * Called when the user commits the value (the native `change`).
+     * @type {((detail: { value: string }) => void) | undefined}
+     */
+    onvaluecommit = undefined,
+
+    /** @type {import("svelte/elements").ClassValue | undefined} */
+    class: className = undefined,
+
+    /** @type {string | undefined | null} */
+    "aria-describedby": ariaDescribedBy = undefined,
+
+    /** @type {import("svelte/elements").FormEventHandler<HTMLInputElement> | undefined | null} */
+    oninput = undefined,
+
+    /** @type {import("svelte/elements").FormEventHandler<HTMLInputElement> | undefined | null} */
+    onchange = undefined,
+
+    /** @type {import("svelte/elements").FocusEventHandler<HTMLInputElement> | undefined | null} */
+    onfocus = undefined,
+
+    ...rest
+  } = $props();
+
+  import { getContext, onMount, tick, untrack } from "svelte";
   import PortalTooltip from "../Portal/PortalTooltip.svelte";
   import {
     FORM_CONTEXT_KEY,
@@ -143,52 +174,61 @@
   import { fieldsetDisabled } from "../utils/fieldset-disabled.js";
   import { clippedBy } from "../utils/fit-align.js";
   import { formReset } from "../utils/form-reset.js";
-  import { noop } from "../utils/noop.js";
   import { preserveFocusSelection } from "../utils/preserve-focus-selection.js";
   import { FIELD_SIZE_ALIASES, normalizeSize } from "../utils/size-aliases.js";
   import { tooltipPlacement } from "../utils/tooltip-align.js";
   import { getTooltipGroup } from "../utils/tooltip-group.js";
-  import { uniqueId } from "../utils/unique-id.js";
 
   // A disabled `<fieldset>` around the component disables it too.
-  let inDisabledFieldset = false;
-  $: effectiveDisabled = disabled || inDisabledFieldset;
+  let inDisabledFieldset = $state(false);
+  const effectiveDisabled = $derived(disabled || inDisabledFieldset);
 
   const ctx = getContext(FORM_CONTEXT_KEY);
   /** @type {undefined | import("svelte/store").Readable<undefined | "xs" | "sm" | "md" | "xl">} */
   const formSize = getContext(FORM_SIZE_CONTEXT_KEY);
-  $: effectiveSize = normalizeSize(size ?? $formSize, FIELD_SIZE_ALIASES);
+  const effectiveSize = $derived(
+    normalizeSize(size ?? $formSize, FIELD_SIZE_ALIASES),
+  );
   const insideModal = getContext(MODAL_CONTEXT_KEY);
 
-  $: ({ showInvalid, showWarn } = resolveValidationVisibility({
-    invalid,
-    warn,
-    disabled: effectiveDisabled,
-    readonly,
-  }));
-  $: isFluid = !inline && (fluid || !!ctx?.isFluid);
+  const { showInvalid, showWarn } = $derived(
+    resolveValidationVisibility({
+      invalid,
+      warn,
+      disabled: effectiveDisabled,
+      readonly,
+    }),
+  );
+  const isFluid = $derived(!inline && (fluid || !!ctx?.isFluid));
+  const slottedLabel = $derived(typeof labelText === "function");
+  const {
+    position: effectiveTooltipPosition,
+    alignment: effectiveTooltipAlignment,
+  } = $derived(tooltipPlacement(tooltipAlign, tooltipPosition, tooltipAlignment));
+
   // Set for one open when the in-place tooltip turns out to be cut off by
   // a box around it (a scrolling panel, a DataTable): it shows in a portal
   // instead. Only when `portalTooltip` is left unset.
-  let portalWhenClipped = false;
-  $: effectivePortalTooltip =
+  let portalWhenClipped = $state(false);
+  const effectivePortalTooltip = $derived(
     portalTooltip === undefined
       ? !!insideModal || portalWhenClipped
-      : portalTooltip;
+      : portalTooltip,
+  );
 
   // The position classes place the in-place tooltip and its caret. A
   // portalled one has its own, so the toggle drops them, as Button does.
-  $: inlinePosition = effectivePortalTooltip
-    ? undefined
-    : effectiveTooltipPosition;
-  $: inlineAlignment = effectivePortalTooltip
-    ? undefined
-    : effectiveTooltipAlignment;
+  const inlinePosition = $derived(
+    effectivePortalTooltip ? undefined : effectiveTooltipPosition,
+  );
+  const inlineAlignment = $derived(
+    effectivePortalTooltip ? undefined : effectiveTooltipAlignment,
+  );
 
   /** @type {null | HTMLButtonElement} */
-  let toggleButtonRef = null;
+  let toggleButtonRef = $state(null);
   /** @type {null | HTMLSpanElement} */
-  let tooltipRef = null;
+  let tooltipRef = $state(null);
 
   // The toggle's tooltip opens without a delay, but still takes the tooltip
   // group's active slot so it never overlaps another tooltip, and skips the
@@ -206,59 +246,68 @@
     instant: tooltipInstant,
   } = tooltip;
 
-  let detachTooltip = noop;
+  $effect(() => {
+    if (toggleButtonRef) return tooltip.attach(toggleButtonRef);
+  });
 
-  $: {
-    detachTooltip();
-    detachTooltip = toggleButtonRef ? tooltip.attach(toggleButtonRef) : noop;
-  }
+  $effect(() => {
+    if (effectiveDisabled) untrack(() => tooltip.hide());
+  });
 
-  $: if (effectiveDisabled) tooltip.hide();
-
-  $: if (!$tooltipOpen) portalWhenClipped = false;
-  $: inlineOpen = !effectivePortalTooltip && $tooltipOpen;
+  $effect(() => {
+    if (!$tooltipOpen) portalWhenClipped = false;
+  });
+  const inlineOpen = $derived(!effectivePortalTooltip && $tooltipOpen);
   // The in-place tooltip is laid out while hidden, so it measures where it
-  // shows. Measured after the update, so the swap lands before paint.
-  $: if (inlineOpen) tick().then(portalIfClipped);
+  // shows. Effects run after the update, so the swap lands before paint.
+  $effect(() => {
+    if (inlineOpen) untrack(portalIfClipped);
+  });
 
   function portalIfClipped() {
     if (portalTooltip !== undefined || !inlineOpen || !tooltipRef) return;
     if (clippedBy(tooltipRef)) portalWhenClipped = true;
   }
 
-  onMount(() => {
-    return () => {
-      detachTooltip();
-      tooltip.destroy();
-    };
-  });
+  onMount(() => () => tooltip.destroy());
 
-  $: ({ helperId, errorId, warnId } = buildFieldIds(id));
-  $: tooltipLabel = type === "text" ? hidePasswordLabel : showPasswordLabel;
+  const { helperId, errorId, warnId } = $derived(buildFieldIds(id));
+  const tooltipLabel = $derived(
+    type === "text" ? hidePasswordText : showPasswordText,
+  );
 
-  function handleFocus() {
+  /** @param {Event & { currentTarget: EventTarget & HTMLInputElement }} event */
+  function handleInput(event) {
+    value = event.currentTarget.value;
+    onvaluechange?.({ value });
+    oninput?.(event);
+  }
+
+  /** @param {Event & { currentTarget: EventTarget & HTMLInputElement }} event */
+  function handleChange(event) {
+    onvaluecommit?.({ value: event.currentTarget.value });
+    onchange?.(event);
+  }
+
+  /** @param {FocusEvent & { currentTarget: EventTarget & HTMLInputElement }} event */
+  function handleFocus(event) {
+    onfocus?.(event);
     if (selectTextOnFocus && !effectiveDisabled) {
       tick().then(() => ref?.select());
     }
   }
 
-  // A form reset restores the field without an input event, and this is a
-  // one-way value write, not bind:value, so no Svelte version syncs it back
-  // on its own (Svelte 5's built-in resync only instruments genuine two-way
-  // bindings — see the note in the TextArea prompt, item 23).
+  // A form reset restores the field without an input event; read it back.
   function handleFormReset() {
     if (ref) value = ref.value;
   }
-
-  $: ({
-    position: effectiveTooltipPosition,
-    alignment: effectiveTooltipAlignment,
-  } = tooltipPlacement(tooltipAlign, tooltipPosition, tooltipAlignment));
 </script>
 
-<!-- svelte-ignore a11y-mouse-events-have-key-events -->
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<!-- svelte-ignore a11y-no-static-element-interactions -->
+{#snippet content(/** @type {string | import("svelte").Snippet} */ source)}
+  {#if typeof source === "function"}{@render source()}{:else}{source}{/if}
+{/snippet}
+
+
 <div
   use:fieldsetDisabled={(value) => (inDisabledFieldset = value)}
   class:bx--form-item={true}
@@ -267,10 +316,6 @@
   class:bx--text-input-wrapper--inline={inline}
   class:bx--text-input-wrapper--readonly={readonly}
   class:bx--text-input--fluid={isFluid}
-  on:click
-  on:mouseover
-  on:mouseenter
-  on:mouseleave
 >
   {#if inline}
     <div
@@ -286,9 +331,9 @@
         class:bx--label--inline--xs={inline && effectiveSize === "xs"}
         class:bx--label--inline--sm={inline && effectiveSize === "sm"}
         class:bx--label--inline--xl={inline && effectiveSize === "xl"}
-        class:bx--label--slotted={isFluid && $$slots.labelChildren}
+        class:bx--label--slotted={isFluid && slottedLabel}
       >
-        <slot name="labelChildren">{labelText}</slot>
+        {@render content(labelText)}
       </label>
       {#if !isFluid && helperText}
         <div
@@ -302,7 +347,7 @@
       {/if}
     </div>
   {/if}
-  {#if !inline && (labelText || $$slots.labelChildren)}
+  {#if !inline && labelText}
     <label
       for={id}
       class:bx--label={true}
@@ -312,9 +357,9 @@
       class:bx--label--inline--xs={inline && effectiveSize === "xs"}
       class:bx--label--inline--sm={inline && effectiveSize === "sm"}
       class:bx--label--inline--xl={inline && effectiveSize === "xl"}
-      class:bx--label--slotted={isFluid && $$slots.labelChildren}
+      class:bx--label--slotted={isFluid && slottedLabel}
     >
-      <slot name="labelChildren">{labelText}</slot>
+      {@render content(labelText)}
     </label>
   {/if}
   <div
@@ -349,20 +394,21 @@
         data-warn={showWarn || undefined}
         aria-errormessage={showInvalid && invalidText ? errorId : undefined}
         {id}
-        {name}
-        {placeholder}
-        {type}
         value={value ?? ""}
         disabled={effectiveDisabled}
         {readonly}
-        class:bx--text-input={true}
-        class:bx--password-input={true}
-        class:bx--text-input--invalid={showInvalid}
-        class:bx--text-input--warning={showWarn}
-        class:bx--text-input--xs={effectiveSize === "xs"}
-        class:bx--text-input--sm={effectiveSize === "sm"}
-        class:bx--text-input--xl={effectiveSize === "xl"}
-        {...$$restProps}
+        {...rest}
+        {type}
+        class={[
+          "bx--text-input",
+          "bx--password-input",
+          showInvalid && "bx--text-input--invalid",
+          showWarn && "bx--text-input--warning",
+          effectiveSize === "xs" && "bx--text-input--xs",
+          effectiveSize === "sm" && "bx--text-input--sm",
+          effectiveSize === "xl" && "bx--text-input--xl",
+          className,
+        ]}
         aria-describedby={joinDescribedBy(
           resolveStatusDescribedBy({
             showInvalid,
@@ -376,19 +422,11 @@
             helperId,
             includeErrorId: false,
           }),
-          $$restProps["aria-describedby"],
+          ariaDescribedBy,
         )}
-        on:change
-        on:input
-        on:input={(event) => {
-          value = /** @type {HTMLInputElement} */ (event.target).value;
-        }}
-        on:keydown
-        on:keyup
-        on:focus
-        on:focus={handleFocus}
-        on:blur
-        on:paste
+        oninput={handleInput}
+        onchange={handleChange}
+        onfocus={handleFocus}
       />
       {#if isFluid}
         <hr class:bx--text-input__divider={true} />
@@ -425,7 +463,7 @@
         aria-label={effectivePortalTooltip || effectiveDisabled
           ? tooltipLabel
           : undefined}
-        on:click={() => {
+        onclick={() => {
           type = type === "password" ? "text" : "password";
         }}
       >

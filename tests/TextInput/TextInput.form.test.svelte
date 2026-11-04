@@ -13,7 +13,7 @@
     {type}
     name="user"
     labelText="User"
-    on:input={onInput}
+    onvaluechange={(e) => onInput(e.value)}
   />
 </form>
 <p data-testid="bound">{String(value)}</p>

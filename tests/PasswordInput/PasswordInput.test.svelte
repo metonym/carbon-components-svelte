@@ -41,8 +41,8 @@
   bind:value
   bind:type
   {placeholder}
-  {hidePasswordLabel}
-  {showPasswordLabel}
+  hidePasswordText={hidePasswordLabel}
+  showPasswordText={showPasswordLabel}
   {tooltipAlignment}
   {tooltipPosition}
   {disabled}
@@ -59,17 +59,10 @@
   {id}
   {name}
   {portalTooltip}
-  on:click
-  on:mouseover
-  on:mouseenter
-  on:mouseleave
-  on:input={onInput}
-  on:change={onChange}
-  on:keydown
-  on:keyup
-  on:focus={onFocus}
-  on:blur={onBlur}
-  on:paste
+  oninput={onInput}
+  onchange={onChange}
+  onfocus={onFocus}
+  onblur={onBlur}
 />
 
 <div data-testid="bound">{value}</div>

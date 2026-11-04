@@ -51,7 +51,7 @@
 </div>
 <div data-testid="text-input">
   <TextInput labelText="Summary"
-    ><AILabelOrIcon slot="decorator" {ai} /></TextInput
+    >{#snippet decorator()}<AILabelOrIcon {ai} />{/snippet}</TextInput
   >
 </div>
 <div data-testid="text-area">

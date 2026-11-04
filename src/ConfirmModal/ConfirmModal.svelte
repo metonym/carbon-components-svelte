@@ -273,7 +273,7 @@
         data-bwignore
         data-form-type="other"
       >
-        <svelte:fragment slot="labelChildren">
+        {#snippet labelText()}
           {#if phraseAt === -1}
             {phraseLabel}
           {:else}
@@ -282,7 +282,7 @@
               translate="no">{confirmationPhrase}</span
             >{phraseLabel.slice(phraseAt + confirmationPhrase.length)}
           {/if}
-        </svelte:fragment>
+        {/snippet}
       </TextInput>
     </div>
   {/if}
