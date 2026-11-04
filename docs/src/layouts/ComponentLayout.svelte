@@ -162,8 +162,8 @@
         labelText="Theme"
         items={themeItems}
         selectedId={$theme}
-        on:select={({ detail }) => {
-          theme.set(detail.selectedId);
+        onselectedchange={({ selectedId }) => {
+          theme.set(selectedId);
         }}
       />
       <ComponentDocBarActions

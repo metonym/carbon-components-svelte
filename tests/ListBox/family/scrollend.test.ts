@@ -88,6 +88,8 @@ describe.each(caseRows)("%s scrollend", (_, c) => {
     expect(onScrollend).toHaveBeenCalledTimes(2);
   });
 
+  // A runes list box's rest props go to its field, so the menu's own
+  // `scroll` doesn't reach the consumer; `onmenuscrollend` replaces it.
   it.skipIf(c.callbacks)(
     "still forwards the raw DOM scroll event",
     async () => {

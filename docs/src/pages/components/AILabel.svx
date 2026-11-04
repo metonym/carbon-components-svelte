@@ -168,9 +168,9 @@ Put an AI label in the `decorator` slot of a field to mark its value as AI-gener
       </AILabel>
     </Select>
     <Dropdown labelText="Owning team" selectedId="db" items={[{ id: "db", text: "Database platform" }, { id: "net", text: "Networking" }]}>
-      <AILabel slot="decorator">
+      {#snippet decorator()}<AILabel>
         <p>Matched to the team that owns the failed service.</p>
-      </AILabel>
+      </AILabel>{/snippet}
     </Dropdown>
     <ComboBox labelText="Region" selectedId="us-east-1" items={[{ id: "us-east-1", text: "US East (N. Virginia)" }, { id: "eu-west-1", text: "EU West (Ireland)" }]}>
       {#snippet decorator()}<AILabel>

@@ -10,18 +10,14 @@
     { id: "1", text: "Email" },
     { id: "2", text: "Fax" },
   ]}
-  let:item
-  let:index
-  let:selected
-  let:highlighted
 >
-  <div>
-    <strong>{item.text}</strong>
-  </div>
-  <div>
-    id: {item.id} - index: {index} - selected: {selected} - highlighted:
-    {highlighted}
-  </div>
+  {#snippet children({ item, index, selected, highlighted })}<div>
+      <strong>{item.text}</strong>
+    </div>
+    <div>
+      id: {item.id} - index: {index} - selected: {selected} - highlighted:
+      {highlighted}
+    </div>{/snippet}
 </Dropdown>
 
 <style>

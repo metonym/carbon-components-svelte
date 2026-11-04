@@ -48,7 +48,9 @@
   </DatePicker>
 </div>
 <div data-testid="dropdown">
-  <Dropdown labelText="Region" {items}><AILabel slot="decorator" /></Dropdown>
+  <Dropdown labelText="Region" {items}
+    >{#snippet decorator()}<AILabel />{/snippet}</Dropdown
+  >
 </div>
 <div data-testid="combo-box">
   <ComboBox labelText="Region search" {items}>

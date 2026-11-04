@@ -83,7 +83,7 @@
 </div>
 <div data-testid="dropdown">
   <Dropdown labelText="Region" {items}
-    ><AILabelOrIcon slot="decorator" {ai} /></Dropdown
+    >{#snippet decorator()}<AILabelOrIcon {ai} />{/snippet}</Dropdown
   >
 </div>
 <div data-testid="combo-box">

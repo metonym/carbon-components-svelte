@@ -1,5 +1,6 @@
 import Checkbox from "carbon-components-svelte/Checkbox/Checkbox.svelte";
 import ComboBox from "carbon-components-svelte/ComboBox/ComboBox.svelte";
+import Dropdown from "carbon-components-svelte/Dropdown/Dropdown.svelte";
 import PasswordInput from "carbon-components-svelte/TextInput/PasswordInput.svelte";
 import TextInput from "carbon-components-svelte/TextInput/TextInput.svelte";
 import Toggle from "carbon-components-svelte/Toggle/Toggle.svelte";
@@ -12,6 +13,7 @@ import Toggle from "carbon-components-svelte/Toggle/Toggle.svelte";
 export const RUNES_COMPONENTS = new Set<unknown>([
   Checkbox,
   ComboBox,
+  Dropdown,
   PasswordInput,
   TextInput,
   Toggle,

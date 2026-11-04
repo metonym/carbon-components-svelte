@@ -22,6 +22,11 @@ import ListBoxHost from "./ListBoxHost.test.svelte";
 export type ListBoxCase = {
   name: string;
   component: ComponentType;
+  /**
+   * Migrated to runes: reports with `onopenchange` and `onmenuscrollend`,
+   * only for user actions, instead of dispatching events.
+   */
+  callbacks?: boolean;
   /** Props every render of this case starts from. */
   props: Record<string, unknown>;
   /** Keys that open a closed menu, with trigger `keydown`. */
@@ -66,6 +71,7 @@ export const cases: ListBoxCase[] = [
   {
     name: "Dropdown",
     component: Dropdown,
+    callbacks: true,
     props: { labelText: "Contact" },
     openKeys: ["{ArrowDown}", "{Enter}"],
     opensOnInput: false,

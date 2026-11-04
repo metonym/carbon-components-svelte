@@ -15,12 +15,11 @@
   labelText="Custom item height (support tickets, 60px)"
   {items}
   bind:selectedId
-  let:item
 >
-  <Stack gap={2}>
-    <strong>{item.text}</strong>
-    <span>{item.description}</span>
-  </Stack>
+  {#snippet children({ item })}<Stack gap={2}>
+      <strong>{item.text}</strong>
+      <span>{item.description}</span>
+    </Stack>{/snippet}
 </Dropdown>
 
 <style>

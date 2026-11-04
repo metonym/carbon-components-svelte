@@ -1,12 +1,14 @@
 <script lang="ts">
   import type { ComponentType } from "svelte";
 
-  type Trigger = CustomEvent<{ trigger: string }>;
-  type ScrollMetrics = CustomEvent<{
-    scrollTop: number;
-    scrollHeight: number;
-    clientHeight: number;
-  }>;
+  type Trigger = { detail: { trigger: string } };
+  type ScrollMetrics = {
+    detail: {
+      scrollTop: number;
+      scrollHeight: number;
+      clientHeight: number;
+    };
+  };
 
   export let component: ComponentType;
   export let fieldProps: Record<string, unknown> = {};
@@ -17,6 +19,9 @@
   export let onScrollend: (e: ScrollMetrics) => void = () => {};
 </script>
 
+<!-- Legacy list boxes dispatch `open`, `close` and `scrollend`; runes ones
+     call `onopenchange` and `onmenuscrollend`. Both reach the same handlers
+     in the `{ detail }` shape the shared tests read. -->
 <svelte:component
   this={component}
   {...fieldProps}

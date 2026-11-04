@@ -80,7 +80,7 @@
 </Dropdown>
 
 <Dropdown data-testid="dropdown-label-children" {items} selectedId="1">
-  {#snippet labelChildren()}
+  {#snippet labelText()}
     <span data-testid="dropdown-custom-label">Custom label content</span>
   {/snippet}
 </Dropdown>
@@ -109,7 +109,7 @@
   {#snippet icon({ item })}
     <span data-testid="dropdown-icon-{item.id}">L</span>
   {/snippet}
-  {#snippet iconRight({ item, selected })}
+  {#snippet iconEnd({ item, selected })}
     <span data-testid="dropdown-icon-right-{item.id}" data-selected={selected}
       >R</span
     >

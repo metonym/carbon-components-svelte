@@ -254,8 +254,8 @@
     {...dropdownProps}
     items={dropdownThemes.map((t) => ({ id: t, text: themes[t] }))}
     selectedId={theme}
-    on:select={(event) => {
-      theme = event.detail.selectedId;
+    onselectedchange={(event) => {
+      theme = event.selectedId;
     }}
   />
 {/if}

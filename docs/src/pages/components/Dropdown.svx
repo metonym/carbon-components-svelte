@@ -37,7 +37,7 @@ Omit `selectedId` to render the dropdown with no item selected. The label appear
 
 ### Clearable
 
-Set `clearable` to `true` to show a clear button when an item is selected. Clearing resets `selectedId` and dispatches a `clear` event. The clear button is hidden when there is no selection. With the field focused, <DocKbd label="Delete" /> or <DocKbd label="Backspace" /> also clears the selection.
+Set `clearable` to `true` to show a clear button when an item is selected. Clearing resets `selectedId` and calls `onclear`. The clear button is hidden when there is no selection. With the field focused, <DocKbd label="Delete" /> or <DocKbd label="Backspace" /> also clears the selection.
 
 A long selected label truncates with an ellipsis before the clear button instead of running underneath it.
 
@@ -95,41 +95,41 @@ Customize the label, item display, and supporting text.
 
 ### Custom label
 
-Use the `labelChildren` slot for custom label content instead of `labelText`.
+Pass a snippet to `labelText` for custom label content.
 
 <Dropdown selectedId="0" items="{[{id: "0", text: "Slack"},
   {id: "1", text: "Email"},
   {id: "2", text: "Fax"}]}">
-  <strong slot="labelChildren">Custom label</strong>
+  {#snippet labelText()}<strong>Custom label</strong>{/snippet}
 </Dropdown>
 
-### Custom slot
+### Custom item
 
-Override the default slot to customize the display of each item. Use `let:item`, `let:index`, `let:selected`, and `let:highlighted` to style highlighted and selected rows.
+Pass `children` to customize the display of each item. The snippet receives `{ item, index, selected, highlighted }`, to style highlighted and selected rows.
 
 <FileSource src="/framed/Dropdown/DropdownSlot" />
 
 ### Item icons
 
-Set icon on an item for a left icon. The label sits between the icon and the checkmark. Use the icon slot for custom markup.
+Set icon on an item for a left icon. The label sits between the icon and the checkmark. Use the `icon` snippet for custom markup.
 
 <Dropdown labelText="Contact" selectedId="0" items={[
   {id: "0", text: "Slack", icon: Chat},
   {id: "1", text: "Email", icon: Email},
   {id: "2", text: "Fax", icon: Document}]} />
 
-Use the `iconEnd` slot to replace the checkmark.
+Use the `iconEnd` snippet to replace the checkmark.
 
 <Dropdown labelText="Contact" selectedId="0" items={[
   {id: "0", text: "Slack", icon: Chat},
   {id: "1", text: "Email", icon: Email},
   {id: "2", text: "Fax", icon: Document}]}>
-  <svelte:fragment slot="icon" let:item>
+  {#snippet icon({ item })}
     <svelte:component this={item.icon} />
-  </svelte:fragment>
-  <svelte:fragment slot="iconEnd" let:selected>
+  {/snippet}
+  {#snippet iconEnd({ selected })}
     {#if selected}<StarFilled />{:else}<Star />{/if}
-  </svelte:fragment>
+  {/snippet}
 </Dropdown>
 
 ### Format display text
@@ -175,7 +175,7 @@ Each group is exposed to screen readers as a group named by its label. The selec
 
 ### Custom header
 
-Override the `group` slot to customize a header. Use `let:group` for the label and `let:items` for the group's items. The slot changes the visible header only; screen readers still announce the plain label.
+Pass a `group` snippet to customize a header. It receives `{ group, items }`: the label and the group's items. The snippet changes the visible header only; screen readers still announce the plain label.
 
 <Dropdown labelText="Region" label="Select a region"
   items="{[{id: "0", text: "Frankfurt", group: "Europe"},
@@ -184,9 +184,9 @@ Override the `group` slot to customize a header. Use `let:group` for the label a
     {id: "3", text: "São Paulo", group: "Americas"},
     {id: "4", text: "Global (any region)"}]}"
 >
-  <svelte:fragment slot="group" let:group let:items={groupItems}>
+  {#snippet group({ group, items: groupItems })}
     {group} ({groupItems.length})
-  </svelte:fragment>
+  {/snippet}
 </Dropdown>
 
 ## Menu
@@ -245,19 +245,19 @@ Set `emptyText` to change the message, or set it to `""` to leave the menu empty
 
 <Dropdown labelText="Contact" label="Select a contact method" emptyText="No contact methods yet" items={[]} />
 
-Use the `empty` slot for richer content. The slot changes the visible row only; screen readers still hear `emptyText`.
+Use the `empty` snippet for richer content. The snippet changes the visible row only; screen readers still hear `emptyText`.
 
 <Dropdown labelText="Contact" label="Select a contact method" emptyText="No contact methods yet" items={[]}>
-  <svelte:fragment slot="empty">
+  {#snippet empty()}
     No contact methods yet. Add one in Settings.
-  </svelte:fragment>
+  {/snippet}
 </Dropdown>
 
 ### Wrapped options
 
 Option labels are truncated to one line. At a 320px viewport, that hides text and can leave two options looking identical, a WCAG 1.4.10 Reflow failure.
 
-Set `wrapOptions` to let a label take as many lines as it needs. Lines break between words, and mid-word only when a word is too long to fit a line by itself. A [custom slot](#custom-slot) wraps with the label.
+Set `wrapOptions` to let a label take as many lines as it needs. Lines break between words, and mid-word only when a word is too long to fit a line by itself. A [custom item](#custom-item) wraps with the label.
 
 It defaults to `false` because wrapping changes option heights.
 
@@ -279,7 +279,7 @@ Set `virtualize={false}` to explicitly disable virtualization, even for large li
 
 ### Load more
 
-`scrollend` fires when the menu is scrolled near the bottom so you can append the next page of `items`. Same pattern as [ComboBox load more](/components/ComboBox#load-more): handle `on:scrollend`, keep prior items visible while loading, and set `loading` while the next page is in flight to show a loading row after them. The event is a near-bottom load-more signal, not the browser's native `scrollend`.
+`onmenuscrollend` runs when the menu is scrolled near the bottom so you can append the next page of `items`. Same pattern as [ComboBox load more](/components/ComboBox#load-more): keep prior items visible while loading, and set `loading` while the next page is in flight to show a loading row after them. It receives `{ scrollTop, scrollHeight, clientHeight }`, and is a near-bottom load-more signal, not the browser's native `scrollend`.
 
 <FileSource src="/framed/Dropdown/ScrollEndDropdown" />
 
@@ -311,7 +311,7 @@ Specify a custom value for `threshold` to control when virtualization activates.
 
 ### Custom item height
 
-By default, item height matches the menu row for each size: 24px (`xs`), 32px (`sm`), 40px (`md`), 48px (`lg`, `xl`). Set `itemHeight` when custom slots change row height.
+By default, item height matches the menu row for each size: 24px (`xs`), 32px (`sm`), 40px (`md`), 48px (`lg`, `xl`). Set `itemHeight` when custom snippets change row height.
 
 <FileSource src="/framed/Dropdown/VirtualizeItemHeight" />
 
@@ -340,13 +340,15 @@ Create multiple dropdowns that work together.
 
 <FileSource src="/framed/Dropdown/MultipleDropdown" />
 
-## Events
+## Callbacks
 
-Respond to selection, clearing, and the menu opening and closing.
+Respond to selection, clearing, and the menu opening and closing. Each
+callback runs only for what the user does, not when a prop is set from
+outside. Bind `selectedId` and `open` to follow every change.
 
-### Select
+### Selection
 
-Use `on:select` to listen for a new selection. The event detail includes the selected item's id and the full item. From the keyboard, <DocKbd label="Enter" /> or <DocKbd label="Space" /> selects the highlighted item. On an item highlighted only by hovering, or on the item that is already selected, they close the menu without dispatching `select`.
+`onselectedchange` receives `{ selectedId, selectedItem }` when the user picks a new item. From the keyboard, <DocKbd label="Enter" /> or <DocKbd label="Space" /> selects the highlighted item. On an item highlighted only by hovering, or on the item that is already selected, they close the menu without calling it.
 
 <Dropdown
   labelText="Contact"
@@ -355,15 +357,15 @@ Use `on:select` to listen for a new selection. The event detail includes the sel
     { id: "1", text: "Email" },
     { id: "2", text: "Fax" },
   ]}
-  on:select={(e) => {
-    console.log(e.detail.selectedId);
-    console.log(e.detail.selectedItem);
+  onselectedchange={({ selectedId, selectedItem }) => {
+    console.log(selectedId);
+    console.log(selectedItem);
   }}
 />
 
 ### Clear
 
-Use `on:clear` to listen for the selection being cleared, either via the clear button or the Delete/Backspace shortcut. Only fires when `clearable` is `true`. The event detail is the original `KeyboardEvent` or `MouseEvent`.
+`onclear` runs when the user clears the selection with the clear button or the Delete/Backspace shortcut, so only when `clearable` is `true`. It receives `{ trigger }`, `"click"` or `"keydown"`. The `clear()` method doesn't call it.
 
 <Dropdown
   clearable
@@ -374,12 +376,12 @@ Use `on:clear` to listen for the selection being cleared, either via the clear b
     { id: "1", text: "Email" },
     { id: "2", text: "Fax" },
   ]}
-  on:clear={(e) => console.log(e)}
+  onclear={({ trigger }) => console.log(trigger)}
 />
 
-### Open
+### Open and close
 
-Use `on:open` to know when the menu opens and why. `event.detail.trigger` is `"click"` or `"keydown"`, or `"programmatic"` when `open` is set from outside, such as through `bind:open`. It fires once per open, after the menu renders, and not for a dropdown rendered already open.
+`onopenchange` receives `{ open, trigger }` when the user opens or closes the menu. Opening reports `"click"` or `"keydown"`. Closing reports `"escape-key"`, `"outside-click"`, or `"select"`. <DocKbd label="Escape" />, <DocKbd label="Alt" /> + <DocKbd label="ArrowUp" />, and <DocKbd label="Tab" /> close the menu without selecting and report `"escape-key"`. It isn't called when `open` is set from outside, or for a dropdown rendered already open.
 
 <Dropdown
   labelText="Contact"
@@ -388,31 +390,17 @@ Use `on:open` to know when the menu opens and why. `event.detail.trigger` is `"c
     { id: "1", text: "Email" },
     { id: "2", text: "Fax" },
   ]}
-  on:open={(e) => console.log(e.detail.trigger)}
-/>
-
-### Close
-
-Use `on:close` to know when the menu closes and why. `event.detail.trigger` is `"escape-key"`, `"outside-click"`, or `"select"`. <DocKbd label="Escape" />, <DocKbd label="Alt" /> + <DocKbd label="ArrowUp" />, and <DocKbd label="Tab" /> close the menu without selecting and report `"escape-key"`.
-
-<Dropdown
-  labelText="Contact"
-  items={[
-    { id: "0", text: "Slack" },
-    { id: "1", text: "Email" },
-    { id: "2", text: "Fax" },
-  ]}
-  on:close={(e) => console.log(e.detail.trigger)}
+  onopenchange={({ open, trigger }) => console.log(open, trigger)}
 />
 
 ## AI label
 
-Put an `AILabel` in the `decorator` slot to mark the value as AI-generated. The field shows the AI gradient. See [AI label](/components/AILabel#fields) for the revert flow.
+Put an `AILabel` in the `decorator` snippet to mark the value as AI-generated. The field shows the AI gradient. See [AI label](/components/AILabel#fields) for the revert flow.
 
 <Dropdown labelText="Region" selectedId="us-east-1" items={[{ id: "us-east-1", text: "US East (N. Virginia)" }, { id: "eu-west-1", text: "EU West (Ireland)" }]}>
-  <AILabel slot="decorator">
+  {#snippet decorator()}<AILabel>
     <p>Picked as the region closest to most of your users.</p>
-  </AILabel>
+  </AILabel>{/snippet}
 </Dropdown>
 
 ## Sizes
@@ -539,16 +527,16 @@ automatically. The fluid variant cannot be combined with the inline variant.
 
 ### Custom label
 
-Use the `labelChildren` slot to render custom label content, such as a
+Pass a snippet to `labelText` to render custom label content, such as a
 tooltip icon.
 
-<Dropdown fluid labelText="Contact" selectedId="0" items="{[{id: "0", text: "Slack"},
+<Dropdown fluid selectedId="0" items="{[{id: "0", text: "Slack"},
   {id: "1", text: "Email"},
   {id: "2", text: "Fax"}]}">
-  <svelte:fragment slot="labelChildren">
+  {#snippet labelText()}
     Contact
     <TooltipIcon tooltipText="Your contact method is used for account notifications." icon={Information} />
-  </svelte:fragment>
+  {/snippet}
 </Dropdown>
 
 ### Condensed

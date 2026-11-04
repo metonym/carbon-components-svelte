@@ -11,21 +11,12 @@
   export let id: ComponentProps<Dropdown>["id"] = "test-dropdown-slot";
 </script>
 
-<Dropdown
-  {items}
-  {selectedId}
-  {id}
-  labelText="Custom slot dropdown"
-  let:item
-  let:index
-  let:selected
-  let:highlighted
->
-  <span
-    data-testid="custom-item"
-    data-selected={selected}
-    data-highlighted={highlighted}
-  >
-    Item {index + 1}: {item.text}
-  </span>
+<Dropdown {items} {selectedId} {id} labelText="Custom slot dropdown">
+  {#snippet children({ item, index, selected, highlighted })}<span
+      data-testid="custom-item"
+      data-selected={selected}
+      data-highlighted={highlighted}
+    >
+      Item {index + 1}: {item.text}
+    </span>{/snippet}
 </Dropdown>

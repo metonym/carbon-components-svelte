@@ -23,5 +23,7 @@
   label="Select a contact method"
   {items}
   {loading}
-  on:open={handleOpen}
+  onopenchange={({ open }) => {
+    if (open) handleOpen();
+  }}
 />
