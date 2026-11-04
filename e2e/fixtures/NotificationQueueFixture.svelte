@@ -16,7 +16,7 @@
   <Button
     data-testid="nq-add"
     onclick={() => {
-      queue?.add({ title: "Toast A" });
+      queue?.add({ titleText: "Toast A" });
     }}
   >
     Add toast
@@ -24,7 +24,7 @@
   <Button
     data-testid="nq-t1"
     onclick={() => {
-      queue?.add({ title: "T1" });
+      queue?.add({ titleText: "T1" });
     }}
   >
     T1
@@ -32,7 +32,7 @@
   <Button
     data-testid="nq-t2"
     onclick={() => {
-      queue?.add({ title: "T2" });
+      queue?.add({ titleText: "T2" });
     }}
   >
     T2
@@ -40,7 +40,7 @@
   <Button
     data-testid="nq-t3"
     onclick={() => {
-      queue?.add({ title: "T3" });
+      queue?.add({ titleText: "T3" });
     }}
   >
     T3
@@ -48,7 +48,7 @@
   <Button
     data-testid="nq-timed"
     onclick={() => {
-      queue?.add({ title: "Quick", timeout: 400 });
+      queue?.add({ titleText: "Quick", timeout: 400 });
     }}
   >
     Add timed
@@ -56,7 +56,7 @@
   <Button
     data-testid="nq-slow"
     onclick={() => {
-      queue?.add({ title: "Slow", timeout: 800 });
+      queue?.add({ titleText: "Slow", timeout: 800 });
     }}
   >
     Add slow
@@ -65,7 +65,7 @@
     data-testid="nq-action"
     onclick={() => {
       queue?.add({
-        title: "Report deleted",
+        titleText: "Report deleted",
         timeout: 400,
         action: { label: "Undo", onClick: () => (undone = true) },
       });

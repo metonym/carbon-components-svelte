@@ -14,7 +14,10 @@
   data-testid="nq-hold-add"
   onclick={() => {
     count += 1;
-    queue?.add({ title: `Toast ${count}`, subtitle: "Saved to drafts" });
+    queue?.add({
+      titleText: `Toast ${count}`,
+      subtitleText: "Saved to drafts",
+    });
   }}
 >
   Add toast

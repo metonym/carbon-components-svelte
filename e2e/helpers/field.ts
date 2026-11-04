@@ -19,3 +19,11 @@ export function fieldByTestId(page: Page, testId: string): Locator {
 export function modalByTestId(page: Page, testId: string): Locator {
   return page.locator(".bx--modal", { has: page.getByTestId(testId) });
 }
+
+/**
+ * The visible `<label class="bx--tile">` of a RadioTile or SelectableTile
+ * whose `<input>` has the test id.
+ */
+export function tileByTestId(page: Page, testId: string): Locator {
+  return page.locator(`[data-testid=${JSON.stringify(testId)}] + label`);
+}

@@ -99,8 +99,11 @@ async function measure(roots: Element[], request: Request): Promise<Result> {
         steps.unshift(`${tag}[data-testid="${testId}"]`);
         break;
       }
+      // Sorted, so the name doesn't depend on the order a component writes
+      // its classes in (a `class={[...]}` array or `class:` directives).
       const classes = [...node.classList]
         .filter((c) => !c.startsWith("svelte-"))
+        .sort()
         .slice(0, 2);
       let step = tag + classes.map((c) => `.${CSS.escape(c)}`).join("");
       const parent: Element | null = node.parentElement;

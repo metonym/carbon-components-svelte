@@ -342,10 +342,13 @@
     valueUpper={60}
   />
 
-  <ToastNotification title="Upload failed" subtitle="The connection timed out.">
-    <svelte:fragment slot="actions">
+  <ToastNotification
+    titleText="Upload failed"
+    subtitleText="The connection timed out."
+  >
+    {#snippet actions()}
       <NotificationActionButton>Retry</NotificationActionButton>
-    </svelte:fragment>
+    {/snippet}
   </ToastNotification>
 
   <PaginationNav total={5} page={2} />
@@ -459,8 +462,8 @@
       <Tab label="Logs" />
     </Tabs>
     <ExpandableTile>
-      <div slot="above">Deployment</div>
-      <div slot="below">Region: US East</div>
+      {#snippet above()}<div>Deployment</div>{/snippet}
+      {#snippet below()}<div>Region: US East</div>{/snippet}
     </ExpandableTile>
     <RadioTile value="us-east" checked>US East</RadioTile>
     <ToggleButtonGroup labelText="View" selected={[]}>

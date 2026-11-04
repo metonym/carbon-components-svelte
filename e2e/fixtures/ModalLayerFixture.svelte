@@ -38,7 +38,7 @@
   <TextInput labelText="Workspace name" />
   <Tile>Usage this month</Tile>
   <Accordion>
-    <AccordionItem title="Billing">Billed monthly</AccordionItem>
+    <AccordionItem titleText="Billing">Billed monthly</AccordionItem>
   </Accordion>
   <DataTable size="compact" {headers} {rows} />
   <NumberInput label="Seats" value={5} />

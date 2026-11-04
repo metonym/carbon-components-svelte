@@ -24,7 +24,7 @@
     <div data-testid="tile" style="width: 160px">
       <Tile>
         {text}
-        <AILabel slot="decorator"><p>Explanation</p></AILabel>
+        {#snippet decorator()}<AILabel><p>Explanation</p></AILabel>{/snippet}
       </Tile>
     </div>
 
@@ -35,28 +35,28 @@
     <div data-testid="clickable-tile" style="width: 160px">
       <ClickableTile href="#top">
         {text}
-        <AILabel slot="decorator"><p>Explanation</p></AILabel>
+        {#snippet decorator()}<AILabel><p>Explanation</p></AILabel>{/snippet}
       </ClickableTile>
     </div>
 
     <div data-testid="selectable-tile" style="width: 160px">
       <SelectableTile>
         {text}
-        <AILabel slot="decorator"><p>Explanation</p></AILabel>
+        {#snippet decorator()}<AILabel><p>Explanation</p></AILabel>{/snippet}
       </SelectableTile>
     </div>
 
     <div data-testid="selectable-tile-selected" style="width: 160px">
       <SelectableTile selected>
         {text}
-        <AILabel slot="decorator"><p>Explanation</p></AILabel>
+        {#snippet decorator()}<AILabel><p>Explanation</p></AILabel>{/snippet}
       </SelectableTile>
     </div>
 
     <div data-testid="selectable-tile-sm" style="width: 160px">
       <SelectableTile size="sm">
         {text}
-        <AILabel slot="decorator"><p>Explanation</p></AILabel>
+        {#snippet decorator()}<AILabel><p>Explanation</p></AILabel>{/snippet}
       </SelectableTile>
     </div>
 
@@ -64,7 +64,7 @@
     <div data-testid="selectable-tile-docs" style="width: 146px">
       <SelectableTile>
         Recommended plan: Team
-        <AILabel slot="decorator"><p>Explanation</p></AILabel>
+        {#snippet decorator()}<AILabel><p>Explanation</p></AILabel>{/snippet}
       </SelectableTile>
     </div>
 
@@ -76,7 +76,7 @@
       <TileGroup legendText="Plan" name="plan-{dir}-a">
         <RadioTile value="team">
           {text}
-          <AILabel slot="decorator"><p>Explanation</p></AILabel>
+          {#snippet decorator()}<AILabel><p>Explanation</p></AILabel>{/snippet}
         </RadioTile>
       </TileGroup>
     </div>
@@ -85,24 +85,24 @@
       <TileGroup legendText="Plan" name="plan-{dir}-b" selected="team">
         <RadioTile value="team">
           {text}
-          <AILabel slot="decorator"><p>Explanation</p></AILabel>
+          {#snippet decorator()}<AILabel><p>Explanation</p></AILabel>{/snippet}
         </RadioTile>
       </TileGroup>
     </div>
 
     <div data-testid="expandable-tile" style="width: 160px">
       <ExpandableTile>
-        <span slot="above">{text}</span>
-        <span slot="below">More about the plan</span>
-        <AILabel slot="decorator"><p>Explanation</p></AILabel>
+        {#snippet above()}<span>{text}</span>{/snippet}
+        {#snippet below()}<span>More about the plan</span>{/snippet}
+        {#snippet decorator()}<AILabel><p>Explanation</p></AILabel>{/snippet}
       </ExpandableTile>
     </div>
 
     <div data-testid="expandable-tile-expanded" style="width: 160px">
       <ExpandableTile expanded>
-        <span slot="above">{text}</span>
-        <span slot="below">More about the plan</span>
-        <AILabel slot="decorator"><p>Explanation</p></AILabel>
+        {#snippet above()}<span>{text}</span>{/snippet}
+        {#snippet below()}<span>More about the plan</span>{/snippet}
+        {#snippet decorator()}<AILabel><p>Explanation</p></AILabel>{/snippet}
       </ExpandableTile>
     </div>
   </div>

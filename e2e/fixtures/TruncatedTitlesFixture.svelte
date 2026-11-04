@@ -39,8 +39,9 @@
     <div data-testid="progress-indicator">
       <ProgressIndicator spaceEqually preventChangeOnClick>
         <ProgressStep label="Team members" />
-        <ProgressStep let:props>
-          <span {...props}>Billing plan</span>
+        <ProgressStep>
+          {#snippet children({ props })}<span {...props}>Billing plan</span
+            >{/snippet}
         </ProgressStep>
       </ProgressIndicator>
     </div>
