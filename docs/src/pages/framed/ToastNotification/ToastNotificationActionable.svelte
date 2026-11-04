@@ -16,14 +16,14 @@
     bind:open
     actionable
     lowContrast
-    title="Upload failed"
-    subtitle="The connection timed out before quarterly-report.pdf finished."
-    caption={new Date().toLocaleString()}
+    titleText="Upload failed"
+    subtitleText="The connection timed out before quarterly-report.pdf finished."
+    captionText={new Date().toLocaleString()}
   >
-    <svelte:fragment slot="actions">
-      <NotificationActionButton on:click={() => (open = false)}>
+    {#snippet actions()}
+      <NotificationActionButton onclick={() => (open = false)}>
         Retry
       </NotificationActionButton>
-    </svelte:fragment>
+    {/snippet}
   </ToastNotification>
 </Stack>

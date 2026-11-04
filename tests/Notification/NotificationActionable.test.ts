@@ -83,7 +83,10 @@ describe.each(["inline", "toast"] as const)("actionable (%s)", (type) => {
 
     expect(screen.queryByRole("alertdialog")).not.toBeInTheDocument();
     expect(onClose).toHaveBeenCalledTimes(1);
-    expect(onClose.mock.calls[0][0].detail).toEqual({ timeout: false });
+    expect(onClose.mock.calls[0][0]).toMatchObject({
+      open: false,
+      trigger: "escape-key",
+    });
     expect(trigger).toHaveFocus();
     // A surrounding modal must not also close on the same key.
     expect(onKeydown.mock.calls.some(([event]) => event.key === "Escape")).toBe(

@@ -18,13 +18,13 @@
     bind:open
     actionable
     kind="success"
-    title="API key deleted:"
-    subtitle="Requests that use the key now fail."
+    titleText="API key deleted:"
+    subtitleText="Requests that use the key now fail."
   >
-    <svelte:fragment slot="actions">
-      <NotificationActionButton on:click={() => (open = false)}>
+    {#snippet actions()}
+      <NotificationActionButton onclick={() => (open = false)}>
         Undo
       </NotificationActionButton>
-    </svelte:fragment>
+    {/snippet}
   </InlineNotification>
 </Stack>

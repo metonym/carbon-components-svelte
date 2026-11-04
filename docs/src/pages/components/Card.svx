@@ -30,8 +30,8 @@ description: Cards group related content and actions on one surface, built from 
 </script>
 
 <Callout
-  title="Preview"
-  subtitle="Card follows Carbon React's preview Card. Its API may change in a minor release."
+  titleText="Preview"
+  subtitleText="Card follows Carbon React's preview Card. Its API may change in a minor release."
 />
 
 ## Basic

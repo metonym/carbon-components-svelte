@@ -12,7 +12,12 @@
   export let hideCloseButton = false;
   export let title = "Record deleted";
   export let subtitle = "The record moved to the trash.";
-  export let onClose: (event: CustomEvent) => void = () => {};
+  export let onClose: (
+    detail: import("carbon-components-svelte/utils/cancelable.js").Cancelable<{
+      open: boolean;
+      trigger: "close-button" | "escape-key" | "timeout";
+    }>,
+  ) => void = () => {};
   export let onKeydown: (event: KeyboardEvent) => void = () => {};
 </script>
 
@@ -27,15 +32,15 @@
       {focusOnOpen}
       {closeOnEscape}
       {hideCloseButton}
-      {title}
-      {subtitle}
-      on:close={onClose}
+      titleText={title}
+      subtitleText={subtitle}
+      onopenchange={onClose}
     >
-      <svelte:fragment slot="actions">
+      {#snippet actions()}
         {#if withAction}
           <NotificationActionButton>Undo</NotificationActionButton>
         {/if}
-      </svelte:fragment>
+      {/snippet}
     </InlineNotification>
   {:else}
     <ToastNotification
@@ -44,15 +49,15 @@
       {focusOnOpen}
       {closeOnEscape}
       {hideCloseButton}
-      {title}
-      {subtitle}
-      on:close={onClose}
+      titleText={title}
+      subtitleText={subtitle}
+      onopenchange={onClose}
     >
-      <svelte:fragment slot="actions">
+      {#snippet actions()}
         {#if withAction}
           <NotificationActionButton>Undo</NotificationActionButton>
         {/if}
-      </svelte:fragment>
+      {/snippet}
     </ToastNotification>
   {/if}
 

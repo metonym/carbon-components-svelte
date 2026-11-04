@@ -15,15 +15,15 @@
     onclick={() => {
       queue.add({
         kind: "success",
-        title: "Report deleted",
-        subtitle: "Q3 revenue summary moved to trash.",
+        titleText: "Report deleted",
+        subtitleText: "Q3 revenue summary moved to trash.",
         action: {
           label: "Undo",
           onClick: () => {
             queue.add({
               kind: "info",
-              title: "Report restored",
-              subtitle: "Q3 revenue summary is back in Reports.",
+              titleText: "Report restored",
+              subtitleText: "Q3 revenue summary is back in Reports.",
               timeout: 3000,
             });
           },
@@ -38,8 +38,8 @@
     onclick={() => {
       const id = queue.add({
         kind: "error",
-        title: "Upload failed",
-        subtitle:
+        titleText: "Upload failed",
+        subtitleText:
           "The connection timed out before quarterly-report.pdf finished.",
         action: {
           label: "Retry",
@@ -48,16 +48,16 @@
             event.preventDefault();
             queue.update(id, {
               kind: "info",
-              title: "Retrying upload",
-              subtitle: "Uploading quarterly-report.pdf.",
+              titleText: "Retrying upload",
+              subtitleText: "Uploading quarterly-report.pdf.",
               action: undefined,
               hideCloseButton: true,
             });
             setTimeout(() => {
               queue.update(id, {
                 kind: "success",
-                title: "Upload complete",
-                subtitle: "quarterly-report.pdf is in Reports.",
+                titleText: "Upload complete",
+                subtitleText: "quarterly-report.pdf is in Reports.",
                 hideCloseButton: false,
                 timeout: 3000,
               });

@@ -45,5 +45,11 @@
     <Button kind="danger-ghost" onclick={showError}>Show error</Button>
   </ButtonSet>
 
-  <ToastNotification bind:open {kind} {title} {subtitle} {caption} />
+  <ToastNotification
+    bind:open
+    {kind}
+    titleText={title}
+    subtitleText={subtitle}
+    captionText={caption}
+  />
 </Stack>

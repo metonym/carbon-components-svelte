@@ -1,53 +1,43 @@
 <script>
   /** @extendProps {"../Button/Button.svelte"} ButtonProps */
 
-  import { getContext } from "svelte";
+  let {
+    /** @type {import("svelte").Snippet | undefined} */
+    children = undefined,
+
+    /** @type {import("svelte/elements").ClassValue | undefined} */
+    class: className = undefined,
+
+    /** @type {string | undefined | null} */
+    "aria-describedby": ariaDescribedBy = undefined,
+
+    ...rest
+  } = $props();
+
   import Button from "../Button/Button.svelte";
   import { joinDescribedBy } from "../utils/field-status.js";
+  import {
+    getNotificationAction,
+    hasNotificationAction,
+  } from "./notification-context.js";
 
   // The notification's title describes the action, so focusing it reads
   // "Retry, button, Upload failed". As in Carbon React, a toast's action is
   // a tertiary button, not a ghost.
-  const { describedBy, toast } = getContext("carbon:NotificationAction") ?? {};
-
-  import { createBubbler } from "svelte/legacy";
-
-  // Re-dispatches a runes child's events to this component's `on:` listeners.
-  const bubble = createBubbler();
+  const ctx = hasNotificationAction() ? getNotificationAction() : undefined;
 </script>
 
 <Button
-  kind={toast ? "tertiary" : "ghost"}
+  kind={ctx?.toast ? "tertiary" : "ghost"}
   size="small"
-  {...$$restProps}
+  {...rest}
   class={[
-    toast
+    ctx?.toast
       ? "bx--toast-notification__action-button"
       : "bx--inline-notification__action-button",
-    $$restProps.class,
-  ]
-    .filter(Boolean)
-    .join(" ")}
-  aria-describedby={joinDescribedBy(
-    $describedBy,
-    $$restProps["aria-describedby"],
-  )}
-  onclick={(e) => {
-    $$restProps.onclick?.(e);
-    bubble("click")(e);
-  }}
-  onmouseover={(e) => {
-    $$restProps.onmouseover?.(e);
-    bubble("mouseover")(e);
-  }}
-  onmouseenter={(e) => {
-    $$restProps.onmouseenter?.(e);
-    bubble("mouseenter")(e);
-  }}
-  onmouseleave={(e) => {
-    $$restProps.onmouseleave?.(e);
-    bubble("mouseleave")(e);
-  }}
+    className,
+  ]}
+  aria-describedby={joinDescribedBy(ctx?.describedBy, ariaDescribedBy)}
 >
-  <slot />
+  {@render children?.()}
 </Button>

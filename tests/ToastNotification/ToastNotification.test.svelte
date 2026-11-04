@@ -7,14 +7,15 @@
   export let timeout: ComponentProps<ToastNotification>["timeout"] = 0;
   export let pauseOnHover: ComponentProps<ToastNotification>["pauseOnHover"] = false;
   export let role: ComponentProps<ToastNotification>["role"] = "status";
-  export let title: ComponentProps<ToastNotification>["title"] = "";
-  export let subtitle: ComponentProps<ToastNotification>["subtitle"] = "";
-  export let caption: ComponentProps<ToastNotification>["caption"] = "";
+  export let title: ComponentProps<ToastNotification>["titleText"] = "";
+  export let subtitle: ComponentProps<ToastNotification>["subtitleText"] = "";
+  export let caption: ComponentProps<ToastNotification>["captionText"] = "";
   export let closeButtonDescription: ComponentProps<ToastNotification>["closeButtonDescription"] =
     "Close notification";
   export let hideCloseButton: ComponentProps<ToastNotification>["hideCloseButton"] = false;
   export let fullWidth: ComponentProps<ToastNotification>["fullWidth"] = false;
-  export let onclose: ((event: CustomEvent) => void) | undefined = undefined;
+  export let onclose: ComponentProps<ToastNotification>["onopenchange"] =
+    undefined;
   export let onclick: ((event: MouseEvent) => void) | undefined = undefined;
 </script>
 
@@ -24,13 +25,13 @@
   {timeout}
   {pauseOnHover}
   {role}
-  {title}
-  {subtitle}
-  {caption}
+  titleText={title}
+  subtitleText={subtitle}
+  captionText={caption}
   {closeButtonDescription}
   {hideCloseButton}
   {fullWidth}
-  on:close={(e) => onclose?.(e)}
-  on:click={(e) => onclick?.(e)}
+  onopenchange={(e) => onclose?.(e)}
+  onclick={(e) => onclick?.(e)}
   {...$$restProps}
 />

@@ -5,13 +5,13 @@
 
 <InlineNotification
   kind="info"
-  title="New features available:"
-  subtitle="Check out what's new."
+  titleText="New features available:"
+  subtitleText="Check out what's new."
 >
-  <svelte:fragment slot="actions">
+  {#snippet actions()}
     <NotificationActionButton
       href="https://example.com/releases"
       target="_blank">View release notes</NotificationActionButton
     >
-  </svelte:fragment>
+  {/snippet}
 </InlineNotification>

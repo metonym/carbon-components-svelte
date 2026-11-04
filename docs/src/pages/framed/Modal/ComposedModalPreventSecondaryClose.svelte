@@ -39,8 +39,8 @@
     {#if showWarning}
       <InlineNotification
         kind="warning"
-        title="Unsaved changes"
-        subtitle="Save your changes, or keep editing. Cancel stays open while the form is dirty."
+        titleText="Unsaved changes"
+        subtitleText="Save your changes, or keep editing. Cancel stays open while the form is dirty."
         hideCloseButton
       />
     {/if}

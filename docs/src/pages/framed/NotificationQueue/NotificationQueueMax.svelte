@@ -12,7 +12,7 @@
     count++;
     queue.add({
       kind: "success",
-      title: `Backup job ${count} completed`,
+      titleText: `Backup job ${count} completed`,
     });
   }}
 >

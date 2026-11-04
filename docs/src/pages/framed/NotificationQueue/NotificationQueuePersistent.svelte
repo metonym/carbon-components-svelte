@@ -15,8 +15,8 @@
     onclick={() => {
       queue.add({
         kind: "warning",
-        title: "Persistent notification",
-        subtitle:
+        titleText: "Persistent notification",
+        subtitleText:
           "This notification has no close button and will not auto-dismiss.",
         hideCloseButton: true,
       });
@@ -28,8 +28,8 @@
     onclick={() => {
       queue.add({
         kind: "info",
-        title: "Auto-dismiss notification",
-        subtitle:
+        titleText: "Auto-dismiss notification",
+        subtitleText:
           "This notification has no close button but will auto-dismiss after 3 seconds.",
         hideCloseButton: true,
         timeout: 3000,

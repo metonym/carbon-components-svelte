@@ -25,7 +25,7 @@
     onclick={() => {
       topLeftQueue.add({
         kind: "info",
-        title: "Top left",
+        titleText: "Top left",
       });
     }}
   >
@@ -35,7 +35,7 @@
     onclick={() => {
       topCenterQueue.add({
         kind: "success",
-        title: "Top center",
+        titleText: "Top center",
       });
     }}
   >
@@ -45,7 +45,7 @@
     onclick={() => {
       topRightQueue.add({
         kind: "success",
-        title: "Top right",
+        titleText: "Top right",
       });
     }}
   >
@@ -58,7 +58,7 @@
     onclick={() => {
       bottomLeftQueue.add({
         kind: "warning",
-        title: "Bottom left",
+        titleText: "Bottom left",
       });
     }}
   >
@@ -68,7 +68,7 @@
     onclick={() => {
       bottomCenterQueue.add({
         kind: "info",
-        title: "Bottom center",
+        titleText: "Bottom center",
       });
     }}
   >
@@ -78,7 +78,7 @@
     onclick={() => {
       bottomRightQueue.add({
         kind: "info",
-        title: "Bottom right",
+        titleText: "Bottom right",
       });
     }}
   >

@@ -624,7 +624,7 @@ export const interactive: AriaEntry[] = [
     name: "InlineNotification",
     render: (attrs) =>
       render(InlineNotification, {
-        props: { title: "Error", subtitle: "Try again", ...attrs },
+        props: { titleText: "Error", subtitleText: "Try again", ...attrs },
       }),
     target: () => screen.getByRole("status"),
   },
@@ -636,8 +636,8 @@ export const interactive: AriaEntry[] = [
         props: {
           actionable: true,
           focusOnOpen: false,
-          title: "Error",
-          subtitle: "Try again",
+          titleText: "Error",
+          subtitleText: "Try again",
           ...attrs,
         },
       }),
@@ -695,9 +695,9 @@ export const interactive: AriaEntry[] = [
     render: (attrs) =>
       render(ToastNotification, {
         props: {
-          title: "Saved",
-          subtitle: "All changes saved",
-          caption: "Just now",
+          titleText: "Saved",
+          subtitleText: "All changes saved",
+          captionText: "Just now",
           ...attrs,
         },
       }),
@@ -711,9 +711,9 @@ export const interactive: AriaEntry[] = [
         props: {
           actionable: true,
           focusOnOpen: false,
-          title: "Saved",
-          subtitle: "All changes saved",
-          caption: "Just now",
+          titleText: "Saved",
+          subtitleText: "All changes saved",
+          captionText: "Just now",
           ...attrs,
         },
       }),

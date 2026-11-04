@@ -40,8 +40,8 @@
   {#if showWarning}
     <InlineNotification
       kind="warning"
-      title="Unsaved changes"
-      subtitle="Please save or discard your changes before closing."
+      titleText="Unsaved changes"
+      subtitleText="Please save or discard your changes before closing."
       hideCloseButton
     />
   {/if}

@@ -36,8 +36,8 @@
   {#if error}
     <InlineNotification
       kind="error"
-      title="Couldn't delete the account."
-      subtitle={error}
+      titleText="Couldn't delete the account."
+      subtitleText={error}
       hideCloseButton
       lowContrast
     />

@@ -16,8 +16,8 @@
     onclick={() => {
       const id = queue.add({
         kind: "info",
-        title: "Removable notification",
-        subtitle: "This notification can be removed programmatically.",
+        titleText: "Removable notification",
+        subtitleText: "This notification can be removed programmatically.",
         timeout: 0,
       });
       notificationIds = [...notificationIds, id];

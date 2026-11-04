@@ -2,6 +2,6 @@
   import ToastNotification from "carbon-components-svelte/Notification/ToastNotification.svelte";
 </script>
 
-<ToastNotification on:close on:click>
-  <span slot="titleChildren">Slot title</span>
+<ToastNotification>
+  {#snippet titleText()}<span>Slot title</span>{/snippet}
 </ToastNotification>

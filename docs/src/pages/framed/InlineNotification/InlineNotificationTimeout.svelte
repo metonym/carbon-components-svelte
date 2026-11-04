@@ -21,11 +21,11 @@
       {timeout}
       pauseOnHover
       kind="success"
-      title="Export complete:"
-      subtitle="This notification will autoclose in {timeout.toLocaleString()} ms. Hover to pause the countdown."
-      on:close={(e) => {
+      titleText="Export complete:"
+      subtitleText="This notification will autoclose in {timeout.toLocaleString()} ms. Hover to pause the countdown."
+      onopenchange={(e) => {
         timeout = undefined;
-        console.log(e.detail.timeout); // true if closed via timeout
+        console.log(e.trigger); // "timeout" when it closed on its own
       }}
     />
   </div>

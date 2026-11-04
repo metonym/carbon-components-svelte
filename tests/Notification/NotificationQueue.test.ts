@@ -36,13 +36,13 @@ describe("NotificationQueue", () => {
 
     const id1 = getQueue(component.queue).add({
       kind: "info",
-      title: "Notification 1",
+      titleText: "Notification 1",
     });
     await tick();
 
     const id2 = getQueue(component.queue).add({
       kind: "info",
-      title: "Notification 2",
+      titleText: "Notification 2",
     });
     await tick();
 
@@ -54,7 +54,7 @@ describe("NotificationQueue", () => {
   it("should not put the queue id on the toast element", async () => {
     const { component } = render(NotificationQueueTest);
 
-    getQueue(component.queue).add({ id: "save", title: "Saved" });
+    getQueue(component.queue).add({ id: "save", titleText: "Saved" });
     await tick();
 
     expect(screen.getByRole("status")).not.toHaveAttribute("id");
@@ -66,13 +66,13 @@ describe("NotificationQueue", () => {
     const id = getQueue(component.queue).add({
       id: "duplicate-id",
       kind: "error",
-      title: "First notification",
+      titleText: "First notification",
     });
 
     const id2 = getQueue(component.queue).add({
       id: "duplicate-id",
       kind: "error",
-      title: "Second notification",
+      titleText: "Second notification",
     });
     await tick();
 
@@ -90,19 +90,19 @@ describe("NotificationQueue", () => {
 
     getQueue(component.queue).add({
       kind: "success",
-      title: "First notification",
+      titleText: "First notification",
     });
     await tick();
 
     getQueue(component.queue).add({
       kind: "info",
-      title: "Second notification",
+      titleText: "Second notification",
     });
     await tick();
 
     getQueue(component.queue).add({
       kind: "warning",
-      title: "Third notification",
+      titleText: "Third notification",
     });
     await tick();
 
@@ -116,13 +116,13 @@ describe("NotificationQueue", () => {
 
     const id1 = getQueue(component.queue).add({
       kind: "success",
-      title: "First notification",
+      titleText: "First notification",
     });
     await tick();
 
     getQueue(component.queue).add({
       kind: "info",
-      title: "Second notification",
+      titleText: "Second notification",
     });
     await tick();
 
@@ -150,8 +150,8 @@ describe("NotificationQueue", () => {
     const id = getQueue(component.queue).add({
       id: "progress",
       kind: "info",
-      title: "Uploading...",
-      subtitle: "0%",
+      titleText: "Uploading...",
+      subtitleText: "0%",
     });
     await tick();
 
@@ -160,8 +160,8 @@ describe("NotificationQueue", () => {
 
     const updated = getQueue(component.queue).update(id, {
       kind: "success",
-      title: "Upload complete",
-      subtitle: "100%",
+      titleText: "Upload complete",
+      subtitleText: "100%",
     });
     await tick();
 
@@ -179,8 +179,8 @@ describe("NotificationQueue", () => {
     const id = getQueue(component.queue).add({
       id: "merge",
       kind: "info",
-      title: "Title",
-      subtitle: "Subtitle",
+      titleText: "Title",
+      subtitleText: "Subtitle",
     });
     await tick();
 
@@ -202,11 +202,11 @@ describe("NotificationQueue", () => {
   it("should keep the same toast element when updating it", async () => {
     const { component } = render(NotificationQueueTest);
 
-    const id = getQueue(component.queue).add({ title: "Uploading" });
+    const id = getQueue(component.queue).add({ titleText: "Uploading" });
     await tick();
     const toast = screen.getByRole("status");
 
-    getQueue(component.queue).update(id, { title: "Done" });
+    getQueue(component.queue).update(id, { titleText: "Done" });
     await tick();
 
     expect(screen.getByRole("status")).toBe(toast);
@@ -216,13 +216,13 @@ describe("NotificationQueue", () => {
     const { component } = render(NotificationQueueTest);
 
     const id = getQueue(component.queue).add({
-      title: "Uploading",
+      titleText: "Uploading",
       timeout: 1000,
     });
     await tick();
 
     vi.advanceTimersByTime(400);
-    getQueue(component.queue).update(id, { title: "Done" });
+    getQueue(component.queue).update(id, { titleText: "Done" });
     await tick();
     vi.advanceTimersByTime(600);
     await tick();
@@ -236,13 +236,13 @@ describe("NotificationQueue", () => {
     const id = getQueue(component.queue).add({
       id: "original",
       kind: "info",
-      title: "Original",
+      titleText: "Original",
     });
     await tick();
 
     const updated = getQueue(component.queue).update(id, {
       id: "different",
-      title: "Updated",
+      titleText: "Updated",
     });
     await tick();
 
@@ -259,7 +259,7 @@ describe("NotificationQueue", () => {
     const { component } = render(NotificationQueueTest);
 
     const updated = getQueue(component.queue).update("non-existent-id", {
-      title: "New title",
+      titleText: "New title",
     });
     expect(updated).toBe(false);
   });
@@ -269,13 +269,13 @@ describe("NotificationQueue", () => {
 
     getQueue(component.queue).add({
       kind: "success",
-      title: "First notification",
+      titleText: "First notification",
     });
     await tick();
 
     getQueue(component.queue).add({
       kind: "info",
-      title: "Second notification",
+      titleText: "Second notification",
     });
     await tick();
 
@@ -303,7 +303,7 @@ describe("NotificationQueue", () => {
       document.body.append(before);
       onTestFinished(() => before.remove());
 
-      const id = getQueue(component.queue).add({ title: "Saved" });
+      const id = getQueue(component.queue).add({ titleText: "Saved" });
       await tick();
       before.focus();
       screen.getByRole("button", { name: "Close notification" }).focus();
@@ -323,8 +323,8 @@ describe("NotificationQueue", () => {
     before.focus();
 
     getQueue(component.queue).add({
-      title: "Upload failed",
-      subtitle: "Retry from the files list.",
+      titleText: "Upload failed",
+      subtitleText: "Retry from the files list.",
       actionable: true,
     });
     await tick();
@@ -352,19 +352,19 @@ describe("NotificationQueue", () => {
 
       getQueue(component.queue).add({
         kind: "success",
-        title: "First",
+        titleText: "First",
       });
       await tick();
 
       getQueue(component.queue).add({
         kind: "info",
-        title: "Second",
+        titleText: "Second",
       });
       await tick();
 
       getQueue(component.queue).add({
         kind: "warning",
-        title: "Third",
+        titleText: "Third",
       });
       await tick();
 
@@ -436,7 +436,7 @@ describe("NotificationQueue", () => {
 
       getQueue(component.queue).add({
         kind: "success",
-        title: "Test",
+        titleText: "Test",
       });
       await tick();
 
@@ -462,7 +462,7 @@ describe("NotificationQueue", () => {
 
     getQueue(component.queue).add({
       kind: "success",
-      title: "Test",
+      titleText: "Test",
     });
     await tick();
 
@@ -477,7 +477,7 @@ describe("NotificationQueue", () => {
 
     getQueue(component.queue).add({
       kind: "success",
-      title: "Test",
+      titleText: "Test",
     });
     await tick();
 
@@ -491,7 +491,7 @@ describe("NotificationQueue", () => {
 
     getQueue(component.queue).add({
       kind: "success",
-      title: "Test notification",
+      titleText: "Test notification",
     });
     await tick();
 
@@ -513,8 +513,8 @@ describe("NotificationQueue", () => {
       props: { position: "bottom-right" },
     });
 
-    getQueue(component.queue).add({ title: "First" });
-    getQueue(component.queue).add({ title: "Second" });
+    getQueue(component.queue).add({ titleText: "First" });
+    getQueue(component.queue).add({ titleText: "Second" });
     await tick();
 
     const secondToast = screen.getAllByRole("status")[1];
@@ -533,7 +533,7 @@ describe("NotificationQueue", () => {
 
     getQueue(component.queue).add({
       kind: "success",
-      title: "Test notification",
+      titleText: "Test notification",
       timeout: 1000,
     });
     await tick();
@@ -550,7 +550,7 @@ describe("NotificationQueue", () => {
     const { component } = render(NotificationQueueTest);
 
     const id = getQueue(component.queue).add({
-      title: "Uploading",
+      titleText: "Uploading",
       timeout: 1000,
       pauseOnHover: true,
     });
@@ -570,7 +570,7 @@ describe("NotificationQueue", () => {
 
     getQueue(component.queue).add({
       kind: "warning",
-      title: "Persistent notification",
+      titleText: "Persistent notification",
       hideCloseButton: true,
     });
     await tick();
@@ -587,7 +587,7 @@ describe("NotificationQueue", () => {
     const { component } = render(NotificationQueueTest);
 
     getQueue(component.queue).add({
-      title: "Saved",
+      titleText: "Saved",
       kind: "success",
       pauseOnHover: true,
       role: "alert",
@@ -624,14 +624,14 @@ describe("NotificationQueue", () => {
       getQueue(component.queue).add({
         id: "first",
         kind: "success",
-        title: "First",
+        titleText: "First",
       });
       await tick();
 
       getQueue(component.queue).add({
         id: "second",
         kind: "info",
-        title: "Second",
+        titleText: "Second",
       });
       await tick();
 
@@ -651,14 +651,14 @@ describe("NotificationQueue", () => {
       getQueue(component.queue).add({
         id: "first",
         kind: "success",
-        title: "First",
+        titleText: "First",
       });
       await tick();
 
       getQueue(component.queue).add({
         id: "second",
         kind: "info",
-        title: "Second",
+        titleText: "Second",
       });
       await tick();
 
@@ -682,7 +682,7 @@ describe("NotificationQueue", () => {
       const { component } = render(NotificationQueueTest);
 
       getQueue(component.queue).add({
-        title: "Upload failed",
+        titleText: "Upload failed",
         action: { label: "Retry" },
       });
       await tick();
@@ -699,7 +699,7 @@ describe("NotificationQueue", () => {
       const { component } = render(NotificationQueueTest);
 
       getQueue(component.queue).add({
-        title: "Export ready",
+        titleText: "Export ready",
         action: { label: "Download", href: "/exports/q3.csv" },
       });
       await tick();
@@ -713,7 +713,7 @@ describe("NotificationQueue", () => {
     it("renders no action row without an action", async () => {
       const { component } = render(NotificationQueueTest);
 
-      getQueue(component.queue).add({ title: "Saved" });
+      getQueue(component.queue).add({ titleText: "Saved" });
       await tick();
 
       expect(
@@ -727,7 +727,7 @@ describe("NotificationQueue", () => {
       const onClick = vi.fn();
 
       getQueue(component.queue).add({
-        title: "Report deleted",
+        titleText: "Report deleted",
         action: { label: "Undo", onClick },
       });
       await tick();
@@ -747,12 +747,12 @@ describe("NotificationQueue", () => {
       const { component } = render(NotificationQueueTest);
 
       const id = getQueue(component.queue).add({
-        title: "Upload failed",
+        titleText: "Upload failed",
         action: {
           label: "Retry",
           onClick: (event) => {
             event.preventDefault();
-            getQueue(component.queue).update(id, { title: "Retrying" });
+            getQueue(component.queue).update(id, { titleText: "Retrying" });
           },
         },
       });
@@ -769,7 +769,7 @@ describe("NotificationQueue", () => {
       const before = focusOutside();
 
       getQueue(component.queue).add({
-        title: "Upload failed",
+        titleText: "Upload failed",
         action: { label: "Retry" },
       });
       await tick();
@@ -786,7 +786,7 @@ describe("NotificationQueue", () => {
       const { component } = render(NotificationQueueTest);
 
       const id = getQueue(component.queue).add({
-        title: "Report deleted",
+        titleText: "Report deleted",
         timeout: 1000,
         ...props,
       });
@@ -810,9 +810,9 @@ describe("NotificationQueue", () => {
         });
         const queue = getQueue(component.queue);
 
-        queue.add({ title: "Deleted", action: { label: "Undo" } });
-        queue.add({ title: "Saved" });
-        queue.add({ title: "Published" });
+        queue.add({ titleText: "Deleted", action: { label: "Undo" } });
+        queue.add({ titleText: "Saved" });
+        queue.add({ titleText: "Published" });
         await tick();
 
         expect(screen.getByText("Deleted")).toBeInTheDocument();
@@ -827,9 +827,9 @@ describe("NotificationQueue", () => {
       });
       const queue = getQueue(component.queue);
 
-      queue.add({ title: "First", action: { label: "Undo" } });
-      queue.add({ title: "Second", action: { label: "Undo" } });
-      queue.add({ title: "Saved" });
+      queue.add({ titleText: "First", action: { label: "Undo" } });
+      queue.add({ titleText: "Second", action: { label: "Undo" } });
+      queue.add({ titleText: "Saved" });
       await tick();
 
       expect(screen.queryByText("First")).not.toBeInTheDocument();
@@ -850,8 +850,8 @@ describe("NotificationQueue", () => {
 
     it("pauses every timer while the pointer is in the queue", async () => {
       const { component } = render(NotificationQueueTest);
-      getQueue(component.queue).add({ title: "Saved", timeout: 1000 });
-      getQueue(component.queue).add({ title: "Synced", timeout: 2000 });
+      getQueue(component.queue).add({ titleText: "Saved", timeout: 1000 });
+      getQueue(component.queue).add({ titleText: "Synced", timeout: 2000 });
       await tick();
 
       await advance(400);
@@ -874,7 +874,7 @@ describe("NotificationQueue", () => {
 
     it("does not pause for touch, which has no hover", async () => {
       const { component } = render(NotificationQueueTest);
-      getQueue(component.queue).add({ title: "Saved", timeout: 1000 });
+      getQueue(component.queue).add({ titleText: "Saved", timeout: 1000 });
       await tick();
 
       await fireEvent.pointerEnter(getRegion(), { pointerType: "touch" });
@@ -888,8 +888,8 @@ describe("NotificationQueue", () => {
       const before = document.createElement("button");
       document.body.append(before);
       onTestFinished(() => before.remove());
-      getQueue(component.queue).add({ title: "Saved", timeout: 1000 });
-      getQueue(component.queue).add({ title: "Synced", timeout: 1000 });
+      getQueue(component.queue).add({ titleText: "Saved", timeout: 1000 });
+      getQueue(component.queue).add({ titleText: "Synced", timeout: 1000 });
       await tick();
 
       const [first, second] = screen.getAllByRole("button", {
@@ -913,10 +913,10 @@ describe("NotificationQueue", () => {
 
     it("resumes when the focused toast is removed", async () => {
       const { component } = render(NotificationQueueTest);
-      getQueue(component.queue).add({ title: "Saved" });
+      getQueue(component.queue).add({ titleText: "Saved" });
       // No control in "Synced", so focus leaves the queue.
       getQueue(component.queue).add({
-        title: "Synced",
+        titleText: "Synced",
         timeout: 1000,
         hideCloseButton: true,
       });
@@ -937,11 +937,11 @@ describe("NotificationQueue", () => {
 
     it("starts a toast added while paused paused", async () => {
       const { component } = render(NotificationQueueTest);
-      getQueue(component.queue).add({ title: "Saved", timeout: 1000 });
+      getQueue(component.queue).add({ titleText: "Saved", timeout: 1000 });
       await tick();
 
       await fireEvent.pointerEnter(getRegion(), { pointerType: "mouse" });
-      getQueue(component.queue).add({ title: "Synced", timeout: 1000 });
+      getQueue(component.queue).add({ titleText: "Synced", timeout: 1000 });
       await tick();
       await advance(5000);
       expect(screen.getByText("Synced")).toBeInTheDocument();
@@ -953,13 +953,13 @@ describe("NotificationQueue", () => {
 
     it("forgets the pointer when the queue empties", async () => {
       const { component } = render(NotificationQueueTest);
-      getQueue(component.queue).add({ title: "Saved" });
+      getQueue(component.queue).add({ titleText: "Saved" });
       await tick();
 
       await fireEvent.pointerEnter(getRegion(), { pointerType: "mouse" });
       getQueue(component.queue).clear();
       await tick();
-      getQueue(component.queue).add({ title: "Synced", timeout: 1000 });
+      getQueue(component.queue).add({ titleText: "Synced", timeout: 1000 });
       await tick();
       await advance(1000);
 
@@ -981,8 +981,8 @@ describe("NotificationQueue", () => {
 
     it("keeps a closed toast's space until the pointer leaves", async () => {
       const { component } = render(NotificationQueueTest);
-      getQueue(component.queue).add({ title: "Saved" });
-      getQueue(component.queue).add({ title: "Synced" });
+      getQueue(component.queue).add({ titleText: "Saved" });
+      getQueue(component.queue).add({ titleText: "Synced" });
       await tick();
 
       await fireEvent.pointerEnter(getRegion(), { pointerType: "mouse" });
@@ -1010,12 +1010,12 @@ describe("NotificationQueue", () => {
       const before = document.createElement("button");
       document.body.append(before);
       onTestFinished(() => before.remove());
-      getQueue(component.queue).add({ title: "First" });
-      getQueue(component.queue).add({ title: "Second" });
+      getQueue(component.queue).add({ titleText: "First" });
+      getQueue(component.queue).add({ titleText: "Second" });
       await tick();
 
       screen.getAllByRole("button", { name: "Close notification" })[0].focus();
-      getQueue(component.queue).add({ title: "Third" });
+      getQueue(component.queue).add({ titleText: "Third" });
       await tick();
       expect(getTitles()).toEqual(["Second", "First", "Third"]);
 
@@ -1031,14 +1031,14 @@ describe("NotificationQueue", () => {
       onTestFinished(() => before.remove());
       before.focus();
       getQueue(component.queue).add({
-        title: "First",
+        titleText: "First",
         action: { label: "Undo first" },
       });
       await tick();
 
       await fireEvent.pointerEnter(getRegion(), { pointerType: "mouse" });
       getQueue(component.queue).add({
-        title: "Second",
+        titleText: "Second",
         action: { label: "Undo second" },
       });
       await tick();
@@ -1053,7 +1053,7 @@ describe("NotificationQueue", () => {
     it("renders the queue as a region named Notifications", async () => {
       const { component } = render(NotificationQueueTest);
 
-      getQueue(component.queue).add({ title: "Saved" });
+      getQueue(component.queue).add({ titleText: "Saved" });
       await tick();
 
       expect(screen.getByRole("region", { name: "Notifications" })).toHaveClass(
@@ -1066,7 +1066,7 @@ describe("NotificationQueue", () => {
         props: { labelText: "Alerts" },
       });
 
-      getQueue(component.queue).add({ title: "Saved" });
+      getQueue(component.queue).add({ titleText: "Saved" });
       await tick();
 
       expect(
@@ -1086,11 +1086,11 @@ describe("NotificationQueue", () => {
         before.focus();
 
         getQueue(component.queue).add({
-          title: "First",
+          titleText: "First",
           action: { label: "Undo first" },
         });
         getQueue(component.queue).add({
-          title: "Second",
+          titleText: "Second",
           action: { label: "Undo second" },
         });
         await tick();
@@ -1108,7 +1108,7 @@ describe("NotificationQueue", () => {
       const { component } = render(NotificationQueueTest);
       document.body.focus();
 
-      getQueue(component.queue).add({ title: "Saved" });
+      getQueue(component.queue).add({ titleText: "Saved" });
       await tick();
 
       await fireEvent.keyDown(document.body, { key: "F6" });
@@ -1120,7 +1120,10 @@ describe("NotificationQueue", () => {
     it("leaves F6 to the browser when no toast has a control", async () => {
       const { component } = render(NotificationQueueTest);
 
-      getQueue(component.queue).add({ title: "Saving", hideCloseButton: true });
+      getQueue(component.queue).add({
+        titleText: "Saving",
+        hideCloseButton: true,
+      });
       await tick();
 
       const event = new KeyboardEvent("keydown", {
@@ -1170,7 +1173,11 @@ describe("NotificationQueue", () => {
     ] as const)(
       "moves focus from $close to $next ($position)",
       async ({ position, close, next }) => {
-        await setup(position, [{ title: "A" }, { title: "B" }, { title: "C" }]);
+        await setup(position, [
+          { titleText: "A" },
+          { titleText: "B" },
+          { titleText: "C" },
+        ]);
         closeButton(close).focus();
 
         await fireEvent.click(closeButton(close));
@@ -1183,10 +1190,10 @@ describe("NotificationQueue", () => {
 
     it("moves focus to the next toast when Escape closes an actionable one", async () => {
       const { queue, before } = await setup("top-right", [
-        { title: "A", actionable: true },
+        { titleText: "A", actionable: true },
       ]);
       before.focus();
-      queue.add({ title: "B", actionable: true });
+      queue.add({ titleText: "B", actionable: true });
       await tick();
       await tick();
       expect(closeButton("B")).toHaveFocus();
@@ -1199,8 +1206,8 @@ describe("NotificationQueue", () => {
 
     it("moves focus to the next toast when an action closes its toast", async () => {
       const { before } = await setup("top-right", [
-        { title: "A", action: { label: "Undo A" } },
-        { title: "B", action: { label: "Undo B" } },
+        { titleText: "A", action: { label: "Undo A" } },
+        { titleText: "B", action: { label: "Undo B" } },
       ]);
       await fireEvent.keyDown(before, { key: "F6" });
 
@@ -1212,8 +1219,8 @@ describe("NotificationQueue", () => {
 
     it("returns focus to where F6 took it from once the queue empties", async () => {
       const { before } = await setup("top-right", [
-        { title: "A" },
-        { title: "B" },
+        { titleText: "A" },
+        { titleText: "B" },
       ]);
       await fireEvent.keyDown(before, { key: "F6" });
 
@@ -1229,8 +1236,8 @@ describe("NotificationQueue", () => {
 
     it("keeps focus in place when a timeout closes a toast", async () => {
       const { before } = await setup("top-right", [
-        { title: "A", timeout: 1000 },
-        { title: "B" },
+        { titleText: "A", timeout: 1000 },
+        { titleText: "B" },
       ]);
 
       vi.advanceTimersByTime(1000);
@@ -1242,9 +1249,9 @@ describe("NotificationQueue", () => {
 
     it("keeps focus in place when a toast closes without focus", async () => {
       const { queue, before } = await setup("top-right", [
-        { id: "a", title: "A" },
-        { id: "b", title: "B" },
-        { id: "c", title: "C" },
+        { id: "a", titleText: "A" },
+        { id: "b", titleText: "B" },
+        { id: "c", titleText: "C" },
       ]);
       await fireEvent.keyDown(before, { key: "F6" });
       closeButton("A").focus();

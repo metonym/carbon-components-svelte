@@ -4,11 +4,11 @@
 </script>
 
 <Callout kind="warning" titleId="quota-title">
-  <svelte:fragment slot="titleChildren">Storage almost full</svelte:fragment>
-  <svelte:fragment slot="subtitleChildren">
+  {#snippet titleText()}Storage almost full{/snippet}
+  {#snippet subtitleText()}
     <Link href="/settings/billing" aria-describedby="quota-title">
       Upgrade your plan
     </Link>
-  </svelte:fragment>
+  {/snippet}
   <p data-testid="extra">Older builds are removed first.</p>
 </Callout>

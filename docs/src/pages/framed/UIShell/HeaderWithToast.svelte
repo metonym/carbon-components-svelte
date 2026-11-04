@@ -19,8 +19,8 @@
     queuePosition = position;
     queue.add({
       kind: "success",
-      title: "Cluster created",
-      subtitle: "Your Kubernetes cluster is now provisioning.",
+      titleText: "Cluster created",
+      subtitleText: "Your Kubernetes cluster is now provisioning.",
       timeout: 5000,
     });
   };

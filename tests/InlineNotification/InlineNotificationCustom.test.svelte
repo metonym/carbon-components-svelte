@@ -3,15 +3,22 @@
   import NotificationActionButton from "carbon-components-svelte/Notification/NotificationActionButton.svelte";
 
   export let timeout = 0;
-  export let onclose: ((event: CustomEvent) => void) | undefined = undefined;
+  export let onclose:
+    | ((
+        detail: import("carbon-components-svelte/utils/cancelable.js").Cancelable<{
+          open: boolean;
+          trigger: "close-button" | "escape-key" | "timeout";
+        }>,
+      ) => void)
+    | undefined = undefined;
 </script>
 
 <InlineNotification
   kind="warning"
   {timeout}
-  on:close={(event) => onclose?.(event)}
+  onopenchange={(event) => onclose?.(event)}
 >
-  <svelte:fragment slot="actions">
+  {#snippet actions()}
     <NotificationActionButton>Learn more</NotificationActionButton>
-  </svelte:fragment>
+  {/snippet}
 </InlineNotification>

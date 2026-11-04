@@ -34,7 +34,10 @@ describe.each([
     await tick();
 
     expect(closeHandler).toHaveBeenCalledTimes(1);
-    expect(closeHandler.mock.calls[0][0].detail).toEqual({ timeout: false });
+    expect(closeHandler.mock.calls[0][0]).toMatchObject({
+      open: false,
+      trigger: "close-button",
+    });
     expect(document.querySelector(root)).not.toBeInTheDocument();
   });
 
@@ -48,7 +51,10 @@ describe.each([
     await tick();
 
     expect(closeHandler).toHaveBeenCalledTimes(1);
-    expect(closeHandler.mock.calls[0][0].detail).toEqual({ timeout: true });
+    expect(closeHandler.mock.calls[0][0]).toMatchObject({
+      open: false,
+      trigger: "timeout",
+    });
   });
 
   it("should pause timeout on hover when pauseOnHover is true", async () => {
@@ -75,7 +81,10 @@ describe.each([
     vi.advanceTimersByTime(1);
     await tick();
     expect(closeHandler).toHaveBeenCalledTimes(1);
-    expect(closeHandler.mock.calls[0][0].detail).toEqual({ timeout: true });
+    expect(closeHandler.mock.calls[0][0]).toMatchObject({
+      open: false,
+      trigger: "timeout",
+    });
   });
 
   it("should not pause timeout on hover when pauseOnHover is false", async () => {
@@ -94,7 +103,10 @@ describe.each([
     await tick();
 
     expect(closeHandler).toHaveBeenCalledTimes(1);
-    expect(closeHandler.mock.calls[0][0].detail).toEqual({ timeout: true });
+    expect(closeHandler.mock.calls[0][0]).toMatchObject({
+      open: false,
+      trigger: "timeout",
+    });
   });
 
   it("should pause timeout while focus is inside and resume after focus leaves", async () => {
@@ -122,7 +134,10 @@ describe.each([
     vi.advanceTimersByTime(1);
     await tick();
     expect(closeHandler).toHaveBeenCalledTimes(1);
-    expect(closeHandler.mock.calls[0][0].detail).toEqual({ timeout: true });
+    expect(closeHandler.mock.calls[0][0]).toMatchObject({
+      open: false,
+      trigger: "timeout",
+    });
   });
 
   it("should not pause timeout on focus when pauseOnHover is false", async () => {
@@ -142,7 +157,10 @@ describe.each([
     await tick();
 
     expect(closeHandler).toHaveBeenCalledTimes(1);
-    expect(closeHandler.mock.calls[0][0].detail).toEqual({ timeout: true });
+    expect(closeHandler.mock.calls[0][0]).toMatchObject({
+      open: false,
+      trigger: "timeout",
+    });
   });
 
   it("should prevent close when event is cancelled", async () => {

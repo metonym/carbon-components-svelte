@@ -94,8 +94,8 @@
   {#if form?.type === "success"}
     <InlineNotification
       kind="success"
-      title="Application created"
-      subtitle={`${form.data.created} is being deployed.`}
+      titleText="Application created"
+      subtitleText={`${form.data.created} is being deployed.`}
       hideCloseButton
     />
   {/if}

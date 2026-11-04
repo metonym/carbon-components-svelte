@@ -78,8 +78,8 @@
     {#if form?.type === "success"}
       <InlineNotification
         kind="success"
-        title="Invitation sent"
-        subtitle={`We emailed ${form.data.invited}.`}
+        titleText="Invitation sent"
+        subtitleText={`We emailed ${form.data.invited}.`}
         hideCloseButton
       />
     {/if}

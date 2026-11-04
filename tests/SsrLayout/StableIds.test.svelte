@@ -8,14 +8,14 @@
 <InlineNotification
   id="inline"
   actionable
-  title="Saved"
-  subtitle="Your changes are live."
+  titleText="Saved"
+  subtitleText="Your changes are live."
 />
 <ToastNotification
   id="toast"
   actionable
-  title="Saved"
-  subtitle="Your changes are live."
+  titleText="Saved"
+  subtitleText="Your changes are live."
 />
 <HeaderSwitcher id="switcher" isOpen text="Products" />
 <ProfileMenu id="profile" isOpen />

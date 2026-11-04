@@ -41,5 +41,10 @@
     <Button kind="danger-ghost" onclick={showError}>Show error</Button>
   </ButtonSet>
 
-  <InlineNotification bind:open {kind} {title} {subtitle} />
+  <InlineNotification
+    bind:open
+    {kind}
+    titleText={title}
+    subtitleText={subtitle}
+  />
 </Stack>

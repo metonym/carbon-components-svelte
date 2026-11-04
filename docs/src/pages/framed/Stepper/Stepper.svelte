@@ -91,7 +91,7 @@
             lowContrast
             hideCloseButton
             kind="error"
-            title={error}
+            titleText={error}
           />
         {/if}
       </Stack>

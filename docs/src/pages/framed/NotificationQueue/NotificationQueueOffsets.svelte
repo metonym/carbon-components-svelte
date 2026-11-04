@@ -15,7 +15,7 @@
   onclick={() => {
     queue.add({
       kind: "success",
-      title: "Custom offset",
+      titleText: "Custom offset",
     });
   }}
 >

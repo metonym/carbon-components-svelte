@@ -4,17 +4,24 @@
 
   export let href: string | undefined = undefined;
   export let timeout = 0;
-  export let onclose: ((event: CustomEvent) => void) | undefined = undefined;
+  export let onclose:
+    | ((
+        detail: import("carbon-components-svelte/utils/cancelable.js").Cancelable<{
+          open: boolean;
+          trigger: "close-button" | "escape-key" | "timeout";
+        }>,
+      ) => void)
+    | undefined = undefined;
 </script>
 
 <ToastNotification
-  title="Upload failed"
-  subtitle="The connection timed out."
-  caption="10:42 AM"
+  titleText="Upload failed"
+  subtitleText="The connection timed out."
+  captionText="10:42 AM"
   {timeout}
-  on:close={(event) => onclose?.(event)}
+  onopenchange={(event) => onclose?.(event)}
 >
-  <svelte:fragment slot="actions">
+  {#snippet actions()}
     <NotificationActionButton {href}>Retry</NotificationActionButton>
-  </svelte:fragment>
+  {/snippet}
 </ToastNotification>

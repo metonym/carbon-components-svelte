@@ -20,12 +20,12 @@
     <ToastNotification
       {timeout}
       kind="success"
-      title="Export complete"
-      subtitle="This notification will autoclose in {timeout.toLocaleString()} ms."
-      caption={new Date().toLocaleString()}
-      on:close={(e) => {
+      titleText="Export complete"
+      subtitleText="This notification will autoclose in {timeout.toLocaleString()} ms."
+      captionText={new Date().toLocaleString()}
+      onopenchange={(e) => {
         timeout = undefined;
-        console.log(e.detail.timeout); // true if closed via timeout
+        console.log(e.trigger); // "timeout" when it closed on its own
       }}
     />
   </div>
