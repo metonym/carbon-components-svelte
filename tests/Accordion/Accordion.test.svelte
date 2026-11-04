@@ -29,32 +29,33 @@
   {size}
   {flush}
   class={customClass}
-  on:click={() => onClick()}
-  on:mouseover={() => onMouseover()}
-  on:mouseenter={() => onMouseenter()}
-  on:mouseleave={() => onMouseleave()}
+  onclick={() => onClick()}
+  onmouseover={() => onMouseover()}
+  onmouseenter={() => onMouseenter()}
+  onmouseleave={() => onMouseleave()}
 >
   {#if useSlot}
     <AccordionItem class={itemClass}>
-      <div slot="title">Custom Title</div>
+      {#snippet titleText()}<div>Custom Title</div>{/snippet}
       Slot content
     </AccordionItem>
   {:else if noTitle}
     <AccordionItem>No title content</AccordionItem>
   {:else}
-    <AccordionItem title="Natural Language Classifier" bind:ref>1</AccordionItem
+    <AccordionItem titleText="Natural Language Classifier" bind:ref
+      >1</AccordionItem
     >
-    <AccordionItem title="Natural Language Understanding" disabled
+    <AccordionItem titleText="Natural Language Understanding" disabled
       >2</AccordionItem
     >
     <AccordionItem
-      title="Language Translator"
+      titleText="Language Translator"
       class={itemClass}
-      on:click={() => onItemClick()}
-      on:focus={() => onFocus()}
-      on:blur={() => onBlur()}
-      on:keydown={(e) => onKeydown(e.key)}
-      on:toggle={(e) => onToggle(e.detail.open)}>3</AccordionItem
+      onclick={() => onItemClick()}
+      onfocus={() => onFocus()}
+      onblur={() => onBlur()}
+      onkeydown={(e) => onKeydown(e.key)}
+      onopenchange={(e) => onToggle(e.open)}>3</AccordionItem
     >
   {/if}
 </Accordion>

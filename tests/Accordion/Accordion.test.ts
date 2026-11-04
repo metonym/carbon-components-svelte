@@ -307,9 +307,11 @@ describe("Accordion", () => {
     {
       name: "AccordionItem",
       props: { itemClass: "custom-item" },
-      getElement: () => screen.getByText("Language Translator").closest("li"),
+      // Rest props, `class` included, go to the heading button.
+      getElement: () =>
+        screen.getByText("Language Translator").closest("button"),
       custom: "custom-item",
-      base: "bx--accordion__item",
+      base: "bx--accordion__heading",
     },
   ])(
     "should apply custom class to $name",

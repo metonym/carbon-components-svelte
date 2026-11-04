@@ -13,10 +13,10 @@
 
 <Accordion disabled={accordionDisabled}>
   <AccordionItem
-    title="Natural Language Classifier"
+    titleText="Natural Language Classifier"
     {open}
     {disabled}
-    on:toggle={(e) => onToggle(e.detail.open)}
+    onopenchange={(e) => onToggle(e.open)}
   >
     <p>Natural Language Classifier content</p>
   </AccordionItem>

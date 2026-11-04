@@ -49,7 +49,7 @@
 
 <Accordion {disabled}>
   {#each items as item}
-    <AccordionItem title={item.title} {open}>
+    <AccordionItem titleText={item.title} {open}>
       <p>{item.description}</p>
     </AccordionItem>
   {/each}

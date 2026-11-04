@@ -4,7 +4,7 @@
 </script>
 
 <Accordion disabled>
-  <AccordionItem title="Natural Language Classifier">
+  <AccordionItem titleText="Natural Language Classifier">
     <p>
       Natural Language Classifier uses advanced natural language processing and
       machine learning techniques to create custom classification models. Users
@@ -12,13 +12,13 @@
       inputted text.
     </p>
   </AccordionItem>
-  <AccordionItem title="Natural Language Understanding">
+  <AccordionItem titleText="Natural Language Understanding">
     <p>
       Analyze text to extract meta-data from content such as concepts, entities,
       emotion, relations, sentiment and more.
     </p>
   </AccordionItem>
-  <AccordionItem title="Language Translator">
+  <AccordionItem titleText="Language Translator">
     <p>
       Translate text, documents, and websites from one language to another.
       Create industry or region-specific translations via the service's
