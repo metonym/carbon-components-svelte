@@ -18,5 +18,5 @@
   {readonlyText}
   labelText="Readonly checkbox test"
   data-testid="checkbox"
-  on:change={onChange}
+  onchange={onChange}
 />

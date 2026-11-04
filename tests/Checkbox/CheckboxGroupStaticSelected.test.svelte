@@ -11,7 +11,7 @@
   legendText="Notification preferences"
   name="prefs"
   selected={["email"]}
-  on:change={(e) => onChange(e.detail)}
+  onselectedchange={(e) => onChange(e.selected)}
 >
   <Checkbox value="email" labelText="Email" />
   <Checkbox value="sms" labelText="SMS" />

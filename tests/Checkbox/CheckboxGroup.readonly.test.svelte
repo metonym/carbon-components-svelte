@@ -21,7 +21,7 @@
   {id}
   {readonlyText}
   bind:selected
-  on:change={(e) => onChange(e.detail)}
+  onselectedchange={(e) => onChange(e.selected)}
 >
   <Checkbox labelText="Option 1" value="1" />
   <Checkbox labelText="Option 2" value="2" />

@@ -16,16 +16,16 @@
 </script>
 
 <div data-testid="checkbox">
-  <Checkbox labelText="Enable failover"><AILabel slot="decorator" /></Checkbox>
+  <Checkbox labelText="Enable failover">{#snippet decorator()}<AILabel />{/snippet}</Checkbox>
 </div>
 <div data-testid="checkbox-inline">
   <Checkbox labelText="Inline">
-    <AILabel slot="decorator" kind="inline" />
+    {#snippet decorator()}<AILabel kind="inline" />{/snippet}
   </Checkbox>
 </div>
 <div data-testid="checkbox-group">
   <CheckboxGroup legendText="Channels">
-    <AILabel slot="decorator" kind="inline" />
+    {#snippet decorator()}<AILabel kind="inline" />{/snippet}
     <Checkbox labelText="Email" />
   </CheckboxGroup>
 </div>

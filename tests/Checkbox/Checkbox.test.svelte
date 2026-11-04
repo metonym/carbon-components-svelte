@@ -22,9 +22,9 @@
   {helperText}
   {tabindex}
   data-testid="checkbox"
-  on:check={onCheck}
-  on:click={onClick}
-  on:change={onChange}
-  on:focus={onFocus}
-  on:blur={onBlur}
+  oncheckedchange={(e) => onCheck(e.checked)}
+  onclick={onClick}
+  onchange={onChange}
+  onfocus={onFocus}
+  onblur={onBlur}
 />

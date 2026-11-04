@@ -193,9 +193,9 @@ Checkboxes, radio buttons, and their groups have a `decorator` slot too. The lab
 
 <Stack gap={5}>
   <Checkbox labelText="Enable automatic failover" checked>
-    <AILabel slot="decorator">
+    {#snippet decorator()}<AILabel>
       <p>Recommended because this database had two outages last quarter.</p>
-    </AILabel>
+    </AILabel>{/snippet}
   </Checkbox>
   <RadioButtonGroup legendText="Billing cycle" selected="annual">
     <AILabel slot="decorator">

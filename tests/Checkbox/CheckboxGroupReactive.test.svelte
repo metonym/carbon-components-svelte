@@ -13,7 +13,7 @@
   value="option-1"
   labelText="Option 1"
   data-testid="checkbox-1"
-  on:check={(e) => onCheck?.("option-1", e.detail)}
+  oncheckedchange={(e) => onCheck?.("option-1", e.checked)}
 />
 
 <Checkbox
@@ -21,7 +21,7 @@
   value="option-2"
   labelText="Option 2"
   data-testid="checkbox-2"
-  on:check={(e) => onCheck?.("option-2", e.detail)}
+  oncheckedchange={(e) => onCheck?.("option-2", e.checked)}
 />
 
 <Checkbox
@@ -29,7 +29,7 @@
   value="option-3"
   labelText="Option 3"
   data-testid="checkbox-3"
-  on:check={(e) => onCheck?.("option-3", e.detail)}
+  oncheckedchange={(e) => onCheck?.("option-3", e.checked)}
 />
 
 <div data-testid="group-value">{JSON.stringify(group)}</div>

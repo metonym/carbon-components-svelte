@@ -8,9 +8,7 @@
 </script>
 
 <CheckboxGroup {...$$restProps} hideLegend={hideLabel}>
-  <svelte:fragment slot="legendChildren"
-    ><slot name="labelChildren" /></svelte:fragment
-  >
+  {#snippet legendText()}<slot name="labelChildren" />{/snippet}
   <Checkbox value="a" labelText="A" />
   <Checkbox value="b" labelText="B" />
 </CheckboxGroup>

@@ -11,5 +11,5 @@
   bind:checked
   labelText="Reactive bind test"
   data-testid="checkbox-reactive"
-  on:check={onCheck}
+  oncheckedchange={(e) => onCheck(e.checked)}
 />

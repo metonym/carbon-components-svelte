@@ -15,7 +15,7 @@
     {value}
     name="agree"
     labelText="Agree"
-    on:check={onCheck}
+    oncheckedchange={(e) => onCheck(e.checked)}
   />
 </form>
 <p data-testid="bound">{String(checked)}</p>

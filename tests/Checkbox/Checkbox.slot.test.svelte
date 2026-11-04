@@ -3,7 +3,7 @@
 </script>
 
 <Checkbox data-testid="checkbox-slot">
-  <span slot="labelChildren" data-testid="custom-label">
+  {#snippet labelText()}<span data-testid="custom-label">
     Custom label content
-  </span>
+  </span>{/snippet}
 </Checkbox>
