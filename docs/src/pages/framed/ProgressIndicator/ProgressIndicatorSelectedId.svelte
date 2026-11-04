@@ -7,7 +7,7 @@
     Stack,
   } from "carbon-components-svelte";
 
-  let selectedId = "step-b";
+  let currentId = "step-b";
   let showStepA = true;
   let showStepB = true;
   let showStepC = true;
@@ -29,16 +29,12 @@
     <Checkbox bind:checked={showStepD} labelText="Show Deploy step" />
   </div>
   <Stack gap={4} orientation="horizontal" align="center">
-    <Button
-      kind="tertiary"
-      size="small"
-      onclick={() => (selectedId = "step-c")}
-    >
+    <Button kind="tertiary" size="small" onclick={() => (currentId = "step-c")}>
       Select the Stage step by id
     </Button>
-    <div><strong>selectedId:</strong> {selectedId}</div>
+    <div><strong>currentId:</strong> {currentId}</div>
   </Stack>
-  <ProgressIndicator bind:selectedId>
+  <ProgressIndicator bind:currentId>
     {#each visibleSteps as step (step.id)}
       <ProgressStep id={step.id} label={step.label} complete />
     {/each}
