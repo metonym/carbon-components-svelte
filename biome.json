@@ -119,7 +119,8 @@
             "useAriaPropsSupportedByRole": "off",
             "useFocusableInteractive": "off",
             "noNoninteractiveTabindex": "off",
-            "noAmbiguousAnchorText": "off"
+            "noAmbiguousAnchorText": "off",
+            "noStaticElementInteractions": "off"
           }
         }
       }
