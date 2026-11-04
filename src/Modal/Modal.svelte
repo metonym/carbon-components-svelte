@@ -177,7 +177,7 @@
      */
     lazy = false,
 
-    /** Set an id for the top-level element 
+    /** Set an id for the top-level element
      * @type {string}
      */
     id = fallbackId,
@@ -249,37 +249,6 @@
     ...rest
   } = $props();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   import { onMount, setContext, untrack } from "svelte";
   import { readable, writable } from "svelte/store";
   import Decorator from "../AILabel/Decorator.svelte";
@@ -316,7 +285,11 @@
    * @param {{ trigger?: string }} [detail]
    */
   function lifecycleEvent(type, detail) {
-    if (type !== "close" || !detail?.trigger || detail.trigger === "programmatic")
+    if (
+      type !== "close" ||
+      !detail?.trigger ||
+      detail.trigger === "programmatic"
+    )
       return true;
     const payload = cancelable({
       open: false,
@@ -335,7 +308,9 @@
       container,
       selectorPrimaryFocus,
       fallbacks: [
-        danger ? container.querySelector(".bx--btn--secondary") : null,
+        danger
+          ? (container?.querySelector(".bx--btn--secondary") ?? null)
+          : null,
         primaryButtonRef,
         buttonRef,
         // With nothing else to focus, focus the dialog itself so Escape
@@ -429,10 +404,14 @@
    * surface. `Decorator` clears it when no `AILabel` claims it.
    * @type {import("svelte/store").Writable<undefined | "active" | "revert">}
    */
-  const aiLabelState = writable(untrack(() => decorator) ? "active" : undefined);
+  const aiLabelState = writable(
+    untrack(() => decorator) ? "active" : undefined,
+  );
 </script>
 
-{#snippet content(/** @type {string | import("svelte").Snippet | undefined} */ source)}
+{#snippet content(
+  /** @type {string | import("svelte").Snippet | undefined} */ source,
+)}
   {#if typeof source === "function"}{@render source()}{:else}{source}{/if}
 {/snippet}
 

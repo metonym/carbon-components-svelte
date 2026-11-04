@@ -129,9 +129,7 @@
       readonly,
     }),
   );
-  const { helperId, errorId, readonlyId, warnId } = $derived(
-    buildFieldIds(id),
-  );
+  const { helperId, errorId, readonlyId, warnId } = $derived(buildFieldIds(id));
 
   // A form reset restores the switch without a change event. Read the DOM
   // back, like the other form controls do. A read-only switch keeps its
@@ -206,8 +204,8 @@
         helperText,
         invalidText,
         warnText,
-        errorId,
-        warnId,
+        errorId: errorId ?? "",
+        warnId: warnId ?? "",
         helperId,
       }),
       ariaDescribedBy,

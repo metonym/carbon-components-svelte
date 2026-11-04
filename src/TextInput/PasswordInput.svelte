@@ -204,7 +204,9 @@
   const {
     position: effectiveTooltipPosition,
     alignment: effectiveTooltipAlignment,
-  } = $derived(tooltipPlacement(tooltipAlign, tooltipPosition, tooltipAlignment));
+  } = $derived(
+    tooltipPlacement(tooltipAlign, tooltipPosition, tooltipAlignment),
+  );
 
   // Set for one open when the in-place tooltip turns out to be cut off by
   // a box around it (a scrolling panel, a DataTable): it shows in a portal
@@ -306,7 +308,6 @@
 {#snippet content(/** @type {string | import("svelte").Snippet} */ source)}
   {#if typeof source === "function"}{@render source()}{:else}{source}{/if}
 {/snippet}
-
 
 <div
   use:fieldsetDisabled={(value) => (inDisabledFieldset = value)}
@@ -417,8 +418,8 @@
             warnText,
             helperText,
             isFluid,
-            errorId,
-            warnId,
+            errorId: errorId ?? "",
+            warnId: warnId ?? "",
             helperId,
             includeErrorId: false,
           }),

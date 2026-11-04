@@ -158,8 +158,11 @@
   import { fieldsetDisabled } from "../utils/fieldset-disabled.js";
   import { formReset } from "../utils/form-reset.js";
   import { overflowTitle } from "../utils/overflow-title.js";
-  import { getCheckboxGroup, hasCheckboxGroup } from "./checkbox-group-context.js";
   import CheckboxSkeleton from "./CheckboxSkeleton.svelte";
+  import {
+    getCheckboxGroup,
+    hasCheckboxGroup,
+  } from "./checkbox-group-context.js";
 
   const ctx = hasCheckboxGroup() ? getCheckboxGroup() : undefined;
 
@@ -202,9 +205,7 @@
       readonly: effectiveReadonly,
     }),
   );
-  const { helperId, errorId, warnId, readonlyId } = $derived(
-    buildFieldIds(id),
-  );
+  const { helperId, errorId, warnId, readonlyId } = $derived(buildFieldIds(id));
   // A decorative checkbox's owner (e.g. a MultiSelect option) already
   // announces read-only, so skip the per-checkbox description.
   const describeReadonly = $derived(effectiveReadonly && !decorative);
@@ -314,8 +315,8 @@
           invalidText,
           warnText,
           helperText,
-          errorId,
-          warnId,
+          errorId: errorId ?? "",
+          warnId: warnId ?? "",
           helperId,
         }),
         ariaDescribedBy,

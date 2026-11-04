@@ -26,7 +26,7 @@
      * Ignored when `Tabs` sets `navigation`.
      * @type {number | string | undefined}
      */
-    tabindex = "0",
+    tabindex = 0,
 
     /**
      * Set an id for the tab.
@@ -192,7 +192,13 @@
   <a
     bind:this={ref}
     role={ctx.navigation ? undefined : "tab"}
-    tabindex={ctx.navigation ? undefined : selected ? tabindex : "-1"}
+    tabindex={ctx.navigation
+      ? undefined
+      : selected
+        ? tabindex == null
+          ? undefined
+          : Number(tabindex)
+        : -1}
     aria-selected={ctx.navigation ? undefined : selected}
     aria-current={ctx.navigation && selected ? "page" : undefined}
     aria-disabled={disabled}

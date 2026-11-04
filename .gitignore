@@ -35,3 +35,6 @@ tests/zzprobe/
 **/zz*.test.ts
 **/Zz*.test.svelte
 zz.*.config.ts
+
+# svelte-typecheck output
+.svelte-check/

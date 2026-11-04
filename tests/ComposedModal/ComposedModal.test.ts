@@ -4,7 +4,6 @@ import { user } from "../utils/user";
 import ComposedModalTest from "./ComposedModal.test.svelte";
 import ComposedModalFocusReturnTest from "./ComposedModalFocusReturn.test.svelte";
 import ComposedModalFocusTrapTest from "./ComposedModalFocusTrap.test.svelte";
-import ComposedModalUnmountOnCloseTest from "./ComposedModalUnmountOnClose.test.svelte";
 
 async function flushProgrammaticClose() {
   await tick();
