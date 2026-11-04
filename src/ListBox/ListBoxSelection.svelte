@@ -58,15 +58,18 @@
     clearSelection: "clearSelection",
   });
 
-  import { getContext } from "svelte";
   import { on } from "svelte/events";
+  import {
+    getMultiSelect,
+    hasMultiSelect,
+  } from "../MultiSelect/multi-select-context.js";
   import Close from "../icons/Close.svelte";
 
   const defaultTranslations = {
     [translationIds.clearAll]: "Clear all selected items",
     [translationIds.clearSelection]: "Clear selected item",
   };
-  const ctx = getContext("carbon:MultiSelect");
+  const ctx = hasMultiSelect() ? getMultiSelect() : undefined;
 
   // Declare the node to a `MultiSelect`, and release that same node when it
   // goes away: `bind:this` has nulled `ref` by then.
@@ -74,7 +77,7 @@
     const node = ref;
     if (!ctx || !node) return;
     ctx.declareRef({ key: "selection", ref: node });
-    return () => ctx.releaseRef?.({ key: "selection", ref: node });
+    return () => ctx.releaseRef({ key: "selection", ref: node });
   });
 
   const translationId = $derived(

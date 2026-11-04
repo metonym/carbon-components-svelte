@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { ComponentType } from "svelte";
+  import { RUNES_COMPONENTS } from "../runes-components";
 
   export let component: ComponentType;
   export let fieldProps: Record<string, unknown> = {};
@@ -7,6 +8,12 @@
   export let onInput: () => void = () => {};
   export let onChange: () => void = () => {};
   export let onClear: () => void = () => {};
+
+  // A runes field's native `input` and `change` reach its element through
+  // rest props, not `on:` forwarding.
+  $: nativeHandlers = RUNES_COMPONENTS.has(component)
+    ? { oninput: onInput, onchange: onChange }
+    : {};
 </script>
 
 <form data-testid="form">
@@ -16,6 +23,7 @@
     name="field"
     labelText="Field"
     {...fieldProps}
+    {...nativeHandlers}
     onvaluechange={onInput}
     onvaluecommit={onChange}
     oninput={onInput}

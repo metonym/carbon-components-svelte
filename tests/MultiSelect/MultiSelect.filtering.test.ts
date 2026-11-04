@@ -1,5 +1,4 @@
 import { fireEvent, render, screen } from "@testing-library/svelte";
-import type MultiSelectComponent from "carbon-components-svelte/MultiSelect/MultiSelect.svelte";
 import type { MultiSelectItem } from "carbon-components-svelte/MultiSelect/MultiSelect.svelte";
 import { fuzzyMatch } from "carbon-components-svelte/utils/fuzzy-match";
 import type { ComponentProps } from "svelte";
@@ -236,7 +235,7 @@ describe("MultiSelect", () => {
     // user-event stalls under fake timers, so these tests drive the input
     // with fireEvent. An input event both sets `value` and opens the menu.
     const renderFiltered = (
-      props: Partial<ComponentProps<MultiSelectComponent>> = {},
+      props: Partial<ComponentProps<MultiSelect>> = {},
     ) => {
       render(MultiSelect, {
         props: { items, filterable: true, placeholder: "Filter...", ...props },

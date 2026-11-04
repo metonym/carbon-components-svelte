@@ -8,7 +8,7 @@
 </script>
 
 <MultiSelect labelText="Contact" {items} filterable>
-  <svelte:fragment slot="empty" let:value>
+  {#snippet empty({ value })}
     {`Nothing like "${value}"`}
-  </svelte:fragment>
+  {/snippet}
 </MultiSelect>

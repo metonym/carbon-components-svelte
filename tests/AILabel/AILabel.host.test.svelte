@@ -59,7 +59,7 @@
 </div>
 <div data-testid="multi-select">
   <MultiSelect labelText="Regions" {items}
-    ><AILabel slot="decorator" /></MultiSelect
+    >{#snippet decorator()}<AILabel />{/snippet}</MultiSelect
   >
 </div>
 <div data-testid="aligned">

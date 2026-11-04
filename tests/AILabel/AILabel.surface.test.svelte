@@ -93,7 +93,7 @@
 </div>
 <div data-testid="multi-select">
   <MultiSelect labelText="Regions" {items}
-    ><AILabelOrIcon slot="decorator" {ai} /></MultiSelect
+    >{#snippet decorator()}<AILabelOrIcon {ai} />{/snippet}</MultiSelect
   >
 </div>
 <div data-testid="table-header">

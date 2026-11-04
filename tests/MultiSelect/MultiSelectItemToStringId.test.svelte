@@ -13,5 +13,5 @@
   itemToString={(item) => item.id}
   label="Choose SKU"
   labelText="SKU"
-  on:select={() => {}}
+  onselectedchange={() => {}}
 />

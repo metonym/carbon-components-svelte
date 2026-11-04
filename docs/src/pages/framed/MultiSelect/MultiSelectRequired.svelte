@@ -20,7 +20,7 @@
         { id: "1", text: "Email" },
         { id: "2", text: "Fax" },
       ]}
-      on:select={() => (submitted = false)}
+      onselectedchange={() => (submitted = false)}
     />
     <div>
       <Button type="submit">Submit</Button>

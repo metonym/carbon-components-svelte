@@ -97,6 +97,6 @@
   {condensed}
   {direction}
   bind:sortedItems
-  on:select={(e) => onSelect(e.detail)}
-  on:clear={(e) => onClear(e.detail)}
+  onselectedchange={(e) => onSelect(e)}
+  onclear={(e) => onClear(e)}
 />

@@ -16,12 +16,11 @@
   labelText="Custom item height (60px)"
   {items}
   bind:selectedIds
-  let:item
 >
-  <Stack gap={2}>
-    <strong>{item.text}</strong>
-    <span>{item.description}</span>
-  </Stack>
+  {#snippet children({ item })}<Stack gap={2}>
+      <strong>{item.text}</strong>
+      <span>{item.description}</span>
+    </Stack>{/snippet}
 </MultiSelect>
 
 <style>

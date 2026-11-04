@@ -17,7 +17,7 @@
   selectionDisplay="tags"
   bind:selectedIds
 >
-  <svelte:fragment slot="tag" let:item let:index let:props>
+  {#snippet tag({ item, index, props })}
     <Tag
       {...props}
       filter={props.filter && item.id !== "a"}
@@ -26,7 +26,7 @@
     >
       {item.text}
     </Tag>
-  </svelte:fragment>
+  {/snippet}
 </MultiSelect>
 
 <div data-testid="selected">{JSON.stringify(selectedIds)}</div>

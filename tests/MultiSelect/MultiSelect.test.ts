@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/svelte";
 import type MultiSelectComponent from "carbon-components-svelte/MultiSelect/MultiSelect.svelte";
 import type { MultiSelectItem } from "carbon-components-svelte/MultiSelect/MultiSelect.svelte";
 import MultiSelectReal from "carbon-components-svelte/MultiSelect/MultiSelect.svelte";
-import type { ComponentEvents, ComponentProps } from "svelte";
+import type { ComponentProps } from "svelte";
 import { tick } from "svelte";
 import { user } from "../utils/user";
 import MultiSelectLabelSlot from "./MultiSelect.slot.test.svelte";
@@ -893,16 +893,37 @@ describe("MultiSelect", () => {
     for (const id of ids) expect(document.getElementById(id)).not.toBeNull();
   });
 
-  // Interim: `ListBoxSelection` calls `onclear({ trigger })`, so the legacy
-  // `clear` event has no DOM event detail until MultiSelect migrates.
-  it("dispatches clear once from the clear button", async () => {
+  it("calls onclear with the click trigger from the clear button", async () => {
     const onClear = vi.fn();
+    const onSelect = vi.fn();
     render(MultiSelect, {
-      props: { items, selectedIds: ["0", "1"], onClear },
+      props: { items, selectedIds: ["0", "1"], onClear, onSelect },
     });
 
     await user.click(screen.getByRole("button", { name: /clear/i }));
-    expect(onClear).toHaveBeenCalledOnce();
+    expect(onClear).toHaveBeenCalledExactlyOnceWith({ trigger: "click" });
+    // The cleared selection is reported after `onclear`.
+    expect(onSelect).toHaveBeenCalledWith(
+      expect.objectContaining({ selectedIds: [] }),
+    );
+    expect(onClear.mock.invocationCallOrder[0]).toBeLessThan(
+      onSelect.mock.invocationCallOrder[0],
+    );
+  });
+
+  it("calls no callback when the selection or open state is set from outside", async () => {
+    const onSelect = vi.fn();
+    const onClear = vi.fn();
+    const { rerender } = render(MultiSelect, {
+      props: { items, selectedIds: ["0"], onSelect, onClear },
+    });
+
+    await rerender({ selectedIds: ["1", "2"] });
+    await rerender({ open: true });
+    await rerender({ open: false });
+
+    expect(onSelect).not.toHaveBeenCalled();
+    expect(onClear).not.toHaveBeenCalled();
   });
 
   it("clears all selections when clear button is clicked", async () => {
@@ -1073,7 +1094,7 @@ describe("MultiSelect", () => {
       ]);
     });
 
-    it("should support generic types with ComponentProps and ComponentEvents", () => {
+    it("should support generic types with ComponentProps", () => {
       type Product = {
         id: string;
         text: string;
@@ -1084,7 +1105,6 @@ describe("MultiSelect", () => {
 
       type ComponentType = MultiSelectComponent<Product>;
       type Props = ComponentProps<ComponentType>;
-      type Events = ComponentEvents<ComponentType>;
 
       expectTypeOf<NonNullable<Props["items"]>>().toEqualTypeOf<
         readonly Product[]
@@ -1100,34 +1120,35 @@ describe("MultiSelect", () => {
       });
       expectTypeOf(itemToInput).parameter(0).toEqualTypeOf<Product>();
 
-      type SelectEvent = Events["select"];
-      type SelectEventDetail =
-        SelectEvent extends CustomEvent<infer T> ? T : never;
+      type SelectEventDetail = Parameters<
+        NonNullable<Props["onselectedchange"]>
+      >[0];
       expectTypeOf<SelectEventDetail["selected"][0]>().toEqualTypeOf<Product>();
       expectTypeOf<
         SelectEventDetail["unselected"][0]
       >().toEqualTypeOf<Product>();
     });
 
-    it("types the clear event detail as the originating DOM event", () => {
-      type Events = ComponentEvents<MultiSelectComponent>;
-      type ClearDetail =
-        Events["clear"] extends CustomEvent<infer T> ? T : never;
-      expectTypeOf<ClearDetail>().toEqualTypeOf<KeyboardEvent | MouseEvent>();
+    it("types the onclear payload with its trigger", () => {
+      type ClearDetail = Parameters<
+        NonNullable<ComponentProps<MultiSelectComponent>["onclear"]>
+      >[0];
+      expectTypeOf<ClearDetail>().toEqualTypeOf<{
+        trigger: "click" | "keydown";
+      }>();
     });
 
     it("should default to MultiSelectItem when generic is not specified", () => {
       type ComponentType = MultiSelectComponent;
       type Props = ComponentProps<ComponentType>;
-      type Events = ComponentEvents<ComponentType>;
 
       expectTypeOf<NonNullable<Props["items"]>>().toEqualTypeOf<
         readonly MultiSelectItem[]
       >();
 
-      type SelectEvent = Events["select"];
-      type SelectEventDetail =
-        SelectEvent extends CustomEvent<infer T> ? T : never;
+      type SelectEventDetail = Parameters<
+        NonNullable<Props["onselectedchange"]>
+      >[0];
       expectTypeOf<
         SelectEventDetail["selected"][0]
       >().toEqualTypeOf<MultiSelectItem>();
@@ -1161,16 +1182,15 @@ describe("MultiSelect", () => {
       it("should default Id to any when not specified", () => {
         type ComponentType = MultiSelectComponent;
         type Props = ComponentProps<ComponentType>;
-        type Events = ComponentEvents<ComponentType>;
 
         expectTypeOf<Props["selectedIds"]>().toEqualTypeOf<
           // biome-ignore lint/suspicious/noExplicitAny: Testing default any type
           readonly any[] | undefined
         >();
 
-        type SelectEvent = Events["select"];
-        type SelectEventDetail =
-          SelectEvent extends CustomEvent<infer T> ? T : never;
+        type SelectEventDetail = Parameters<
+          NonNullable<Props["onselectedchange"]>
+        >[0];
         // biome-ignore lint/suspicious/noExplicitAny: Testing default any type
         expectTypeOf<SelectEventDetail["selectedIds"]>().toEqualTypeOf<any[]>();
       });
@@ -1191,9 +1211,9 @@ describe("MultiSelect", () => {
         type UnionId = "a" | "b" | "c";
         type UnionItem = { id: UnionId; text: string };
         type UnionComponent = MultiSelectComponent<UnionItem>;
-        type UnionEvents = ComponentEvents<UnionComponent>;
-        type UnionSelectDetail =
-          UnionEvents["select"] extends CustomEvent<infer T> ? T : never;
+        type UnionSelectDetail = Parameters<
+          NonNullable<ComponentProps<UnionComponent>["onselectedchange"]>
+        >[0];
         expectTypeOf<UnionSelectDetail["selectedIds"]>().toEqualTypeOf<
           UnionId[]
         >();
@@ -1215,15 +1235,14 @@ describe("MultiSelect", () => {
 
         type ComponentType = MultiSelectComponent<InferredItem>;
         type Props = ComponentProps<ComponentType>;
-        type Events = ComponentEvents<ComponentType>;
 
         expectTypeOf<Props["selectedIds"]>().toEqualTypeOf<
           readonly InferredId[] | undefined
         >();
 
-        type SelectEvent = Events["select"];
-        type SelectEventDetail =
-          SelectEvent extends CustomEvent<infer T> ? T : never;
+        type SelectEventDetail = Parameters<
+          NonNullable<Props["onselectedchange"]>
+        >[0];
         expectTypeOf<SelectEventDetail["selectedIds"]>().toEqualTypeOf<
           InferredId[]
         >();

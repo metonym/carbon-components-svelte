@@ -48,10 +48,13 @@
     ...rest
   } = $props();
 
-  import { getContext } from "svelte";
   import { on } from "svelte/events";
+  import {
+    getMultiSelect,
+    hasMultiSelect,
+  } from "../MultiSelect/multi-select-context.js";
 
-  const ctx = getContext("carbon:MultiSelect");
+  const ctx = hasMultiSelect() ? getMultiSelect() : undefined;
 
   // Declare the node to a `MultiSelect`, and release that same node when it
   // goes away: `bind:this` has nulled `ref` by then.
@@ -59,7 +62,7 @@
     const node = ref;
     if (!ctx || !node) return;
     ctx.declareRef({ key: "field", ref: node });
-    return () => ctx.releaseRef?.({ key: "field", ref: node });
+    return () => ctx.releaseRef({ key: "field", ref: node });
   });
 
   const expanded = $derived(ariaExpanded === true || ariaExpanded === "true");

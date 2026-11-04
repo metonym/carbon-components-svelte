@@ -24,9 +24,9 @@ With the menu open, type a character to move the highlight to the next enabled i
 
 Customize how items render and what supporting text appears around the field.
 
-### Custom slot
+### Custom option content
 
-Override the default slot to customize item rendering. Use `let:item`, `let:index`, `let:selected`, and `let:highlighted` to access each item's data and its derived selected and highlighted state.
+Pass `children` to customize item rendering. The snippet receives `{ item, index, selected, highlighted }`: each item's data and its derived selected and highlighted state.
 
 <FileSource src="/framed/MultiSelect/MultiSelectSlot" />
 
@@ -267,16 +267,16 @@ Tags wrap onto as many rows as they need. Set `tagOverflow` to `"collapse"` to k
 
 ### Custom tags
 
-Use the `tag` slot to render each selected item's tag yourself, for example with a color `type` or an icon. Spread the slot's `props` onto the tag so closing it still deselects the item. Leave out `filter` to lock a tag in place.
+Use the `tag` snippet to render each selected item's tag yourself, for example with a color `type` or an icon. It receives `{ item, index, props }`; spread `props` onto the tag so closing it still deselects the item. Leave out `filter` to lock a tag in place.
 
 <MultiSelect selectionDisplay="tags" selectedIds="{["critical", "low"]}" labelText="Severity" label="Select severities..."
     items="{[{id: "critical", text: "Critical"},
     {id: "high", text: "High"},
     {id: "low", text: "Low"}]}"
   >
-  <svelte:fragment slot="tag" let:item let:props>
+  {#snippet tag({ item, props })}
     <Tag {...props} type={item.id === "critical" ? "red" : "gray"}>{item.text}</Tag>
-  </svelte:fragment>
+  {/snippet}
 </MultiSelect>
 
 In Svelte 5, pass a snippet instead: `{#snippet tag({ item, props })}`.
@@ -304,7 +304,7 @@ Each group is exposed to screen readers as a group named by its label. The selec
 
 ### Custom header
 
-Override the `group` slot to customize a header. Use `let:group` for the label and `let:items` for the group's items, each with a `checked` flag. The slot changes the visible header only; screen readers still announce the plain label.
+Pass a `group` snippet to customize a header. It receives `{ group, items }`: the label, and the group's items, each with a `checked` flag. The snippet changes the visible header only; screen readers still announce the plain label.
 
 <FileSource src="/framed/MultiSelect/MultiSelectGroupHeader" />
 
@@ -332,7 +332,7 @@ Provide a custom `filterItem` to override the default substring matching. This e
 
 ### Highlight matches
 
-Besides `matched`, `fuzzyMatch` returns the `indices` of the characters that matched. Pass them to the `highlightSegments` utility (also exported from `carbon-components-svelte`) to split the item text into matched and unmatched runs, then bold the matched runs in the default slot. Bind `value` to read the filter text inside the slot.
+Besides `matched`, `fuzzyMatch` returns the `indices` of the characters that matched. Pass them to the `highlightSegments` utility (also exported from `carbon-components-svelte`) to split the item text into matched and unmatched runs, then bold the matched runs in `children`. Bind `value` to read the filter text inside the snippet.
 
 <FileSource src="/framed/MultiSelect/MultiSelectHighlightMatch" />
 
@@ -358,16 +358,16 @@ Set `emptyText` to change the message, or pass a function that builds it from th
     {id: "2", text: "Fax"}]}"
   />
 
-Use the `empty` slot for richer content. `let:value` is the filter text.
+Use the `empty` snippet for richer content. It receives `{ value }`, the filter text.
 
 <MultiSelect filterable labelText="Contact" placeholder="Filter contact methods..."
     items="{[{id: "0", text: "Slack"},
     {id: "1", text: "Email"},
     {id: "2", text: "Fax"}]}"
   >
-  <svelte:fragment slot="empty" let:value>
+  {#snippet empty({ value })}
     No contact method named "{value}".
-  </svelte:fragment>
+  {/snippet}
 </MultiSelect>
 
 Without `filterable`, an empty `items` list shows "No options" instead, such as before async options arrive. `loading` holds the message back, and screen readers hear it through the multi-select's live region.
@@ -394,31 +394,31 @@ Manage multiple dropdowns in a form with coordinated state.
 
 Respond to selection, clearing, and the menu opening and closing.
 
-### Select
+### Selection change
 
-Use `on:select` to listen for selection changes. `event.detail` includes `selectedIds`, `selected` (the checked items), and `unselected` (the rest). A [select-all](#select-all) item is left out of all three. It fires when the user toggles an option, selects a [range](#range-selection) with <DocKbd label="Shift" />, selects all with the select-all item or <DocKbd label="Ctrl" /> + <DocKbd label="A" />, or clears the selection.
+`onselectedchange` is called with `{ selectedIds, selected, unselected }` when the user changes the selection: `selected` is the checked items and `unselected` the rest. A [select-all](#select-all) item is left out of all three. It is called when the user toggles an option, selects a [range](#range-selection) with <DocKbd label="Shift" />, selects all with the select-all item or <DocKbd label="Ctrl" /> + <DocKbd label="A" />, removes a [tag](#selected-tags), or clears the selection. It isn't called when `selectedIds` is set from outside; bind `selectedIds` to follow every change.
 
 <MultiSelect labelText="Contact" label="Select contact methods..."
     items="{[{id: "0", text: "Slack"},
     {id: "1", text: "Email"},
     {id: "2", text: "Fax"}]}"
-    on:select="{(e) => console.log(e.detail)}"
+    onselectedchange={(e) => console.log(e)}
   />
 
 ### Clear
 
-Use `on:clear` to listen for the clear ("x") button that appears once there is a selection, activated by click or by keyboard. `event.detail` is the originating `MouseEvent` or `KeyboardEvent`. Clearing with <DocKbd label="Delete" /> or <DocKbd label="Backspace" />, or calling [`clear()`](#clear-selection), does not dispatch `clear`. All three still dispatch `select`.
+`onclear` is called with `{ trigger }` when the user clears the selection: `"click"` for the clear ("x") button, or `"keydown"` for <DocKbd label="Enter" /> or <DocKbd label="Space" /> on it, or <DocKbd label="Delete" /> or <DocKbd label="Backspace" /> in the field. `onselectedchange` follows it. Calling [`clear()`](#clear-selection) calls neither.
 
 <MultiSelect selectedIds="{["0", "1"]}" labelText="Contact" label="Select contact methods..."
     items="{[{id: "0", text: "Slack"},
     {id: "1", text: "Email"},
     {id: "2", text: "Fax"}]}"
-    on:clear="{(e) => console.log(e.detail)}"
+    onclear={(e) => console.log(e.trigger)}
   />
 
-### Open
+### Open and close
 
-Use `on:open` to know when the menu opens and why. `event.detail.trigger` is `"click"`, `"keydown"`, `"input"` (typing a filter opened it), or `"programmatic"` when `open` is set from outside, such as through `bind:open`. It fires once per open, after the menu renders, and not for a multi-select rendered already open.
+`onopenchange` is called with `{ open, trigger }` when the user opens or closes the menu. An open reports `"click"`, `"keydown"`, or `"input"` (typing a filter opened it), once the menu has rendered. A close reports `"click"` (clicking the field or the chevron), `"escape-key"` (<DocKbd label="Escape" />, <DocKbd label="Tab" />, or <DocKbd label="Alt" /> + <DocKbd label="ArrowUp" /> on an open menu), or `"outside-click"` (a click or focus outside the multi-select and its menu). Selecting an option keeps the menu open. It isn't called when `open` is set from outside, or for a multi-select rendered already open.
 
 <MultiSelect
   labelText="Contact"
@@ -428,19 +428,12 @@ Use `on:open` to know when the menu opens and why. `event.detail.trigger` is `"c
     { id: "1", text: "Email" },
     { id: "2", text: "Fax" },
   ]}
-  on:open={(e) => console.log(e.detail.trigger)}
+  onopenchange={(e) => console.log(e.open, e.trigger)}
 />
 
-### Close
+### Native events
 
-Use `on:close` to know when the menu is dismissed and why. `event.detail.trigger` is `"escape-key"` (<DocKbd label="Escape" />, or <DocKbd label="Alt" /> + <DocKbd label="ArrowUp" /> on an open menu) or `"outside-click"` (a click or focus outside the multi-select and its menu). Selecting an option keeps the menu open. Clicking the field to collapse it, or pressing <DocKbd label="Tab" />, closes the menu without dispatching `close`.
-
-<MultiSelect labelText="Contact" label="Select contact methods..."
-    items="{[{id: "0", text: "Slack"},
-    {id: "1", text: "Email"},
-    {id: "2", text: "Fax"}]}"
-    on:close="{(e) => console.log(e.detail.trigger)}"
-  />
+Rest props, including native handlers such as `onfocus`, `onblur`, `onkeydown` and `oninput`, go to the field: the filter `<input>` when `filterable`, otherwise the field button.
 
 ## Loading
 
@@ -469,7 +462,7 @@ Set `virtualize={false}` to explicitly disable virtualization, even for large li
 
 ### Load more
 
-`scrollend` fires when the menu is scrolled near the bottom so you can append the next page of `items`. Same pattern as [ComboBox load more](/components/ComboBox#load-more): handle `on:scrollend`, keep prior items visible while loading, and set `loading` while the next page is in flight to show a loading row after them. The event is a near-bottom load-more signal, not the browser's native `scrollend`.
+`onmenuscrollend` is called with `{ scrollTop, scrollHeight, clientHeight }` when the menu is scrolled near the bottom, so you can append the next page of `items`. Keep prior items visible while loading, and set `loading` while the next page is in flight to show a loading row after them. It is a near-bottom load-more signal, not the browser's native `scrollend`.
 
 <FileSource src="/framed/MultiSelect/ScrollEndMultiSelect" />
 
@@ -501,7 +494,7 @@ Specify a custom value for `threshold` to control when virtualization activates.
 
 ### Custom item height
 
-By default, item height matches the menu row for each size: 24px (xs), 32px (sm), 40px (md), 48px (lg, xl). Set `itemHeight` when custom slots change row height.
+By default, item height matches the menu row for each size: 24px (xs), 32px (sm), 40px (md), 48px (lg, xl). Set `itemHeight` when custom snippets change row height.
 
 <FileSource src="/framed/MultiSelect/VirtualizeItemHeight" />
 
@@ -509,7 +502,7 @@ By default, item height matches the menu row for each size: 24px (xs), 32px (sm)
 
 Option labels are truncated to one line. At a 320px viewport, that hides text and can leave two options looking identical, a WCAG 1.4.10 Reflow failure.
 
-Set `wrapOptions` to let a label take as many lines as it needs. Lines break between words, and mid-word only when a word is too long to fit a line by itself. Default slot markup wraps with the label: a [highlighted match](#highlight-matches) stays marked across the break it is split by.
+Set `wrapOptions` to let a label take as many lines as it needs. Lines break between words, and mid-word only when a word is too long to fit a line by itself. Markup in `children` wraps with the label: a [highlighted match](#highlight-matches) stays marked across the break it is split by.
 
 It defaults to `false` because wrapping changes option heights.
 
@@ -517,12 +510,12 @@ It defaults to `false` because wrapping changes option heights.
 
 ## AI label
 
-Put an `AILabel` in the `decorator` slot to mark the value as AI-generated. The field shows the AI gradient. See [AI label](/components/AILabel#fields) for the revert flow.
+Put an `AILabel` in the `decorator` snippet to mark the value as AI-generated. The field shows the AI gradient. See [AI label](/components/AILabel#fields) for the revert flow.
 
 <MultiSelect labelText="Regions" selectedIds={["us-east-1"]} items={[{ id: "us-east-1", text: "US East (N. Virginia)" }, { id: "eu-west-1", text: "EU West (Ireland)" }]}>
-  <AILabel slot="decorator">
+  {#snippet decorator()}<AILabel>
     <p>Picked as the regions closest to most of your users.</p>
-  </AILabel>
+  </AILabel>{/snippet}
 </MultiSelect>
 
 ## Sizes
@@ -623,17 +616,17 @@ Filterable multi-selects support the fluid variant. Set both `fluid` and
 
 ### Custom label
 
-Use the `labelChildren` slot to render custom label content, such as a
+Pass a snippet to `labelText` to render custom label content, such as a
 tooltip icon.
 
-<MultiSelect fluid labelText="Contact" label="Select contact methods..."
+<MultiSelect fluid label="Select contact methods..."
     items="{[{id: "0", text: "Slack"},
     {id: "1", text: "Email"},
     {id: "2", text: "Fax"}]}">
-  <svelte:fragment slot="labelChildren">
+  {#snippet labelText()}
     Contact
     <TooltipIcon tooltipText="Your contact methods are used for account notifications." icon={Information} />
-  </svelte:fragment>
+  {/snippet}
 </MultiSelect>
 
 ### Condensed

@@ -8,6 +8,6 @@
   ];
 </script>
 
-<MultiSelect {items} labelText="Default label">
-  <span slot="labelChildren">Custom label content</span>
+<MultiSelect {items}>
+  {#snippet labelText()}<span>Custom label content</span>{/snippet}
 </MultiSelect>

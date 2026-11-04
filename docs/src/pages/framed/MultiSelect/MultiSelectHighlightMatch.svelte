@@ -34,13 +34,14 @@
   labelText="Environment"
   placeholder="Filter environments..."
   {items}
-  let:item
 >
-  {#each highlightSegments(item.text, fuzzyMatch(item.text, value).indices) as segment}
-    {#if segment.match}
-      <strong>{segment.text}</strong>
-    {:else}
-      {segment.text}
-    {/if}
-  {/each}
+  {#snippet children({
+    item,
+  })}{#each highlightSegments(item.text, fuzzyMatch(item.text, value).indices) as segment}
+      {#if segment.match}
+        <strong>{segment.text}</strong>
+      {:else}
+        {segment.text}
+      {/if}
+    {/each}{/snippet}
 </MultiSelect>

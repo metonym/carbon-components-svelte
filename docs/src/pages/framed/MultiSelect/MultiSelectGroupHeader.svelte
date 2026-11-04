@@ -17,9 +17,9 @@
   {items}
   selectedIds={["0", "2", "5"]}
 >
-  <svelte:fragment slot="group" let:group let:items={groupItems}>
+  {#snippet group({ group, items: groupItems })}
     {@const selectedCount = groupItems.filter((item) => item.checked).length}
     {group}
     ({selectedCount}/{groupItems.length})
-  </svelte:fragment>
+  {/snippet}
 </MultiSelect>
