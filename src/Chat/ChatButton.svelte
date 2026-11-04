@@ -51,6 +51,11 @@
   // A pressed state belongs on a button, not on a link.
   $: pressed =
     quickAction && !$$restProps.href ? { "aria-pressed": selected } : {};
+
+  import { createBubbler } from "svelte/legacy";
+
+  // Re-dispatches a runes child's events to this component's `on:` listeners.
+  const bubble = createBubbler();
 </script>
 
 <Button
@@ -69,13 +74,13 @@
   ]
     .filter(Boolean)
     .join(" ")}
-  on:click
-  on:mousedown
-  on:focus
-  on:blur
-  on:mouseover
-  on:mouseenter
-  on:mouseleave
+  onclick={(e) => { $$restProps.onclick?.(e); bubble("click")(e); }}
+  onmousedown={(e) => { $$restProps.onmousedown?.(e); bubble("mousedown")(e); }}
+  onfocus={(e) => { $$restProps.onfocus?.(e); bubble("focus")(e); }}
+  onblur={(e) => { $$restProps.onblur?.(e); bubble("blur")(e); }}
+  onmouseover={(e) => { $$restProps.onmouseover?.(e); bubble("mouseover")(e); }}
+  onmouseenter={(e) => { $$restProps.onmouseenter?.(e); bubble("mouseenter")(e); }}
+  onmouseleave={(e) => { $$restProps.onmouseleave?.(e); bubble("mouseleave")(e); }}
 >
   <slot />
 </Button>

@@ -43,8 +43,8 @@
 
 <Stack gap={6}>
   <div>
-    <Button on:click={() => treeview?.expandAll()}>Expand all</Button>
-    <Button kind="secondary" on:click={() => treeview?.collapseAll()}>
+    <Button onclick={() => treeview?.expandAll()}>Expand all</Button>
+    <Button kind="secondary" onclick={() => treeview?.collapseAll()}>
       Collapse all
     </Button>
   </div>

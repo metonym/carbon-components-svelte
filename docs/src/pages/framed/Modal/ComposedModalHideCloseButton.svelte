@@ -10,7 +10,7 @@
   let open = false;
 </script>
 
-<Button on:click={() => (open = true)}>Review terms</Button>
+<Button onclick={() => (open = true)}>Review terms</Button>
 
 <ComposedModal bind:open on:submit={() => (open = false)}>
   <ModalHeader title="Accept terms of use" hideCloseButton />

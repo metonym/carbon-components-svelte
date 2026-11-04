@@ -18,7 +18,7 @@
 </script>
 
 <Button
-  on:click={() => {
+  onclick={() => {
     open = true;
     draft = name;
     showWarning = false;

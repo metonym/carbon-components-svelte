@@ -38,7 +38,7 @@
     <br /><br />
     <Button
       data-testid="test-button"
-      on:click={(e) => {
+      onclick={(e) => {
         if (stopClicks) e.stopPropagation();
         buttonClicked = true;
       }}

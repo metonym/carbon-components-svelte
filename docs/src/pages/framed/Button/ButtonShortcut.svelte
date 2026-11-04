@@ -6,7 +6,7 @@
 </script>
 
 <Stack orientation="horizontal" gap={5} align="center">
-  <Button shortcut="mod+s" on:click={() => saves++}>Save</Button>
+  <Button shortcut="mod+s" onclick={() => saves++}>Save</Button>
   <Button
     kind="ghost"
     shortcut="mod+shift+s"

@@ -4,7 +4,7 @@
   let invalid = false;
 </script>
 
-<Button size="small" on:click={() => (invalid = true)}>Reject file</Button>
+<Button size="small" onclick={() => (invalid = true)}>Reject file</Button>
 <FileUploaderItem
   name="report.pdf"
   status="edit"

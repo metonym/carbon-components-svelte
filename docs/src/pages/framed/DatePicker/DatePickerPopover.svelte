@@ -9,7 +9,7 @@
   let popover = null;
 </script>
 
-<Button type="button" on:click={() => popover?.showPopover()}
+<Button type="button" onclick={() => popover?.showPopover()}
   >Open popover</Button
 >
 
@@ -32,7 +32,7 @@
   <Button
     kind="secondary"
     type="button"
-    on:click={() => popover?.hidePopover()}
+    onclick={() => popover?.hidePopover()}
   >
     Close
   </Button>

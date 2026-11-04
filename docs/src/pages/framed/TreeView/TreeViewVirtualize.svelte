@@ -208,7 +208,7 @@
       kind="tertiary"
       size="small"
       disabled={!ready}
-      on:click={() => treeview?.expandAll()}
+      onclick={() => treeview?.expandAll()}
     >
       Expand all
     </Button>
@@ -216,7 +216,7 @@
       kind="tertiary"
       size="small"
       disabled={!ready}
-      on:click={() => {
+      onclick={() => {
         treeview?.collapseAll();
         expandedIds = [];
       }}
@@ -227,7 +227,7 @@
       kind="tertiary"
       size="small"
       disabled={!ready || searchValue.trim() !== ""}
-      on:click={() => treeview?.showNode(deepFile.id)}
+      onclick={() => treeview?.showNode(deepFile.id)}
     >
       Jump to a deep file
     </Button>

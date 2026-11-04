@@ -25,10 +25,10 @@
     />
   </Countdown>
   <Stack orientation="horizontal" gap={3}>
-    <Button kind="tertiary" size="small" on:click={() => (remaining += 300)}>
+    <Button kind="tertiary" size="small" onclick={() => (remaining += 300)}>
       Add 5 minutes
     </Button>
-    <Button kind="ghost" size="small" on:click={() => (running = !running)}>
+    <Button kind="ghost" size="small" onclick={() => (running = !running)}>
       {running ? "Pause" : "Resume"}
     </Button>
   </Stack>

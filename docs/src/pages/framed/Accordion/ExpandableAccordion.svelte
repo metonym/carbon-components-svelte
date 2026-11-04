@@ -22,7 +22,7 @@
   let open = false;
 </script>
 
-<Button kind="ghost" size="field" on:click={() => (open = !open)}>
+<Button kind="ghost" size="field" onclick={() => (open = !open)}>
   {open ? "Collapse" : "Expand"}
   all
 </Button>

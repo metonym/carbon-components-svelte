@@ -15,7 +15,7 @@
   <NotificationQueue bind:this={queue} maxNotifications={2} />
   <Button
     data-testid="nq-add"
-    on:click={() => {
+    onclick={() => {
       queue?.add({ title: "Toast A" });
     }}
   >
@@ -23,7 +23,7 @@
   </Button>
   <Button
     data-testid="nq-t1"
-    on:click={() => {
+    onclick={() => {
       queue?.add({ title: "T1" });
     }}
   >
@@ -31,7 +31,7 @@
   </Button>
   <Button
     data-testid="nq-t2"
-    on:click={() => {
+    onclick={() => {
       queue?.add({ title: "T2" });
     }}
   >
@@ -39,7 +39,7 @@
   </Button>
   <Button
     data-testid="nq-t3"
-    on:click={() => {
+    onclick={() => {
       queue?.add({ title: "T3" });
     }}
   >
@@ -47,7 +47,7 @@
   </Button>
   <Button
     data-testid="nq-timed"
-    on:click={() => {
+    onclick={() => {
       queue?.add({ title: "Quick", timeout: 400 });
     }}
   >
@@ -55,7 +55,7 @@
   </Button>
   <Button
     data-testid="nq-slow"
-    on:click={() => {
+    onclick={() => {
       queue?.add({ title: "Slow", timeout: 800 });
     }}
   >
@@ -63,7 +63,7 @@
   </Button>
   <Button
     data-testid="nq-action"
-    on:click={() => {
+    onclick={() => {
       queue?.add({
         title: "Report deleted",
         timeout: 400,

@@ -6,7 +6,7 @@
   export let disabled = false;
   export let labelText = "Checkbox label";
   export let helperText = "";
-  export let onCheck: (event: CustomEvent<boolean>) => void = () => {};
+  export let onCheck: (checked: boolean) => void = () => {};
   export let onClick: (event: MouseEvent) => void = () => {};
   export let onChange: (event: Event) => void = () => {};
   export let onFocus: (event: FocusEvent) => void = () => {};

@@ -4,7 +4,7 @@
   let open = false;
 </script>
 
-<Button on:click={() => (open = true)}>View database instances</Button>
+<Button onclick={() => (open = true)}>View database instances</Button>
 
 <Modal
   fullWidth

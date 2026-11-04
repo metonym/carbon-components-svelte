@@ -46,7 +46,7 @@
 </script>
 
 <Stack gap={6}>
-  <div><Button on:click={treeview?.collapseAll}>Collapse all</Button></div>
+  <div><Button onclick={treeview?.collapseAll}>Collapse all</Button></div>
   <div>
     <TreeView
       bind:this={treeview}

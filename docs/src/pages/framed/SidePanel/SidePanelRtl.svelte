@@ -14,14 +14,14 @@
 <LayoutDirection dir="rtl">
   <Header companyName="IBM" platformName="Cloud" />
   <Content>
-    <Button on:click={() => (open = true)}>تعديل الخدمة</Button>
+    <Button onclick={() => (open = true)}>تعديل الخدمة</Button>
   </Content>
 
   <SidePanel bind:open resizable currentStep={1} title="تعديل الخدمة">
     <TextInput labelText="اسم الخدمة" value="checkout-api" />
     <svelte:fragment slot="actions">
-      <Button kind="secondary" on:click={() => (open = false)}>إلغاء</Button>
-      <Button on:click={() => (open = false)}>حفظ</Button>
+      <Button kind="secondary" onclick={() => (open = false)}>إلغاء</Button>
+      <Button onclick={() => (open = false)}>حفظ</Button>
     </svelte:fragment>
   </SidePanel>
 </LayoutDirection>

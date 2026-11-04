@@ -19,7 +19,7 @@
     />
     <OverflowMenuItem danger text="Delete service" />
   </OverflowMenu>
-  <Button kind="tertiary" size="small" on:click={() => (open = !open)}>
+  <Button kind="tertiary" size="small" onclick={() => (open = !open)}>
     {open ? "Close menu" : "Open menu"}
   </Button>
 </Stack>

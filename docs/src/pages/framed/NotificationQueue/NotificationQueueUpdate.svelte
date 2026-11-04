@@ -7,7 +7,7 @@
 <NotificationQueue bind:this={queue} />
 
 <Button
-  on:click={() => {
+  onclick={() => {
     const id = queue.add({
       id: "upload",
       kind: "info",

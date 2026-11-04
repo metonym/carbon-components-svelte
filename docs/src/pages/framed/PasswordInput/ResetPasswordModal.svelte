@@ -4,7 +4,7 @@
   let open = false;
 </script>
 
-<Button on:click={() => (open = true)}>Reset password</Button>
+<Button onclick={() => (open = true)}>Reset password</Button>
 
 <Modal
   bind:open

@@ -19,7 +19,7 @@
 <Header companyName="IBM" platformName="Cloud" />
 <Content>
   <Button
-    on:click={() => {
+    onclick={() => {
       currentStep = 0;
       open = true;
     }}
@@ -47,11 +47,11 @@
     </Select>
   {/if}
   <svelte:fragment slot="actions">
-    <Button kind="secondary" on:click={() => (open = false)}>Cancel</Button>
+    <Button kind="secondary" onclick={() => (open = false)}>Cancel</Button>
     {#if currentStep === 0}
-      <Button on:click={() => (currentStep = 1)}>Next</Button>
+      <Button onclick={() => (currentStep = 1)}>Next</Button>
     {:else}
-      <Button on:click={() => (open = false)}>Create</Button>
+      <Button onclick={() => (open = false)}>Create</Button>
     {/if}
   </svelte:fragment>
 </SidePanel>

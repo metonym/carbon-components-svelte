@@ -13,7 +13,7 @@
   }
 </script>
 
-<Button on:click={() => (open = true)}>Save changes</Button>
+<Button onclick={() => (open = true)}>Save changes</Button>
 
 <Modal
   bind:open

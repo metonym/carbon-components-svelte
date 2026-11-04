@@ -12,7 +12,7 @@
   let launcherButtonRef;
 </script>
 
-<Button bind:ref={launcherButtonRef} on:click={() => (open = true)}>
+<Button bind:ref={launcherButtonRef} onclick={() => (open = true)}>
   Get started
 </Button>
 

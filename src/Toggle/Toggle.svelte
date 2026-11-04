@@ -174,8 +174,8 @@
   }
 </script>
 
-{#snippet content(/** @type {string | import("svelte").Snippet} */ value)}
-  {#if typeof value === "function"}{@render value()}{:else}{value}{/if}
+{#snippet content(/** @type {string | import("svelte").Snippet} */ source)}
+  {#if typeof source === "function"}{@render source()}{:else}{source}{/if}
 {/snippet}
 
 <div
@@ -230,7 +230,7 @@
     class="bx--toggle-input__label"
   >
     {#if labelText}
-      <span class={hideLabel && "bx--visually-hidden"}>
+      <span class={[hideLabel && "bx--visually-hidden"]}>
         {@render content(labelText)}
       </span>
     {/if}

@@ -11,7 +11,7 @@
   let open = false;
 </script>
 
-<Button on:click={() => (open = true)}>Create database</Button>
+<Button onclick={() => (open = true)}>Create database</Button>
 
 <ComposedModal bind:open on:submit={() => (open = false)}>
   <ModalHeader title="Create database">

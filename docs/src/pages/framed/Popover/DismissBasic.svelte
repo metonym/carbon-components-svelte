@@ -17,7 +17,7 @@
 </script>
 
 <Box bind:ref={trigger} display="inline-flex">
-  <Button kind="tertiary" on:click={() => (open = !open)}>
+  <Button kind="tertiary" onclick={() => (open = !open)}>
     Filter by region
   </Button>
 </Box>

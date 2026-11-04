@@ -10,7 +10,7 @@
     <Button
       kind="tertiary"
       size="small"
-      on:click={() => (page = 1)}
+      onclick={() => (page = 1)}
       disabled={page === 0}
     >
       Set page to 1

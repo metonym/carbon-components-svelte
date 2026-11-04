@@ -37,6 +37,6 @@
       <OverflowMenuItem text="Duplicate" />
       <OverflowMenuItem danger text="Delete" />
     </OverflowMenu>
-    <Button kind="secondary" on:click={() => dialog?.close()}>Close</Button>
+    <Button kind="secondary" onclick={() => dialog?.close()}>Close</Button>
   </Stack>
 </dialog>

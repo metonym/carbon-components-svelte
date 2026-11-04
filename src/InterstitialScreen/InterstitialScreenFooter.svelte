@@ -82,7 +82,7 @@
         size="default"
         kind="ghost"
         disabled={Boolean(loadingAction)}
-        on:click={() => handleAction("skip")}
+        onclick={() => handleAction("skip")}
       >
         {skipButtonText}
       </Button>
@@ -92,7 +92,7 @@
         size="default"
         kind="secondary"
         disabled={Boolean(loadingAction)}
-        on:click={() => handleAction("back")}
+        onclick={() => handleAction("back")}
       >
         {#if loadingAction === "back"}
           <InlineLoading status="active" description={previousButtonText} />
@@ -106,7 +106,7 @@
         size="default"
         bind:ref={primaryButtonRef}
         disabled={Boolean(loadingAction)}
-        on:click={() => handleAction("next")}
+        onclick={() => handleAction("next")}
       >
         {#if loadingAction === "next"}
           <InlineLoading status="active" description={nextButtonText} />
@@ -121,7 +121,7 @@
         bind:ref={primaryButtonRef}
         icon={isMultiStep ? ArrowRight : undefined}
         disabled={Boolean(loadingAction)}
-        on:click={() => handleAction("start")}
+        onclick={() => handleAction("start")}
       >
         {#if loadingAction === "start"}
           <InlineLoading status="active" description={startButtonText} />
@@ -138,7 +138,7 @@
         size="default"
         kind="ghost"
         disabled={Boolean(loadingAction)}
-        on:click={() => handleAction("skip")}
+        onclick={() => handleAction("skip")}
       >
         {skipButtonText}
       </Button>
@@ -148,7 +148,7 @@
         size="default"
         kind="secondary"
         disabled={Boolean(loadingAction)}
-        on:click={() => handleAction("back")}
+        onclick={() => handleAction("back")}
       >
         {#if loadingAction === "back"}
           <InlineLoading status="active" description={previousButtonText} />
@@ -162,7 +162,7 @@
         size="default"
         bind:ref={primaryButtonRef}
         disabled={Boolean(loadingAction)}
-        on:click={() => handleAction("next")}
+        onclick={() => handleAction("next")}
       >
         {#if loadingAction === "next"}
           <InlineLoading status="active" description={nextButtonText} />
@@ -177,7 +177,7 @@
         bind:ref={primaryButtonRef}
         icon={isMultiStep ? ArrowRight : undefined}
         disabled={Boolean(loadingAction)}
-        on:click={() => handleAction("start")}
+        onclick={() => handleAction("start")}
       >
         {#if loadingAction === "start"}
           <InlineLoading status="active" description={startButtonText} />

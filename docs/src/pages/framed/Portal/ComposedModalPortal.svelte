@@ -27,7 +27,7 @@
     This container hides overflowing content. Without a portal, the modal would
     be clipped.
   </p>
-  <div><Button on:click={() => (open = true)}>Open modal</Button></div>
+  <div><Button onclick={() => (open = true)}>Open modal</Button></div>
   <Portal>
     <ComposedModal bind:open>
       <ModalHeader title="Composed Modal in Portal" />

@@ -12,21 +12,21 @@
   iconDescription="Add"
   tooltipPosition="right"
   icon={Add}
-  on:click={() => (lastAction = "Add")}
+  onclick={() => (lastAction = "Add")}
 />
 <Button
   kind="ghost"
   iconDescription="Delete"
   tooltipPosition="right"
   icon={TrashCan}
-  on:click={() => (lastAction = "Delete")}
+  onclick={() => (lastAction = "Delete")}
 />
 <Button
   kind="ghost"
   iconDescription="Save"
   tooltipPosition="right"
   icon={Save}
-  on:click={() => (lastAction = "Save")}
+  onclick={() => (lastAction = "Save")}
 />
 
 {#if lastAction}

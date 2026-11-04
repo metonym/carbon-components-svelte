@@ -11,7 +11,7 @@
   let open = true;
 </script>
 
-<Button on:click={() => (open = true)}>Continue setup</Button>
+<Button onclick={() => (open = true)}>Continue setup</Button>
 
 <ComposedModal bind:open>
   <ModalHeader title="Continue setup" />
@@ -20,9 +20,9 @@
   </ModalBody>
   <ModalFooter>
     <ActionSet size="lg" disableStacking>
-      <Button kind="ghost" on:click={() => (open = false)}>Cancel</Button>
+      <Button kind="ghost" onclick={() => (open = false)}>Cancel</Button>
       <Button kind="secondary">Previous</Button>
-      <Button on:click={() => (open = false)}>Next</Button>
+      <Button onclick={() => (open = false)}>Next</Button>
     </ActionSet>
   </ModalFooter>
 </ComposedModal>

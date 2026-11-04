@@ -8,6 +8,6 @@
 
 <Text>Current theme: {theme}</Text>
 
-<Button kind="tertiary" on:click={() => (theme = "g10")}>
+<Button kind="tertiary" onclick={() => (theme = "g10")}>
   Switch to Gray 10
 </Button>

@@ -14,7 +14,7 @@
 
 <Header companyName="IBM" platformName="Cloud" />
 <Content>
-  <Button on:click={() => (open = true)}>Report an incident</Button>
+  <Button onclick={() => (open = true)}>Report an incident</Button>
 </Content>
 
 <SidePanel bind:open includeOverlay title="Report an incident">
@@ -26,7 +26,7 @@
     />
   </Stack>
   <svelte:fragment slot="actions">
-    <Button kind="secondary" on:click={() => (open = false)}>Cancel</Button>
-    <Button on:click={() => (open = false)}>Submit</Button>
+    <Button kind="secondary" onclick={() => (open = false)}>Cancel</Button>
+    <Button onclick={() => (open = false)}>Submit</Button>
   </svelte:fragment>
 </SidePanel>

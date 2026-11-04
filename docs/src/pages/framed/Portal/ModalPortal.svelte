@@ -20,7 +20,7 @@
     be clipped.
   </p>
   <div>
-    <Button on:click={() => (open = true)}>Deploy build #4213</Button>
+    <Button onclick={() => (open = true)}>Deploy build #4213</Button>
   </div>
   <Portal>
     <Modal

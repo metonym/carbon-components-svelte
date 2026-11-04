@@ -4,7 +4,7 @@
   let open = false;
 </script>
 
-<Button kind="danger" on:click={() => (open = true)}
+<Button kind="danger" onclick={() => (open = true)}
   >Delete all instances</Button
 >
 

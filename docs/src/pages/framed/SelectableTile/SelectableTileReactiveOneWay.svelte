@@ -27,7 +27,7 @@
     size="small"
     kind="tertiary"
     disabled={selected.length === 0}
-    on:click={() => (selected = [])}
+    onclick={() => (selected = [])}
   >
     Clear selection
   </Button>

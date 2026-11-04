@@ -9,7 +9,7 @@
   let open = false;
 </script>
 
-<Button kind="danger" on:click={() => (open = true)}>Remove members</Button>
+<Button kind="danger" onclick={() => (open = true)}>Remove members</Button>
 
 <ConfirmModal bind:open title="Remove these members?" confirmText="Remove">
   <p>The following members will lose access to this workspace:</p>

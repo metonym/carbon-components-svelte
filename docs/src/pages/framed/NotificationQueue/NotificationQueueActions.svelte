@@ -12,7 +12,7 @@
 
 <ButtonSet>
   <Button
-    on:click={() => {
+    onclick={() => {
       queue.add({
         kind: "success",
         title: "Report deleted",
@@ -35,7 +35,7 @@
   </Button>
   <Button
     kind="tertiary"
-    on:click={() => {
+    onclick={() => {
       const id = queue.add({
         kind: "error",
         title: "Upload failed",

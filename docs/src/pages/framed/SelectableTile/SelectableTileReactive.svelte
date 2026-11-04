@@ -25,7 +25,7 @@
   <Button
     size="small"
     disabled={selected.length === 1 && selected[0] === values[1]}
-    on:click={() => (selected = [values[1]])}
+    onclick={() => (selected = [values[1]])}
   >
     Set to "{values[1]}" only
   </Button>

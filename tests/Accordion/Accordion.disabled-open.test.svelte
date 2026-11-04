@@ -9,7 +9,7 @@
   export let onToggle: (open: boolean) => void = () => {};
 </script>
 
-<Button on:click={() => (disabled = !disabled)}>Toggle disabled</Button>
+<Button onclick={() => (disabled = !disabled)}>Toggle disabled</Button>
 
 <Accordion disabled={accordionDisabled}>
   <AccordionItem

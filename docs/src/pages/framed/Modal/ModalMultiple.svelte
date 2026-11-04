@@ -5,8 +5,8 @@
   let openDelete = false;
 </script>
 
-<Button on:click={() => (openCreate = true)}>Create database</Button>
-<Button kind="danger-tertiary" on:click={() => (openDelete = true)}>
+<Button onclick={() => (openCreate = true)}>Create database</Button>
+<Button kind="danger-tertiary" onclick={() => (openDelete = true)}>
   Delete database
 </Button>
 

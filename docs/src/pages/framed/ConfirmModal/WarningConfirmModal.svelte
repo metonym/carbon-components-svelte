@@ -4,7 +4,7 @@
   let open = false;
 </script>
 
-<Button on:click={() => (open = true)}>Leave page</Button>
+<Button onclick={() => (open = true)}>Leave page</Button>
 
 <ConfirmModal
   bind:open

@@ -8,7 +8,7 @@
   <Toggletip bind:open labelText="Resource list" align="start">
     Resources are provisioned based on your account's organization.
   </Toggletip>
-  <Button kind="tertiary" size="small" on:click={() => (open = !open)}>
+  <Button kind="tertiary" size="small" onclick={() => (open = !open)}>
     {open ? "Close toggletip" : "Open toggletip"}
   </Button>
 </Stack>

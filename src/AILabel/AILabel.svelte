@@ -174,7 +174,7 @@
       aria-label={consumerLabel}
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
-      on:click={handleRevert}
+      onclick={handleRevert}
     />
   {:else}
     <Toggletip

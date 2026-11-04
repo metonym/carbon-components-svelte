@@ -6,7 +6,7 @@
 
 <Stack inline gap={4}>
   <Checkbox labelText="Enable maintenance mode" bind:checked />
-  <Button on:click={() => (checked = !checked)}>Toggle</Button>
+  <Button onclick={() => (checked = !checked)}>Toggle</Button>
   <div>
     <strong>checked:</strong>
     {checked}

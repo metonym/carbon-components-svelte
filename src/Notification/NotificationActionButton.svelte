@@ -9,6 +9,11 @@
   // "Retry, button, Upload failed". As in Carbon React, a toast's action is
   // a tertiary button, not a ghost.
   const { describedBy, toast } = getContext("carbon:NotificationAction") ?? {};
+
+  import { createBubbler } from "svelte/legacy";
+
+  // Re-dispatches a runes child's events to this component's `on:` listeners.
+  const bubble = createBubbler();
 </script>
 
 <Button
@@ -27,10 +32,10 @@
     $describedBy,
     $$restProps["aria-describedby"],
   )}
-  on:click
-  on:mouseover
-  on:mouseenter
-  on:mouseleave
+  onclick={(e) => { $$restProps.onclick?.(e); bubble("click")(e); }}
+  onmouseover={(e) => { $$restProps.onmouseover?.(e); bubble("mouseover")(e); }}
+  onmouseenter={(e) => { $$restProps.onmouseenter?.(e); bubble("mouseenter")(e); }}
+  onmouseleave={(e) => { $$restProps.onmouseleave?.(e); bubble("mouseleave")(e); }}
 >
   <slot />
 </Button>

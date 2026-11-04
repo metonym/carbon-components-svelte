@@ -61,7 +61,7 @@
       <Column>
         <Stack gap={6}>
           <h1>Clusters</h1>
-          <Button on:click={() => (open = true)}>Create cluster</Button>
+          <Button onclick={() => (open = true)}>Create cluster</Button>
         </Stack>
       </Column>
     </Row>

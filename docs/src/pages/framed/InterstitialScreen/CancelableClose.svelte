@@ -17,7 +17,7 @@
   }
 </script>
 
-<Button on:click={() => (open = true)}>Start tour</Button>
+<Button onclick={() => (open = true)}>Start tour</Button>
 
 <InterstitialScreen bind:open on:close={handleClose}>
   <InterstitialScreenHeader title="Quick tour" />

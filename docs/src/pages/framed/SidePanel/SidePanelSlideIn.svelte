@@ -27,7 +27,7 @@
       checkout-api serves 1.2k requests per minute across three instances in US
       East. The panel pushes this content aside instead of covering it.
     </p>
-    <Button on:click={() => (open = !open)}>
+    <Button onclick={() => (open = !open)}>
       {open ? "Hide activity" : "Show activity"}
     </Button>
   </Stack>

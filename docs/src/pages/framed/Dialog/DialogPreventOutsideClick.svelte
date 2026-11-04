@@ -4,7 +4,7 @@
   let open = false;
 </script>
 
-<Button on:click={() => (open = true)}>Delete workspace</Button>
+<Button onclick={() => (open = true)}>Delete workspace</Button>
 
 <Dialog
   preventCloseOnClickOutside

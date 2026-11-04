@@ -20,7 +20,7 @@
     <Checkbox value="push" labelText="Push notifications" />
   </CheckboxGroup>
 
-  <Button on:click={() => (selected = ["email", "push"])}>
+  <Button onclick={() => (selected = ["email", "push"])}>
     Select Email + Push
   </Button>
 

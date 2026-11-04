@@ -20,5 +20,5 @@
   <DatePicker datePickerType="month" dateFormat="m/Y" bind:value on:change>
     <DatePickerInput labelText="Billing month" placeholder="mm/yyyy" />
   </DatePicker>
-  <Button on:click={previousMonth}>Previous month</Button>
+  <Button onclick={previousMonth}>Previous month</Button>
 </Stack>

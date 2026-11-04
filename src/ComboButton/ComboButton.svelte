@@ -176,6 +176,11 @@
     position: effectiveTooltipPosition,
     alignment: effectiveTooltipAlignment,
   } = tooltipPlacement(tooltipAlign, tooltipPosition, tooltipAlignment));
+
+  import { createBubbler } from "svelte/legacy";
+
+  // Re-dispatches a runes child's events to this component's `on:` listeners.
+  const bubble = createBubbler();
 </script>
 
 <div
@@ -194,13 +199,13 @@
     aria-label={ariaLabel ?? labelText}
     aria-labelledby={ariaLabelledBy}
     aria-describedby={ariaDescribedBy}
-    on:click
-    on:mousedown
-    on:focus
-    on:blur
-    on:mouseover
-    on:mouseenter
-    on:mouseleave
+    onclick={(e) => { $$restProps.onclick?.(e); bubble("click")(e); }}
+    onmousedown={(e) => { $$restProps.onmousedown?.(e); bubble("mousedown")(e); }}
+    onfocus={(e) => { $$restProps.onfocus?.(e); bubble("focus")(e); }}
+    onblur={(e) => { $$restProps.onblur?.(e); bubble("blur")(e); }}
+    onmouseover={(e) => { $$restProps.onmouseover?.(e); bubble("mouseover")(e); }}
+    onmouseenter={(e) => { $$restProps.onmouseenter?.(e); bubble("mouseenter")(e); }}
+    onmouseleave={(e) => { $$restProps.onmouseleave?.(e); bubble("mouseleave")(e); }}
   >
     <slot name="labelChildren">{labelText}</slot>
   </Button>
@@ -219,20 +224,13 @@
       : ''}"
     aria-haspopup="menu"
     aria-expanded={open}
-    on:mousedown={(event) => event.preventDefault()}
-    on:mousedown
-    on:mousedown={dispatchTriggerEvent("mousedown")}
-    on:click={toggleOpen}
-    on:focus
-    on:focus={dispatchTriggerEvent("focus")}
-    on:blur
-    on:blur={dispatchTriggerEvent("blur")}
-    on:mouseover
-    on:mouseover={dispatchTriggerEvent("mouseover")}
-    on:mouseenter
-    on:mouseenter={dispatchTriggerEvent("mouseenter")}
-    on:mouseleave
-    on:mouseleave={dispatchTriggerEvent("mouseleave")}
+    onmousedown={(e) => { ((event) => event.preventDefault())(e); $$restProps.onmousedown?.(e); bubble("mousedown")(e); (dispatchTriggerEvent("mousedown"))(e); }}
+    onclick={toggleOpen}
+    onfocus={(e) => { $$restProps.onfocus?.(e); bubble("focus")(e); (dispatchTriggerEvent("focus"))(e); }}
+    onblur={(e) => { $$restProps.onblur?.(e); bubble("blur")(e); (dispatchTriggerEvent("blur"))(e); }}
+    onmouseover={(e) => { $$restProps.onmouseover?.(e); bubble("mouseover")(e); (dispatchTriggerEvent("mouseover"))(e); }}
+    onmouseenter={(e) => { $$restProps.onmouseenter?.(e); bubble("mouseenter")(e); (dispatchTriggerEvent("mouseenter"))(e); }}
+    onmouseleave={(e) => { $$restProps.onmouseleave?.(e); bubble("mouseleave")(e); (dispatchTriggerEvent("mouseleave"))(e); }}
   />
   <Menu
     anchor={triggerRef}

@@ -8,7 +8,7 @@
 
 <Button
   disabled={showNotification}
-  on:click={() => {
+  onclick={() => {
     timeout = 3_000; // 3 seconds
   }}
 >

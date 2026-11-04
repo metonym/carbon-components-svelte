@@ -85,7 +85,7 @@ Patterns:
 - ComboBox, Dropdown, and MultiSelect share listbox behavior (virtualization, keyboard navigation, outside-click) through `src/utils/`. When you change shared menu behavior, apply and test the change in all three. The per-component wiring is parallel but not abstracted.
 - Use Carbon v10 markup: `bx--` BEM classes in templates; SCSS patches use `$prefix` and tokens. See [Custom styles](#custom-styles-patching-carbon-v10).
 - Do not add themeable styles in per-component `<style>` blocks (see [Custom styles](#custom-styles-patching-carbon-v10)).
-- Use the legacy Svelte 5 API. Components use `export let`, `$:`, and `createEventDispatcher`. Do not introduce runes (`$state`, `$derived`, `$effect`) unless the project explicitly migrates.
+- The library is moving to runes for v1, one component family at a time. A family that has moved follows [Runes components](#runes-components). Until a family moves, keep its legacy API (`export let`, `$:`, `createEventDispatcher`); don't mix the two in one component.
 - Bind per-iteration values once with `{@const}` inside `{#each}` blocks, then reuse them across the markup instead of recomputing inline. See `isSelected` / `isExpanded` / `rowClassValue` in [`DataTable.svelte`](src/DataTable/DataTable.svelte) and `actualIndex` in [`ComboBox.svelte`](src/ComboBox/ComboBox.svelte).
 - Keep reactive inputs visible in `$:` and `{@const}` expressions. Svelte 3/4 track dependencies by the identifiers in the statement, so `$: x = compute()` or `{@const x = compute(item)}` where `compute` closes over other component state never re-runs when that state changes (Svelte 5's signals hide the bug locally, but the compatibility suites will not). Pass the state as arguments (`compute(item, isAtSelectionCap)`) or keep the expression inline.
 - Use `Set` / `Map` for membership and id lookups instead of `.includes()` / `.find()`. The O(1) lookup matters in components that can hold large datasets. See the `selectedRowIdsSet` / `nonSelectableRowIdsSet` sets in [`DataTable.svelte`](src/DataTable/DataTable.svelte) and the `itemsById` map in [`ComboBox.svelte`](src/ComboBox/ComboBox.svelte).
@@ -147,6 +147,24 @@ Patterns:
 - Check whether a difference from Carbon React is deliberate before you change it to match. Read the `// ccs:` comments, `git log -S`, the tests that pin the behavior, `e2e/forced-colors.test.ts`, and this file. If it is deliberate, keep it. Carbon React has bugs of its own, and this library is ahead in places: forced colors, the Toggletip caret, RTL keys in TreeView. Never regress a forced-colors row or an accessibility test for parity.
 
 The `{#if skeleton}` early-return pattern is being phased out. Follow it only when maintaining existing skeleton code.
+
+#### Runes components
+
+Migrated components use runes. Follow these rules in them, and when you migrate one.
+
+- Declare every prop in one `$props()` destructure, each with its own JSDoc: the description, then `@type`. Use `$bindable()` for a prop consumers `bind:`. Give a `$props.id()` default an explicit `@type {string}`; sveld can't infer it.
+- Rest props go to the primary element, the native element the component represents: the `<input>` of Toggle and Checkbox, the `<fieldset>` of CheckboxGroup, the `<a>` or `<button>` of Button. That includes `class`, `style`, every `on*` handler and every `{@attach}`. Don't add `*Class` or `*Style` props. A consumer positions a whole field from its container.
+- Destructure every attribute the component reads (`class`, `target`, `aria-label`, `tabindex`), and never read `rest.x`. Merge `class` with clsx arrays: `class={["bx--link", disabled && "bx--link--disabled", className]}`.
+- To guard a native event, destructure its handler and wrap it: `onclick={(event) => { if (disabled) return event.preventDefault(); onclick?.(event); }}`. There is no listener order to rely on.
+- Callback props replace `createEventDispatcher`. They are lowercase and never reuse a DOM event name. A bindable `x` gets `on{x}change`; an event on a part is `on{part}{event}`. Each takes one payload object, such as `oncheckedchange({ checked })`. A cancelable one gets its payload from [`cancelable`](src/utils/cancelable.js), which adds `preventDefault()`. Call callbacks from the handler of the user action, never from an effect or on mount, and not when a prop changes from outside.
+- Text a consumer can replace takes `string | Snippet` under its `{part}Text` name. Render it through a local snippet, `{#snippet content(source)}{#if typeof source === "function"}{@render source()}{:else}{source}{/if}{/snippet}`, not with `{@render labelText()}` in the markup: sveld types a prop rendered directly as a snippet only. Name the parameter so it can't match a prop.
+- Other replaceable parts are snippet props that take one object argument: `child({ props })`, `badge`, `decorator`. A component prop such as `icon` takes a component; a snippet can't share its name, because nothing tells a snippet from a component at runtime.
+- `$derived` is the default. Use `$effect` only to sync with something outside Svelte: an observer, a library, a timer. Return its cleanup. Don't write state that the same effect reads; use `untrack`.
+- Share a group's state through `createContext` in a `*-context.js` file. Put getters over the parent's props on the context object instead of mirroring them into stores. See [`checkbox-group-context.js`](src/Checkbox/checkbox-group-context.js).
+- Prefer attachments to actions. An attachment factory whose options change takes a getter and updates in place from an inner `$effect`, so new options don't tear the listeners down. See [`dismiss.svelte.js`](src/utils/dismiss.svelte.js). A runes module (`x.svelte.js`) ships a hand-written `x.svelte.d.ts`; list it in `.gitignore`'s exceptions.
+- A prop with a default, even `= undefined`, is read when the component is created. In docs and tests, pass `onclick={() => tree.expandAll()}`, not `onclick={tree.expandAll}`, when `tree` comes from `bind:this`: it is still unset then. A prop without a default is read lazily and costs no signal, but sveld types it as required, so keep the default until sveld reads such props as optional.
+- Event attributes on elements are delegated to the root for `click`, `mousedown`, `mouseover`, `input`, `keydown` and similar. In tests, dispatch synthetic events with `bubbles: true`, as real ones do.
+- A legacy component that wraps a migrated one keeps its `on:` API until it moves: `createBubbler` from `svelte/legacy` re-dispatches the child's events, and the wrapper also calls the consumer's own `on*` from `$$restProps`.
 
 #### Naming conventions
 

@@ -6,7 +6,7 @@
 </script>
 
 <Stack gap={5}>
-  <Button on:click={() => (open = true)}>Edit deployment settings</Button>
+  <Button onclick={() => (open = true)}>Edit deployment settings</Button>
   {#if lastTrigger}
     <p>Last close trigger: <code>{lastTrigger}</code></p>
   {/if}

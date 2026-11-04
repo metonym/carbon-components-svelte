@@ -18,7 +18,7 @@
   let unrelated = 0;
 </script>
 
-<Button on:click={() => (unrelated += 1)}>Bump unrelated</Button>
+<Button onclick={() => (unrelated += 1)}>Bump unrelated</Button>
 
 <DataTable
   headers={[

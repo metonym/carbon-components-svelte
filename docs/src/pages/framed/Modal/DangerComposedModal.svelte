@@ -10,7 +10,7 @@
   let open = false;
 </script>
 
-<Button kind="danger" on:click={() => (open = true)}>Delete all</Button>
+<Button kind="danger" onclick={() => (open = true)}>Delete all</Button>
 
 <ComposedModal
   danger

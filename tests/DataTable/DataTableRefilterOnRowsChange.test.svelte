@@ -18,7 +18,7 @@
   let rows: typeof initialRows = initialRows;
 </script>
 
-<Button on:click={() => (rows = toggledRows)}>Toggle rows</Button>
+<Button onclick={() => (rows = toggledRows)}>Toggle rows</Button>
 
 <DataTable
   headers={[

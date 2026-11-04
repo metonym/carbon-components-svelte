@@ -143,7 +143,7 @@
         size="default"
         kind={button.kind ?? "secondary"}
         disabled={button.disabled || button.loading || footerBusy}
-        on:click={() => {
+        onclick={() => {
           if (button.loading || footerBusy) return;
           dispatch("click:button--secondary", { text: button.text });
         }}
@@ -165,7 +165,7 @@
       kind="secondary"
       class={secondaryClass}
       disabled={secondaryButtonLoading || footerBusy}
-      on:click={handleSecondaryClick}
+      onclick={handleSecondaryClick}
     >
       {#if secondaryButtonLoading}
         <InlineLoading
@@ -185,7 +185,7 @@
       disabled={primaryButtonDisabled || primaryBusy}
       class={primaryClass}
       icon={primaryBusy ? undefined : primaryButtonIcon}
-      on:click={handlePrimaryClick}
+      onclick={handlePrimaryClick}
     >
       {#if primaryBusy}
         <InlineLoading

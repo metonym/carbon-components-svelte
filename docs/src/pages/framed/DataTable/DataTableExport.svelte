@@ -41,7 +41,7 @@
   <Toolbar>
     <ToolbarContent>
       <ToolbarSearch persistent shouldFilterRows bind:filteredRowIds />
-      <Button on:click={downloadCsv}>Export CSV</Button>
+      <Button onclick={downloadCsv}>Export CSV</Button>
     </ToolbarContent>
   </Toolbar>
 </DataTable>

@@ -5,9 +5,9 @@
   export let mode: "bind-group" | "checkbox-group" = "bind-group";
   export let group: string[] = [];
   export let required = false;
-  export let onCheck: (event: CustomEvent<boolean>) => void = () => {};
+  export let onCheck: (checked: boolean) => void = () => {};
   export let onChange: (
-    event: CustomEvent<ReadonlyArray<string | number>>,
+    selected: ReadonlyArray<string | number>,
   ) => void = () => {};
 </script>
 

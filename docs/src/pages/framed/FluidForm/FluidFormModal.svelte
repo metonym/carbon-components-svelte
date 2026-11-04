@@ -12,7 +12,7 @@
   let open = false;
 </script>
 
-<Button on:click={() => (open = true)}>Register application</Button>
+<Button onclick={() => (open = true)}>Register application</Button>
 
 <Modal
   fullWidth

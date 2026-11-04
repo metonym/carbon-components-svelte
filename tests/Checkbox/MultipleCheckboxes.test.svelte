@@ -15,7 +15,7 @@
 {/each}
 
 <Button
-  on:click={() => {
+  onclick={() => {
     group = ["Banana"];
     onSet();
   }}

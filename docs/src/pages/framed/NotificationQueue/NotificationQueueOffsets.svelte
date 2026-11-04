@@ -12,7 +12,7 @@
 />
 
 <Button
-  on:click={() => {
+  onclick={() => {
     queue.add({
       kind: "success",
       title: "Custom offset",

@@ -38,7 +38,7 @@
       <Button
         kind={currentIndex === 2 ? "secondary" : "primary"}
         size="small"
-        on:click={() => {
+        onclick={() => {
           currentIndex = currentIndex === 2 ? 0 : 2;
         }}
       >

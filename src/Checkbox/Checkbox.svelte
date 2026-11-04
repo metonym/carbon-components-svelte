@@ -270,8 +270,8 @@
   }
 </script>
 
-{#snippet content(/** @type {string | import("svelte").Snippet} */ value)}
-  {#if typeof value === "function"}{@render value()}{:else}{value}{/if}
+{#snippet content(/** @type {string | import("svelte").Snippet} */ source)}
+  {#if typeof source === "function"}{@render source()}{:else}{source}{/if}
 {/snippet}
 
 {#if skeleton}

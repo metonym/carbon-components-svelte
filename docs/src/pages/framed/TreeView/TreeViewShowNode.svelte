@@ -32,14 +32,14 @@
   <ButtonSet>
     {#each [nodeSpark, nodeBlockchain] as { id, text }}
       <Button
-        on:click={() => {
+        onclick={() => {
           treeview?.showNode(id);
         }}
       >
         Show "{text}"
       </Button>
     {/each}
-    <Button kind="tertiary" on:click={() => treeview?.collapseAll()}>
+    <Button kind="tertiary" onclick={() => treeview?.collapseAll()}>
       Collapse all
     </Button>
   </ButtonSet>

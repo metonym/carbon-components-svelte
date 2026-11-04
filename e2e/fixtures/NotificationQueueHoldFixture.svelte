@@ -12,7 +12,7 @@
 <NotificationQueue bind:this={queue} {position} />
 <Button
   data-testid="nq-hold-add"
-  on:click={() => {
+  onclick={() => {
     count += 1;
     queue?.add({ title: `Toast ${count}`, subtitle: "Saved to drafts" });
   }}

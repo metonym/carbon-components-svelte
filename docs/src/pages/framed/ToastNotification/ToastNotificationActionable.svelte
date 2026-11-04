@@ -10,7 +10,7 @@
 </script>
 
 <Stack gap={5} align="start">
-  <Button disabled={open} on:click={() => (open = true)}>Upload report</Button>
+  <Button disabled={open} onclick={() => (open = true)}>Upload report</Button>
 
   <ToastNotification
     bind:open

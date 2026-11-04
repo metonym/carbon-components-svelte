@@ -78,6 +78,9 @@ describe("boolean ARIA states", () => {
     let spreadElements = 0;
     let spreadStates = 0;
     for (const [path, source] of Object.entries(sources)) {
+      // Svelte 5 writes `true` as `"true"`, so runes components (Svelte 5
+      // only) are exempt. Remove this test once every component has moved.
+      if (source.includes("$props()")) continue;
       for (const [, name, value] of source.matchAll(
         /"aria-([a-z]+)":\s*([^,\n}]+)/g,
       )) {

@@ -21,7 +21,7 @@
   }
 </script>
 
-<Button on:click={() => (open = true)}>Finish setup</Button>
+<Button onclick={() => (open = true)}>Finish setup</Button>
 
 <InterstitialScreen bind:open>
   <InterstitialScreenHeader title="Finish setup" />

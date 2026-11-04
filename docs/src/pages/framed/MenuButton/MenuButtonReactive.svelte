@@ -15,7 +15,7 @@
     <MenuItem on:click={() => console.log("Copy")}>Copy</MenuItem>
     <MenuItem on:click={() => console.log("Paste")}>Paste</MenuItem>
   </MenuButton>
-  <Button kind="tertiary" size="small" on:click={() => (open = !open)}>
+  <Button kind="tertiary" size="small" onclick={() => (open = !open)}>
     {open ? "Close menu" : "Open menu"}
   </Button>
 </Stack>

@@ -286,6 +286,7 @@
     {tabindex}
   />
 {:else if filter}
+  <!-- svelte-ignore a11y_no_noninteractive_tabindex: the consumer's own tabindex -->
   <div
     bind:this={ref}
     {id}
@@ -388,6 +389,7 @@
   <!-- As in Carbon v11, `tabindex` applies to the tooltip trigger, the
   element that takes focus, so a composite parent can pass `-1` to keep a
   truncated tag out of the tab order. -->
+  <!-- svelte-ignore a11y_no_noninteractive_tabindex: the consumer's own tabindex -->
   <div
     bind:this={ref}
     {id}

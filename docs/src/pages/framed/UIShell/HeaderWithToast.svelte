@@ -43,10 +43,10 @@
             positions.
           </p>
           <ButtonSet>
-            <Button on:click={() => triggerToast("top-right")}>
+            <Button onclick={() => triggerToast("top-right")}>
               Top right
             </Button>
-            <Button on:click={() => triggerToast("bottom-right")}>
+            <Button onclick={() => triggerToast("bottom-right")}>
               Bottom right
             </Button>
           </ButtonSet>

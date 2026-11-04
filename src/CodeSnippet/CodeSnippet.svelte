@@ -670,7 +670,7 @@
         aria-expanded={expanded}
         aria-controls={id}
         {disabled}
-        on:click={() => {
+        onclick={() => {
           expanded = !expanded;
         }}
       >

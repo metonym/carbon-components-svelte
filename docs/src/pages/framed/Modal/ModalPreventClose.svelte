@@ -7,7 +7,7 @@
 </script>
 
 <Button
-  on:click={() => {
+  onclick={() => {
     open = true;
     hasUnsavedChanges = true;
     showWarning = false;

@@ -100,7 +100,7 @@
       <Column>
         <h1>HeaderSearch</h1>
         <Button
-          on:click={() => {
+          onclick={() => {
             active = true;
           }}
         >

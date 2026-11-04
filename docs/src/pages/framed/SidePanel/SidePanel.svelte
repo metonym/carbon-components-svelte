@@ -15,7 +15,7 @@
 
 <Header companyName="IBM" platformName="Cloud" />
 <Content>
-  <Button on:click={() => (open = true)}>Edit deployment</Button>
+  <Button onclick={() => (open = true)}>Edit deployment</Button>
 </Content>
 
 <SidePanel
@@ -34,7 +34,7 @@
     <TextInput labelText="Start command" value="node server.js" />
   </Stack>
   <svelte:fragment slot="actions">
-    <Button kind="secondary" on:click={() => (open = false)}>Cancel</Button>
-    <Button on:click={() => (open = false)}>Save</Button>
+    <Button kind="secondary" onclick={() => (open = false)}>Cancel</Button>
+    <Button onclick={() => (open = false)}>Save</Button>
   </svelte:fragment>
 </SidePanel>

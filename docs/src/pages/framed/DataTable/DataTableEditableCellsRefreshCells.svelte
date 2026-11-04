@@ -37,7 +37,7 @@
     kind="secondary"
     size="small"
     disabled={!hasEdits}
-    on:click={updateTotals}
+    onclick={updateTotals}
   >
     Update totals
   </Button>

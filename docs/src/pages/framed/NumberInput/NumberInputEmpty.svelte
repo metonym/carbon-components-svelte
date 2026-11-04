@@ -17,10 +17,10 @@
     helperText="Value: {value}"
   />
   <ButtonSet>
-    <Button kind="tertiary" size="small" on:click={() => (value = null)}>
+    <Button kind="tertiary" size="small" onclick={() => (value = null)}>
       Set to null
     </Button>
-    <Button kind="tertiary" size="small" on:click={() => (value = 0)}>
+    <Button kind="tertiary" size="small" onclick={() => (value = 0)}>
       Set to 0
     </Button>
   </ButtonSet>

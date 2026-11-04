@@ -11,7 +11,7 @@
   }
 </script>
 
-<Button on:click={() => (open = true)}>Create account</Button>
+<Button onclick={() => (open = true)}>Create account</Button>
 
 <Modal
   bind:open

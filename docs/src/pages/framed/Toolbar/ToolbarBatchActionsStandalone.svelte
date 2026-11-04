@@ -31,7 +31,7 @@
       <Button
         kind="danger"
         icon={TrashCan}
-        on:click={() => {
+        onclick={() => {
           items = items.filter((item) => !item.checked);
         }}
       >
@@ -42,7 +42,7 @@
       <Button
         icon={Add}
         size="small"
-        on:click={() => {
+        onclick={() => {
           items = [
             ...items,
             { id: nextId, name: `Load Balancer ${nextId}`, checked: false },

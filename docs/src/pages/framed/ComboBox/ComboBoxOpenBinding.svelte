@@ -15,4 +15,4 @@
   ]}
 />
 <br />
-<Button on:click={() => (open = !open)}>Toggle menu</Button>
+<Button onclick={() => (open = !open)}>Toggle menu</Button>

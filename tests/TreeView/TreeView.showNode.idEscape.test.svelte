@@ -22,7 +22,7 @@
 
 <Button
   data-testid="show-special-id"
-  on:click={() => treeview.showNode(targetId)}
+  onclick={() => treeview.showNode(targetId)}
 >
   Show node with special id
 </Button>

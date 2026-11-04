@@ -11,7 +11,7 @@
   let open = false;
 </script>
 
-<Button on:click={() => (open = true)}>Open full screen</Button>
+<Button onclick={() => (open = true)}>Open full screen</Button>
 
 <InterstitialScreen bind:open isFullScreen>
   <InterstitialScreenHeader

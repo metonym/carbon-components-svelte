@@ -82,7 +82,7 @@
       title="Drag to move, click to toggle"
     >
       <Tile>
-        <Button on:click={() => (open = !open)}>View instance details</Button>
+        <Button onclick={() => (open = !open)}>View instance details</Button>
       </Tile>
     </div>
   </Box>

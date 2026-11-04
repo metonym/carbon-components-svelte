@@ -12,7 +12,7 @@
 
 <ButtonSet>
   <Button
-    on:click={() => {
+    onclick={() => {
       queue.add({
         kind: "success",
         title: "Deployment succeeded",
@@ -25,7 +25,7 @@
   </Button>
   <Button
     kind="tertiary"
-    on:click={() => {
+    onclick={() => {
       queue.add({
         kind: "error",
         title: "API rate limit exceeded",
@@ -38,7 +38,7 @@
   </Button>
   <Button
     kind="tertiary"
-    on:click={() => {
+    onclick={() => {
       queue.add({
         kind: "info",
         title: "Scheduled maintenance",
@@ -51,7 +51,7 @@
   </Button>
   <Button
     kind="tertiary"
-    on:click={() => {
+    onclick={() => {
       queue.add({
         kind: "warning",
         title: "Certificate expiring soon",

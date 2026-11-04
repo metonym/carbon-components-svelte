@@ -219,7 +219,7 @@
           kind="ghost"
           icon={ArrowLeft}
           disabled={busy}
-          on:click={() => go(currentIndex - 1)}
+          onclick={() => go(currentIndex - 1)}
         >
           {backText}
         </Button>
@@ -232,7 +232,7 @@
         loadingDescription={checking
           ? validatingDescription
           : submittingDescription}
-        on:click={next}
+        onclick={next}
       >
         {last ? submitText : nextText}
       </Button>

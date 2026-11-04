@@ -6,7 +6,7 @@
 </script>
 
 <Box width="320px">
-  <Button bind:ref={anchor} on:click={() => (open = !open)}>
+  <Button bind:ref={anchor} onclick={() => (open = !open)}>
     Actions on this wide button
   </Button>
 </Box>

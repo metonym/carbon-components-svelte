@@ -93,14 +93,13 @@
         aria-label={iconDescription}
         tooltipPosition="left"
         portalTooltip
-        on:click={() => handleClose("close")}
+        onclick={() => handleClose("close")}
       >
-        <Close
-          slot="icon"
+        {#snippet iconChildren()}<Close
           size={20}
           class="bx--modal-close__icon"
           aria-hidden="true"
-        />
+        />{/snippet}
       </Button>
     </div>
   </header>

@@ -32,7 +32,7 @@
     <Button
       kind="tertiary"
       size="small"
-      on:click={() => (selectedId = "step-c")}
+      onclick={() => (selectedId = "step-c")}
     >
       Select the Stage step by id
     </Button>

@@ -30,7 +30,7 @@
         size="small"
         disabled={action.disabled}
         tabindex={i === active ? 0 : -1}
-        on:focus={() => (active = i)}
+        onfocus={() => (active = i)}
       >
         {action.label}
       </Button>

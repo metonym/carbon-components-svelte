@@ -36,6 +36,8 @@ describe("ComboButton", () => {
     "mousedown",
   ])(
     "forwards %s from both buttons, and %s:trigger only from the trigger",
+    // Svelte delegates mouseover, mousedown and click to the root, so the
+    // synthetic event must bubble, as a real one does.
     async (name) => {
       const onEvent = vi.fn();
       render(ComboButtonFixture, { props: { onEvent } });
@@ -45,12 +47,12 @@ describe("ComboButton", () => {
         name: "Additional actions",
       });
 
-      await fireEvent(primaryAction, new Event(name));
+      await fireEvent(primaryAction, new Event(name, { bubbles: true }));
       expect(onEvent).toHaveBeenCalledWith(name);
       expect(onEvent).not.toHaveBeenCalledWith(`${name}:trigger`);
 
       onEvent.mockClear();
-      await fireEvent(trigger, new Event(name));
+      await fireEvent(trigger, new Event(name, { bubbles: true }));
       expect(onEvent).toHaveBeenCalledWith(name);
       expect(onEvent).toHaveBeenCalledWith(`${name}:trigger`);
     },

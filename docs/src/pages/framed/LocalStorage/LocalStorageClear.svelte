@@ -17,4 +17,4 @@
 <br />
 <br />
 
-<Button size="small" on:click={storage.clearAll}>Clear storage</Button>
+<Button size="small" onclick={() => storage.clearAll()}>Clear storage</Button>

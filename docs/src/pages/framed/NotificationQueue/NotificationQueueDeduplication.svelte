@@ -13,7 +13,7 @@
 
 <ButtonSet>
   <Button
-    on:click={() => {
+    onclick={() => {
       queue.add({
         id: "id",
         kind: "warning",
@@ -26,7 +26,7 @@
     Add duplicate
   </Button>
   <Button
-    on:click={() => {
+    onclick={() => {
       queue.add({
         id: `id-${count++}`,
         kind: "info",

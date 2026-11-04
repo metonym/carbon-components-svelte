@@ -10,7 +10,7 @@
   bind:this={containerRef}
   style="position: relative; display: inline-block"
 >
-  <Button data-testid="open-popover" on:click={() => (open = !open)}>
+  <Button data-testid="open-popover" onclick={() => (open = !open)}>
     Toggle popover
   </Button>
   <Popover
@@ -25,7 +25,7 @@
     }}
   >
     <div data-testid="popover-content">Popover content</div>
-    <Button data-testid="close-popover" on:click={() => (open = false)}>
+    <Button data-testid="close-popover" onclick={() => (open = false)}>
       Close
     </Button>
   </Popover>

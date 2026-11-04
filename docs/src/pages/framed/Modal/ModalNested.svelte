@@ -5,7 +5,7 @@
   let openConfirm = false;
 </script>
 
-<Button kind="danger-tertiary" on:click={() => (open = true)}>
+<Button kind="danger-tertiary" onclick={() => (open = true)}>
   Delete database
 </Button>
 

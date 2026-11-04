@@ -9,7 +9,7 @@
   let open = false;
 </script>
 
-<Button on:click={() => (open = true)}>Select date</Button>
+<Button onclick={() => (open = true)}>Select date</Button>
 
 <Modal
   bind:open

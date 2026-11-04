@@ -68,7 +68,7 @@
       data-testid="pin-code-input-clear"
       kind="tertiary"
       size="small"
-      on:click={() => pinCodeInput?.clear()}
+      onclick={() => pinCodeInput?.clear()}
     >
       Clear
     </Button>

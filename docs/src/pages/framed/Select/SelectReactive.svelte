@@ -20,7 +20,7 @@
     kind="tertiary"
     size="small"
     disabled={selected === "business"}
-    on:click={() => (selected = "business")}
+    onclick={() => (selected = "business")}
   >
     Set to "business"
   </Button>

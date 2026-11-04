@@ -10,8 +10,8 @@
   let toastOpen = false;
 </script>
 
-<Button on:click={() => (inlineOpen = true)}>Delete file</Button>
-<Button on:click={() => (toastOpen = true)}>Upload</Button>
+<Button onclick={() => (inlineOpen = true)}>Delete file</Button>
+<Button onclick={() => (toastOpen = true)}>Upload</Button>
 
 <InlineNotification
   bind:open={inlineOpen}

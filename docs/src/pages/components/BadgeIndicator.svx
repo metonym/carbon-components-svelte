@@ -17,7 +17,7 @@ Compose a `BadgeIndicator` in the `badge` slot of an icon-only [Button](/compone
   icon={Notification}
   iconDescription="Notifications"
 >
-  <BadgeIndicator slot="badge" />
+  {#snippet badge()}<BadgeIndicator />{/snippet}
 </Button>
 
 ## Count
@@ -34,21 +34,21 @@ Set `count` to a number. Values greater than `999` display as `999+`.
     icon={Notification}
     iconDescription="Notifications"
   >
-    <BadgeIndicator slot="badge" count={4} />
+    {#snippet badge()}<BadgeIndicator count={4} />{/snippet}
   </Button>
   <Button
     kind="ghost"
     icon={Notification}
     iconDescription="Notifications"
   >
-    <BadgeIndicator slot="badge" count={25} />
+    {#snippet badge()}<BadgeIndicator count={25} />{/snippet}
   </Button>
   <Button
     kind="ghost"
     icon={Notification}
     iconDescription="Notifications"
   >
-    <BadgeIndicator slot="badge" count={1000} />
+    {#snippet badge()}<BadgeIndicator count={1000} />{/snippet}
   </Button>
 </Stack>
 

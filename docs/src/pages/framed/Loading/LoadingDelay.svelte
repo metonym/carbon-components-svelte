@@ -12,11 +12,11 @@
 
 <Stack gap={5}>
   <Stack orientation="horizontal" gap={5} align="center">
-    <Button on:click={() => simulateRequest(150)}>Fast request (150 ms)</Button>
-    <Button kind="secondary" on:click={() => simulateRequest(400)}>
+    <Button onclick={() => simulateRequest(150)}>Fast request (150 ms)</Button>
+    <Button kind="secondary" onclick={() => simulateRequest(400)}>
       Request (400 ms)
     </Button>
-    <Button kind="tertiary" on:click={() => simulateRequest(2000)}>
+    <Button kind="tertiary" onclick={() => simulateRequest(2000)}>
       Slow request (2 s)
     </Button>
     <Loading withOverlay={false} small {active} delay={300} />

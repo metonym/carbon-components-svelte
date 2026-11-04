@@ -199,7 +199,7 @@
   </Card>
   <Card data-testid="card-static"><CardBody>Static card</CardBody></Card>
 
-  <Button data-testid="side-panel-open" on:click={() => (sidePanelOpen = true)}>
+  <Button data-testid="side-panel-open" onclick={() => (sidePanelOpen = true)}>
     Open side panel
   </Button>
   <SidePanel bind:open={sidePanelOpen} resizable title="Side panel">

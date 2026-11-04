@@ -57,7 +57,7 @@
         <div>
           <Button
             kind="tertiary"
-            on:click={() => {
+            onclick={() => {
               currentIndex = 0;
               submitted = false;
             }}

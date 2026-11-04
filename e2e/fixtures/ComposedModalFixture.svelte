@@ -46,7 +46,7 @@
     <ModalFooter>
       <!-- The footer "Close" closes via app code (sets `open = false`), not a
            built-in close affordance — exercises the "programmatic" trigger. -->
-      <Button data-testid="close-modal" on:click={() => (open = false)}>
+      <Button data-testid="close-modal" onclick={() => (open = false)}>
         Close
       </Button>
     </ModalFooter>

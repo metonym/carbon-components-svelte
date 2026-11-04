@@ -12,7 +12,7 @@
   let open = false;
 </script>
 
-<Button on:click={() => (open = true)}>Open modal</Button>
+<Button onclick={() => (open = true)}>Open modal</Button>
 
 <Portal>
   <Modal

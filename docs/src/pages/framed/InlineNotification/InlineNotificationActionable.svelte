@@ -10,7 +10,7 @@
 </script>
 
 <Stack gap={5} align="start">
-  <Button kind="danger" disabled={open} on:click={() => (open = true)}>
+  <Button kind="danger" disabled={open} onclick={() => (open = true)}>
     Delete API key
   </Button>
 

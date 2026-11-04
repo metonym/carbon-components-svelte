@@ -4,7 +4,7 @@
   let open = false;
 </script>
 
-<Button on:click={() => (open = true)}>Review forecast</Button>
+<Button onclick={() => (open = true)}>Review forecast</Button>
 
 <Modal
   bind:open

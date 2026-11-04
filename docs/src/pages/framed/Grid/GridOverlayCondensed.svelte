@@ -14,7 +14,7 @@
 <Grid condensed>
   <Row>
     <Column>
-      <Button on:click={() => (open = !open)}>
+      <Button onclick={() => (open = !open)}>
         {open ? "Hide" : "Show"}
         condensed grid overlay
       </Button>

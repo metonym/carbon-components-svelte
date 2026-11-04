@@ -7,7 +7,7 @@
 <Stack gap={6}>
   <Toggle labelText="Push notifications" bind:toggled />
   <div>
-    <Button kind="tertiary" size="small" on:click={() => (toggled = !toggled)}>
+    <Button kind="tertiary" size="small" onclick={() => (toggled = !toggled)}>
       Toggle
       {toggled ? "off" : "on"}
     </Button>

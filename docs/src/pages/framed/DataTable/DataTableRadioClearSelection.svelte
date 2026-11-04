@@ -20,7 +20,7 @@
   kind="ghost"
   size="small"
   disabled={selectedRowIds.length === 0}
-  on:click={() => {
+  onclick={() => {
     selectedRowIds = [];
   }}
 >

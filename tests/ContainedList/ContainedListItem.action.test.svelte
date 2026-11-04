@@ -16,7 +16,7 @@
       kind="ghost"
       icon={Close}
       iconDescription="Dismiss"
-      on:click={() => onActionClick?.()}
+      onclick={() => onActionClick?.()}
     />
   </ContainedListItem>
   <ContainedListItem>Item 2</ContainedListItem>

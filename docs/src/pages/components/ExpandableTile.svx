@@ -172,7 +172,7 @@ press <DocKbd label="Enter" /> or <DocKbd label="Space" /> to expand or collapse
     <OutboundLink href="https://svelte.carbondesignsystem.com/">
       View documentation
     </OutboundLink>
-    <Button on:click={() => console.log("Alert acknowledged")}>
+    <Button onclick={() => console.log("Alert acknowledged")}>
       Acknowledge alert
     </Button>
   </Stack>

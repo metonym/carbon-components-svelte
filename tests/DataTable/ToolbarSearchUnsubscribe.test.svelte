@@ -17,11 +17,11 @@
   let shouldFilterRows = true;
 </script>
 
-<Button on:click={() => (shouldFilterRows = !shouldFilterRows)}>
+<Button onclick={() => (shouldFilterRows = !shouldFilterRows)}>
   Toggle filter
 </Button>
 <Button
-  on:click={() =>
+  onclick={() =>
     (rows = rows.map((row) => ({ ...row, name: `${row.name}!` })))}
 >
   Change rows

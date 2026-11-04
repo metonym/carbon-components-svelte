@@ -11,7 +11,7 @@
   let open = false;
 </script>
 
-<Button on:click={() => (open = true)}>Open dialog</Button>
+<Button onclick={() => (open = true)}>Open dialog</Button>
 
 <Dialog bind:open modal aria-label="Region settings">
   <Stack gap={5}>
@@ -46,6 +46,6 @@
       <OverflowMenuItem text="Duplicate" />
       <OverflowMenuItem danger text="Delete" />
     </OverflowMenu>
-    <Button kind="secondary" on:click={() => (open = false)}>Close</Button>
+    <Button kind="secondary" onclick={() => (open = false)}>Close</Button>
   </Stack>
 </Dialog>

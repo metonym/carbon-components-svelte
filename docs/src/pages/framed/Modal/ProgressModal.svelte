@@ -36,7 +36,7 @@
 </script>
 
 <Button
-  on:click={() => {
+  onclick={() => {
     open = true;
     step = 0;
     name = "";
@@ -89,8 +89,8 @@
     </form>
   </ModalBody>
   <ModalFooter>
-    <Button kind="ghost" on:click={() => (open = false)}>Cancel</Button>
-    <Button kind="secondary" disabled={step === 0} on:click={() => step--}>
+    <Button kind="ghost" onclick={() => (open = false)}>Cancel</Button>
+    <Button kind="secondary" disabled={step === 0} onclick={() => step--}>
       Previous
     </Button>
     <Button type="submit" form="workspace-form">

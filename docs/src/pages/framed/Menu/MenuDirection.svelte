@@ -6,7 +6,7 @@
 </script>
 
 <Box marginTop="220px">
-  <Button bind:ref={anchor} on:click={() => (open = !open)}>Actions</Button>
+  <Button bind:ref={anchor} onclick={() => (open = !open)}>Actions</Button>
 </Box>
 
 <Menu {anchor} direction="top" bind:open labelText="Actions menu">

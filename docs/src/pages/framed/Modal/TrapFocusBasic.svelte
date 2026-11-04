@@ -16,7 +16,7 @@
   }
 </script>
 
-<Button on:click={() => (open = true)}>Invite teammate</Button>
+<Button onclick={() => (open = true)}>Invite teammate</Button>
 
 {#if open}
   <Box
@@ -33,9 +33,9 @@
     <Stack gap={5}>
       <TextInput labelText="Email" placeholder="ada@acme-corp.com" />
       <Stack orientation="horizontal" gap={3}>
-        <Button size="small" on:click={() => (open = false)}>Send invite</Button
+        <Button size="small" onclick={() => (open = false)}>Send invite</Button
         >
-        <Button size="small" kind="ghost" on:click={() => (open = false)}>
+        <Button size="small" kind="ghost" onclick={() => (open = false)}>
           Cancel
         </Button>
       </Stack>

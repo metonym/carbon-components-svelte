@@ -20,7 +20,7 @@
       <RadioButton labelText="Start" value="start" />
       <RadioButton labelText="End" value="end" />
     </RadioButtonGroup>
-    <Button on:click={() => (open = true)}>Filter services</Button>
+    <Button onclick={() => (open = true)}>Filter services</Button>
   </Stack>
 </Content>
 

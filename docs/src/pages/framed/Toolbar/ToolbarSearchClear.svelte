@@ -24,7 +24,7 @@
         kind="ghost"
         size="small"
         disabled={value.length === 0}
-        on:click={() => toolbarSearch.clear()}
+        onclick={() => toolbarSearch.clear()}
       >
         Clear search
       </Button>

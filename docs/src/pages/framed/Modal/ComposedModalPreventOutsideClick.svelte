@@ -11,7 +11,7 @@
   let open = false;
 </script>
 
-<Button on:click={() => (open = true)}>Create API key</Button>
+<Button onclick={() => (open = true)}>Create API key</Button>
 
 <ComposedModal preventCloseOnClickOutside bind:open>
   <ModalHeader title="API key created" />

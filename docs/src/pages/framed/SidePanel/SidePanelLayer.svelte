@@ -15,7 +15,7 @@
 
 <Header companyName="IBM" platformName="Cloud" />
 <Content>
-  <Button on:click={() => (open = true)}>Edit scaling</Button>
+  <Button onclick={() => (open = true)}>Edit scaling</Button>
 </Content>
 
 <SidePanel bind:open title="Scaling">

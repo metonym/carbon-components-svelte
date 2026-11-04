@@ -29,10 +29,10 @@
     <DatePickerInput labelText="Appointment" placeholder="mm/dd/yyyy" />
   </DatePicker>
   <Stack gap={3} orientation="horizontal">
-    <Button kind="tertiary" on:click={openCalendar}>Open calendar</Button>
+    <Button kind="tertiary" onclick={openCalendar}>Open calendar</Button>
     <Button
       kind="tertiary"
-      on:click={() => (weekendsDisabled = !weekendsDisabled)}
+      onclick={() => (weekendsDisabled = !weekendsDisabled)}
     >
       {weekendsDisabled ? "Enable" : "Disable"}
       weekends

@@ -5,7 +5,7 @@
   let result = "";
 </script>
 
-<Button kind="danger" on:click={() => (open = true)}>Delete file</Button>
+<Button kind="danger" onclick={() => (open = true)}>Delete file</Button>
 
 {#if result}
   <Text>Result: {result}</Text>

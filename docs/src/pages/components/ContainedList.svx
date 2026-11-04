@@ -162,7 +162,7 @@ Use the `action` slot on an item for trailing controls such as buttons or icons.
       kind="ghost"
       iconDescription="Dismiss"
       icon={Close}
-      on:click={() => console.log('click close')}
+      onclick={() => console.log('click close')}
     />
   </ContainedListItem>
   <ContainedListItem interactive disabled>New comment on PR #482</ContainedListItem>

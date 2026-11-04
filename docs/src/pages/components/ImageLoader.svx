@@ -49,7 +49,7 @@ Raise `rootMargin`, for example to `"1200px"`, if images still appear blank duri
 
 Enable a smooth fade-in animation when the image loads successfully.
 
-<Button kind="ghost" on:click="{() => { key++;}}">Reload image</Button>
+<Button kind="ghost" onclick={() => { key++;}}>Reload image</Button>
 {#key key}<ImageLoader fadeIn ratio="16x9" src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" />{/key}
 
 ## Loading and error states

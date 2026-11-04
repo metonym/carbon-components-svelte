@@ -166,9 +166,9 @@
   </ContentSwitcher>
 
   <ButtonSet>
-    <Button on:click={handleExpandAll}>Expand All</Button>
-    <Button on:click={handleCollapseAll}>Collapse All</Button>
-    <Button on:click={handleShowNode}>Show Deep Node</Button>
+    <Button onclick={handleExpandAll}>Expand All</Button>
+    <Button onclick={handleCollapseAll}>Collapse All</Button>
+    <Button onclick={handleShowNode}>Show Deep Node</Button>
   </ButtonSet>
 
   {#if hasTiming}

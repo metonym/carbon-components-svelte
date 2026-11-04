@@ -1,18 +1,31 @@
 <script>
   /**
-   * Set the `href` to use an anchor link.
-   * @type {string | undefined}
+   * @restProps {a | div}
    */
-  export let href = undefined;
+  let {
+    /**
+     * Set the `href` to use an anchor link.
+     * @type {string | undefined}
+     */
+    href = undefined,
 
-  /**
-   * Specify the size of button skeleton.
-   * Falls back to the height of a parent `Form`'s size, as Button does.
-   * Accepts the same Carbon v11 aliases as Button.
-   * @type {"default" | "field" | "small" | "xs" | "lg" | "xl" | "sm" | "md" | "2xl" | undefined}
-   * @default "default"
-   */
-  export let size = undefined;
+    /**
+     * Specify the size of button skeleton.
+     * Falls back to the height of a parent `Form`'s size, as Button does.
+     * Accepts the same Carbon v11 aliases as Button.
+     * @type {"default" | "field" | "small" | "xs" | "lg" | "xl" | "sm" | "md" | "2xl" | undefined}
+     * @default "default"
+     */
+    size = undefined,
+
+    /** @type {import("svelte/elements").ClassValue | undefined} */
+    class: className = undefined,
+
+    /** @type {string | undefined | null} */
+    target = undefined,
+
+    ...rest
+  } = $props();
 
   import { getContext } from "svelte";
   import { FORM_SIZE_CONTEXT_KEY } from "../constants/context-keys.js";
@@ -22,51 +35,36 @@
 
   /** @type {undefined | import("svelte/store").Readable<undefined | "xs" | "sm" | "md" | "xl">} */
   const formSize = getContext(FORM_SIZE_CONTEXT_KEY);
-  $: effectiveSize =
+  const effectiveSize = $derived(
     normalizeSize(size, BUTTON_SIZE_ALIASES) ??
-    formButtonSize($formSize) ??
-    "default";
+      formButtonSize($formSize) ??
+      "default",
+  );
+  const skeletonClass = $derived([
+    "bx--skeleton",
+    "bx--btn",
+    effectiveSize === "field" && "bx--btn--field",
+    effectiveSize === "xs" && "bx--btn--xs",
+    effectiveSize === "small" && "bx--btn--sm",
+    effectiveSize === "lg" && "bx--btn--lg",
+    effectiveSize === "xl" && "bx--btn--xl",
+    className,
+  ]);
 </script>
 
 {#if href}
   <a
     {href}
-    rel={resolveLinkRel($$restProps.target)}
+    {target}
+    rel={resolveLinkRel(target)}
     role="button"
     tabindex="-1"
     aria-hidden="true"
-    class:bx--skeleton={true}
-    class:bx--btn={true}
-    class:bx--btn--field={effectiveSize === "field"}
-    class:bx--btn--xs={effectiveSize === "xs"}
-    class:bx--btn--sm={effectiveSize === "small"}
-    class:bx--btn--lg={effectiveSize === "lg"}
-    class:bx--btn--xl={effectiveSize === "xl"}
-    {...$$restProps}
-    on:click
-    on:focus
-    on:blur
-    on:mouseover
-    on:mouseenter
-    on:mouseleave
+    {...rest}
+    class={skeletonClass}
   >
     {""}
   </a>
 {:else}
-  <div
-    class:bx--skeleton={true}
-    class:bx--btn={true}
-    class:bx--btn--field={effectiveSize === "field"}
-    class:bx--btn--xs={effectiveSize === "xs"}
-    class:bx--btn--sm={effectiveSize === "small"}
-    class:bx--btn--lg={effectiveSize === "lg"}
-    class:bx--btn--xl={effectiveSize === "xl"}
-    {...$$restProps}
-    on:click
-    on:focus
-    on:blur
-    on:mouseover
-    on:mouseenter
-    on:mouseleave
-  ></div>
+  <div {...rest} class={skeletonClass}></div>
 {/if}

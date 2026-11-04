@@ -22,7 +22,7 @@
         kind="tertiary"
         size="small"
         tabindex={i === active ? 0 : -1}
-        on:focus={() => (active = i)}
+        onfocus={() => (active = i)}
       >
         {action}
       </Button>

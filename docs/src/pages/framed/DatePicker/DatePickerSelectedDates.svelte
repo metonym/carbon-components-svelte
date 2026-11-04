@@ -24,7 +24,7 @@
     <DatePickerInput labelText="Sprint end" placeholder="mm/dd/yyyy" />
   </DatePicker>
   <div>
-    <Button kind="tertiary" size="small" on:click={nextWeek}>Next week</Button>
+    <Button kind="tertiary" size="small" onclick={nextWeek}>Next week</Button>
   </div>
   <p>
     selectedDates:

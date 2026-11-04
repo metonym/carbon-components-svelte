@@ -92,7 +92,7 @@ To reveal on click, clear `maskedValue` from a button beside the field.
     size="field"
     icon={shown ? ViewOff : View}
     iconDescription={shown ? "Hide secret" : "Show secret"}
-    on:click={() => (shown = !shown)}
+    onclick={() => (shown = !shown)}
   />
 </Stack>
 

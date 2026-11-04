@@ -11,7 +11,7 @@
       <Button
         size="small"
         disabled={value === "Cloud functions"}
-        on:click={() => (value = "Cloud functions")}
+        onclick={() => (value = "Cloud functions")}
       >
         Set value
       </Button>
@@ -19,7 +19,7 @@
         kind="ghost"
         size="small"
         disabled={value.length === 0}
-        on:click={() => (value = "")}
+        onclick={() => (value = "")}
       >
         Clear value
       </Button>

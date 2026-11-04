@@ -45,7 +45,7 @@
     <Button
       kind="secondary"
       type="button"
-      on:click={() => popover?.hidePopover()}
+      onclick={() => popover?.hidePopover()}
     >
       Close
     </Button>

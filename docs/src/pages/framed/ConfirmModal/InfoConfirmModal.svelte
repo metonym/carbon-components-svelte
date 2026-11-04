@@ -4,7 +4,7 @@
   let open = false;
 </script>
 
-<Button on:click={() => (open = true)}>Sign out</Button>
+<Button onclick={() => (open = true)}>Sign out</Button>
 
 <ConfirmModal
   bind:open

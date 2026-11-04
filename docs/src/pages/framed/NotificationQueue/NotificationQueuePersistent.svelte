@@ -12,7 +12,7 @@
 
 <ButtonSet>
   <Button
-    on:click={() => {
+    onclick={() => {
       queue.add({
         kind: "warning",
         title: "Persistent notification",
@@ -25,7 +25,7 @@
     Add persistent
   </Button>
   <Button
-    on:click={() => {
+    onclick={() => {
       queue.add({
         kind: "info",
         title: "Auto-dismiss notification",
@@ -39,7 +39,7 @@
     Add auto-dismiss
   </Button>
   <Button
-    on:click={() => {
+    onclick={() => {
       queue.clear();
     }}
   >

@@ -30,14 +30,14 @@
 </script>
 
 <ButtonSet>
-  <Button size="field" {disabled} on:click={() => (open = !open)}>
+  <Button size="field" {disabled} onclick={() => (open = !open)}>
     {open ? "Collapse" : "Expand"}
     all
   </Button>
   <Button
     kind="ghost"
     size="field"
-    on:click={() => {
+    onclick={() => {
       disabled = !disabled;
       if (disabled) {
         open = false;

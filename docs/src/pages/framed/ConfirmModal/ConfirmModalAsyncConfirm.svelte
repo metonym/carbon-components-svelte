@@ -18,7 +18,7 @@
   }
 </script>
 
-<Button kind="danger" on:click={() => (open = true)}>Delete account</Button>
+<Button kind="danger" onclick={() => (open = true)}>Delete account</Button>
 
 <ConfirmModal
   bind:open

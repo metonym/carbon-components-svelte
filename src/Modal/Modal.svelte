@@ -437,16 +437,15 @@
             {iconDescription}
             aria-label={iconDescription}
             tooltipPosition="left"
-            on:click={() => {
+            onclick={() => {
               close("close-button");
             }}
           >
-            <Close
-              slot="icon"
+            {#snippet iconChildren()}<Close
               size={20}
               class="bx--modal-close__icon"
               aria-hidden="true"
-            />
+            />{/snippet}
           </Button>
         </div>
       {/if}
@@ -478,16 +477,15 @@
             {iconDescription}
             aria-label={iconDescription}
             tooltipPosition="left"
-            on:click={() => {
+            onclick={() => {
               close("close-button");
             }}
           >
-            <Close
-              slot="icon"
+            {#snippet iconChildren()}<Close
               size={20}
               class="bx--modal-close__icon"
               aria-hidden="true"
-            />
+            />{/snippet}
           </Button>
         </div>
       {/if}
@@ -530,7 +528,7 @@
               size="default"
               kind={button.kind ?? "secondary"}
               disabled={button.disabled || button.loading || footerBusy}
-              on:click={() => {
+              onclick={() => {
                 if (button.loading || footerBusy) return;
                 dispatch("click:button--secondary", { text: button.text });
               }}
@@ -551,7 +549,7 @@
             size="default"
             kind="secondary"
             disabled={secondaryButtonLoading || footerBusy}
-            on:click={() => {
+            onclick={() => {
               if (secondaryButtonLoading || footerBusy) return;
               dispatch("click:button--secondary", {
                 text: secondaryButtonText,
@@ -577,7 +575,7 @@
           icon={primaryBusy ? undefined : primaryButtonIcon}
           type={formId ? "submit" : "button"}
           form={formId}
-          on:click={() => {
+          onclick={() => {
             if (primaryBusy) return;
             dispatch("submit");
             dispatch("click:button--primary");

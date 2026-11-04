@@ -4,7 +4,7 @@
   let open = false;
 </script>
 
-<Button on:click={() => (open = true)}>Provision resource</Button>
+<Button onclick={() => (open = true)}>Provision resource</Button>
 
 <Modal
   bind:open

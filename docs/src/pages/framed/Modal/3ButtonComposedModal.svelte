@@ -12,7 +12,7 @@
   let checked = false;
 </script>
 
-<Button on:click={() => (open = true)}>Review changes</Button>
+<Button onclick={() => (open = true)}>Review changes</Button>
 
 <ComposedModal bind:open on:submit={() => (open = false)}>
   <ModalHeader label="Changes" title="Confirm changes" />

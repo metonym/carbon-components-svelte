@@ -32,7 +32,7 @@
     <Button
       kind="tertiary"
       size="small"
-      on:click={() => (selectedId = "settings")}
+      onclick={() => (selectedId = "settings")}
     >
       Select Settings by id
     </Button>

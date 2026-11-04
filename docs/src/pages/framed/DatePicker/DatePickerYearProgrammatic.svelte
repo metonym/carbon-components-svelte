@@ -30,9 +30,9 @@
     <DatePickerInput labelText="Fiscal year" placeholder="yyyy" />
   </DatePicker>
   <Stack gap={3} orientation="horizontal">
-    <Button kind="tertiary" on:click={selectCurrentYear}>
+    <Button kind="tertiary" onclick={selectCurrentYear}>
       Select current year
     </Button>
-    <Button kind="tertiary" on:click={viewNextDecade}>View next decade</Button>
+    <Button kind="tertiary" onclick={viewNextDecade}>View next decade</Button>
   </Stack>
 </Stack>

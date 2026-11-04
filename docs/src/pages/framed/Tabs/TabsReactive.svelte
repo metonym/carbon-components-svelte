@@ -23,7 +23,7 @@
   </Tabs>
   <Stack gap={4} orientation="horizontal" align="center">
     <div>
-      <Button kind="tertiary" size="small" on:click={() => (selected = 1)}>
+      <Button kind="tertiary" size="small" onclick={() => (selected = 1)}>
         Set index to 1
       </Button>
     </div>

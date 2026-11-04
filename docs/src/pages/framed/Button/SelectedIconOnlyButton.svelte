@@ -12,19 +12,19 @@
   kind="ghost"
   iconDescription="Bold"
   icon={TextBold}
-  on:click={() => (index = 0)}
+  onclick={() => (index = 0)}
 />
 <Button
   isSelected={index === 1}
   kind="ghost"
   iconDescription="Italicize"
   icon={TextItalic}
-  on:click={() => (index = 1)}
+  onclick={() => (index = 1)}
 />
 <Button
   isSelected={index === 2}
   kind="ghost"
   iconDescription="Underline"
   icon={TextUnderline}
-  on:click={() => (index = 2)}
+  onclick={() => (index = 2)}
 />

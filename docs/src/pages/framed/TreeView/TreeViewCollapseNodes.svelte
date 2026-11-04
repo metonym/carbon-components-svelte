@@ -50,14 +50,14 @@
 <Stack gap={6}>
   <ButtonSet>
     <Button
-      on:click={() => {
+      onclick={() => {
         treeview?.collapseNodes();
       }}
     >
       Collapse all nodes
     </Button>
     <Button
-      on:click={() => {
+      onclick={() => {
         treeview?.expandNodes();
         treeview?.collapseNodes((node) => node.disabled);
       }}

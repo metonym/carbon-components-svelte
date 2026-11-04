@@ -11,7 +11,7 @@
   let open = false;
 </script>
 
-<Button on:click={() => (open = true)}>View webhook deliveries</Button>
+<Button onclick={() => (open = true)}>View webhook deliveries</Button>
 
 <ComposedModal fullWidth bind:open>
   <ModalHeader label="Webhooks" title="Delivery history" />

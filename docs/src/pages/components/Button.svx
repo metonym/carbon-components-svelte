@@ -75,10 +75,10 @@ Add an icon to the button using the `icon` prop.
 
 ### Custom icon
 
-Use the `icon` named slot to render custom icon markup instead of, or with different props than, the `icon` prop.
+Use the `iconChildren` snippet to render custom icon markup instead of, or with different props than, the `icon` prop. Spread `props` on your icon.
 
 <Button>
-  <Add slot="icon" size={20} />
+  {#snippet iconChildren({ props })}<Add {...props} size={20} />{/snippet}
   Custom icon
 </Button>
 
@@ -156,15 +156,15 @@ Wrap a toolbar of icon-only buttons in a [TooltipGroup](/components/TooltipGroup
 
 ### Badge
 
-Compose a `BadgeIndicator` in the `badge` slot to overlay a badge on an icon-only button. Size is set to `lg` automatically. See [BadgeIndicator](/components/BadgeIndicator) for the full set of examples.
+Compose a `BadgeIndicator` in the `badge` snippet to overlay a badge on an icon-only button. Size is set to `lg` automatically. See [BadgeIndicator](/components/BadgeIndicator) for the full set of examples.
 
 <Button kind="ghost" icon={Notification} iconDescription="Notifications">
-  <BadgeIndicator slot="badge" />
+  {#snippet badge()}<BadgeIndicator />{/snippet}
 </Button>
 
 ## Element
 
-By default, the button renders a `button` or `a` element. Set `href` to render an anchor, or `as` to render a fully custom element.
+By default, the button renders a `button` or `a` element. Set `href` to render an anchor, or pass a `child` snippet to render a fully custom element.
 
 ### Link
 
@@ -178,10 +178,10 @@ Link buttons can also have icons.
 
 ### Custom element
 
-Set `as` to `true` and spread `let:props` to the element. `bind:ref` stays `null` in this mode; use `bind:this` on your own element instead.
+Pass a `child` snippet and spread its `props` on your element. `bind:ref` stays `null` in this mode; use `bind:this` on your own element instead.
 
-<Button as let:props>
-  <p {...props}>Custom element</p>
+<Button>
+  {#snippet child({ props })}<p {...props}>Custom element</p>{/snippet}
 </Button>
 
 ## Sizes
@@ -345,13 +345,13 @@ Set `loadingDelay` to wait a number of milliseconds after `loading` becomes `tru
 
 ## Keyboard shortcut
 
-Set `shortcut` to show its keys after the label, in the tooltip of an icon-only button, and to the screen reader through `aria-keyshortcuts`. Pressing the keys clicks the button, so `on:click` runs, as does a form's submit or a link's navigation. `mod` is Command on Apple platforms and Ctrl elsewhere. The examples run in a frame, so click in one before you press its keys.
+Set `shortcut` to show its keys after the label, in the tooltip of an icon-only button, and to the screen reader through `aria-keyshortcuts`. Pressing the keys clicks the button, so `onclick` runs, as does a form's submit or a link's navigation. `mod` is Command on Apple platforms and Ctrl elsewhere. The examples run in a frame, so click in one before you press its keys.
 
 <FileSource src="/framed/Button/ButtonShortcut" />
 
 The button only answers while it's enabled and shown, and while a modal is open, only if it's inside it, so a page's Save never fires behind a dialog. When two shown buttons share a shortcut, the one rendered last answers. A shortcut you bind yourself with `onShortcut` comes first.
 
-To do something other than click, handle `on:shortcut`, dispatched before the click, and call `preventDefault()` to skip the click.
+To do something other than click, pass `onshortcut`, called before the click, and call `preventDefault()` on its argument to skip the click.
 
 <FileSource src="/framed/Button/ButtonShortcutEvent" />
 

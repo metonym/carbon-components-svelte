@@ -67,7 +67,7 @@
       {announcements.length}
       {announcements.length === 1 ? "announcement" : "announcements"}
     </span>
-    <Button kind="tertiary" size="small" icon={Add} on:click={add}>
+    <Button kind="tertiary" size="small" icon={Add} onclick={add}>
       Add announcement
     </Button>
   </Stack>
@@ -89,7 +89,7 @@
                 icon={Close}
                 iconDescription="Dismiss announcement"
                 tooltipPosition="left"
-                on:click={() => dismiss(item.id)}
+                onclick={() => dismiss(item.id)}
               />
             </Stack>
             <h4>{item.title}</h4>

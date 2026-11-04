@@ -11,7 +11,7 @@
   let open = false;
 </script>
 
-<Button on:click={() => (open = true)}>Invite teammate</Button>
+<Button onclick={() => (open = true)}>Invite teammate</Button>
 
 <ComposedModal bind:open on:submit={() => (open = false)}>
   <ModalHeader title="Invite teammate" />

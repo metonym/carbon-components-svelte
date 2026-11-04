@@ -27,7 +27,7 @@
 </script>
 
 <Button
-  on:click={() => {
+  onclick={() => {
     toggleRows = !toggleRows;
     if (toggleRows) {
       rows = Array.from({ length: 4 }).map((_, i) => ({

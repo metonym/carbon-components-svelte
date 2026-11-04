@@ -686,7 +686,7 @@
           tooltipPosition="bottom"
           tooltipAlignment="start"
           class="bx--side-panel__back"
-          on:click={() => dispatch("back")}
+          onclick={() => dispatch("back")}
         />
       {/if}
       {#if title && labelText}
@@ -726,7 +726,7 @@
               tooltipPosition="bottom"
               tooltipAlignment="end"
               class="bx--side-panel__close"
-              on:click={() => close("close-button")}
+              onclick={() => close("close-button")}
             />
           {/if}
         </div>

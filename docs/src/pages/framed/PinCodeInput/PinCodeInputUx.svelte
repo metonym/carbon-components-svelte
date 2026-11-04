@@ -100,7 +100,7 @@
     <Button
       kind="tertiary"
       disabled={!verified && !invalid}
-      on:click={resetVerification}
+      onclick={resetVerification}
     >
       Reset
     </Button>

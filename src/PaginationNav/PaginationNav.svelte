@@ -156,7 +156,7 @@
         iconDescription={backwardText}
         disabled={!loop && page === 1}
         icon={CaretLeft}
-        on:click={() => {
+        onclick={() => {
           if (page <= 1) {
             if (loop) page = total;
           } else {
@@ -237,7 +237,7 @@
         iconDescription={forwardText}
         disabled={!loop && page === total}
         icon={CaretRight}
-        on:click={() => {
+        onclick={() => {
           if (page >= total) {
             if (loop) page = 1;
           } else {

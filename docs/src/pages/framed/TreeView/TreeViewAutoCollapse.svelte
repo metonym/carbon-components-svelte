@@ -47,11 +47,11 @@
 
 <Stack gap={6}>
   <ButtonSet>
-    <Button size="small" on:click={() => (activeId = 3)}>Select Spark</Button>
-    <Button size="small" on:click={() => (activeId = 8)}>
+    <Button size="small" onclick={() => (activeId = 3)}>Select Spark</Button>
+    <Button size="small" onclick={() => (activeId = 8)}>
       Select Blockchain
     </Button>
-    <Button size="small" on:click={() => (activeId = 12)}>
+    <Button size="small" onclick={() => (activeId = 12)}>
       Select MongoDB
     </Button>
   </ButtonSet>

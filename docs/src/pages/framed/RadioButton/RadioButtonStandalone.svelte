@@ -18,7 +18,7 @@
       size="small"
       kind="secondary"
       disabled={!acknowledged}
-      on:click={() => (acknowledged = !acknowledged)}
+      onclick={() => (acknowledged = !acknowledged)}
     >
       Reset
     </Button>

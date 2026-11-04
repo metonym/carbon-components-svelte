@@ -14,7 +14,7 @@
 </script>
 
 <Stack gap={5}>
-  <Button bind:ref={anchor} on:click={() => (open = !open)}>View</Button>
+  <Button bind:ref={anchor} onclick={() => (open = !open)}>View</Button>
 
   <Menu {anchor} bind:open labelText="View menu">
     <MenuItem on:click={() => console.log("Reset")}>Reset</MenuItem>

@@ -14,11 +14,11 @@
     "option-3": 0,
   };
 
-  function handleCheck(value: string, event: CustomEvent<boolean>) {
+  function handleCheck(value: string, checked: boolean) {
     checkCounts[value as keyof typeof checkCounts]++;
     onCheck(
       value,
-      event.detail,
+      checked,
       checkCounts[value as keyof typeof checkCounts],
     );
   }

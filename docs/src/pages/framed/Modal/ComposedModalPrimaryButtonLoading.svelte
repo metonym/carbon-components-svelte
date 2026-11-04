@@ -19,7 +19,7 @@
   }
 </script>
 
-<Button on:click={() => (open = true)}>Save changes</Button>
+<Button onclick={() => (open = true)}>Save changes</Button>
 
 <ComposedModal bind:open on:submit={onSave}>
   <ModalHeader title="Save changes" />

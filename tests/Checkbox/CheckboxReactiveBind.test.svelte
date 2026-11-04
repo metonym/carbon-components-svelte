@@ -4,7 +4,7 @@
   import Checkbox from "carbon-components-svelte/Checkbox/Checkbox.svelte";
 
   export let checked = false;
-  export let onCheck: (event: CustomEvent<boolean>) => void = () => {};
+  export let onCheck: (checked: boolean) => void = () => {};
 </script>
 
 <Checkbox

@@ -42,6 +42,11 @@
   // header before its replacement mounts, which would clear the new values.
   const unregisterHeader = registerHeader();
   onMount(() => unregisterHeader);
+
+  import { createBubbler } from "svelte/legacy";
+
+  // Re-dispatches a runes child's events to this component's `on:` listeners.
+  const bubble = createBubbler();
 </script>
 
 <div class:bx--modal-header={true} {...$$restProps}>
@@ -74,15 +79,13 @@
         {iconDescription}
         aria-label={iconDescription}
         tooltipPosition="left"
-        on:click
-        on:click={closeModal}
+        onclick={(e) => { $$restProps.onclick?.(e); bubble("click")(e); (closeModal)(e); }}
       >
-        <Close
-          slot="icon"
+        {#snippet iconChildren()}<Close
           size={20}
           class="bx--modal-close__icon {closeIconClass}"
           aria-hidden="true"
-        />
+        />{/snippet}
       </Button>
     </div>
   {/if}
