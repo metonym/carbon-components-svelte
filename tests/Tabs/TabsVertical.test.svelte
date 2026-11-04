@@ -14,20 +14,20 @@
 </script>
 
 <TabsVertical
-  {selected}
+  selectedIndex={selected}
   {activation}
   {size}
   {orientation}
-  on:change={({ detail }) => onChange(detail)}
+  onselectedchange={({ index }) => onChange(index)}
 >
   <Tab label="Tab 1" />
   <Tab label="Tab 2" disabled />
   <Tab label="Tab 3" />
   <Tab label="Tab 4" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Content 1</TabContent>
     <TabContent>Content 2</TabContent>
     <TabContent>Content 3</TabContent>
     <TabContent>Content 4</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </TabsVertical>

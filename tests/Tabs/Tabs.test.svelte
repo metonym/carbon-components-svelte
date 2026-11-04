@@ -30,7 +30,7 @@
 
 <svelte:component
   this={Component}
-  {selected}
+  selectedIndex={selected}
   {activation}
   {size}
   {...vertical
@@ -43,7 +43,7 @@
         class: customClass,
         "aria-label": ariaLabel === undefined ? undefined : ariaLabel,
       }}
-  on:change={({ detail }) => onChange(detail)}
+  onselectedchange={({ index }) => onChange(index)}
 >
   <Tab label="Tab 1" />
   <Tab label="Tab 2" disabled />
@@ -51,12 +51,12 @@
   {#if extraTab}
     <Tab label="Tab 4" />
   {/if}
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent {flush}>Content 1</TabContent>
     <TabContent>Content 2</TabContent>
     <TabContent>Content 3</TabContent>
     {#if extraTab}
       <TabContent>Content 4</TabContent>
     {/if}
-  </svelte:fragment>
+  {/snippet}
 </svelte:component>

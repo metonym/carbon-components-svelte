@@ -10,7 +10,9 @@ describe("Tab aria forwarding", () => {
     expect(
       screen.getByRole("tab", { name: "Consumer label" }),
     ).toBeInTheDocument();
-    expect(screen.getByTestId("tab-item")).not.toHaveAttribute("aria-label");
+    expect(screen.getByTestId("tab-item").closest("li")).not.toHaveAttribute(
+      "aria-label",
+    );
   });
 
   it("places a consumer aria-controls on the tab", () => {
@@ -22,6 +24,8 @@ describe("Tab aria forwarding", () => {
       "aria-controls",
       "external-panel",
     );
-    expect(screen.getByTestId("tab-item")).not.toHaveAttribute("aria-controls");
+    expect(screen.getByTestId("tab-item").closest("li")).not.toHaveAttribute(
+      "aria-controls",
+    );
   });
 });

@@ -19,9 +19,9 @@
   <Tab label="Tab 1" />
   <Tab label="Tab 2" />
   <Tab label="Tab 3" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Content 1</TabContent>
     <TabContent>Content 2</TabContent>
     <TabContent>Content 3</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </TabsVertical>

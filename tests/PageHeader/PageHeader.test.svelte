@@ -11,76 +11,80 @@
 
 <PageHeader
   data-testid="basic"
-  title="Databases"
+  titleText="Databases"
   subtitle="Manage your database instances"
 />
 
-<PageHeader data-testid="layer" title="Layer" fill="layer-01" hideDivider />
+<PageHeader data-testid="layer" titleText="Layer" fill="layer-01" hideDivider />
 
 <PageHeader
   data-testid="sticky-offset"
-  title="Sticky offset"
+  titleText="Sticky offset"
   sticky
   stickyOffset="3rem"
 />
 
 <PageHeader
   data-testid="offset-not-sticky"
-  title="Offset without sticky"
+  titleText="Offset without sticky"
   stickyOffset="3rem"
 />
 
-<PageHeader data-testid="small" size="sm" title="Small" />
+<PageHeader data-testid="small" size="sm" titleText="Small" />
 
-<PageHeader data-testid="sticky" title="Sticky" sticky bind:ref />
+<PageHeader data-testid="sticky" titleText="Sticky" sticky bind:ref />
 
-<PageHeader data-testid="with-slots" title="With slots">
-  <svelte:fragment slot="breadcrumb">
+<PageHeader data-testid="with-slots" titleText="With slots">
+  {#snippet breadcrumb()}
     <Breadcrumb>
       <BreadcrumbItem href="/">Home</BreadcrumbItem>
     </Breadcrumb>
-  </svelte:fragment>
-  <svelte:fragment slot="actions">
+  {/snippet}
+  {#snippet actions()}
     <ButtonSet>
       <Button>Create</Button>
     </ButtonSet>
-  </svelte:fragment>
+  {/snippet}
 </PageHeader>
 
-<PageHeader data-testid="rich" title="Rich">
-  <svelte:fragment slot="breadcrumbEnd">
+<PageHeader data-testid="rich" titleText="Rich">
+  {#snippet breadcrumbEnd()}
     <button type="button">Share</button>
-  </svelte:fragment>
-  <svelte:fragment slot="titleStart">
+  {/snippet}
+  {#snippet titleStart()}
     <span>Icon</span>
-  </svelte:fragment>
-  <svelte:fragment slot="titleEnd">
+  {/snippet}
+  {#snippet titleEnd()}
     <span>Running</span>
-  </svelte:fragment>
-  <svelte:fragment slot="description">
+  {/snippet}
+  {#snippet description()}
     <p>Longer description</p>
-  </svelte:fragment>
-  <svelte:fragment slot="meta">
+  {/snippet}
+  {#snippet meta()}
     <dl>
       <dt>Region</dt>
       <dd>us-south</dd>
     </dl>
-  </svelte:fragment>
+  {/snippet}
 </PageHeader>
 
-<PageHeader data-testid="eyebrow" eyebrow="Resources" title="Eyebrow only" />
+<PageHeader
+  data-testid="eyebrow"
+  eyebrow="Resources"
+  titleText="Eyebrow only"
+/>
 
 <PageHeader
   data-testid="eyebrow-icon"
   eyebrow="Resources"
   eyebrowIcon={Folder}
-  title="Eyebrow with icon"
+  titleText="Eyebrow with icon"
 />
 
 <div data-testid="ref-tag">{ref?.tagName}</div>
 
-<PageHeader data-testid="tabs-end-only" title="Tabs end only">
-  <svelte:fragment slot="tabsEnd">
+<PageHeader data-testid="tabs-end-only" titleText="Tabs end only">
+  {#snippet tabsEnd()}
     <span>Range</span>
-  </svelte:fragment>
+  {/snippet}
 </PageHeader>

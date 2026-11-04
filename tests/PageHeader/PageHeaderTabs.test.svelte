@@ -8,28 +8,28 @@
   export let type: "default" | "container" = "default";
 </script>
 
-<PageHeader data-testid="header" title="Databases">
-  <svelte:fragment slot="tabs">
+<PageHeader data-testid="header" titleText="Databases">
+  {#snippet tabs()}
     {#if show}
       <Tabs {type}>
         <Tab label="Overview" />
         <Tab label="Backups" />
       </Tabs>
     {/if}
-  </svelte:fragment>
-  <svelte:fragment slot="tabsEnd">
+  {/snippet}
+  {#snippet tabsEnd()}
     <button type="button">Last 24 hours</button>
-  </svelte:fragment>
+  {/snippet}
   {#if show}
     <TabContent data-testid="overview">
       Overview panel
       <Tabs>
         <Tab label="Daily" />
         <Tab label="Weekly" />
-        <svelte:fragment slot="content">
+        {#snippet content()}
           <TabContent>Daily panel</TabContent>
           <TabContent>Weekly panel</TabContent>
-        </svelte:fragment>
+        {/snippet}
       </Tabs>
     </TabContent>
     <TabContent data-testid="backups">Backups panel</TabContent>

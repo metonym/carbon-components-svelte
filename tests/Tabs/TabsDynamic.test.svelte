@@ -8,7 +8,7 @@
   export let showTab2 = true;
 </script>
 
-<Tabs bind:selected>
+<Tabs bind:selectedIndex={selected}>
   {#if showTab1}
     <Tab label="Tab 1" />
   {/if}
@@ -16,7 +16,7 @@
     <Tab label="Tab 2" />
   {/if}
   <Tab label="Tab 3" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     {#if showTab1}
       <TabContent>Content 1</TabContent>
     {/if}
@@ -24,7 +24,7 @@
       <TabContent>Content 2</TabContent>
     {/if}
     <TabContent>Content 3</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
 <button

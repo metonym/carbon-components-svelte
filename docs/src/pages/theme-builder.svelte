@@ -221,7 +221,7 @@
                     <Tab label="Overview" />
                     <Tab label="Metrics" />
                     <Tab label="Settings" />
-                    <svelte:fragment slot="content">
+                    {#snippet content()}
                       <TabContent>
                         <Text color="primary">api-gateway runs in us-east.</Text
                         >
@@ -232,7 +232,7 @@
                       <TabContent>
                         <Text color="primary">Autoscaling is on.</Text>
                       </TabContent>
-                    </svelte:fragment>
+                    {/snippet}
                   </Tabs>
 
                   <Stack gap={5}>
@@ -274,7 +274,7 @@
                 <Tab label="Theme" />
                 <Tab label="createTheme" />
                 <Tab label="CSS" />
-                <svelte:fragment slot="content">
+                {#snippet content()}
                   <TabContent>
                     <CodeSnippet
                       type="multi"
@@ -290,7 +290,7 @@
                   <TabContent>
                     <CodeSnippet type="multi" code={result.css()} />
                   </TabContent>
-                </svelte:fragment>
+                {/snippet}
               </Tabs>
               <Text type="body-01" color="secondary">
                 Load the CSS after all.css. It applies while the base theme is

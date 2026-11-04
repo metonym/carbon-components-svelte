@@ -171,7 +171,8 @@ describe.each(variants)(
         "true",
       );
       expect(screen.getByText("Content 3")).toBeVisible();
-      expect(onChange).toHaveBeenCalledWith(2);
+      // `onselectedchange` is for user selection only.
+      expect(onChange).not.toHaveBeenCalled();
     });
 
     it(`moves ${prev} from the focused tab, not the selected one`, async () => {

@@ -12,15 +12,15 @@
   $: Component = (vertical ? TabsVertical : Tabs) as typeof Tabs;
 </script>
 
-<svelte:component this={Component} bind:selected>
+<svelte:component this={Component} bind:selectedIndex={selected}>
   {#each items as item (item)}
     <Tab id={item} label={item.toUpperCase()} />
   {/each}
-  <svelte:fragment slot="content">
+  {#snippet content()}
     {#each items as item (item)}
       <TabContent>{item}</TabContent>
     {/each}
-  </svelte:fragment>
+  {/snippet}
 </svelte:component>
 
 <div data-testid="selected-index">{selected}</div>

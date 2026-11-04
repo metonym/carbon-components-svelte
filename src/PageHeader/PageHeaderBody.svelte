@@ -1,34 +1,76 @@
 <script>
   /**
    * Internal: the page body rendered after the `<header>`. Not exported from
-   * the package; only `PageHeader` ships. Re-provides the slotted `Tabs`
+   * the package; only `PageHeader` ships. Re-provides the header's `Tabs`
    * context so `TabContent` placed in the body pairs with the header's tabs.
-   * @slot {{}}
    */
+  let {
+    /**
+     * Obtain a reference to the body element.
+     * @type {null | HTMLDivElement}
+     */
+    ref = $bindable(null),
+
+    /**
+     * The page body.
+     * @type {import("svelte").Snippet | undefined}
+     */
+    children = undefined,
+  } = $props();
+
+  import { setTabs } from "../Tabs/tabs-context.js";
+  import { getPageHeader, setPageHeader } from "./page-header-context.js";
+
+  const pageHeader = getPageHeader();
 
   /**
-   * Obtain a reference to the body element.
-   * @type {null | HTMLDivElement}
-   * @bindable readonly
+   * Stands in while the header has no `Tabs`: panels render unselected
+   * and unpaired.
+   * @type {import("../Tabs/tabs-context.js").TabsContext}
    */
-  export let ref = null;
-
-  import { getContext, setContext } from "svelte";
-
-  const pageHeader = getContext("carbon:PageHeader");
+  const noTabs = {
+    selectedTabId: null,
+    iconOnly: false,
+    autoWidth: false,
+    fullWidth: false,
+    dismissible: false,
+    container: false,
+    navigation: false,
+    secondaryLabelSupported: false,
+    hasSecondaryLabel: false,
+    dismissText: () => "",
+    panelIdFor: () => undefined,
+    tabIdFor: () => undefined,
+    isPanelSelected: () => false,
+    add: () => {},
+    patch: () => {},
+    remove: () => {},
+    addPanel: (id, fallbackId) => id ?? fallbackId,
+    renamePanel: () => {},
+    removePanel: () => {},
+    select: () => {},
+    dismiss: () => {},
+  };
 
   // The header's `Tabs` can mount after this body or be replaced, so resolve
   // them on each access instead of capturing them once.
-  const tabs = /** @type {import("../Tabs/Tabs.svelte").CarbonTabsContext} */ (
-    new Proxy({}, { get: (_, key) => pageHeader?.getTabs()?.[key] })
-  );
-
-  if (pageHeader) setContext("carbon:Tabs", tabs);
+  if (pageHeader) {
+    setTabs(
+      /** @type {import("../Tabs/tabs-context.js").TabsContext} */ (
+        new Proxy(noTabs, {
+          get: (target, key) => {
+            const name = /** @type {keyof typeof noTabs} */ (key);
+            return (pageHeader.getTabs() ?? target)[name];
+          },
+        })
+      ),
+    );
+  }
 
   // `Tabs` nested inside a panel belong to the body, not the header.
-  setContext("carbon:PageHeader", undefined);
+  setPageHeader(undefined);
 </script>
 
-<div bind:this={ref} class:bx--page-header__body={true}>
-  <slot />
+<div bind:this={ref} class="bx--page-header__body">
+  {@render children?.()}
 </div>

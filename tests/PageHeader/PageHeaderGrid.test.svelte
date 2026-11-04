@@ -4,16 +4,16 @@
   import PageHeader from "carbon-components-svelte/PageHeader/PageHeader.svelte";
 </script>
 
-<PageHeader data-testid="grid" grid title="Grid">
+<PageHeader data-testid="grid" grid titleText="Grid">
   <Row>
     <Column>Column content</Column>
   </Row>
 </PageHeader>
 
-<PageHeader data-testid="full-width" grid="full-width" title="Full width">
+<PageHeader data-testid="full-width" grid="full-width" titleText="Full width">
   <Row>
     <Column>Column content</Column>
   </Row>
 </PageHeader>
 
-<PageHeader data-testid="no-grid" title="No grid" />
+<PageHeader data-testid="no-grid" titleText="No grid" />

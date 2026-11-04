@@ -46,12 +46,12 @@
     {#each visibleTabs as tab (tab.id)}
       <Tab id={tab.id} label={tab.label} />
     {/each}
-    <svelte:fragment slot="content">
+    {#snippet content()}
       {#each visibleTabs as tab (tab.id)}
         <TabContent>
           <p>{tab.label} content</p>
         </TabContent>
       {/each}
-    </svelte:fragment>
+    {/snippet}
   </Tabs>
 </Stack>

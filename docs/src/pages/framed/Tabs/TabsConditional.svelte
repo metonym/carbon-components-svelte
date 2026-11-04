@@ -21,7 +21,7 @@
     <strong>Selected index:</strong>
     {selected}
   </div>
-  <Tabs bind:selected>
+  <Tabs bind:selectedIndex={selected}>
     <Tab label="Dashboard" />
     {#if showAdminTab}
       <Tab label="Admin" />
@@ -30,7 +30,7 @@
       <Tab label="Settings" />
     {/if}
     <Tab label="Profile" />
-    <svelte:fragment slot="content">
+    {#snippet content()}
       <TabContent>
         <p>Dashboard content with analytics and overview.</p>
       </TabContent>
@@ -43,6 +43,6 @@
         <TabContent><p>Settings and configuration options.</p></TabContent>
       {/if}
       <TabContent><p>User profile and account information.</p></TabContent>
-    </svelte:fragment>
+    {/snippet}
   </Tabs>
 </Stack>

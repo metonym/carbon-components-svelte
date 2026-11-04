@@ -26,14 +26,14 @@
   });
 </script>
 
-<PageHeader grid title="db-prod-01" subtitle="PostgreSQL 16 · us-south">
-  <svelte:fragment slot="tabs">
+<PageHeader grid titleText="db-prod-01" subtitle="PostgreSQL 16 · us-south">
+  {#snippet tabs()}
     <Tabs bind:selectedId={$selectedTab}>
       {#each tabs as tab (tab.id)}
         <Tab id={tab.id} label={tab.label} />
       {/each}
     </Tabs>
-  </svelte:fragment>
+  {/snippet}
   {#each tabs as tab (tab.id)}
     <TabContent>
       <Row padding>

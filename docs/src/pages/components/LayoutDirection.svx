@@ -156,11 +156,11 @@ Tabs run from right to left. <DocKbd label="ArrowLeft" /> moves to the next tab 
     <Tab label="نظرة عامة" />
     <Tab label="السجلات" />
     <Tab label="الإعدادات" />
-    <svelte:fragment slot="content">
+    {#snippet content()}
       <TabContent>حالة الخدمة وآخر عملية نشر.</TabContent>
       <TabContent>سجلات آخر ٢٤ ساعة.</TabContent>
       <TabContent>المنطقة وحدود الموارد.</TabContent>
-    </svelte:fragment>
+    {/snippet}
   </Tabs>
 </LayoutDirection>
 

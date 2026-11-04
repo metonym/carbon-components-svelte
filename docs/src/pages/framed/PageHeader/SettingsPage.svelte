@@ -24,14 +24,14 @@
   let current = sections[0];
 </script>
 
-<PageHeader grid size="sm" title="Settings" subtitle="db-prod-01">
-  <svelte:fragment slot="breadcrumb">
+<PageHeader grid size="sm" titleText="Settings" subtitle="db-prod-01">
+  {#snippet breadcrumb()}
     <Breadcrumb noTrailingSlash>
       <BreadcrumbItem href="/">Databases</BreadcrumbItem>
       <BreadcrumbItem href="/">db-prod-01</BreadcrumbItem>
       <BreadcrumbItem href="/" isCurrentPage>Settings</BreadcrumbItem>
     </Breadcrumb>
-  </svelte:fragment>
+  {/snippet}
   <Row padding>
     <Column sm={4} md={2} lg={4}>
       <!-- Bleed cancels the items' 1rem padding so their text lines up with the title. -->

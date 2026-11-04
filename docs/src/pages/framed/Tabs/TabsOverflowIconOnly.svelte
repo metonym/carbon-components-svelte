@@ -33,9 +33,9 @@
   {#each items as item}
     <Tab label={item.label} icon={item.icon} />
   {/each}
-  <svelte:fragment slot="content">
+  {#snippet content()}
     {#each items as item}
       <TabContent>{item.label} content</TabContent>
     {/each}
-  </svelte:fragment>
+  {/snippet}
 </Tabs>

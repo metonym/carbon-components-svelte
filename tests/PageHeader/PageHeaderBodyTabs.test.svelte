@@ -5,13 +5,13 @@
   import Tabs from "carbon-components-svelte/Tabs/Tabs.svelte";
 </script>
 
-<PageHeader data-testid="header" title="Databases">
+<PageHeader data-testid="header" titleText="Databases">
   <Tabs type="container">
     <Tab label="Daily" />
     <Tab label="Weekly" />
-    <svelte:fragment slot="content">
+    {#snippet content()}
       <TabContent data-testid="daily">Daily panel</TabContent>
       <TabContent data-testid="weekly">Weekly panel</TabContent>
-    </svelte:fragment>
+    {/snippet}
   </Tabs>
 </PageHeader>
