@@ -401,7 +401,7 @@
       <div data-part="real">
         <PageHeader
           {size}
-          title="Billing"
+          titleText="Billing"
           subtitle="Invoices and payment methods"
         />
       </div>

@@ -253,10 +253,10 @@
 <Tabs>
   <Tab label="Calendar" aria-describedby="note" />
   <Tab label="Settings" />
-  <svelte:fragment slot="content">
+  {#snippet content()}
     <TabContent>Calendar content</TabContent>
     <TabContent>Settings content</TabContent>
-  </svelte:fragment>
+  {/snippet}
 </Tabs>
 
 <h2>Tooltips</h2>

@@ -25,11 +25,11 @@
     {#each labels as label, i}
       <Tab {label} icon={icons[i]} disabled={i === 3} />
     {/each}
-    <svelte:fragment slot="content">
+    {#snippet content()}
       {#each labels as label}
         <TabContent>{label} content</TabContent>
       {/each}
-    </svelte:fragment>
+    {/snippet}
   </Tabs>
 </section>
 
@@ -54,11 +54,11 @@
         disabled={i === 3}
       />
     {/each}
-    <svelte:fragment slot="content">
+    {#snippet content()}
       {#each labels as label}
         <TabContent>{label} content</TabContent>
       {/each}
-    </svelte:fragment>
+    {/snippet}
   </Tabs>
 </section>
 
@@ -125,11 +125,11 @@
     {#each labels as label, i}
       <Tab {label} icon={icons[i % 3]} disabled={i === 3} />
     {/each}
-    <svelte:fragment slot="content">
+    {#snippet content()}
       {#each labels as label}
         <TabContent>{label} content</TabContent>
       {/each}
-    </svelte:fragment>
+    {/snippet}
   </TabsVertical>
   {#each ["sm", "md", "lg"] as size}
     <TabsVertical {size}>

@@ -169,7 +169,7 @@
     exceeded the memory limit configured for the production namespace.
   </Truncate>
 
-  <Tabs selected={1}>
+  <Tabs selectedIndex={1}>
     <Tab label="Tab" />
     <Tab label="Selected tab" />
     <Tab label="Disabled tab" disabled />
@@ -502,7 +502,7 @@
   </ul>
 
   <div data-testid="tabs-vertical">
-    <TabsVertical orientation="vertical" selected={1}>
+    <TabsVertical orientation="vertical" selectedIndex={1}>
       <Tab label="Vertical tab" />
       <Tab label="Selected vertical tab" />
       <Tab label="Disabled vertical tab" disabled />
@@ -510,7 +510,7 @@
   </div>
 
   <div data-testid="tabs-container">
-    <Tabs type="container" selected={1}>
+    <Tabs type="container" selectedIndex={1}>
       <Tab label="Overview" />
       <Tab label="Logs" />
       <Tab label="Metrics" />

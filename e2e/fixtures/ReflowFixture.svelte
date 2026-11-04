@@ -137,15 +137,16 @@
   bind:value={highlightValue}
   wrapOptions
   portalMenu={false}
-  let:item
 >
-  {#each highlightSegments(item.text, matchIndices(item.text, highlightValue)) as segment}
-    {#if segment.match}
-      <mark data-testid="match">{segment.text}</mark>
-    {:else}
-      {segment.text}
-    {/if}
-  {/each}
+  {#snippet children({
+    item,
+  })}{#each highlightSegments(item.text, matchIndices(item.text, highlightValue)) as segment}
+      {#if segment.match}
+        <mark data-testid="match">{segment.text}</mark>
+      {:else}
+        {segment.text}
+      {/if}
+    {/each}{/snippet}
 </ComboBox>
 
 <MultiSelect

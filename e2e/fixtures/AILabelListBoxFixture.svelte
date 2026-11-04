@@ -16,7 +16,7 @@
 
 <div data-testid="dropdown">
   <Dropdown clearable labelText="Contact" selectedId="pager" {items}>
-    <AILabel slot="decorator" />
+    {#snippet decorator()}<AILabel />{/snippet}
   </Dropdown>
 </div>
 
@@ -29,7 +29,7 @@
     invalid
     invalidText="This contact method is no longer supported"
   >
-    <AILabel slot="decorator" />
+    {#snippet decorator()}<AILabel />{/snippet}
   </Dropdown>
 </div>
 
@@ -42,7 +42,7 @@
     warn
     warnText="This contact method is deprecated"
   >
-    <AILabel slot="decorator" />
+    {#snippet decorator()}<AILabel />{/snippet}
   </Dropdown>
 </div>
 
@@ -54,7 +54,7 @@
     invalid
     invalidText="This contact method is no longer supported"
   >
-    <AILabel slot="decorator" />
+    {#snippet decorator()}<AILabel />{/snippet}
   </ComboBox>
 </div>
 

@@ -28,9 +28,7 @@ test.describe("Modal", () => {
     await expect(page.locator(".bx--modal")).not.toHaveClass(/is-visible/);
   });
 
-  test("closes with a programmatic trigger when open is set false", async ({
-    page,
-  }) => {
+  test("closes without a callback when open is set false", async ({ page }) => {
     await page.getByTestId("open-modal").click();
     await expect(page.locator(".bx--modal")).toHaveClass(/is-visible/);
 
@@ -38,8 +36,8 @@ test.describe("Modal", () => {
     await page.getByTestId("close-modal-programmatic").click();
 
     await expect(page.locator(".bx--modal")).not.toHaveClass(/is-visible/);
-    // The deferred `close` dispatch reports the "programmatic" trigger.
-    await expect(page.getByTestId("close-events")).toHaveText("programmatic");
+    // `onopenchange` is for user actions only: setting `open` reports nothing.
+    await expect(page.getByTestId("close-events")).toHaveText("");
   });
 
   test("does not close when mousedown inside modal and mouseup outside", async ({
