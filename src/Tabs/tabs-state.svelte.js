@@ -53,10 +53,14 @@ export class TabsState {
   /** The tab arrow keys moved to in manual activation; -1 when none. */
   focusedIndex = -1;
 
-  // Set when registration may have left an array out of DOM order:
-  // children mount out of order when they render conditionally.
+  // Set when registration may have left an array out of DOM order: a child
+  // added after mount, such as one rendered by an `{#if}` that turned true,
+  // registers last wherever it renders. The first render registers in
+  // document order, so it needs no sync; sorting then would query the
+  // panels' whole parent once per instance.
   #needsTabSync = false;
   #needsPanelSync = false;
+  #mounted = false;
 
   /** @type {TabsHost} */
   #host;
@@ -118,6 +122,7 @@ export class TabsState {
     });
 
     onMount(() => {
+      this.#mounted = true;
       const root = host.getTabRoot();
       if (!root) return;
       // A keyed reorder moves tabs without re-registering them. Keep the
@@ -267,7 +272,7 @@ export class TabsState {
       add(entry) {
         if (state.#tabIndex(entry.id) > -1) return;
         state.tabs = [...state.tabs, entry];
-        state.#needsTabSync = true;
+        if (state.#mounted) state.#needsTabSync = true;
       },
       patch(id, patch) {
         const index = state.#tabIndex(id);
@@ -296,7 +301,7 @@ export class TabsState {
           ownId ?? (host.hasContent && tab ? `${tab.id}-panel` : fallbackId);
         if (state.#panelIndex(id) === -1) {
           state.panels = [...state.panels, { id }];
-          state.#needsPanelSync = true;
+          if (state.#mounted) state.#needsPanelSync = true;
         }
         return id;
       },

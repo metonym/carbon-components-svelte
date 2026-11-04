@@ -112,10 +112,13 @@
   /** @type {Array<{ id: string }>} */
   let panels = $state.raw([]);
   let focusedIndex = -1;
-  // Set when registration may have left the arrays out of DOM order:
-  // children mount out of order when they render conditionally.
+  // Set when registration may have left the arrays out of DOM order: a
+  // child added after mount registers last wherever it renders. The first
+  // render registers in document order, so it needs no sync; sorting then
+  // would query the panels' whole parent once per instance.
   let needsDomSync = false;
   let needsPanelSync = false;
+  let mounted = false;
 
   /** @param {number} index */
   const clamp = (index) => clampIndex(index, 0, switches.length);
@@ -228,7 +231,7 @@
         selectedIndex = switches.length;
       }
       switches = [...switches, entry];
-      needsDomSync = true;
+      if (mounted) needsDomSync = true;
     },
     remove(id) {
       // Keep the switch that is selected when an earlier one goes away.
@@ -257,7 +260,7 @@
     addPanel(id) {
       if (panels.some((p) => p.id === id)) return;
       panels = [...panels, { id }];
-      needsPanelSync = true;
+      if (mounted) needsPanelSync = true;
     },
     removePanel(id) {
       panels = panels.filter((p) => p.id !== id);
@@ -307,17 +310,18 @@
     });
   });
 
-  onMount(() =>
+  onMount(() => {
+    mounted = true;
     // A keyed reorder moves switches without re-registering them.
-    observeDomOrder(ref, {
+    return observeDomOrder(ref, {
       selector: "[role='tab']",
       getItems: () => switches,
       onReorder: () => {
         needsDomSync = needsPanelSync = true;
         switches = [...switches];
       },
-    }),
-  );
+    });
+  });
 
   /** @param {number} index */
   async function focusSwitchElement(index) {
