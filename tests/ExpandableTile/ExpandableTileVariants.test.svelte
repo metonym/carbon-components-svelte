@@ -8,14 +8,14 @@
 </script>
 
 <ExpandableTile data-testid="bound" bind:tileMaxHeight bind:tilePadding>
-  <div slot="above">Above bound</div>
-  <div slot="below">Below bound</div>
+  {#snippet above()}<div>Above bound</div>{/snippet}
+  {#snippet below()}<div>Below bound</div>{/snippet}
 </ExpandableTile>
 
 <!-- Basic expandable tile (no interactive content) -->
 <ExpandableTile data-testid="basic">
-  <div slot="above">Above the fold</div>
-  <div slot="below">Below the fold</div>
+  {#snippet above()}<div>Above the fold</div>{/snippet}
+  {#snippet below()}<div>Below the fold</div>{/snippet}
 </ExpandableTile>
 
 <!-- Expandable tile with interactive content (link) in "above" slot -->
@@ -24,8 +24,8 @@
   id="interactive-tile"
   hasInteractiveContent
 >
-  <div slot="above">
-    <a href="https://example.com" data-testid="inner-link">Learn more</a>
-  </div>
-  <div slot="below">Below the fold</div>
+  {#snippet above()}<div>
+      <a href="https://example.com" data-testid="inner-link">Learn more</a>
+    </div>{/snippet}
+  {#snippet below()}<div>Below the fold</div>{/snippet}
 </ExpandableTile>

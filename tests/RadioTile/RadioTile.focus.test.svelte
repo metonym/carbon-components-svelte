@@ -5,6 +5,6 @@
   export let onBlur: (e: FocusEvent) => void = () => {};
 </script>
 
-<RadioTile value="standard" on:focus={onFocus} on:blur={onBlur}>
+<RadioTile value="standard" onfocus={onFocus} onblur={onBlur}>
   Standard
 </RadioTile>

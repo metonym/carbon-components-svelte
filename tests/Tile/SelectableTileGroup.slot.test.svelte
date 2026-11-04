@@ -2,6 +2,6 @@
   import SelectableTileGroup from "carbon-components-svelte/Tile/SelectableTileGroup.svelte";
 </script>
 
-<SelectableTileGroup legendText="Default legend">
-  <span slot="legendChildren">Custom legend content</span>
+<SelectableTileGroup>
+  {#snippet legendText()}<span>Custom legend content</span>{/snippet}
 </SelectableTileGroup>

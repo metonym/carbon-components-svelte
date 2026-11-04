@@ -5,11 +5,15 @@
 
   export let selected: ComponentProps<TileGroup>["selected"] = undefined;
   export let values = ["a", "b"];
-  export let onSelect: (event: CustomEvent) => void = () => {};
+  export let onSelect: (value: string | undefined) => void = () => {};
 </script>
 
 <form data-testid="form">
-  <TileGroup bind:selected legendText="Pick one" on:select={onSelect}>
+  <TileGroup
+    bind:selected
+    legendText="Pick one"
+    onselectedchange={(e) => onSelect(e.selected)}
+  >
     <RadioTile value={values[0]}>A</RadioTile>
     <RadioTile value={values[1]}>B</RadioTile>
   </TileGroup>

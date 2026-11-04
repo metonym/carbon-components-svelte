@@ -44,23 +44,33 @@
   <Tag>Forecast{#snippet decorator()}<AILabel />{/snippet}</Tag>
 </div>
 <div data-testid="tile">
-  <Tile>Forecast<AILabel slot="decorator" size="xl" bind:revertActive /></Tile>
+  <Tile
+    >Forecast{#snippet decorator()}<AILabel
+        size="xl"
+        bind:revertActive
+      />{/snippet}</Tile
+  >
 </div>
 <div data-testid="clickable-tile">
-  <ClickableTile href="#">Open<AILabel slot="decorator" /></ClickableTile>
+  <ClickableTile href="#"
+    >Open{#snippet decorator()}<AILabel />{/snippet}</ClickableTile
+  >
 </div>
 <div data-testid="selectable-tile">
-  <SelectableTile bind:selected>Plan<AILabel slot="decorator" /></SelectableTile
+  <SelectableTile bind:selected
+    >Plan{#snippet decorator()}<AILabel />{/snippet}</SelectableTile
   >
 </div>
 <div data-testid="radio-tile">
-  <RadioTile value="a">Plan<AILabel slot="decorator" /></RadioTile>
+  <RadioTile value="a"
+    >Plan{#snippet decorator()}<AILabel />{/snippet}</RadioTile
+  >
 </div>
 <div data-testid="expandable-tile">
   <ExpandableTile>
-    <div slot="above">Details</div>
-    <div slot="below">More</div>
-    <AILabel slot="decorator" />
+    {#snippet above()}<div>Details</div>{/snippet}
+    {#snippet below()}<div>More</div>{/snippet}
+    {#snippet decorator()}<AILabel />{/snippet}
   </ExpandableTile>
 </div>
 <div data-testid="plain-tile"><SelectableTile>Plain</SelectableTile></div>

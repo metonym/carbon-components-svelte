@@ -7,23 +7,30 @@ import SelectableTileTest from "./SelectableTile.test.svelte";
 import SelectableTileChange from "./SelectableTileChange.test.svelte";
 import SelectableTileStandalone from "./SelectableTileStandalone.test.svelte";
 
+// Rest props, `data-testid` included, go to the `<input>`; the tile is its
+// `<label>`.
+function getTile() {
+  const input = screen.getByTestId("selectable-tile") as HTMLInputElement;
+  return input.labels?.[0] as HTMLLabelElement;
+}
+
 describe("SelectableTile", () => {
   it("renders with default props", () => {
     render(SelectableTileTest);
-    const tile = screen.getByTestId("selectable-tile");
+    const tile = getTile();
     expect(tile).toHaveClass("bx--tile");
     expect(tile).toHaveClass("bx--tile--selectable");
   });
 
   it("renders with selected state", () => {
     render(SelectableTileTest, { selected: true });
-    const tile = screen.getByTestId("selectable-tile");
+    const tile = getTile();
     expect(tile).toHaveClass("bx--tile--is-selected");
   });
 
   it("renders with disabled state", () => {
     const { container } = render(SelectableTileTest, { disabled: true });
-    const tile = screen.getByTestId("selectable-tile");
+    const tile = getTile();
     expect(tile).toHaveClass("bx--tile--disabled");
 
     const input = container.querySelector('input[type="checkbox"]');
@@ -40,7 +47,7 @@ describe("SelectableTile", () => {
 
   it('should not put role="checkbox" on the <label> element', () => {
     render(SelectableTileTest);
-    const tile = screen.getByTestId("selectable-tile");
+    const tile = getTile();
 
     expect(tile.tagName).toBe("LABEL");
     expect(tile).not.toHaveAttribute("role", "checkbox");
@@ -63,7 +70,7 @@ describe("SelectableTile", () => {
   it("renders with a custom icon description", () => {
     render(SelectableTileTest, { iconDescription: "Custom checkmark" });
 
-    const icon = screen.getByTestId("selectable-tile").querySelector("svg");
+    const icon = getTile().querySelector("svg");
     expect(icon).toHaveAttribute("aria-label", "Custom checkmark");
   });
 
@@ -72,7 +79,7 @@ describe("SelectableTile", () => {
     const input = container.querySelector('input[type="checkbox"]');
     expect(input).not.toBeChecked();
 
-    const tile = screen.getByTestId("selectable-tile");
+    const tile = getTile();
     expect(tile).not.toHaveAttribute("role");
     expect(tile).not.toHaveAttribute("aria-checked");
   });
@@ -80,15 +87,13 @@ describe("SelectableTile", () => {
   it("hides the checkmark icon from assistive technology", () => {
     render(SelectableTileTest);
 
-    const checkmark = screen
-      .getByTestId("selectable-tile")
-      .querySelector(".bx--tile__checkmark");
+    const checkmark = getTile().querySelector(".bx--tile__checkmark");
     expect(checkmark).toHaveAttribute("aria-hidden", "true");
   });
 
   it("shows an empty checkbox until selected, then a checked one", async () => {
     render(SelectableTileTest);
-    const tile = screen.getByTestId("selectable-tile");
+    const tile = getTile();
     const checkmark = tile.querySelector(".bx--tile__checkmark");
     // Only the checked icon has a check cut out of its box.
     const checkedIcon = () =>
@@ -108,7 +113,7 @@ describe("SelectableTile", () => {
 
   describe("interaction", () => {
     const activate = {
-      click: () => user.click(screen.getByTestId("selectable-tile")),
+      click: () => user.click(getTile()),
       keyboard: async () => {
         await user.keyboard("{Tab}");
         await user.keyboard("{Enter}");
@@ -139,7 +144,7 @@ describe("SelectableTile", () => {
       const onDeselect = vi.fn();
       render(SelectableTileTest, { disabled: true, onSelect, onDeselect });
 
-      const tile = screen.getByTestId("selectable-tile");
+      const tile = getTile();
       await user.click(tile);
       expect(onSelect).not.toHaveBeenCalled();
       expect(onDeselect).not.toHaveBeenCalled();

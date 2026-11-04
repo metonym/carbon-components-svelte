@@ -14,8 +14,8 @@
   <ExpandableTile
     tileCollapsedLabel="View details"
     tileExpandedLabel="Hide details"
-    on:toggle={(e) => {
-      const { expanded } = e.detail;
+    onexpandedchange={(e) => {
+      const { expanded } = e;
       // Keep the details hidden until the reader acknowledges the notice.
       if (expanded && !acknowledged) {
         e.preventDefault();
@@ -25,12 +25,12 @@
       lastToggle = expanded ? "Expanded" : "Collapsed";
     }}
   >
-    <svelte:fragment slot="above">
+    {#snippet above()}
       INC-2041: Payments API elevated error rate
-    </svelte:fragment>
-    <svelte:fragment slot="below">
+    {/snippet}
+    {#snippet below()}
       312 merchant accounts affected. Root cause: an expired TLS certificate on
       the card vault proxy, rotated at 14:32 UTC.
-    </svelte:fragment>
+    {/snippet}
   </ExpandableTile>
 </Stack>

@@ -120,8 +120,8 @@ describe("ExpandableTile", () => {
     expect(onKeydown.mock.calls[0][0].key).toBe("ArrowDown");
   });
 
-  describe("toggle event", () => {
-    it("dispatches the next expanded state on click", async () => {
+  describe("onexpandedchange", () => {
+    it("is called with the next expanded state on click", async () => {
       const onToggle = vi.fn();
       render(ExpandableTile, { props: { onToggle } });
 
@@ -130,13 +130,16 @@ describe("ExpandableTile", () => {
       await user.click(tile);
 
       expect(onToggle).toHaveBeenCalledTimes(2);
-      expect(onToggle.mock.calls[0][0].detail).toEqual({ expanded: true });
-      expect(onToggle.mock.calls[1][0].detail).toEqual({ expanded: false });
+      expect(onToggle.mock.calls[0][0]).toMatchObject({ expanded: true });
+      expect(onToggle.mock.calls[1][0]).toMatchObject({ expanded: false });
     });
 
-    it("keeps the current state when the event is prevented", async () => {
+    it("keeps the current state when the callback calls preventDefault", async () => {
       render(ExpandableTile, {
-        props: { onToggle: (e: CustomEvent) => e.preventDefault() },
+        props: {
+          onToggle: (detail: { preventDefault: () => void }) =>
+            detail.preventDefault(),
+        },
       });
 
       const tile = screen.getByRole("button");
@@ -145,7 +148,7 @@ describe("ExpandableTile", () => {
       expect(tile).toHaveAttribute("aria-expanded", "false");
     });
 
-    it("does not dispatch when `expanded` is set programmatically", async () => {
+    it("is not called when `expanded` is set from outside", async () => {
       const onToggle = vi.fn();
       const { rerender } = render(ExpandableTile, { props: { onToggle } });
 
@@ -158,14 +161,14 @@ describe("ExpandableTile", () => {
       expect(onToggle).not.toHaveBeenCalled();
     });
 
-    it("dispatches from the chevron button with interactive content", async () => {
+    it("is called from the chevron button with interactive content", async () => {
       const onToggle = vi.fn();
       render(ExpandableTileCustom, { props: { onToggle } });
 
       await user.click(screen.getByRole("button", { name: "View more" }));
 
       expect(onToggle).toHaveBeenCalledTimes(1);
-      expect(onToggle.mock.calls[0][0].detail).toEqual({ expanded: true });
+      expect(onToggle.mock.calls[0][0]).toMatchObject({ expanded: true });
     });
   });
 

@@ -9,7 +9,7 @@
 <TileGroup
   legendText="Service pricing tiers"
   name="plan"
-  on:select={({ detail }) => (selected = detail)}
+  onselectedchange={(detail) => (selected = detail.selected)}
 >
   {#each values as value}
     <RadioTile {value} checked={selected === value}>{value}</RadioTile>

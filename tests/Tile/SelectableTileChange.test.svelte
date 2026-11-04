@@ -10,6 +10,6 @@
   }
 </script>
 
-<SelectableTile bind:selected value="standard" on:change={handleChange}>
+<SelectableTile bind:selected value="standard" onchange={handleChange}>
   Standard
 </SelectableTile>

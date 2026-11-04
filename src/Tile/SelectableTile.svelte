@@ -1,174 +1,240 @@
 <script>
   /**
-   * @restProps {label}
-   * @event {string} "select"
-   * @event {string} "deselect"
-   */
-
-  /**
    * @template {string} [Value=string]
+   * @restProps {input}
    */
 
-  /**
-   * Set to `true` to select the tile.
-   * @bindable writable
-   */
-  export let selected = false;
+  const fallbackId = $props.id();
 
-  /**
-   * Set the size: `"sm"` for a compact tile, such as a row in a list of
-   * choices, with less padding, no minimum height, and the checkbox
-   * pulled in. Defaults to the size of a parent tile group.
-   * @type {"sm" | "md" | undefined}
-   */
-  export let size = undefined;
+  let {
+    /**
+     * Set to `true` to select the tile.
+     * In a `SelectableTileGroup`, follows the group's `selected`.
+     */
+    selected = $bindable(false),
 
-  /** Set to `true` to disable the tile */
-  export let disabled = false;
+    /**
+     * Set the size: `"sm"` for a compact tile, such as a row in a list of
+     * choices, with less padding, no minimum height, and the checkbox
+     * pulled in. Defaults to the size of a parent tile group.
+     * @type {"sm" | "md" | undefined}
+     */
+    size = undefined,
 
-  /** Set to `true` to stretch the tile to fill the height of its container */
-  export let fullHeight = false;
+    /** Set to `true` to disable the tile */
+    disabled = false,
 
-  /**
-   * Set to `true` to round the tile's corners when it has a `decorator`,
-   * such as an `AILabel`. Carbon reserves rounded tiles for AI content.
-   */
-  export let rounded = false;
+    /** Set to `true` to stretch the tile to fill the height of its container */
+    fullHeight = false,
 
-  /**
-   * Specify the title of the selectable tile.
-   * @type {string | undefined}
-   */
-  export let title = undefined;
+    /**
+     * Set to `true` to round the tile's corners when it has a `decorator`,
+     * such as an `AILabel`. Carbon reserves rounded tiles for AI content.
+     */
+    rounded = false,
 
-  /**
-   * Specify the value of the selectable tile.
-   * @type {Value}
-   */
-  export let value = /** @type {Value} */ ("value");
+    /**
+     * Specify the value of the selectable tile.
+     * @type {Value}
+     */
+    value = /** @type {Value} */ ("value"),
 
-  /**
-   * Specify the tabindex
-   * @type {number | string | undefined}
-   */
-  export let tabindex = "0";
+    /**
+     * Specify the tabindex
+     * @type {number | string | undefined}
+     */
+    tabindex = "0",
 
-  /**
-   * Specify the title of the checkbox icon, shown as a tooltip on hover.
-   * The icon is hidden from assistive technology.
-   */
-  export let iconDescription = "Tile checkmark";
+    /**
+     * Specify the title of the checkbox icon, shown as a tooltip on hover.
+     * The icon is hidden from assistive technology.
+     */
+    iconDescription = "Tile checkmark",
 
-  /** Set an id for the input element */
-  export let id = uniqueId();
+    /**
+     * Set an id for the input element
+     * @type {string}
+     */
+    id = fallbackId,
 
-  /**
-   * Specify a name attribute for the input.
-   * @type {string}
-   */
-  export let name = "";
+    /**
+     * Specify a name attribute for the input.
+     * @type {string}
+     */
+    name = "",
 
-  /**
-   * Specify the id of a form element outside the component to associate
-   * the checkbox with.
-   * @type {string | undefined}
-   */
-  export let form = undefined;
+    /**
+     * Specify the id of a form element outside the component to associate
+     * the checkbox with.
+     * @type {string | undefined}
+     */
+    form = undefined,
 
-  /**
-   * Obtain a reference to the input HTML element.
-   * @bindable readonly
-   * @type {null | HTMLInputElement}
-   */
-  export let ref = null;
+    /**
+     * Obtain a reference to the input HTML element.
+     * @type {null | HTMLInputElement}
+     */
+    ref = $bindable(null),
 
-  import { createEventDispatcher, getContext, onMount } from "svelte";
-  import { readable, writable } from "svelte/store";
+    /**
+     * Called when the user selects or deselects a standalone tile. In a
+     * `SelectableTileGroup`, the group's `onselectedchange` reports instead.
+     * Not called when `selected` is set from outside.
+     * @type {((detail: { selected: boolean; id: string; value: Value }) => void) | undefined}
+     */
+    onselectedchange = undefined,
+
+    /**
+     * The tile content.
+     * @type {import("svelte").Snippet | undefined}
+     */
+    children = undefined,
+
+    /**
+     * A decorator beside the tile, such as an `AILabel`.
+     * @type {import("svelte").Snippet | undefined}
+     */
+    decorator = undefined,
+
+    /** @type {import("svelte/elements").ClassValue | undefined} */
+    class: className = undefined,
+
+    /** @type {import("svelte/elements").MouseEventHandler<HTMLInputElement> | undefined | null} */
+    onclick = undefined,
+
+    /** @type {import("svelte/elements").EventHandler<Event, HTMLInputElement> | undefined | null} */
+    onchange = undefined,
+
+    /** @type {import("svelte/elements").KeyboardEventHandler<HTMLInputElement> | undefined | null} */
+    onkeydown = undefined,
+
+    ...rest
+  } = $props();
+
+  import { onMount, untrack } from "svelte";
+  import { writable } from "svelte/store";
   import CheckboxCheckedFilled from "../icons/CheckboxCheckedFilled.svelte";
   import CheckboxIcon from "../icons/CheckboxIcon.svelte";
-  import { splitAriaNaming } from "../utils/aria-naming.js";
   import { fieldsetDisabled } from "../utils/fieldset-disabled.js";
   import { formReset } from "../utils/form-reset.js";
-  import { noop } from "../utils/noop.js";
-  import { uniqueId } from "../utils/unique-id.js";
   import TileWrapper from "./TileWrapper.svelte";
+  import {
+    getSelectableTileGroup,
+    hasSelectableTileGroup,
+  } from "./tile-group-context.js";
 
-  const dispatch = createEventDispatcher();
+  const ctx = hasSelectableTileGroup() ? getSelectableTileGroup() : undefined;
 
-  const ctx = getContext("carbon:SelectableTileGroup");
-  const hasGroup = ctx !== undefined;
-  const add = ctx?.add ?? noop;
-  const remove = ctx?.remove ?? noop;
-  const update = ctx?.update ?? noop;
-  const register = ctx?.register ?? (() => noop);
-  const selectedValues = ctx?.selectedValues ?? readable([]);
-  const groupName = ctx?.groupName ?? readable(undefined);
-  const groupForm = ctx?.groupForm ?? readable(undefined);
-  const groupDisabled = ctx?.groupDisabled ?? readable(false);
-  const groupSize = ctx?.groupSize ?? readable(undefined);
-  $: effectiveSize = size ?? $groupSize;
+  const effectiveSize = $derived(size ?? ctx?.size);
 
   // A disabled group disables the input natively through its fieldset;
   // mirror that in the tile's styling and tab order. The `disabled`
   // attribute stays the tile's own.
   // A disabled `<fieldset>` around the component disables it too.
-  let inDisabledFieldset = false;
-  $: effectiveDisabled = disabled || $groupDisabled || inDisabledFieldset;
+  let inDisabledFieldset = $state(false);
+  const effectiveDisabled = $derived(
+    disabled || !!ctx?.disabled || inDisabledFieldset,
+  );
 
-  add({ value, selected });
+  // In a group, the group's selection decides.
+  const isSelected = $derived(ctx ? ctx.selected.includes(value) : selected);
 
-  let unregister = register(value);
-  onMount(() => () => unregister());
+  if (ctx) {
+    // A tile that starts selected adds its value to the group.
+    untrack(() => {
+      if (selected) ctx.set(value, true);
+    });
+    let release = untrack(() => ctx.register(value));
+    let prevValue = untrack(() => value);
+    $effect.pre(() => {
+      const next = value;
+      untrack(() => {
+        if (next === prevValue) return;
+        // A selected tile carries the selection to its new value.
+        const wasSelected = ctx.selected.includes(prevValue);
+        ctx.set(prevValue, false);
+        if (wasSelected) ctx.set(next, true);
+        release();
+        release = ctx.register(next);
+        prevValue = next;
+      });
+    });
+    onMount(() => () => release());
 
-  let prevValue = value;
+    // Keep `bind:selected` on the group's state.
+    $effect.pre(() => {
+      const next = isSelected;
+      untrack(() => {
+        if (selected !== next) selected = next;
+      });
+    });
+  }
 
   // Captured from the checkbox's `click` event, which fires before `change`,
-  // so the group's `update` knows whether Shift was held for range selection.
+  // so the group knows whether Shift was held for range selection.
   let pendingShiftKey = false;
 
-  $: if (hasGroup) {
-    if (value !== prevValue) {
-      remove(prevValue);
-      unregister();
-      unregister = register(value);
-      add({ value, selected });
-      prevValue = value;
+  /**
+   * Route a change to whatever owns the selection.
+   * @param {boolean} nextSelected
+   * @param {boolean} user
+   */
+  function commit(nextSelected, user) {
+    if (ctx) {
+      if (user) ctx.toggle(value, nextSelected, pendingShiftKey);
+      else ctx.set(value, nextSelected);
+      return;
     }
-    selected = $selectedValues.includes(value);
+    selected = nextSelected;
+    if (user) onselectedchange?.({ selected: nextSelected, id, value });
   }
 
   // A form reset restores the checkbox without a change event. Sync the
-  // state to it and fire no `select`/`deselect`, like the other form
-  // controls. In a group, `add`/`remove` update membership silently.
+  // state to it and call no callback, like the other form controls.
   function handleFormReset() {
     if (!ref) return;
-    const nextSelected = ref.checked;
-    if (hasGroup) {
-      if (nextSelected) add({ value, selected: true });
-      else remove(value);
-    } else {
-      selected = nextSelected;
-    }
+    commit(ref.checked, false);
   }
 
-  // Naming and description belong on the input, not the label.
-  $: ({
-    ariaLabel,
-    ariaLabelledBy,
-    ariaDescribedBy,
-    rest: labelProps,
-  } = splitAriaNaming($$restProps));
+  /** @param {Event & { currentTarget: EventTarget & HTMLInputElement }} event */
+  function handleChange(event) {
+    commit(event.currentTarget.checked, true);
+    pendingShiftKey = false;
+    onchange?.(event);
+  }
+
+  /** @param {KeyboardEvent & { currentTarget: EventTarget & HTMLInputElement }} event */
+  function handleKeydown(event) {
+    onkeydown?.(event);
+    if (event.key !== "Enter") return;
+    event.preventDefault();
+    // Toggle once per press, like Space; a held key would otherwise
+    // toggle on every auto-repeat.
+    if (event.repeat) return;
+    // Dispatching (rather than `ref.click()`) lets Shift be forwarded onto
+    // the resulting click, which still runs the checkbox's native
+    // pre-click activation (toggle + a follow-up "change").
+    event.currentTarget.dispatchEvent(
+      new MouseEvent("click", {
+        shiftKey: event.shiftKey,
+        bubbles: true,
+        cancelable: true,
+      }),
+    );
+  }
 
   /**
-   * Starts active for a filled slot, so the server renders the AI surface.
+   * Starts active with a decorator, so the server renders the AI surface.
    * `Decorator` clears it when no `AILabel` claims the slot.
    * @type {import("svelte/store").Writable<undefined | "active" | "revert">}
    */
-  const aiLabelState = writable($$slots.decorator ? "active" : undefined);
+  const aiLabelState = writable(
+    untrack(() => decorator) ? "active" : undefined,
+  );
 </script>
 
 <TileWrapper
-  decorated={$$slots.decorator}
+  {decorator}
   state={aiLabelState}
   class="bx--tile__wrapper--selectable"
 >
@@ -178,79 +244,40 @@
     use:formReset={handleFormReset}
     type="checkbox"
     tabindex={effectiveDisabled ? undefined : tabindex}
-    class:bx--tile-input={true}
-    checked={selected}
+    checked={isSelected}
     {id}
     {value}
-    name={$groupName ?? name}
-    form={$groupForm ?? form}
-    {title}
+    name={ctx?.name ?? name}
+    form={ctx?.form ?? form}
     {disabled}
-    aria-label={ariaLabel}
-    aria-labelledby={ariaLabelledBy}
-    aria-describedby={ariaDescribedBy}
-    on:click={(event) => {
+    {...rest}
+    class={["bx--tile-input", className]}
+    onclick={(event) => {
       pendingShiftKey = event.shiftKey;
+      onclick?.(event);
     }}
-    on:change={() => {
-      if (!ref) return;
-      const newSelected = ref.checked;
-      selected = newSelected;
-      if (hasGroup) {
-        update({ value, selected: newSelected, shiftKey: pendingShiftKey });
-      } else {
-        if (newSelected) {
-          dispatch("select", id);
-        } else {
-          dispatch("deselect", id);
-        }
-      }
-      pendingShiftKey = false;
-    }}
-    on:change
-    on:keydown
-    on:keydown={(event) => {
-      if (event.key === "Enter") {
-        event.preventDefault();
-        // Toggle once per press, like Space; a held key would otherwise
-        // toggle on every auto-repeat.
-        if (event.repeat) return;
-        // Dispatching (rather than `ref.click()`) lets Shift be forwarded onto
-        // the resulting click, which still runs the checkbox's native
-        // pre-click activation (toggle + a follow-up "change").
-        ref.dispatchEvent(
-          new MouseEvent("click", {
-            shiftKey: event.shiftKey,
-            bubbles: true,
-            cancelable: true,
-          }),
-        );
-      }
-    }}
+    onchange={handleChange}
+    onkeydown={handleKeydown}
   />
   <label
     for={id}
-    class:bx--tile={true}
-    class:bx--tile--selectable={true}
-    class:bx--tile--is-selected={selected}
-    class:bx--tile--sm={effectiveSize === "sm"}
-    class:bx--tile--disabled={effectiveDisabled}
-    class:bx--tile--full-height={fullHeight}
-    class:bx--tile--decorator={$$slots.decorator}
-    class:bx--tile--decorator-rounded={rounded && $$slots.decorator}
-    class:bx--tile--ai-label={$aiLabelState === "active"}
-    {...labelProps}
-    on:click
-    on:mouseover
-    on:mouseenter
-    on:mouseleave
+    class={[
+      "bx--tile",
+      "bx--tile--selectable",
+      isSelected && "bx--tile--is-selected",
+      effectiveSize === "sm" && "bx--tile--sm",
+      effectiveDisabled && "bx--tile--disabled",
+      fullHeight && "bx--tile--full-height",
+      decorator && "bx--tile--decorator",
+      rounded && decorator && "bx--tile--decorator-rounded",
+      $aiLabelState === "active" && "bx--tile--ai-label",
+    ]}
   >
     <span
       aria-hidden="true"
-      class:bx--tile__checkmark={true}
-      class:bx--tile__checkmark--persistent={true}
+      class="bx--tile__checkmark bx--tile__checkmark--persistent"
     >
-      {#if selected}
+      {#if isSelected}
         <CheckboxCheckedFilled
           aria-label={iconDescription}
           title={iconDescription}
@@ -259,9 +286,6 @@
         <CheckboxIcon aria-label={iconDescription} title={iconDescription} />
       {/if}
     </span>
-    <span class:bx--tile-content={true}> <slot /> </span>
+    <span class="bx--tile-content">{@render children?.()}</span>
   </label>
-  <svelte:fragment slot="decorator">
-    <slot name="decorator" />
-  </svelte:fragment>
 </TileWrapper>

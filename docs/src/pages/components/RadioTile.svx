@@ -33,7 +33,7 @@ Use `RadioTile` without `TileGroup` and bind each tile's `checked`. Tiles that s
 
 ### One-way binding
 
-Update the selected value using the `select` event.
+Update the selected value from `onselectedchange`, which `TileGroup` calls with `{ selected }` when the user checks a tile. A `RadioTile` also takes `oncheckedchange`, called with `{ checked: true }` when the user checks it.
 
 <FileSource src="/framed/RadioTile/RadioTileReactiveOneWay" />
 
@@ -49,10 +49,10 @@ checked tile whose `value` changes.
 
 ### Custom content
 
-Use the `legendChildren` slot on `TileGroup` to provide custom legend content instead of `legendText`.
+Pass a snippet to `legendText` on `TileGroup` for custom legend content.
 
 <TileGroup name="plan-legend-slot" selected="standard">
-  <strong slot="legendChildren">Service pricing tiers</strong>
+  {#snippet legendText()}<strong>Service pricing tiers</strong>{/snippet}
   <RadioTile value="lite">
     Lite plan
   </RadioTile>
@@ -82,14 +82,14 @@ Hide the legend visually by setting `hideLegend` to `true`. The legend remains a
 
 ## AI label
 
-Put an `AILabel` in the `decorator` slot to mark the tile's content as AI-generated. The tile shows the AI surface, and the label sits in the top-right corner at the `"xs"` size.
+Put an `AILabel` in the `decorator` snippet to mark the tile's content as AI-generated. The tile shows the AI surface, and the label sits in the top-right corner at the `"xs"` size.
 
 <TileGroup legendText="Recommended region">
   <RadioTile value="us-east-1" checked>
     US East (N. Virginia)
-    <AILabel slot="decorator">
+    {#snippet decorator()}<AILabel>
       <p>Closest to most of your users, by request latency.</p>
-    </AILabel>
+    </AILabel>{/snippet}
   </RadioTile>
   <RadioTile value="eu-west-1">EU West (Ireland)</RadioTile>
 </TileGroup>
@@ -101,9 +101,9 @@ Set `rounded` to `true` to round the corners of a tile with a decorator. Carbon 
 <TileGroup legendText="Recommended region" name="rounded-region">
   <RadioTile value="us-east-1" checked rounded>
     US East (N. Virginia)
-    <AILabel slot="decorator">
+    {#snippet decorator()}<AILabel>
       <p>Closest to most of your users, by request latency.</p>
-    </AILabel>
+    </AILabel>{/snippet}
   </RadioTile>
   <RadioTile value="eu-west-1">EU West (Ireland)</RadioTile>
 </TileGroup>

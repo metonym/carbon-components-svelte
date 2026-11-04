@@ -29,24 +29,28 @@
 </script>
 
 <div data-testid="tile">
-  <Tile>Forecast<AILabelOrIcon slot="decorator" {ai} /></Tile>
+  <Tile>Forecast{#snippet decorator()}<AILabelOrIcon {ai} />{/snippet}</Tile>
 </div>
 <div data-testid="clickable-tile">
   <ClickableTile href="#"
-    >Open<AILabelOrIcon slot="decorator" {ai} /></ClickableTile
+    >Open{#snippet decorator()}<AILabelOrIcon {ai} />{/snippet}</ClickableTile
   >
 </div>
 <div data-testid="selectable-tile">
-  <SelectableTile>Plan<AILabelOrIcon slot="decorator" {ai} /></SelectableTile>
+  <SelectableTile
+    >Plan{#snippet decorator()}<AILabelOrIcon {ai} />{/snippet}</SelectableTile
+  >
 </div>
 <div data-testid="radio-tile">
-  <RadioTile value="a">Plan<AILabelOrIcon slot="decorator" {ai} /></RadioTile>
+  <RadioTile value="a"
+    >Plan{#snippet decorator()}<AILabelOrIcon {ai} />{/snippet}</RadioTile
+  >
 </div>
 <div data-testid="expandable-tile">
   <ExpandableTile>
-    <div slot="above">Details</div>
-    <div slot="below">More</div>
-    <AILabelOrIcon slot="decorator" {ai} />
+    {#snippet above()}<div>Details</div>{/snippet}
+    {#snippet below()}<div>More</div>{/snippet}
+    {#snippet decorator()}<AILabelOrIcon {ai} />{/snippet}
   </ExpandableTile>
 </div>
 <div data-testid="text-input">

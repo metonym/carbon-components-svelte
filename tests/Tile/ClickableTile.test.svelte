@@ -4,7 +4,7 @@
   import ClickableTile from "carbon-components-svelte/Tile/ClickableTile.svelte";
   import type { ComponentProps } from "svelte";
 
-  export let ref: ComponentProps<ClickableTile>["ref"] = undefined;
+  export let ref: ComponentProps<ClickableTile>["ref"] = null;
   export let onClick: (e: MouseEvent) => void = () => {};
 </script>
 
@@ -20,7 +20,7 @@
   Link with other attributes
 </ClickableTile>
 
-<ClickableTile href="#" data-testid="click-test" on:click={onClick}>
+<ClickableTile href="#" data-testid="click-test" onclick={onClick}>
   Click me
 </ClickableTile>
 

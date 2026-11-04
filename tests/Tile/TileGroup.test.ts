@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/svelte";
 import type TileGroupComponent from "carbon-components-svelte/Tile/TileGroup.svelte";
-import type { ComponentEvents, ComponentProps } from "svelte";
+import type { ComponentProps } from "svelte";
 import { flushMacrotask } from "../utils/flush-macrotask";
 import { getForm } from "../utils/get-form";
 import { user } from "../utils/user";
@@ -263,29 +263,23 @@ describe("TileGroup", () => {
 
       type ComponentType = TileGroupComponent<CustomValue>;
       type Props = ComponentProps<ComponentType>;
-      type Events = ComponentEvents<ComponentType>;
+      type Detail = Parameters<NonNullable<Props["onselectedchange"]>>[0];
 
       expectTypeOf<Props["selected"]>().toEqualTypeOf<
         CustomValue | undefined
       >();
 
-      type SelectEvent = Events["select"];
-      type SelectEventDetail =
-        SelectEvent extends CustomEvent<infer T> ? T : never;
-      expectTypeOf<SelectEventDetail>().toEqualTypeOf<CustomValue>();
+      expectTypeOf<Detail["selected"]>().toEqualTypeOf<CustomValue>();
     });
 
     it("should default to string type when generic is not specified", () => {
       type ComponentType = TileGroupComponent;
       type Props = ComponentProps<ComponentType>;
-      type Events = ComponentEvents<ComponentType>;
+      type Detail = Parameters<NonNullable<Props["onselectedchange"]>>[0];
 
       expectTypeOf<Props["selected"]>().toEqualTypeOf<string | undefined>();
 
-      type SelectEvent = Events["select"];
-      type SelectEventDetail =
-        SelectEvent extends CustomEvent<infer T> ? T : never;
-      expectTypeOf<SelectEventDetail>().toEqualTypeOf<string>();
+      expectTypeOf<Detail["selected"]>().toEqualTypeOf<string>();
     });
   });
 });

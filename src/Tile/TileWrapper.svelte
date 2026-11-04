@@ -3,27 +3,41 @@
    * Internal. Wraps an interactive tile when it has a `decorator`, so the
    * decorator sits beside the tile instead of inside its link, button, or
    * label.
+   * @restProps {div}
    */
+  let {
+    /**
+     * The decorator, such as an `AILabel`. Without it, the tile renders
+     * unwrapped.
+     * @type {import("svelte").Snippet | undefined}
+     */
+    decorator = undefined,
 
-  /** Set to `true` to wrap the tile and render the decorator */
-  export let decorated = false;
+    /**
+     * Receives the state of an `AILabel` in the decorator.
+     * @type {import("svelte/store").Writable<undefined | "active" | "revert">}
+     */
+    state,
 
-  /**
-   * Receives the state of an `AILabel` in the decorator.
-   * @type {import("svelte/store").Writable<undefined | "active" | "revert">}
-   */
-  export let state;
+    /** @type {import("svelte").Snippet | undefined} */
+    children = undefined,
+
+    /** @type {import("svelte/elements").ClassValue | undefined} */
+    class: className = undefined,
+
+    ...rest
+  } = $props();
 
   import Decorator from "../AILabel/Decorator.svelte";
 </script>
 
-{#if decorated}
-  <div class:bx--tile__wrapper--decorator={true} {...$$restProps}>
-    <slot />
+{#if decorator}
+  <div {...rest} class={["bx--tile__wrapper--decorator", className]}>
+    {@render children?.()}
     <Decorator class="bx--tile--inner-decorator" {state} labelSize="xs">
-      <slot name="decorator" />
+      {@render decorator()}
     </Decorator>
   </div>
 {:else}
-  <slot />
+  {@render children?.()}
 {/if}

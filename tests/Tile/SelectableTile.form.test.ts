@@ -8,6 +8,10 @@ import SelectableTileForm from "./SelectableTile.form.test.svelte";
 const getCheckboxes = () =>
   screen.getAllByRole("checkbox") as HTMLInputElement[];
 
+// `data-testid` lands on the `<input>`; the tile is its `<label>`.
+const labelOf = (testId: string) =>
+  (screen.getByTestId(testId) as HTMLInputElement).labels?.[0];
+
 describe("SelectableTile form reset", () => {
   it("clears the group selection and tile styling without firing events", async () => {
     const onEvent = vi.fn();
@@ -24,12 +28,8 @@ describe("SelectableTile form reset", () => {
     expect(boxA).not.toBeChecked();
     expect(boxB).not.toBeChecked();
     expect(getBoundText()).toBe("");
-    expect(screen.getByTestId("tile-a")).not.toHaveClass(
-      "bx--tile--is-selected",
-    );
-    expect(screen.getByTestId("tile-b")).not.toHaveClass(
-      "bx--tile--is-selected",
-    );
+    expect(labelOf("tile-a")).not.toHaveClass("bx--tile--is-selected");
+    expect(labelOf("tile-b")).not.toHaveClass("bx--tile--is-selected");
     expect(onEvent).not.toHaveBeenCalled();
   });
 
@@ -47,7 +47,7 @@ describe("SelectableTile form reset", () => {
     expect(boxA).toBeChecked();
     expect(boxB).not.toBeChecked();
     expect(getBoundText()).toBe("a");
-    expect(screen.getByTestId("tile-a")).toHaveClass("bx--tile--is-selected");
+    expect(labelOf("tile-a")).toHaveClass("bx--tile--is-selected");
   });
 
   it("clears a standalone tile without firing deselect", async () => {
@@ -64,9 +64,7 @@ describe("SelectableTile form reset", () => {
 
     expect(solo).not.toBeChecked();
     expect(getBoundText("bound-standalone")).toBe("false");
-    expect(screen.getByTestId("tile-solo")).not.toHaveClass(
-      "bx--tile--is-selected",
-    );
+    expect(labelOf("tile-solo")).not.toHaveClass("bx--tile--is-selected");
     expect(onEvent).not.toHaveBeenCalled();
   });
 

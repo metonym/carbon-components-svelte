@@ -16,7 +16,7 @@
     legendText="Service pricing tiers"
     name="plan"
     {selected}
-    on:change={({ detail }) => (selected = detail)}
+    onselectedchange={(detail) => (selected = detail.selected)}
   >
     {#each values as value}
       <SelectableTile {value}>{value}</SelectableTile>

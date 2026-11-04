@@ -19,8 +19,7 @@
   {value}
   {name}
   {iconDescription}
-  on:select={(e) => onSelect(e.detail)}
-  on:deselect={(e) => onDeselect(e.detail)}
+  onselectedchange={(e) => (e.selected ? onSelect : onDeselect)(e.id)}
 >
   Test Tile Content
 </SelectableTile>

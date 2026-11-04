@@ -32,12 +32,10 @@
     {iconDescription}
     {id}
     {name}
-    on:change={onChange}
-    on:keydown
-    on:click
-    on:mouseover={onMouseover}
-    on:mouseenter={onMouseenter}
-    on:mouseleave={onMouseleave}
+    onchange={onChange}
+    onmouseover={onMouseover}
+    onmouseenter={onMouseenter}
+    onmouseleave={onMouseleave}
   >
     Test content
   </RadioTile>

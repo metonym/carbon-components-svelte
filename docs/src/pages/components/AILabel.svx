@@ -224,17 +224,17 @@ Tiles, clickable tiles, selectable tiles, radio tiles, and expandable tiles show
     <Tile>
       <h4>Usage forecast</h4>
       <p>Spend is projected to grow 12% next month.</p>
-      <AILabel slot="decorator">
+      {#snippet decorator()}<AILabel>
         <p>Projected from the last six months of spend.</p>
-      </AILabel>
+      </AILabel>{/snippet}
     </Tile>
   </Box>
   <Box width="16rem">
     <SelectableTile>
       Recommended plan: Team
-      <AILabel slot="decorator">
+      {#snippet decorator()}<AILabel>
         <p>Recommended for a workspace with 8 to 20 active members.</p>
-      </AILabel>
+      </AILabel>{/snippet}
     </SelectableTile>
   </Box>
 </Stack>
@@ -249,9 +249,9 @@ While AI generates content, show an AI skeleton in its place. Set `ai` on [Skele
       <h4>Usage forecast</h4>
       <SkeletonText ai paragraph lines={2} noMargin />
     </Stack>
-    <AILabel slot="decorator">
+    {#snippet decorator()}<AILabel>
       <p>Projecting from the last six months of spend.</p>
-    </AILabel>
+    </AILabel>{/snippet}
   </Tile>
 </Box>
 

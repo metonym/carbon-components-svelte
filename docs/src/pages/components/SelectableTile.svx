@@ -53,7 +53,7 @@ Hold <DocKbd label="Shift" /> while clicking a tile, or while pressing <DocKbd l
 
 ### One-way binding
 
-Pass `selected` to `SelectableTileGroup` and update it from the `change` event, which fires once per toggle or range with every selected value. For per-tile reactions, `select` and `deselect` fire once for each tile that changes, including every tile in a range.
+Pass `selected` to `SelectableTileGroup` and update it from `onselectedchange`, which is called once per toggle or Shift range with `{ selected, added, removed }`: every selected value, and the values that toggle added and removed. Setting `selected` from code, or a form reset, doesn't call it. A standalone `SelectableTile` has its own `onselectedchange`, called with `{ selected, id, value }`.
 
 Inside a group, the group's `selected` is the source of truth. A tile's own `selected` prop only sets its initial state, so update the group's array rather than each tile.
 
@@ -69,10 +69,10 @@ Bind to `selected` for simpler state management.
 
 ### Custom content
 
-Use the `legendChildren` slot on `SelectableTileGroup` to provide custom legend content instead of `legendText`.
+Pass a snippet to `legendText` on `SelectableTileGroup` for custom legend content.
 
 <SelectableTileGroup name="options-legend-slot" selected={["us-east-1", "us-west-2"]}>
-  <strong slot="legendChildren">Deployment regions</strong>
+  {#snippet legendText()}<strong>Deployment regions</strong>{/snippet}
   <SelectableTile value="us-east-1">
     US East (N. Virginia)
   </SelectableTile>
@@ -102,13 +102,13 @@ Hide the legend visually by setting `hideLegend` to `true`. The legend remains a
 
 ## AI label
 
-Put an `AILabel` in the `decorator` slot to mark the tile's content as AI-generated. The tile shows the AI surface, and the label sits in the top-right corner, beside the checkbox at the `"xs"` size.
+Put an `AILabel` in the `decorator` snippet to mark the tile's content as AI-generated. The tile shows the AI surface, and the label sits in the top-right corner, beside the checkbox at the `"xs"` size.
 
 <SelectableTile>
   Recommended plan: Team
-  <AILabel slot="decorator">
+  {#snippet decorator()}<AILabel>
     <p>Recommended for a workspace with 8 to 20 active members.</p>
-  </AILabel>
+  </AILabel>{/snippet}
 </SelectableTile>
 
 ### Rounded corners
@@ -117,9 +117,9 @@ Set `rounded` to `true` to round the corners of a tile with a decorator. Carbon 
 
 <SelectableTile rounded>
   Recommended plan: Team
-  <AILabel slot="decorator">
+  {#snippet decorator()}<AILabel>
     <p>Recommended for a workspace with 8 to 20 active members.</p>
-  </AILabel>
+  </AILabel>{/snippet}
 </SelectableTile>
 
 ## Small size

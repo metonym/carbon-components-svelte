@@ -10,13 +10,19 @@
 </script>
 
 {#if decorated}
-  <Tile {rounded}><span slot="decorator">AI</span></Tile>
+  <Tile {rounded}>{#snippet decorator()}<span>AI</span>{/snippet}</Tile>
   <ClickableTile href="/details" {rounded}>
-    <span slot="decorator">AI</span>
+    {#snippet decorator()}<span>AI</span>{/snippet}
   </ClickableTile>
-  <SelectableTile {rounded}><span slot="decorator">AI</span></SelectableTile>
-  <RadioTile value="a" {rounded}><span slot="decorator">AI</span></RadioTile>
-  <ExpandableTile {rounded}><span slot="decorator">AI</span></ExpandableTile>
+  <SelectableTile {rounded}
+    >{#snippet decorator()}<span>AI</span>{/snippet}</SelectableTile
+  >
+  <RadioTile value="a" {rounded}
+    >{#snippet decorator()}<span>AI</span>{/snippet}</RadioTile
+  >
+  <ExpandableTile {rounded}
+    >{#snippet decorator()}<span>AI</span>{/snippet}</ExpandableTile
+  >
 {:else}
   <Tile {rounded} />
   <ClickableTile href="/details" {rounded} />

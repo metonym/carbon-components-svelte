@@ -23,7 +23,7 @@
   </ButtonSet>
   <div>Expanded: <strong>{expanded}</strong></div>
   <ExpandableTile bind:expanded>
-    <svelte:fragment slot="above">
+    {#snippet above()}
       <div>Payments API — Operational</div>
       {#if grow}
         <div>Elevated error rate detected on the /charges endpoint.</div>
@@ -32,9 +32,9 @@
           stream in.
         </div>
       {/if}
-    </svelte:fragment>
-    <svelte:fragment slot="below">
+    {/snippet}
+    {#snippet below()}
       No open incidents. On-call engineer: Priya Natarajan.
-    </svelte:fragment>
+    {/snippet}
   </ExpandableTile>
 </Stack>

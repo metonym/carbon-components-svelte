@@ -5,7 +5,7 @@
   import TileGroup from "carbon-components-svelte/Tile/TileGroup.svelte";
   import type { ComponentProps } from "svelte";
 
-  export let ref: ComponentProps<RadioTile>["ref"] = undefined;
+  export let ref: ComponentProps<RadioTile>["ref"] = null;
 </script>
 
 <TileGroup legendText="Pick one">
