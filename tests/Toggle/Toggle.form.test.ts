@@ -37,7 +37,7 @@ describe("Toggle form participation", () => {
 
     expect(toggle).toBeChecked();
     expect(onToggle).toHaveBeenLastCalledWith(
-      expect.objectContaining({ detail: { toggled: true } }),
+      { toggled: true },
     );
   });
 
@@ -48,12 +48,12 @@ describe("Toggle form participation", () => {
 
     await user.click(toggle);
     expect(onToggle).toHaveBeenLastCalledWith(
-      expect.objectContaining({ detail: { toggled: true } }),
+      { toggled: true },
     );
 
     await user.click(toggle);
     expect(onToggle).toHaveBeenLastCalledWith(
-      expect.objectContaining({ detail: { toggled: false } }),
+      { toggled: false },
     );
   });
 

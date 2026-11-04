@@ -15,5 +15,5 @@
   {id}
   {readonlyText}
   labelText="Readonly toggle"
-  on:toggle={(e) => onToggle(e.detail.toggled)}
+  ontoggledchange={(e) => onToggle(e.toggled)}
 />

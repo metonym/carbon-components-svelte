@@ -18,13 +18,13 @@
   bind:toggled
   bind:ref
   labelText="Default toggle"
-  on:toggle={(e) => onToggle(e.detail.toggled)}
-  on:change={(e) => {
+  ontoggledchange={(e) => onToggle(e.toggled)}
+  onchange={(e) => {
     if (e.target instanceof HTMLInputElement) onChange(e.target.checked);
   }}
 />
 
-<Toggle labelText="Custom labels" labelA="Inactive" labelB="Active" />
+<Toggle labelText="Custom labels" offText="Inactive" onText="Active" />
 
 <Toggle size="sm" labelText="Small toggle" />
 
@@ -44,15 +44,15 @@
 
 <Toggle
   labelText="Events toggle"
-  on:focus={onFocus}
-  on:blur={onBlur}
-  on:click={onClick}
+  onfocus={onFocus}
+  onblur={onBlur}
+  onclick={onClick}
 />
 
 <Toggle class="custom-class" labelText="Custom class toggle" />
 
-<Toggle labelText="Slots toggle">
-  <span slot="labelChildren">Label slot</span>
-  <span slot="labelA">Off slot</span>
-  <span slot="labelB">On slot</span>
+<Toggle>
+  {#snippet labelText()}<span>Label slot</span>{/snippet}
+  {#snippet offText()}<span>Off slot</span>{/snippet}
+  {#snippet onText()}<span>On slot</span>{/snippet}
 </Toggle>

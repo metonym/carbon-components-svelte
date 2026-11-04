@@ -11,12 +11,12 @@
 <!-- `slot` can't sit inside an `{#if}` in Svelte 5, so each branch renders the field whole. -->
 {#if inFluidForm}
   <FluidForm>
-    <svelte:component this={component} {...fieldProps}>
+    <svelte:component this={component} labelText="Field" {...fieldProps}>
       <svelte:fragment slot="labelChildren">Field</svelte:fragment>
     </svelte:component>
   </FluidForm>
 {:else}
-  <svelte:component this={component} {...fieldProps}>
+  <svelte:component this={component} labelText="Field" {...fieldProps}>
     <svelte:fragment slot="labelChildren">Field</svelte:fragment>
   </svelte:component>
 {/if}

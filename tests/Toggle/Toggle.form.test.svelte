@@ -5,9 +5,7 @@
   export let toggled: ComponentProps<Toggle>["toggled"] = false;
   export let readonly: ComponentProps<Toggle>["readonly"] = false;
   export let value: ComponentProps<Toggle>["value"] = undefined;
-  export let onToggle: (
-    event: CustomEvent<{ toggled: boolean }>,
-  ) => void = () => {};
+  export let onToggle: (detail: { toggled: boolean }) => void = () => {};
 </script>
 
 <form data-testid="form">
@@ -17,7 +15,7 @@
     {value}
     name="notify"
     labelText="Notify"
-    on:toggle={onToggle}
+    ontoggledchange={onToggle}
   />
 </form>
 <p data-testid="bound">{String(toggled)}</p>

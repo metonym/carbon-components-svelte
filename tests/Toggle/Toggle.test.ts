@@ -173,12 +173,13 @@ describe("Toggle", () => {
   it("applies custom class", () => {
     render(Toggle);
 
+    // `class` goes to the switch itself, like every other attribute.
     const toggle = getToggle("Custom class toggle");
-    const formItem = toggle.closest(".bx--form-item");
-    expect(formItem).toHaveClass("custom-class");
+    expect(toggle).toHaveClass("custom-class", "bx--toggle-input");
+    expect(toggle.closest(".bx--form-item")).not.toHaveClass("custom-class");
   });
 
-  it("supports labelChildren, labelA and labelB slots", () => {
+  it("supports labelText, offText and onText snippets", () => {
     render(Toggle);
 
     expect(screen.getByText("Label slot")).toBeInTheDocument();
@@ -297,9 +298,9 @@ describe("Toggle", () => {
     expect(screen.getByRole("switch")).toHaveAccessibleName("Toggle");
   });
 
-  it("renders no state text when labelA and labelB are empty", () => {
+  it("renders no state text when offText and onText are empty", () => {
     const { container } = render(ToggleComponent, {
-      props: { labelText: "Alerts", labelA: "", labelB: "" },
+      props: { labelText: "Alerts", offText: "", onText: "" },
     });
 
     expect(container.querySelector(".bx--toggle__text--off")).toBeNull();
